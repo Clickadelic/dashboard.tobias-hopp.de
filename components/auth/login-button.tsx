@@ -1,23 +1,23 @@
-"use client"
-import { useRouter } from "next/navigation"
+"use client";
+import { useRouter } from "next/navigation";
 
 interface LoginButtonProps {
-	children?: React.ReactNode
-	mode?: "modal" | "redirect"
-	asChild?: boolean
+	children?: React.ReactNode;
+	mode?: "modal" | "redirect";
+	asChild?: boolean;
 }
 
 export const LoginButton = ({ children, mode = "redirect", asChild }: LoginButtonProps) => {
-	const router = useRouter()
+	const router = useRouter();
 	const onClick = () => {
-		router.push("/auth/login")
-	}
+		router.push("/auth/login");
+	};
 	if (mode === "modal") {
-		return <span>{/* // TODO Modal */}Modal Window</span>
+		return <span>Modal Window</span>;
 	}
 	return (
-		<span className="cursor-pointer" onClick={onClick}>
+		<div className="cursor-pointer" onClick={onClick}>
 			{children}
-		</span>
-	)
-}
+		</div>
+	);
+};
