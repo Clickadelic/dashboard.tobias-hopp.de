@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form"
 import { useState, useTransition } from "react"
 import { zodResolver } from "@hookform/resolvers/zod"
 
-import { LoginSchema } from "@/schemas"
+import { RegisterSchema } from "@/schemas"
 import { Input } from "@/components/ui/input"
 import { Form, FormControl, FormLabel, FormField, FormItem, FormMessage } from "@/components/ui/form"
 
@@ -15,16 +15,16 @@ import { Button } from "@/components/ui/button"
 import { FormError } from "@/components/form-error"
 import { FormSuccess } from "@/components/form-success"
 
-import { login } from "@/actions/login"
+import { register } from "@/actions/register"
 
-export const LoginForm = () => {
+export const RegisterForm = () => {
 	const [error, setError] = useState<string | undefined>("")
 	const [success, setSuccess] = useState<string | undefined>("")
 	const [isPending, startTransiton] = useTransition()
-	const form = useForm<z.infer<typeof LoginSchema>>({ resolver: zodResolver(LoginSchema), defaultValues: { email: "", password: "" } })
-	const onSubmit = (values: z.infer<typeof LoginSchema>) => {
+	const form = useForm<z.infer<typeof RegisterSchema>>({ resolver: zodResolver(RegisterSchema), defaultValues: { email: "", password: "" } })
+	const onSubmit = (values: z.infer<typeof RegisterSchema>) => {
 		startTransiton(() => {
-			login(values).then(data => {
+			register(values).then(data => {
 				setError(data.error)
 				setSuccess(data.success)
 			})
@@ -32,10 +32,24 @@ export const LoginForm = () => {
 	}
 
 	return (
-		<CardWrapper headerLabel="Willkommen zurück!" backButtonLabel="Noch keinen Account?" backButtonHref="/auth/register" showSocial>
+		<CardWrapper headerLabel="Registrier' Dich!" backButtonLabel="Schon registriert?" backButtonHref="/auth/login" showSocial>
 			<Form {...form}>
 				<form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
 					<div className="space-y-4">
+						<FormField
+							control={form.control}
+							name="name"
+							disabled={isPending}
+							render={({ field }) => (
+								<FormItem>
+									<FormLabel>Name:</FormLabel>
+									<FormControl>
+										<Input {...field} placeholder="Mustermann" />
+									</FormControl>
+									<FormMessage />
+								</FormItem>
+							)}
+						/>
 						<FormField
 							control={form.control}
 							name="email"
@@ -44,7 +58,7 @@ export const LoginForm = () => {
 								<FormItem>
 									<FormLabel>E-Mail:</FormLabel>
 									<FormControl>
-										<Input {...field} placeholder="John Doe" type="email" />
+										<Input {...field} placeholder="mustermann@beispiel.de" type="email" />
 									</FormControl>
 									<FormMessage />
 								</FormItem>
@@ -65,10 +79,10 @@ export const LoginForm = () => {
 							)}
 						/>
 					</div>
-					<FormError message={error} />
-					<FormSuccess message={success} />
+					<FormError />
+					<FormSuccess />
 					<Button type="submit" disabled={isPending} className="w-full">
-						Login
+						Registieren
 					</Button>
 				</form>
 			</Form>
