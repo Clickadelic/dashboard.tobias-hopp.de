@@ -1,8 +1,7 @@
 import { Poppins } from "next/font/google";
 
 import { cn } from "@/lib/utils";
-import { LoginButton } from "@/components/auth/login-button";
-import { Button } from "@/components/ui/button";
+import { LoginForm } from "@/components/auth/login-form";
 
 const font = Poppins({
 	subsets: ["latin"],
@@ -15,11 +14,9 @@ export default function Home() {
 			<div className="space-y-6 text-center">
 				<h1 className={cn("text-6xl font-semibold text-white shadow-sm", font.className)}>Dashboard</h1>
 				<p className="text-white">Toby&apos;s Dashboard.</p>
-				<LoginButton>
-					<Button variant="secondary" size="lg">
-						Login
-					</Button>
-				</LoginButton>
+				<div className="text-left">
+					<LoginForm />
+				</div>
 			</div>
 		</main>
 	);
