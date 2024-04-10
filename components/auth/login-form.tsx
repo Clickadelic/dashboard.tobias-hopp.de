@@ -44,7 +44,7 @@ export const LoginForm = () => {
 								<FormItem>
 									<FormLabel>E-Mail:</FormLabel>
 									<FormControl>
-										<Input {...field} placeholder="John Doe" type="email" />
+										<Input {...field} placeholder="Mads Mustermann" type="email" />
 									</FormControl>
 									<FormMessage />
 								</FormItem>
@@ -56,7 +56,7 @@ export const LoginForm = () => {
 							disabled={isPending}
 							render={({ field }) => (
 								<FormItem>
-									<FormLabel>Password:</FormLabel>
+									<FormLabel>Passwort:</FormLabel>
 									<FormControl>
 										<Input {...field} placeholder="******" type="password" />
 									</FormControl>
