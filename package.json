@@ -9,7 +9,7 @@
 		"build": "next build",
 		"start": "next start",
 		"lint": "next lint",
-		"postinstall": "npm i && prisma generate"
+		"postinstall": "prisma generate"
 	},
 	"dependencies": {
 		"@hookform/resolvers": "^3.3.4",
@@ -37,7 +37,7 @@
 		"@types/react": "^18",
 		"@types/react-dom": "^18",
 		"autoprefixer": "^10.4.19",
-		"eslint": "^9",
+		"eslint": "^8",
 		"eslint-config-next": "14.2.1",
 		"postcss": "^8",
 		"prisma": "^5.12.1",
