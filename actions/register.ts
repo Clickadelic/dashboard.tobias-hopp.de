@@ -21,7 +21,7 @@ export const register = async (values: z.infer<typeof RegisterSchema>) => {
 	});
 
 	if (existingUser) {
-		return { error: "E-Mail bereits in Verwendung." };
+		return { error: "E-Mail bereits in Verwendung!" };
 	}
 
 	await db.user.create({
@@ -33,5 +33,5 @@ export const register = async (values: z.infer<typeof RegisterSchema>) => {
 	});
 
 	// Send verification token E-Mail
-	return { success: "Benutzer erstellt." };
+	return { success: "Registrierung erfolgreich!" };
 };
