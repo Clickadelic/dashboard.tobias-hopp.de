@@ -22,6 +22,7 @@ export const RegisterForm = () => {
 	const [success, setSuccess] = useState<string | undefined>("");
 	const [isPending, startTransiton] = useTransition();
 	const form = useForm<z.infer<typeof RegisterSchema>>({ resolver: zodResolver(RegisterSchema), defaultValues: { email: "", password: "", name: "" } });
+
 	const onSubmit = (values: z.infer<typeof RegisterSchema>) => {
 		startTransiton(() => {
 			register(values).then(data => {
@@ -79,8 +80,8 @@ export const RegisterForm = () => {
 							)}
 						/>
 					</div>
-					<FormError />
-					<FormSuccess />
+					<FormError message={error} />
+					<FormSuccess message={success} />
 					<Button type="submit" disabled={isPending} className="w-full">
 						Registieren
 					</Button>
