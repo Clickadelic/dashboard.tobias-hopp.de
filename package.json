@@ -6,7 +6,7 @@
 		"updates-check": "npx npm-check-updates",
 		"updates-execute": "npx npm-check-updates -u",
 		"dev": "next dev",
-		"build": "next build",
+		"build": "next build --legacy-peer-deps",
 		"start": "next start",
 		"lint": "next lint",
 		"postinstall": "prisma generate"
