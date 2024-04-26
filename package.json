@@ -6,7 +6,7 @@
 		"updates-check": "npx npm-check-updates",
 		"updates-execute": "npx npm-check-updates -u",
 		"dev": "next dev",
-		"build": "next build --legacy-peer-deps",
+		"build": "next build",
 		"start": "next start",
 		"lint": "next lint",
 		"postinstall": "prisma generate"
@@ -37,7 +37,7 @@
 		"@types/react": "^18",
 		"@types/react-dom": "^18",
 		"autoprefixer": "^10.4.19",
-		"eslint": "^9",
+		"eslint": "^8",
 		"eslint-config-next": "14.2.3",
 		"postcss": "^8",
 		"prisma": "^5.13.0",
