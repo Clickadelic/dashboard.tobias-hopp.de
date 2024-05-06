@@ -22,13 +22,27 @@ export const LoginForm = () => {
 	const [success, setSuccess] = useState<string | undefined>("")
 	const [isPending, startTransiton] = useTransition()
 	const form = useForm<z.infer<typeof LoginSchema>>({ resolver: zodResolver(LoginSchema), defaultValues: { email: "", password: "" } })
-	const onSubmit = (values: z.infer<typeof LoginSchema>) => {
-		startTransiton(() => {
-			login(values).then(data => {
-				setError(data.error)
-				setSuccess(data.success)
+
+	const onSubmit = async (values: z.infer<typeof LoginSchema>) => {
+		setError("")
+		setSuccess("")
+		login(values)
+			.then(data => {
+				if (data?.error) {
+					form.reset()
+					setError(data.error)
+				}
+				if (data?.success) {
+					form.reset()
+					setSuccess(data.success)
+				}
+				// if (data?.twoFactor) {
+				// 	setShowTwoFactor(true)
+				// }
 			})
-		})
+			.catch(() => {
+				setError("Something went wrong")
+			})
 	}
 
 	return (
