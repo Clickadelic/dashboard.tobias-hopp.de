@@ -17,6 +17,11 @@ import { FormSuccess } from "@/components/form-success"
 
 import { login } from "@/actions/login"
 
+// Temp Solution
+function isLoginResponse(data: any): data is { error: string; success?: string } {
+	return data && typeof data.error === "string"
+}
+
 export const LoginForm = () => {
 	const [error, setError] = useState<string | undefined>("")
 	const [success, setSuccess] = useState<string | undefined>("")
@@ -28,17 +33,19 @@ export const LoginForm = () => {
 		setSuccess("")
 		login(values)
 			.then(data => {
-				if (data?.error) {
-					form.reset()
-					setError(data.error)
+				if (isLoginResponse(data)) {
+					if (data.error) {
+						form.reset()
+						setError(data.error)
+					} else if (data.success) {
+						form.reset()
+						setSuccess(data.success)
+					} else {
+						setError("Something went wrong")
+					}
+				} else {
+					setError("Invalid data format")
 				}
-				if (data?.success) {
-					form.reset()
-					setSuccess(data.success)
-				}
-				// if (data?.twoFactor) {
-				// 	setShowTwoFactor(true)
-				// }
 			})
 			.catch(() => {
 				setError("Something went wrong")
