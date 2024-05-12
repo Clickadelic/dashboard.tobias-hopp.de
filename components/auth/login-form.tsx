@@ -41,14 +41,14 @@ export const LoginForm = () => {
 						form.reset();
 						setSuccess(data.success);
 					} else {
-						setError("Something went wrong");
+						setError("LoginResponse Fehler");
 					}
 				} else {
-					setError("Invalid data format");
+					setError("Ungültiges Datenformat");
 				}
 			})
 			.catch(() => {
-				setError("Something went wrong");
+				setError("FinalResponse Error");
 			});
 	};
 
