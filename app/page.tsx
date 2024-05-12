@@ -1,12 +1,13 @@
-import { Poppins } from "next/font/google"
+import { Poppins } from "next/font/google";
 
-import { cn } from "@/lib/utils"
-import { LoginForm } from "@/components/auth/login-form"
+import { cn } from "@/lib/utils";
+import { LoginForm } from "@/components/auth/login-form";
+import { Suspense } from "react";
 
 const font = Poppins({
 	subsets: ["latin"],
 	weight: ["600"]
-})
+});
 
 export default function Home() {
 	return (
@@ -18,5 +19,5 @@ export default function Home() {
 				</div>
 			</div>
 		</main>
-	)
+	);
 }
