@@ -14,15 +14,14 @@ import { CardWrapper } from "./card-wrapper";
 import { Button } from "@/components/ui/button";
 import { FormError } from "@/components/form-error";
 import { FormSuccess } from "@/components/form-success";
+import { useSearchParams } from "next/navigation";
 
 import { login } from "@/actions/login";
 
-// Temp Solution
-function isLoginResponse(data: any): data is { error: string; success?: string } {
-	return data && typeof data.error === "string";
-}
-
 export const LoginForm = () => {
+	const searchParams = useSearchParams();
+	const urlError = searchParams.get("error") === "OAuthAccountNotLinked" ? "E-Mail schon in Verwendung" : "";
+
 	const [error, setError] = useState<string | undefined>("");
 	const [success, setSuccess] = useState<string | undefined>("");
 	const [isPending, startTransiton] = useTransition();
@@ -31,25 +30,12 @@ export const LoginForm = () => {
 	const onSubmit = async (values: z.infer<typeof LoginSchema>) => {
 		setError("");
 		setSuccess("");
-		login(values)
-			.then(data => {
-				if (isLoginResponse(data)) {
-					if (data.error) {
-						form.reset();
-						setError(data.error);
-					} else if (data.success) {
-						form.reset();
-						setSuccess(data.success);
-					} else {
-						setError("Something went wrong");
-					}
-				} else {
-					setError("Invalid data format");
-				}
-			})
-			.catch(() => {
-				setError("Something went wrong");
+
+		startTransiton(() => {
+			login(values).then(data => {
+				setError(data?.error);
 			});
+		});
 	};
 
 	return (
@@ -86,7 +72,7 @@ export const LoginForm = () => {
 							)}
 						/>
 					</div>
-					<FormError message={error} />
+					<FormError message={error || urlError} />
 					<FormSuccess message={success} />
 					<Button type="submit" disabled={isPending} className="w-full">
 						Login
