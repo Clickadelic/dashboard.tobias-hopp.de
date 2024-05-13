@@ -15,7 +15,9 @@ export default function Home() {
 			<div className="space-y-6 text-center">
 				<h1 className={cn("text-3xl text-white", font.className)}>Toby&apos;s Dashboard</h1>
 				<div className="text-left">
-					<LoginForm />
+					<Suspense fallback={<div>Loading...</div>}>
+						<LoginForm />
+					</Suspense>
 				</div>
 			</div>
 		</main>
