@@ -28,8 +28,8 @@ export const sendVerificationEmail = async (email: string, token: string) => {
 	try {
 		const sendResult = await transport.sendMail({
 			from: EMAIL_FROM,
-			to: "toby.hopp@gmail.com",
-			subject: "Your dashboard registration.",
+			to: email,
+			subject: "Toby's Dashboard - Registration Confirmation",
 			html: `Please activate your account by clicking the following <a href="${confirmationLink}" title="Please click here.">confirmation-link.`
 		});
 		console.log(sendResult);
