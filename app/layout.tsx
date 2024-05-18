@@ -1,22 +1,31 @@
-import type { Metadata } from "next"
-import { Inter } from "next/font/google"
-import "./globals.css"
-
-const inter = Inter({ subsets: ["latin"] })
+import type { Metadata } from "next";
+import { Inter } from "next/font/google";
+import "./globals.css";
+import { siteConfig } from "@/config";
+const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-	title: "Tobys Dashboard",
-	description: "Web-HeadQuarter"
-}
+	title: {
+		default: siteConfig.name,
+		template: `%s | ${siteConfig.name}`
+	},
+	description: siteConfig.description,
+	icons: [
+		{
+			url: "/favicon.svg",
+			href: "/favicon.svg"
+		}
+	]
+};
 
 export default function RootLayout({
 	children
 }: Readonly<{
-	children: React.ReactNode
+	children: React.ReactNode;
 }>) {
 	return (
 		<html lang="de">
 			<body className={inter.className}>{children}</body>
 		</html>
-	)
+	);
 }
