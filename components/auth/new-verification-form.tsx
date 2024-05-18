@@ -1,5 +1,6 @@
 "use client"
 import { useSearchParams } from "next/navigation"
+import { Suspense } from "react"
 import { useEffect, useCallback, useState } from "react"
 import { CardWrapper } from "./card-wrapper"
 import { FiLoader } from "react-icons/fi"
@@ -42,9 +43,11 @@ const NewVerificationForm = () => {
 	return (
 		<CardWrapper headerLabel="E-Mail bestätigen" backButtonLabel="zurück zum Login" backButtonHref="/auth/login">
 			<div className="flex items-center w-full justify-center">
-				{!success && !error && <FiLoader />}
-				<FormSuccess message={success} />
-				{!success && <FormError message={error} />}
+				<Suspense fallback={<div>Loading</div>}>
+					{!success && !error && <FiLoader />}
+					<FormSuccess message={success} />
+					{!success && <FormError message={error} />}
+				</Suspense>
 			</div>
 		</CardWrapper>
 	)
