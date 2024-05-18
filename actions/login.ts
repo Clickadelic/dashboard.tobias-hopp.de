@@ -1,30 +1,32 @@
-"use server";
+"use server"
 
-import * as z from "zod";
-import { signIn } from "@/auth";
-import { LoginSchema } from "@/schemas";
-import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
-import { AuthError } from "next-auth";
-import { generateVerificationToken } from "@/lib/tokens";
-import { getUserByEmail } from "@/data/user";
+import * as z from "zod"
+import { signIn } from "@/auth"
+import { LoginSchema } from "@/schemas"
+import { DEFAULT_LOGIN_REDIRECT } from "@/routes"
+import { AuthError } from "next-auth"
+import { generateVerificationToken } from "@/lib/tokens"
+import { getUserByEmail } from "@/data/user"
+import { sendVerificationEmail } from "@/lib/mail"
 
 export const login = async (values: z.infer<typeof LoginSchema>) => {
-	const validatedFields = LoginSchema.safeParse(values);
+	const validatedFields = LoginSchema.safeParse(values)
 
 	if (!validatedFields.success) {
-		return { error: "Ungültige Eingabe!" };
+		return { error: "Ungültige Eingabe!" }
 	}
-	const { email, password } = validatedFields.data;
+	const { email, password } = validatedFields.data
 
-	const existingUser = await getUserByEmail(email);
+	const existingUser = await getUserByEmail(email)
 
 	if (!existingUser || !existingUser.email || !existingUser.password) {
-		return { error: "E-Mail existiert nicht!" };
+		return { error: "E-Mail existiert nicht!" }
 	}
 
 	if (!existingUser.emailVerified) {
-		const verificationToken = await generateVerificationToken(existingUser.email);
-		return { success: "E-Mailbestätigung versendet!" };
+		const verificationToken = await generateVerificationToken(existingUser.email)
+		sendVerificationEmail(verificationToken.email, verificationToken.token)
+		return { success: "E-Mail Bestätigung versendet!" }
 	}
 
 	try {
@@ -32,20 +34,20 @@ export const login = async (values: z.infer<typeof LoginSchema>) => {
 			email,
 			password,
 			redirectTo: DEFAULT_LOGIN_REDIRECT
-		});
+		})
 	} catch (error) {
 		if (error instanceof AuthError) {
 			switch (error.type) {
 				case "CredentialsSignin":
-					return { error: "Ungültige Zugangsdaten!" };
-					break;
+					return { error: "Ungültige Zugangsdaten!" }
+					break
 
 				default:
-					return { error: "Irgendwas ging schief" };
-					break;
+					return { error: "Irgendwas ging schief" }
+					break
 			}
 		}
 
-		throw error;
+		throw error
 	}
-};
+}
