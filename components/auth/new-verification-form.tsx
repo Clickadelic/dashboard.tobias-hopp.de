@@ -43,11 +43,9 @@ const NewVerificationForm = () => {
 	return (
 		<CardWrapper headerLabel="E-Mail bestätigen" backButtonLabel="zurück zum Login" backButtonHref="/auth/login">
 			<div className="flex items-center w-full justify-center">
-				<Suspense fallback={<div>Loading</div>}>
-					{!success && !error && <FiLoader />}
-					<FormSuccess message={success} />
-					{!success && <FormError message={error} />}
-				</Suspense>
+				{!success && !error && <FiLoader />}
+				<FormSuccess message={success} />
+				{!success && <FormError message={error} />}
 			</div>
 		</CardWrapper>
 	)
