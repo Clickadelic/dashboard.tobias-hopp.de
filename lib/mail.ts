@@ -14,7 +14,6 @@ const transporter = nodemailer.createTransport({
 
 export const sendVerificationEmail = async (email: string, token: string) => {
 	const confirmationLink = process.env.NEXT_PUBLIC_APP_URL + `/auth/new-verification?token=${token}`
-
 	try {
 		const testresult = await transporter.verify()
 		console.log(testresult)
@@ -28,7 +27,7 @@ export const sendVerificationEmail = async (email: string, token: string) => {
 			sender: process.env.EMAIL_SENDER,
 			from: process.env.EMAIL_FROM,
 			to: email,
-			subject: "Registration Confirmation - Toby's Dashboard",
+			subject: "E-Mail Confirmation - Toby's Dashboard",
 			html: `Please activate your account by clicking the following <a href="${confirmationLink}" title="Please click here.">confirmation-link.`
 		})
 		console.log(sendResult)

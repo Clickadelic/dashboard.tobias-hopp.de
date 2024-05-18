@@ -20,7 +20,7 @@ import { login } from "@/actions/login"
 
 export const LoginForm = () => {
 	const searchParams = useSearchParams()
-	const urlError = searchParams.get("error") === "OAuthAccountNotLinked" ? "E-Mail schon in Verwendung" : ""
+	const urlError = searchParams.get("error") === "OAuthAccountNotLinked" ? "E-Mail bereits in Verwendung." : ""
 
 	const [error, setError] = useState<string | undefined>("")
 	const [success, setSuccess] = useState<string | undefined>("")
