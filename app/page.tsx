@@ -11,9 +11,8 @@ const font = Poppins({
 
 export default function Home() {
 	return (
-		<main className="flex flex-col h-full items-center justify-center bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-sky-400 to-blue-900">
+		<main className="flex flex-col h-full items-center justify-center bg-slate-800">
 			<div className="space-y-6 text-center">
-				<h1 className={cn("text-3xl text-white", font.className)}>Toby&apos;s Dashboard</h1>
 				<div className="text-left">
 					<Suspense fallback={<div>Loading...</div>}>
 						<LoginForm />
