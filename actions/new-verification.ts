@@ -30,5 +30,5 @@ export const newVerification = async (token: string) => {
 			email: existingToken.email
 		}
 	})
-	return { success: "E-mail verifiziert!" }
+	return { success: "E-mail verifiziert. Danke!" }
 }

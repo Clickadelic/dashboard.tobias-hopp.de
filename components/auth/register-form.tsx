@@ -1,39 +1,39 @@
-"use client";
+"use client"
 
-import * as z from "zod";
+import * as z from "zod"
 
-import { useForm } from "react-hook-form";
-import { useState, useTransition } from "react";
-import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form"
+import { useState, useTransition } from "react"
+import { zodResolver } from "@hookform/resolvers/zod"
 
-import { RegisterSchema } from "@/schemas";
-import { Input } from "@/components/ui/input";
-import { Form, FormControl, FormLabel, FormField, FormItem, FormMessage } from "@/components/ui/form";
+import { RegisterSchema } from "@/schemas"
+import { Input } from "@/components/ui/input"
+import { Form, FormControl, FormLabel, FormField, FormItem, FormMessage } from "@/components/ui/form"
 
-import { CardWrapper } from "./card-wrapper";
-import { Button } from "@/components/ui/button";
-import { FormError } from "@/components/form-error";
-import { FormSuccess } from "@/components/form-success";
+import { CardWrapper } from "./card-wrapper"
+import { Button } from "@/components/ui/button"
+import { FormError } from "@/components/form-error"
+import { FormSuccess } from "@/components/form-success"
 
-import { register } from "@/actions/register";
+import { register } from "@/actions/register"
 
 export const RegisterForm = () => {
-	const [error, setError] = useState<string | undefined>("");
-	const [success, setSuccess] = useState<string | undefined>("");
-	const [isPending, startTransiton] = useTransition();
-	const form = useForm<z.infer<typeof RegisterSchema>>({ resolver: zodResolver(RegisterSchema), defaultValues: { email: "", password: "", name: "" } });
+	const [error, setError] = useState<string | undefined>("")
+	const [success, setSuccess] = useState<string | undefined>("")
+	const [isPending, startTransiton] = useTransition()
+	const form = useForm<z.infer<typeof RegisterSchema>>({ resolver: zodResolver(RegisterSchema), defaultValues: { email: "", password: "", name: "" } })
 
 	const onSubmit = (values: z.infer<typeof RegisterSchema>) => {
 		startTransiton(() => {
 			register(values).then(data => {
-				setError(data.error);
-				setSuccess(data.success);
-			});
-		});
-	};
+				setError(data.error)
+				setSuccess(data.success)
+			})
+		})
+	}
 
 	return (
-		<CardWrapper headerLabel="Registrier' Dich!" backButtonLabel="Schon registriert?" backButtonHref="/auth/login" showSocial>
+		<CardWrapper headerLabel="Registrier' Dich!" backButtonLabel="zum Login" backButtonHref="/auth/login" showSocial>
 			<Form {...form}>
 				<form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
 					<div className="space-y-4">
@@ -83,10 +83,10 @@ export const RegisterForm = () => {
 					<FormError message={error} />
 					<FormSuccess message={success} />
 					<Button type="submit" disabled={isPending} className="w-full">
-						Registieren
+						Registrieren
 					</Button>
 				</form>
 			</Form>
 		</CardWrapper>
-	);
-};
+	)
+}
