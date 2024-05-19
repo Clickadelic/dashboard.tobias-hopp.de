@@ -27,8 +27,8 @@ export const sendVerificationEmail = async (email: string, token: string) => {
 			sender: process.env.EMAIL_SENDER,
 			from: process.env.EMAIL_FROM,
 			to: email,
-			subject: "E-Mail Confirmation - Toby's Dashboard",
-			html: `Please activate your account by clicking the following <a href="${confirmationLink}" title="Please click here.">confirmation-link.`
+			subject: "Account-Bestätigung - Toby's Dashboard",
+			html: `Hi und danke für Deine Registrierung. Bitte aktivier Deinen Account mit einem Klick auf den folgenden <a href="${confirmationLink}" title="Please click here.">Link</a>.`
 		})
 		console.log(sendResult)
 	} catch (error) {
