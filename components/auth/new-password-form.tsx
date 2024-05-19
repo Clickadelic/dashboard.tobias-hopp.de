@@ -5,34 +5,32 @@ import * as z from "zod";
 import { useForm } from "react-hook-form";
 import { useState, useTransition } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
-import Link from "next/link";
-import { LoginSchema } from "@/schemas";
+import { NewPasswordSchema } from "@/schemas";
 import { Input } from "@/components/ui/input";
 import { Form, FormControl, FormLabel, FormField, FormItem, FormMessage } from "@/components/ui/form";
-
+import { useSearchParams } from "next/navigation";
 import { CardWrapper } from "./card-wrapper";
 import { Button } from "@/components/ui/button";
 import { FormError } from "@/components/form-error";
 import { FormSuccess } from "@/components/form-success";
-import { useSearchParams } from "next/navigation";
 
-import { login } from "@/actions/login";
+import { newPassword } from "@/actions/new-password";
 
-export const LoginForm = () => {
+export const NewPasswordForm = () => {
 	const searchParams = useSearchParams();
-	const urlError = searchParams.get("error") === "OAuthAccountNotLinked" ? "E-Mail bereits in Verwendung." : "";
-
+	const token = searchParams.get("token");
 	const [error, setError] = useState<string | undefined>("");
 	const [success, setSuccess] = useState<string | undefined>("");
 	const [isPending, startTransiton] = useTransition();
-	const form = useForm<z.infer<typeof LoginSchema>>({ resolver: zodResolver(LoginSchema), defaultValues: { email: "", password: "" } });
 
-	const onSubmit = async (values: z.infer<typeof LoginSchema>) => {
+	const form = useForm<z.infer<typeof NewPasswordSchema>>({ resolver: zodResolver(NewPasswordSchema), defaultValues: { password: "" } });
+
+	const onSubmit = async (values: z.infer<typeof NewPasswordSchema>) => {
 		setError("");
 		setSuccess("");
 
 		startTransiton(() => {
-			login(values).then(data => {
+			newPassword(values, token).then(data => {
 				setError(data?.error);
 				setSuccess(data?.success);
 			});
@@ -40,46 +38,29 @@ export const LoginForm = () => {
 	};
 
 	return (
-		<CardWrapper headerLabel="Willkommen zurück!" backButtonLabel="zur Registrierung" backButtonHref="/auth/register" showSocial>
+		<CardWrapper headerLabel="Neues Passwort eingeben" backButtonLabel="zurück zum Login" backButtonHref="/auth/login">
 			<Form {...form}>
 				<form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
 					<div className="space-y-4">
-						<FormField
-							control={form.control}
-							name="email"
-							disabled={isPending}
-							render={({ field }) => (
-								<FormItem>
-									<FormLabel>E-Mail:</FormLabel>
-									<FormControl>
-										<Input {...field} placeholder="z.B. name@anbieter.xy" type="email" />
-									</FormControl>
-									<FormMessage />
-								</FormItem>
-							)}
-						/>
 						<FormField
 							control={form.control}
 							name="password"
 							disabled={isPending}
 							render={({ field }) => (
 								<FormItem>
-									<FormLabel>Passwort:</FormLabel>
+									<FormLabel>Password:</FormLabel>
 									<FormControl>
-										<Input {...field} placeholder="******" type="password" />
+										<Input {...field} placeholder="******" autoComplete="false" type="password" />
 									</FormControl>
-									<Button size="sm" variant="link" className="px-0 font-normal">
-										<Link href="/auth/reset">Passwort vergessen?</Link>
-									</Button>
 									<FormMessage />
 								</FormItem>
 							)}
 						/>
 					</div>
-					<FormError message={error || urlError} />
+					<FormError message={error} />
 					<FormSuccess message={success} />
 					<Button type="submit" disabled={isPending} className="w-full">
-						Login
+						Passwort zurücksetzten
 					</Button>
 				</form>
 			</Form>
