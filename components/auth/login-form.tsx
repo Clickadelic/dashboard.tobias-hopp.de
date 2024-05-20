@@ -26,7 +26,8 @@ export const LoginForm = () => {
 	const [error, setError] = useState<string | undefined>("");
 	const [success, setSuccess] = useState<string | undefined>("");
 	const [isPending, startTransiton] = useTransition();
-	const form = useForm<z.infer<typeof LoginSchema>>({ resolver: zodResolver(LoginSchema), defaultValues: { email: "", password: "", code: "" } });
+	// TODO Check video default values
+	const form = useForm<z.infer<typeof LoginSchema>>({ resolver: zodResolver(LoginSchema), defaultValues: { email: "", password: "" } });
 
 	const onSubmit = async (values: z.infer<typeof LoginSchema>) => {
 		setError("");
@@ -36,7 +37,9 @@ export const LoginForm = () => {
 			login(values)
 				.then(data => {
 					if (data?.error) {
-						form.reset();
+						if (!showTwoFactor) {
+							form.reset();
+						}
 						setError(data.error);
 					}
 
