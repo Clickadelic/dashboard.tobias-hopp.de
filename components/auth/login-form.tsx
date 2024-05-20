@@ -23,18 +23,20 @@ export const LoginForm = () => {
 	const urlError = searchParams.get("error") === "OAuthAccountNotLinked" ? "E-Mail bereits in Verwendung." : "";
 
 	const [showTwoFactor, setShowTwoFactor] = useState<boolean>(false);
-	const [error, setError] = useState<string | undefined>("");
-	const [success, setSuccess] = useState<string | undefined>("");
-	const [isPending, startTransiton] = useTransition();
-	// TODO Check video default values
-	const form = useForm<z.infer<typeof LoginSchema>>({ resolver: zodResolver(LoginSchema), defaultValues: { email: "", password: "" } });
+	const [error, setError] = useState<string | undefined>(undefined);
+	const [success, setSuccess] = useState<string | undefined>(undefined);
+	const [isPending, startTransition] = useTransition();
+
+	const form = useForm<z.infer<typeof LoginSchema>>({
+		resolver: zodResolver(LoginSchema),
+		defaultValues: { email: "", password: "" }
+	});
 
 	const onSubmit = async (values: z.infer<typeof LoginSchema>) => {
-		setError("");
-		setSuccess("");
+		setError(undefined);
+		setSuccess(undefined);
 
-		startTransiton(() => {
-			console.log("Start Transition");
+		startTransition(() => {
 			login(values)
 				.then(data => {
 					if (data?.error) {
@@ -51,11 +53,9 @@ export const LoginForm = () => {
 
 					if (data?.twoFactor) {
 						setShowTwoFactor(true);
-						console.log(showTwoFactor);
 					}
 				})
 				.catch(() => setError("Unbekannter Fehler."));
-			console.log("Shoud be logged in here???");
 		});
 	};
 
@@ -67,7 +67,6 @@ export const LoginForm = () => {
 						<FormField
 							control={form.control}
 							name="code"
-							disabled={isPending}
 							render={({ field }) => (
 								<FormItem>
 									<FormLabel>2FA-Code:</FormLabel>
@@ -85,7 +84,6 @@ export const LoginForm = () => {
 								<FormField
 									control={form.control}
 									name="email"
-									disabled={isPending}
 									render={({ field }) => (
 										<FormItem>
 											<FormLabel>E-Mail:</FormLabel>
@@ -99,7 +97,6 @@ export const LoginForm = () => {
 								<FormField
 									control={form.control}
 									name="password"
-									disabled={isPending}
 									render={({ field }) => (
 										<FormItem>
 											<FormLabel>Passwort:</FormLabel>
