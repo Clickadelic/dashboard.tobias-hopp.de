@@ -34,6 +34,7 @@ export const LoginForm = () => {
 		setSuccess("");
 
 		startTransiton(() => {
+			console.log("Start Transition");
 			login(values)
 				.then(data => {
 					if (data?.error) {
@@ -50,9 +51,11 @@ export const LoginForm = () => {
 
 					if (data?.twoFactor) {
 						setShowTwoFactor(true);
+						console.log(showTwoFactor);
 					}
 				})
 				.catch(() => setError("Unbekannter Fehler."));
+			console.log("Shoud be logged in here???");
 		});
 	};
 
@@ -69,7 +72,7 @@ export const LoginForm = () => {
 								<FormItem>
 									<FormLabel>2FA-Code:</FormLabel>
 									<FormControl>
-										<Input {...field} disabled={isPending} placeholder="123456" />
+										<Input {...field} placeholder="123456" />
 									</FormControl>
 									<FormMessage />
 								</FormItem>
