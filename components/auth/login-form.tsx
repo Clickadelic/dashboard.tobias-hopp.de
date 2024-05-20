@@ -66,7 +66,7 @@ export const LoginForm = () => {
 								<FormItem>
 									<FormLabel>2FA-Code:</FormLabel>
 									<FormControl>
-										<Input {...field} placeholder="123456" />
+										<Input {...field} disabled={isPending} placeholder="123456" />
 									</FormControl>
 									<FormMessage />
 								</FormItem>
