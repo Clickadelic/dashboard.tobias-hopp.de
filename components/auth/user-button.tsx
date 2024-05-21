@@ -4,6 +4,7 @@ import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { FaUser } from "react-icons/fa";
 import { useCurrentUser } from "@/hooks/use-current-user";
 import { LogoutButton } from "@/components/auth/logout-button";
+import { ExitIcon } from "@radix-ui/react-icons";
 
 export const UserButton = () => {
 	const user = useCurrentUser();
@@ -20,7 +21,10 @@ export const UserButton = () => {
 			</DropdownMenuTrigger>
 			<DropdownMenuContent className="w-40" align="end">
 				<LogoutButton>
-					<DropdownMenuItem>Logout</DropdownMenuItem>
+					<DropdownMenuItem>
+						<ExitIcon />
+						Logout
+					</DropdownMenuItem>
 				</LogoutButton>
 			</DropdownMenuContent>
 		</DropdownMenu>
