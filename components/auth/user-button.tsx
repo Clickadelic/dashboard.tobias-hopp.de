@@ -8,12 +8,13 @@ import { ExitIcon } from "@radix-ui/react-icons";
 
 export const UserButton = () => {
 	const user = useCurrentUser();
+	console.log(user?.image);
 
 	return (
 		<DropdownMenu>
 			<DropdownMenuTrigger>
 				<Avatar>
-					<AvatarImage src={user?.image || ""} />
+					<AvatarImage className="size-10" src={user?.image || ""} alt="User image" />
 					<AvatarFallback className="bg-slate-200 border border-slate-400">
 						<FaUser className="text-slate-400" />
 					</AvatarFallback>
