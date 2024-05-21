@@ -1,3 +1,4 @@
+"use client";
 import { useCurrentUser } from "@/hooks/use-current-user";
 
 const AdminPage = () => {
@@ -5,7 +6,7 @@ const AdminPage = () => {
 
 	return (
 		<div className="flex flex-col">
-			<div>Admin Page:</div>
+			<div>Admin Page (Client side):</div>
 			<div>{JSON.stringify(user)}</div>
 		</div>
 	);

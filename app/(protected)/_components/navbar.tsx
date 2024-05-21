@@ -29,24 +29,32 @@ const Navbar = () => {
 				<section className="sidebar-section mt-10 mb-6">
 					<ul className="ml-3 space-y-3">
 						<li>
-							<Link href="/server" className="p-2">
-								Server
-							</Link>
+							<Button asChild variant={pathname === "/server" ? "default" : "outline"}>
+								<Link href="/server" className="p-2">
+									Server
+								</Link>
+							</Button>
 						</li>
 						<li>
-							<Link href="/client" className="p-2">
-								Client
-							</Link>
+							<Button asChild variant={pathname === "/client" ? "default" : "outline"}>
+								<Link href="/client" className="p-2">
+									Client
+								</Link>
+							</Button>
 						</li>
 						<li>
-							<Link href="/admin" className="p-2">
-								Admin
-							</Link>
+							<Button asChild variant={pathname === "/admin" ? "default" : "outline"}>
+								<Link href="/admin" className="p-2">
+									Admin
+								</Link>
+							</Button>
 						</li>
 						<li>
-							<Link href="/settings" className="p-2">
-								Settings
-							</Link>
+							<Button asChild variant={pathname === "/settings" ? "default" : "outline"}>
+								<Link href="/settings" className="p-2">
+									Settings
+								</Link>
+							</Button>
 						</li>
 					</ul>
 				</section>
@@ -213,6 +221,31 @@ const Navbar = () => {
 					</ul>
 				</nav>
 			</header>
+			<div>
+				<h2>Temp</h2>
+				<div>
+					<Button asChild variant={pathname === "/server" ? "default" : "outline"}>
+						<Link href="/server" className="p-2">
+							Server
+						</Link>
+					</Button>
+					<Button asChild variant={pathname === "/client" ? "default" : "outline"}>
+						<Link href="/client" className="p-2">
+							Client
+						</Link>
+					</Button>
+					<Button asChild variant={pathname === "/admin" ? "default" : "outline"}>
+						<Link href="/admin" className="p-2">
+							Admin
+						</Link>
+					</Button>
+					<Button asChild variant={pathname === "/settings" ? "default" : "outline"}>
+						<Link href="/settings" className="p-2">
+							Settings
+						</Link>
+					</Button>
+				</div>
+			</div>
 		</>
 	);
 };
