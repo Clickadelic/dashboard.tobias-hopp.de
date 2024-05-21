@@ -88,7 +88,7 @@ export const LoginForm = () => {
 										<FormItem>
 											<FormLabel>E-Mail:</FormLabel>
 											<FormControl>
-												<Input {...field} placeholder="z.B. name@anbieter.xy" type="email" />
+												<Input {...field} placeholder="name@anbieter.xy" type="email" />
 											</FormControl>
 											<FormMessage />
 										</FormItem>

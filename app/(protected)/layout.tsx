@@ -6,9 +6,9 @@ interface ProtectedLayoutProps {
 
 const ProtectedLayout = ({ children }: ProtectedLayoutProps) => {
 	return (
-		<div className="min-h-screen bg-slate-900">
+		<div className="min-h-screen bg-slate-100">
 			<Navbar />
-			{children}
+			<main className="ml-64">{children}</main>
 		</div>
 	);
 };
