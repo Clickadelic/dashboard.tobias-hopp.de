@@ -1,9 +1,16 @@
-import { useCurrentUser } from "@/hooks/use-current-user";
-
+"use server";
+import { auth } from "@/auth";
+import { UserInfo } from "@/components/user-info";
 const ServerPage = async () => {
-	const user = await useCurrentUser();
-
-	return <div className="text-white">{JSON.stringify(user)}</div>;
+	const session = await auth();
+	return (
+		<div className="flex flex-col">
+			<div>Server Page:</div>
+			<div>{JSON.stringify(session?.user)}</div>
+			<br />
+			<UserInfo user={session?.user} label="Whatever" />
+		</div>
+	);
 };
 
 export default ServerPage;
