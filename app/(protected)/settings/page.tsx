@@ -1,16 +1,16 @@
-"use client"
+"use client";
 
-import { logout } from "@/actions/logout"
-import { useCurrentUser } from "@/hooks/use-current-user"
-import { UserInfo } from "@/components/user-info"
+import { logout } from "@/actions/logout";
+import { useCurrentUser } from "@/hooks/use-current-user";
+import { UserInfo } from "@/components/user-info";
 
 const SettingsPage = () => {
-	const user = useCurrentUser()
+	const user = useCurrentUser();
 	return (
 		<>
-			<UserInfo user={user} label="Server Component" />
+			<UserInfo user={user} label="Settings Page" />
 		</>
-	)
-}
+	);
+};
 
-export default SettingsPage
+export default SettingsPage;
