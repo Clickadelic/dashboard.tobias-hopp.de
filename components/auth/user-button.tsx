@@ -22,7 +22,7 @@ export const UserButton = () => {
 			<DropdownMenuContent className="w-40" align="end">
 				<LogoutButton>
 					<DropdownMenuItem>
-						<ExitIcon />
+						<ExitIcon className="mr-2" />
 						Logout
 					</DropdownMenuItem>
 				</LogoutButton>
