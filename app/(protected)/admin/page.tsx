@@ -22,9 +22,9 @@ const AdminPage = () => {
 	const onApiRouteClick = () => {
 		fetch("/api/admin").then(response => {
 			if (response.ok) {
-				toast.success("Allowed API-Route");
+				toast.success("Yes, you have admin.");
 			} else {
-				toast.error("No permissions.");
+				toast.error("No permissions to view admin content.");
 				console.log("Error fetching Admin.");
 			}
 		});
