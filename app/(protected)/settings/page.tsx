@@ -102,7 +102,7 @@ const SettingsPage = () => {
 											<FormItem>
 												<FormLabel>Passwort</FormLabel>
 												<FormControl>
-													<Input {...field} type="password" placeholder="******" disabled={isPending} />
+													<Input {...field} type="password" autoComplete="false" placeholder="******" disabled={isPending} />
 												</FormControl>
 												<FormMessage />
 											</FormItem>
