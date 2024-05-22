@@ -1,9 +1,10 @@
-import { ExtendedUser } from "@/next-auth"
-import { Card, CardContent, CardHeader } from "@/components/ui/card"
+import { ExtendedUser } from "@/next-auth";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
 
 interface UserInterfaceProps {
-	user?: ExtendedUser
-	label: string
+	user?: ExtendedUser;
+	label: string;
 }
 
 export const UserInfo = ({ user, label }: UserInterfaceProps) => {
@@ -31,9 +32,12 @@ export const UserInfo = ({ user, label }: UserInterfaceProps) => {
 				</div>
 				<div className="flex flex-row items-center justify-between p-3 shadow-sm border rounded-lg">
 					<p>2FA:</p>
-					<p className="text-truncate font-mono bg-slate-100">Off</p>
+
+					<Badge variant={user?.isTwoFactorEnabled ? "success" : "destructive"} className="text-truncate text-white font-mono">
+						{user?.isTwoFactorEnabled ? "ON" : "OFF"}
+					</Badge>
 				</div>
 			</CardContent>
 		</Card>
-	)
-}
+	);
+};

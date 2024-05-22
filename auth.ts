@@ -7,6 +7,7 @@ import { db } from "@/lib/db";
 import { getUserById } from "@/data/user";
 
 import { getTwoFactorConfirmationByUserId } from "@/data/two-factor-confirmation";
+import { executionAsyncId } from "async_hooks";
 
 export const {
 	handlers: { GET, POST },
@@ -56,6 +57,10 @@ export const {
 				session.user.role = token.role as UserRole;
 			}
 
+			if (session.user) {
+				session.user.isTwoFactorEnabled = token.isTwoFactorEnabled as boolean;
+			}
+
 			return session;
 		},
 		async jwt({ token }) {
@@ -66,7 +71,7 @@ export const {
 			if (!existingUser) return token;
 
 			token.role = existingUser.role;
-
+			token.isTwoFactorEnabled = existingUser.isTwoFactorEnabled;
 			return token;
 		}
 	},
