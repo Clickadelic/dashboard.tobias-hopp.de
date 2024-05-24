@@ -1,34 +1,34 @@
-"use client";
+"use client"
 
-import * as z from "zod";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { SettingsSchema } from "@/schemas";
+import * as z from "zod"
+import { useForm } from "react-hook-form"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { SettingsSchema } from "@/schemas"
 
-import { useTransition, useState } from "react";
-import { useSession } from "next-auth/react";
+import { useTransition, useState } from "react"
+import { useSession } from "next-auth/react"
 
-import { Form, FormField, FormControl, FormItem, FormLabel, FormDescription, FormMessage } from "@/components/ui/form";
+import { Form, FormField, FormControl, FormItem, FormLabel, FormDescription, FormMessage } from "@/components/ui/form"
 
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Card, CardHeader, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Switch } from "@/components/ui/switch";
-import { settings } from "@/actions/settings";
-import { Input } from "@/components/ui/input";
-import { useCurrentUser } from "@/hooks/use-current-user";
-import { FormError } from "@/components/form-error";
-import { FormSuccess } from "@/components/form-success";
-import { UserRole } from "@prisma/client";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { Card, CardHeader, CardContent } from "@/components/ui/card"
+import { Button } from "@/components/ui/button"
+import { Switch } from "@/components/ui/switch"
+import { settings } from "@/actions/settings"
+import { Input } from "@/components/ui/input"
+import { useCurrentUser } from "@/hooks/use-current-user"
+import { FormError } from "@/components/form-error"
+import { FormSuccess } from "@/components/form-success"
+import { UserRole } from "@prisma/client"
 
 const SettingsPage = () => {
-	const user = useCurrentUser();
-	const { update } = useSession();
+	const user = useCurrentUser()
+	const { update } = useSession()
 
-	const [error, setError] = useState<string | undefined>("");
-	const [success, setSuccess] = useState<string | undefined>("");
+	const [error, setError] = useState<string | undefined>("")
+	const [success, setSuccess] = useState<string | undefined>("")
 
-	const [isPending, startTransition] = useTransition();
+	const [isPending, startTransition] = useTransition()
 
 	const form = useForm<z.infer<typeof SettingsSchema>>({
 		resolver: zodResolver(SettingsSchema),
@@ -40,24 +40,24 @@ const SettingsPage = () => {
 			role: user?.role || undefined,
 			isTwoFactorEnabled: user?.isTwoFactorEnabled || undefined
 		}
-	});
+	})
 	const onSubmit = (values: z.infer<typeof SettingsSchema>) => {
 		startTransition(() => {
 			settings(values)
 				.then(data => {
 					if (data.error) {
-						setError(data.error);
+						setError(data.error)
 					}
 					if (data.success) {
-						update();
-						setSuccess(data.success);
+						update()
+						setSuccess(data.success)
 					}
 				})
 				.catch(() => {
-					setError("Irgendwas ging serverseitig schief.");
-				});
-		});
-	};
+					setError("Irgendwas ging serverseitig schief.")
+				})
+		})
+	}
 	return (
 		<Card className="w-[600px] m-auto">
 			<CardHeader>
@@ -102,7 +102,7 @@ const SettingsPage = () => {
 											<FormItem>
 												<FormLabel>Passwort</FormLabel>
 												<FormControl>
-													<Input {...field} type="password" autoComplete="false" placeholder="******" disabled={isPending} />
+													<Input {...field} type="password" placeholder="******" disabled={isPending} />
 												</FormControl>
 												<FormMessage />
 											</FormItem>
@@ -168,7 +168,7 @@ const SettingsPage = () => {
 				</Form>
 			</CardContent>
 		</Card>
-	);
-};
+	)
+}
 
-export default SettingsPage;
+export default SettingsPage

@@ -1,7 +1,7 @@
-import Navbar from "@/app/(protected)/_components/navbar"
+import Navbar from "@/app/(protected)/_components/navbar";
 
 interface ProtectedLayoutProps {
-	children: React.ReactNode
+	children: React.ReactNode;
 }
 
 const ProtectedLayout = ({ children }: ProtectedLayoutProps) => {
@@ -10,7 +10,7 @@ const ProtectedLayout = ({ children }: ProtectedLayoutProps) => {
 			<Navbar />
 			<main>{children}</main>
 		</div>
-	)
-}
+	);
+};
 
-export default ProtectedLayout
+export default ProtectedLayout;

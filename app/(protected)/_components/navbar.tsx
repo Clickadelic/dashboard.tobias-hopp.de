@@ -4,39 +4,41 @@ import { Button } from "@/components/ui/button";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { UserButton } from "@/components/auth/user-button";
+import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
 
 const Navbar = () => {
 	const pathname = usePathname();
 
 	return (
-		<header className="flex justify-between p-2 bg-white mb-4">
-			<h1 className="text-2xl">Logo</h1>
-			<nav className="space-x-2">
-				<span className="space-x-3">
-					<Button asChild variant={pathname === "/server" ? "default" : "outline"}>
-						<Link href="/server" className="p-2">
-							Server
-						</Link>
-					</Button>
-					<Button asChild variant={pathname === "/client" ? "default" : "outline"}>
-						<Link href="/client" className="p-2">
-							Client
-						</Link>
-					</Button>
-					<Button asChild variant={pathname === "/admin" ? "default" : "outline"}>
-						<Link href="/admin" className="p-2">
-							Admin
-						</Link>
-					</Button>
-					<Button asChild variant={pathname === "/settings" ? "default" : "outline"}>
-						<Link href="/settings" className="p-2">
-							Settings
-						</Link>
-					</Button>
-				</span>
-				<UserButton />
-			</nav>
-		</header>
+		<>
+			<header className="flex justify-between p-2 bg-white mb-4">
+				<h1 className="text-2xl">
+					<Link href={DEFAULT_LOGIN_REDIRECT} title="Startseite">
+						App Name
+					</Link>
+				</h1>
+				<nav className="flex justify-between">
+					<ul className="flex justify-between space-x-3 mr-3 mt-2">
+						<li>
+							<Link href="/admin/users">Users</Link>
+						</li>
+						<li>
+							<Link href="/server">Server</Link>
+						</li>
+						<li>
+							<Link href="/client">Client</Link>
+						</li>
+						<li>
+							<Link href="/admin">Admin</Link>
+						</li>
+						<li>
+							<Link href="/settings">Settings</Link>
+						</li>
+					</ul>
+					<UserButton />
+				</nav>
+			</header>
+		</>
 	);
 };
 

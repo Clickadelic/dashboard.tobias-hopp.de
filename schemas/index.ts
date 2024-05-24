@@ -7,9 +7,10 @@ export const SettingsSchema = z
 		isTwoFactorEnabled: z.optional(z.boolean()),
 		role: z.enum([UserRole.ADMIN, UserRole.USER]),
 		email: z.optional(z.string().email()),
-		password: z.optional(z.string().min(6, "Mindestens 6 Buchstaben.")),
-		newPassword: z.optional(z.string().min(6, "Mindestens 6 Buchstaben"))
+		password: z.optional(z.string().min(6)),
+		newPassword: z.optional(z.string().min(6))
 	})
+	// TODO Check Refine Code
 	.refine(
 		data => {
 			if (data.password && !data.newPassword) {
