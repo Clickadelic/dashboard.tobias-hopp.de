@@ -1,6 +1,7 @@
 "use server"
 import { auth } from "@/auth"
 import { UserInfo } from "@/components/user-info"
+
 const ServerPage = async () => {
 	const session = await auth()
 	return (
