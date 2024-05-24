@@ -65,7 +65,7 @@ const SettingsPage = () => {
 			</CardHeader>
 			<CardContent>
 				<Form {...form}>
-					<form className="space-y-6" onSubmit={form.handleSubmit(onSubmit)}>
+					<form className="space-y-6" autoComplete="off" onSubmit={form.handleSubmit(onSubmit)}>
 						<div className="space-y-4">
 							<FormField
 								control={form.control}
