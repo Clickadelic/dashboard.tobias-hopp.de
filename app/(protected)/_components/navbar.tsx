@@ -18,9 +18,21 @@ const Navbar = () => {
 					</Link>
 				</h1>
 				<nav className="flex justify-between">
-					<ul className="space-x-3">
+					<ul className="flex justify-between space-x-3 mr-3 mt-2">
 						<li>
-							<Link href="/">Link</Link>
+							<Link href="/admin/users">Users</Link>
+						</li>
+						<li>
+							<Link href="/server">Server</Link>
+						</li>
+						<li>
+							<Link href="/client">Client</Link>
+						</li>
+						<li>
+							<Link href="/admin">Admin</Link>
+						</li>
+						<li>
+							<Link href="/settings">Settings</Link>
 						</li>
 					</ul>
 					<UserButton />
