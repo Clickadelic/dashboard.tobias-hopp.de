@@ -1,12 +1,12 @@
-import "./globals.css";
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import { SessionProvider } from "next-auth/react";
-import { auth } from "@/auth";
-import { siteConfig } from "@/config";
-import { Toaster } from "@/components/ui/sonner";
+import "./globals.css"
+import type { Metadata } from "next"
+import { Inter } from "next/font/google"
+import { SessionProvider } from "next-auth/react"
 
-const inter = Inter({ subsets: ["latin"] });
+import { siteConfig } from "@/config"
+import { Toaster } from "@/components/ui/sonner"
+
+const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
 	title: {
@@ -20,16 +20,15 @@ export const metadata: Metadata = {
 			href: "/favicon.svg"
 		}
 	]
-};
+}
 
 export default async function RootLayout({
 	children
 }: Readonly<{
-	children: React.ReactNode;
+	children: React.ReactNode
 }>) {
-	const session = await auth();
 	return (
-		<SessionProvider session={session}>
+		<SessionProvider>
 			<html lang="de">
 				<body className={inter.className}>
 					<Toaster />
@@ -37,5 +36,5 @@ export default async function RootLayout({
 				</body>
 			</html>
 		</SessionProvider>
-	);
+	)
 }
