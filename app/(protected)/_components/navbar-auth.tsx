@@ -1,13 +1,13 @@
-"use client";
+"use client"
 
-import { Button } from "@/components/ui/button";
-import { usePathname } from "next/navigation";
-import Link from "next/link";
-import { UserButton } from "@/components/auth/user-button";
-import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
+import { Button } from "@/components/ui/button"
+import { usePathname } from "next/navigation"
+import Link from "next/link"
+import { UserButton } from "@/components/auth/user-button"
+import { DEFAULT_LOGIN_REDIRECT } from "@/routes"
 
-const Navbar = () => {
-	const pathname = usePathname();
+const NavbarAuth = () => {
+	const pathname = usePathname()
 
 	return (
 		<>
@@ -39,7 +39,7 @@ const Navbar = () => {
 				</nav>
 			</header>
 		</>
-	);
-};
+	)
+}
 
-export default Navbar;
+export default NavbarAuth
