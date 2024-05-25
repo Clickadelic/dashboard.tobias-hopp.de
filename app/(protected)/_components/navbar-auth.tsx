@@ -1,18 +1,17 @@
-"use client"
+"use client";
 
-import { Button } from "@/components/ui/button"
-import { usePathname } from "next/navigation"
-import Link from "next/link"
-import { UserButton } from "@/components/auth/user-button"
-import { DEFAULT_LOGIN_REDIRECT } from "@/routes"
+import { usePathname } from "next/navigation";
+import Link from "next/link";
+import { UserButton } from "@/components/auth/user-button";
+import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
 
 const NavbarAuth = () => {
-	const pathname = usePathname()
+	const pathname = usePathname();
 
 	return (
 		<>
 			<header className="flex justify-between p-2 bg-white mb-4">
-				<h1 className="text-2xl">
+				<h1 className="text-2xl mt-1">
 					<Link href={DEFAULT_LOGIN_REDIRECT} title="Startseite">
 						App Name
 					</Link>
@@ -39,7 +38,7 @@ const NavbarAuth = () => {
 				</nav>
 			</header>
 		</>
-	)
-}
+	);
+};
 
-export default NavbarAuth
+export default NavbarAuth;
