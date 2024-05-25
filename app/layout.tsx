@@ -1,29 +1,11 @@
 import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import { SessionProvider } from "next-auth/react";
+import { auth } from "@/auth";
 import { siteConfig } from "@/config";
 import { Toaster } from "@/components/ui/sonner";
-
-// import { auth } from "@/auth";
-// import { SessionProvider } from "next-auth/react";
-// Temp
-import { Session } from "next-auth";
-import { headers } from "next/headers";
-import AuthContext from "@/components/auth/auth-context-provider";
-
 const inter = Inter({ subsets: ["latin"] });
-
-async function getSession(cookie: string): Promise<Session> {
-	const response = await fetch(`${process.env.LOCAL_AUTH_URL}/api/auth/session`, {
-		headers: {
-			cookie
-		}
-	});
-
-	const session = await response.json();
-
-	return Object.keys(session).length > 0 ? session : null;
-}
 
 export const metadata: Metadata = {
 	title: {
@@ -44,16 +26,15 @@ export default async function RootLayout({
 }: Readonly<{
 	children: React.ReactNode;
 }>) {
-	// const session = await auth();
-	const session = await getSession(headers().get("cookie") ?? "");
+	const session = await auth();
 	return (
-		<AuthContext session={session}>
+		<SessionProvider session={session}>
 			<html lang="de">
 				<body className={inter.className}>
 					<Toaster />
 					{children}
 				</body>
 			</html>
-		</AuthContext>
+		</SessionProvider>
 	);
 }
