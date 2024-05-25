@@ -232,7 +232,7 @@ export const accountConfirmationTemplate = (confirmationLink: string) => {
 </html>`;
 };
 
-export const twoFactorVerificationTemplete = (link: string) => {
+export const twoFactorVerificationTemplate = (link: string) => {
 	return `<!DOCTYPE html>
 	<html lang="en" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:v="urn:schemas-microsoft-com:vml">
 	<head>
