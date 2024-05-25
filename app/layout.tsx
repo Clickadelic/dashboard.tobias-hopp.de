@@ -21,14 +21,10 @@ export const metadata: Metadata = {
 	]
 };
 
-export default async function RootLayout({
-	children
-}: Readonly<{
-	children: React.ReactNode;
-}>) {
-	// const session = await auth();
+const RootLayout = async ({ children }: Readonly<{ children: React.ReactNode }>) => {
+	const session = await auth();
 	return (
-		<SessionProvider>
+		<SessionProvider session={session}>
 			<html lang="de">
 				<body className={inter.className}>
 					<Toaster />
@@ -37,4 +33,6 @@ export default async function RootLayout({
 			</html>
 		</SessionProvider>
 	);
-}
+};
+
+export default RootLayout;
