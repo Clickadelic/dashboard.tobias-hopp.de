@@ -202,7 +202,7 @@ export const SidebarNavbar = () => {
 										<AiOutlineWindows />
 									</button>
 								</div>
-								<div className="absolute w-[960px] h-80 top-10 right-[-380px] z-50 invisible group-hover:visible grid grid-cols-4 rounded-md overflow-hidden bg-white shadow-md border">
+								<div className="absolute w-[960px] h-80 top-10 right-[-220px] z-50 invisible group-hover:visible grid grid-cols-4 rounded-md overflow-hidden bg-white shadow-md border">
 									<div className="gradient bg-wave-pattern p-8 flex flex-col">
 										<h2 className="text-white text-2xl font-medium mb-6">Dashboard</h2>
 										<p className="text-white mb-4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat, quod.</p>
