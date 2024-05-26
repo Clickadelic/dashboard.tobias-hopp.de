@@ -1,5 +1,5 @@
 const OverviewPage = () => {
-	return <div>Willkommen im Backend.</div>;
+	return <div className="unknown">Willkommen im Backend.</div>;
 };
 
 export default OverviewPage;
