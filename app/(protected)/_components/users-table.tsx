@@ -1,12 +1,9 @@
-import { db } from "@/lib/db";
-import { getUsers } from "@/data/user";
-import { BsPencil } from "react-icons/bs";
-import { BsTrash3 } from "react-icons/bs";
+"use client"
+import { getUsers } from "@/actions/get-users"
 
-const UsersTable = async () => {
-	const users = await getUsers();
-	console.log(users);
-
+export const UsersTable = () => {
+	const users = getUsers()
+	console.log(users)
 	return (
 		<div className="flex flex-col">
 			<div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -23,34 +20,11 @@ const UsersTable = async () => {
 									<td className="p-2">Löschen</td>
 								</tr>
 							</thead>
-							<tbody>
-								{users.map(user => {
-									return (
-										<tr key={user.id}>
-											<td className="p-2">{user.id}</td>
-											<td className="p-2">{user.name}</td>
-											<td className="p-2">{user.email}</td>
-											<td className="p-2">{user.role}</td>
-											<td className="p-2">
-												<button className="size-8 text-slate-800 bg-neutral-100 rounded-sm py-3 flex justify-center items-center hover:text-emerald-500 p-2">
-													<BsPencil />
-												</button>
-											</td>
-											<td className="p-2">
-												<button className="size-8 text-white bg-rose-500 rounded-sm py-3 flex justify-center items-center hover:bg-rose-600 p-2">
-													<BsTrash3 />
-												</button>
-											</td>
-										</tr>
-									);
-								})}
-							</tbody>
+							<tbody>asd</tbody>
 						</table>
 					</div>
 				</div>
 			</div>
 		</div>
-	);
-};
-
-export default UsersTable;
+	)
+}

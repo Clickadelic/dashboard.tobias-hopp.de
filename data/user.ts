@@ -18,14 +18,3 @@ export const getUserById = async (id: string) => {
 		return null
 	}
 }
-
-type UserWithoutPassword = Omit<User, "password">
-
-export const getUsers = async (): Promise<UserWithoutPassword[]> => {
-	const allUsers = await db.user.findMany()
-	const allUsersWithoutPassword = allUsers.map(user => {
-		const { password, ...userWithoutPassword } = user
-		return userWithoutPassword
-	})
-	return allUsersWithoutPassword
-}

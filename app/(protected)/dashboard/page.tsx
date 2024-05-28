@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/button";
+import { LinkCard } from "../_components/link-card"
 
 const DashboardPage = () => {
 	return (
@@ -10,15 +10,12 @@ const DashboardPage = () => {
 			<div className="bg-white rounded-lg shadow-sm border px-3 py-2">
 				<h2 className="text-sm border-bottom">ToDo&apos;s</h2>
 			</div>
-			<div className="bg-white rounded-lg shadow-sm border px-3 py-2">
-				<h2 className="text-sm border-bottom">Links</h2>
-				<button>Plus</button>
-			</div>
+			<LinkCard />
 			<div className="bg-white rounded-lg shadow-sm border px-3 py-2">
 				<h2 className="text-sm border-bottom">News</h2>
 			</div>
 		</div>
-	);
-};
+	)
+}
 
-export default DashboardPage;
+export default DashboardPage
