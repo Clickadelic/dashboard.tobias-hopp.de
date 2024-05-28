@@ -16,21 +16,17 @@ const BreadcrumbNav = () => {
 	let cleanedPath = path.replace("/", "");
 	let capitalizedPath = capitalizeFirstLetter(cleanedPath);
 	return (
-		<div className="mb-5">
-			<Breadcrumb>
-				<BreadcrumbList>
-					<BreadcrumbItem>
-						<BreadcrumbLink href={DEFAULT_LOGIN_REDIRECT}>
-							<BiHomeAlt2 />
-						</BreadcrumbLink>
-					</BreadcrumbItem>
-					<BreadcrumbSeparator />
-					<BreadcrumbItem>
-						<BreadcrumbLink href={path}>{capitalizedPath}</BreadcrumbLink>
-					</BreadcrumbItem>
-				</BreadcrumbList>
-			</Breadcrumb>
-		</div>
+		<Breadcrumb className="mb-4">
+			<BreadcrumbList>
+				<BreadcrumbItem>
+					<BreadcrumbLink href={DEFAULT_LOGIN_REDIRECT}>
+						<BiHomeAlt2 />
+					</BreadcrumbLink>
+				</BreadcrumbItem>
+				<BreadcrumbSeparator />
+				<BreadcrumbItem className="cursor-default">{capitalizedPath}</BreadcrumbItem>
+			</BreadcrumbList>
+		</Breadcrumb>
 	);
 };
 

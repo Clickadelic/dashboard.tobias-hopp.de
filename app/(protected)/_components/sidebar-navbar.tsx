@@ -54,9 +54,9 @@ export const SidebarNavbar = () => {
 							<AccordionContent>
 								<ul className="space-y-1">
 									<li>
-										<Link href="/overview" className="block p-3 rounded-sm hover:bg-slate-100 hover:text-slate-600" title="Zur Übersicht">
+										<Link href="/dashboard" className="block p-3 rounded-sm hover:bg-slate-100 hover:text-slate-600" title="Zur Übersicht">
 											<HiChevronRight className="inline-block mr-2 mt-[-3px]" />
-											&Uuml;bersicht
+											Dashboard
 										</Link>
 									</li>
 									<li>

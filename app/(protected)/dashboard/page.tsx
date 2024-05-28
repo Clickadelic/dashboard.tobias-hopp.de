@@ -1,8 +1,8 @@
 import { Button } from "@/components/ui/button";
 
-const OverviewPage = () => {
+const DashboardPage = () => {
 	return (
-		<div className="custom-grid">
+		<div className="grid grid-cols-2 md:grid-cols-4 gap-3">
 			<div className="bg-white rounded-lg shadow-sm border px-3 py-2">
 				<h2 className="text-sm mb-2">Projekte</h2>
 				<button>Plus</button>
@@ -21,4 +21,4 @@ const OverviewPage = () => {
 	);
 };
 
-export default OverviewPage;
+export default DashboardPage;
