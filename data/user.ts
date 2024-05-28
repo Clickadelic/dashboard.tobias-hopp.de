@@ -18,3 +18,18 @@ export const getUserById = async (id: string) => {
 		return null
 	}
 }
+
+type UserWithoutPassword = Omit<User, "password">
+
+/**
+ * Returns an array of user objects without password key
+ * @returns {object[]}
+ */
+export const getUsers = async (): Promise<UserWithoutPassword[]> => {
+	const allUsers = await db.user.findMany()
+	const allUsersWithoutPassword = allUsers.map(user => {
+		const { password, ...userWithoutPassword } = user
+		return userWithoutPassword
+	})
+	return allUsersWithoutPassword
+}

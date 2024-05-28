@@ -1,6 +1,7 @@
 "use client"
 
 import { FiPlus } from "react-icons/fi"
+
 export const LinkCard = () => {
 	const addLink = () => {
 		console.log("Link added ;D")

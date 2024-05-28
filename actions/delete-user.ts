@@ -1,25 +1,21 @@
 "use server"
-import * as z from "zod";
-import { db } from "@/lib/db";
 
-export const deleteUserById = async (userId: string) => {
-	const currentUser = await db.user.findFirst({
-		where: {
-			id: userId
-		}
-	})
+import { db } from "@/lib/db"
 
-	if (currentUser) {
-		try {
-			await db.user.delete({
-				where: {
-					id: userId
-				}
-			})
-			return { success: "Benutzer gelöscht" }
-		} catch (error) {
-			return { error: error }
-		}
-	}
-	return { error: "Fehler beim Löschen" }
+export const deleteUserByUserId = async (userId: string) => {
+	console.log(userId)
+	return userId
+	// if (currentUser) {
+	// 	try {
+	// 		await db.user.delete({
+	// 			where: {
+	// 				id: userId
+	// 			}
+	// 		})
+	// 		return { success: "Benutzer gelöscht" }
+	// 	} catch (error) {
+	// 		return { error: error }
+	// 	}
+	// }
+	// return { error: "Fehler beim Löschen" }
 }

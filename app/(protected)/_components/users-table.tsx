@@ -1,8 +1,8 @@
-"use client"
-import { getUsers } from "@/actions/get-users"
+import { getUsers } from "@/data/user"
+import { UserDeleteButton } from "./user-delete-button"
 
-export const UsersTable = () => {
-	const users = getUsers()
+export const UsersTable = async () => {
+	const users = await getUsers()
 	console.log(users)
 	return (
 		<div className="flex flex-col">
@@ -20,7 +20,24 @@ export const UsersTable = () => {
 									<td className="p-2">Löschen</td>
 								</tr>
 							</thead>
-							<tbody>asd</tbody>
+							<tbody>
+								{users.map(user => {
+									return (
+										<tr key={user.id}>
+											<td className="p-2">{user.id}</td>
+											<td className="p-2">{user.name}</td>
+											<td className="p-2">{user.email}</td>
+											<td className="p-2">{user.role}</td>
+											<td className="p-2">
+												<button>Edit</button>
+											</td>
+											<td className="p-2">
+												<UserDeleteButton id={user.id} />
+											</td>
+										</tr>
+									)
+								})}
+							</tbody>
 						</table>
 					</div>
 				</div>
