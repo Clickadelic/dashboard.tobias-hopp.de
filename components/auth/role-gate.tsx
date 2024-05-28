@@ -13,7 +13,7 @@ export const RoleGate = ({ children, allowedRole }: RoleGateProps) => {
 	const role = useCurrentRole();
 
 	if (role !== allowedRole) {
-		return <FormError message="Fehlende Berechtigung diesen Inhalt zu sehen." />;
+		return <FormError message="Für diesen Bereich sind Admin-Rechte notwendig." />;
 	}
 	return <>{children}</>;
 };

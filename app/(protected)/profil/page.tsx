@@ -59,10 +59,8 @@ const SettingsPage = () => {
 		});
 	};
 	return (
-		<Card className="w-[600px] m-auto">
-			<CardHeader>
-				<p className="text-2xl font-semibold text-center">Settings</p>
-			</CardHeader>
+		<div className="bg-white px-3 py-2 rounded-md">
+			<h2 className="text-xl mb-3">Profil</h2>
 			<CardContent>
 				<Form {...form}>
 					<form className="space-y-6" autoComplete="off" onSubmit={form.handleSubmit(onSubmit)}>
@@ -167,7 +165,7 @@ const SettingsPage = () => {
 					</form>
 				</Form>
 			</CardContent>
-		</Card>
+		</div>
 	);
 };
 

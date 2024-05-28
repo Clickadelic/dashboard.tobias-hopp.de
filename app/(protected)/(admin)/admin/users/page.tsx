@@ -1,18 +1,11 @@
-import { UserRole } from "@prisma/client"
-import { RoleGate } from "@/components/auth/role-gate"
-import { getUsers } from "@/data/user"
-
+import UsersTable from "@/app/(protected)/_components/users-table";
 const UsersPage = async () => {
-	const users = await getUsers()
 	return (
-		<div>
-			<RoleGate allowedRole={UserRole.ADMIN}>
-				{users.map(user => {
-					return <div key={user.id}>{user.name}</div>
-				})}
-			</RoleGate>
+		<div className="bg-white rounded-md p-3">
+			<h2 className="text-2xl mb-3">Benutzerübersicht</h2>
+			<UsersTable />
 		</div>
-	)
-}
+	);
+};
 
-export default UsersPage
+export default UsersPage;
