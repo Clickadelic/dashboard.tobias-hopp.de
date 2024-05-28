@@ -1,179 +1,167 @@
 "use client";
 
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { useCurrentUser } from "@/hooks/use-current-user";
+import { UserRole } from "@prisma/client";
+
+import Image from "next/image";
+import Link from "next/link";
+import Logo from "./logo";
+
+import { MdOutlineChecklistRtl } from "react-icons/md";
+import { BsBuildings } from "react-icons/bs";
 import { AiOutlineWindows } from "react-icons/ai";
 import { FaUser } from "react-icons/fa";
+import { GoGear } from "react-icons/go";
 import { ExitIcon } from "@radix-ui/react-icons";
-import { LogoutButton } from "@/components/auth/logout-button";
+import { HiChevronRight } from "react-icons/hi2";
+import { IoSpeedometerOutline } from "react-icons/io5";
+import { PiEye } from "react-icons/pi";
+import { BsArrowsFullscreen } from "react-icons/bs";
+import { GoLink } from "react-icons/go";
+import { LuUser2 } from "react-icons/lu";
 
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { useCurrentRole } from "@/hooks/use-current-role";
 
-import { usePathname } from "next/navigation";
-import Link from "next/link";
-import { useCurrentUser } from "@/hooks/use-current-user";
-import Image from "next/image";
 export const SidebarNavbar = () => {
 	const user = useCurrentUser();
+	const role = useCurrentRole();
 
+	const goFullscreen = () => {
+		var body = document.getElementsByTagName("body")[0];
+		if (body.requestFullscreen) {
+			body.requestFullscreen();
+		}
+	};
 	return (
 		<>
 			<aside className="App-sidebar hidden fixed md:block top-0 left-0 w-64 min-h-screen border-r bg-white" id="main-sidebar">
 				<div className="App-sidebar-logo hidden md:flex justify-center px-2 py-3">
-					<h1>
-						<a href="/" className="flex justify-between mt-2 text-slate-900 hover:opacity-75">
-							<img src="./favicon.svg" className="logo inline -mt-1 h-8 w-8" alt="Tailwind Dashboard" />
-							<span id="tailwind-dashboard" className="ml-2">
-								<span className="font-medium mr-1">Toby&apos;s</span>
-								<span className="font-bold">Dashboard</span>
-							</span>
-						</a>
-					</h1>
+					<Logo />
 				</div>
 				<section className="sidebar-section mt-10 mb-6">
-					<div className="accordion" id="tailwind-element-accordion">
-						<div className="accordion-element">
-							<h2 className="mb-0" id="headingOne">
-								<button
-									className="group relative text-medium flex w-full items-center rounded-t-[15px] border-0 bg-white px-5 py-4 text-left text-base text-neutral-800 transition [overflow-anchor:none] hover:z-[2] focus:z-[3] focus:outline-none dark:bg-neutral-800 dark:text-white [&:not([data-te-collapse-collapsed])]:bg-white [&:not([data-te-collapse-collapsed])]:text-primary [&:not([data-te-collapse-collapsed])]:[box-shadow:inset_0_-1px_0_rgba(229,231,235)] dark:[&:not([data-te-collapse-collapsed])]:bg-neutral-800 dark:[&:not([data-te-collapse-collapsed])]:text-primary-400 dark:[&:not([data-te-collapse-collapsed])]:[box-shadow:inset_0_-1px_0_rgba(75,85,99)]"
-									type="button"
-									data-te-collapse-init
-									data-te-target="#collapseOne"
-									aria-expanded="true"
-									aria-controls="collapseOne"
-								>
-									<span className="w-4 h-4 mr-4 mt-[-6px]">
-										<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" className="bi bi-speedometer2" viewBox="0 0 16 16">
-											<path d="M8 4a.5.5 0 0 1 .5.5V6a.5.5 0 0 1-1 0V4.5A.5.5 0 0 1 8 4M3.732 5.732a.5.5 0 0 1 .707 0l.915.914a.5.5 0 1 1-.708.708l-.914-.915a.5.5 0 0 1 0-.707M2 10a.5.5 0 0 1 .5-.5h1.586a.5.5 0 0 1 0 1H2.5A.5.5 0 0 1 2 10m9.5 0a.5.5 0 0 1 .5-.5h1.5a.5.5 0 0 1 0 1H12a.5.5 0 0 1-.5-.5m.754-4.246a.39.39 0 0 0-.527-.02L7.547 9.31a.91.91 0 1 0 1.302 1.258l3.434-4.297a.39.39 0 0 0-.029-.518z" />
-											<path
-												fillRule="evenodd"
-												d="M0 10a8 8 0 1 1 15.547 2.661c-.442 1.253-1.845 1.602-2.932 1.25C11.309 13.488 9.475 13 8 13c-1.474 0-3.31.488-4.615.911-1.087.352-2.49.003-2.932-1.25A8 8 0 0 1 0 10m8-7a7 7 0 0 0-6.603 9.329c.203.575.923.876 1.68.63C4.397 12.533 6.358 12 8 12s3.604.532 4.923.96c.757.245 1.477-.056 1.68-.631A7 7 0 0 0 8 3"
-											/>
-										</svg>
+					<Accordion type="single" collapsible className="w-full">
+						<AccordionItem value="item-1" className="px-3">
+							<span className="text-xs text-neutral-400 ml-.5 inline-block mb-2">Dashboard</span>
+							<AccordionTrigger>
+								<span className="flex justify-between">
+									<IoSpeedometerOutline className="mt-1 mr-2" />
+									Dashboard
+								</span>
+							</AccordionTrigger>
+							<AccordionContent>
+								<ul className="space-y-1">
+									<li>
+										<Link href="/overview" className="block p-3 rounded-sm hover:bg-slate-100 hover:text-slate-600" title="Zur Übersicht">
+											<HiChevronRight className="inline-block mr-2 mt-[-3px]" />
+											&Uuml;bersicht
+										</Link>
+									</li>
+									<li>
+										<Link href="/reports" className="block p-3 rounded-sm hover:bg-slate-100 hover:text-slate-600" title="Zu den Reports">
+											<HiChevronRight className="inline-block mr-2 mt-[-3px]" />
+											Reports
+										</Link>
+									</li>
+								</ul>
+							</AccordionContent>
+						</AccordionItem>
+						<AccordionItem value="item-2" className="px-3">
+							<AccordionTrigger>
+								<span className="flex justify-between">
+									<BsBuildings className="mt-1 mr-2" />
+									Projekte
+								</span>
+							</AccordionTrigger>
+							<AccordionContent>
+								<ul className="list-disc space-y-1">
+									<Link href="/projekte" className="block p-3 rounded-sm hover:bg-slate-100 hover:text-slate-600" title="Zur Projektübersicht">
+										<HiChevronRight className="inline-block mr-2 mt-[-3px]" />
+										Projekt&uuml;bersicht
+									</Link>
+								</ul>
+							</AccordionContent>
+						</AccordionItem>
+						<AccordionItem value="item-3" className="px-3">
+							<AccordionTrigger>
+								<span className="flex justify-between">
+									<MdOutlineChecklistRtl className="mt-1 mr-2" />
+									ToDo&apos;s
+								</span>
+							</AccordionTrigger>
+							<AccordionContent>
+								<ul className="list-disc space-y-1">
+									<Link href="/todos" className="block p-3 rounded-sm hover:bg-slate-100 hover:text-slate-600" title="Zu den Todo's">
+										<HiChevronRight className="inline-block mr-2 mt-[-3px]" />
+										ToDo-&Uuml;bersicht
+									</Link>
+								</ul>
+							</AccordionContent>
+						</AccordionItem>
+						<AccordionItem value="item-4" className="px-3">
+							<AccordionTrigger>
+								<span className="flex justify-between">
+									<GoLink className="mt-1 mr-2" />
+									Links
+								</span>
+							</AccordionTrigger>
+							<AccordionContent>
+								<ul className="list-disc space-y-1">
+									<Link href="/links" className="block p-3 rounded-sm hover:bg-slate-100 hover:text-slate-600" title="Zur Projektübersicht">
+										<HiChevronRight className="inline-block mr-2 mt-[-3px]" />
+										Link-&Uuml;bersicht
+									</Link>
+								</ul>
+							</AccordionContent>
+						</AccordionItem>
+						{role === UserRole.ADMIN && (
+							<AccordionItem value="item-5" className="px-3">
+								<span className="text-xs text-neutral-400 ml-.5 inline-block mt-4 mb-2">Admin</span>
+								<AccordionTrigger>
+									<span className="flex justify-between">
+										<PiEye className="mt-1 mr-2" />
+										Admin
 									</span>
-									<span className="text-toggle">Dashboard</span>
-									<span className="text-toggle ml-auto h-5 w-5 shrink-0 rotate-[-180deg] fill-[#336dec] transition-transform duration-200 ease-in-out group-[[data-te-collapse-collapsed]]:rotate-0 group-[[data-te-collapse-collapsed]]:fill-[#212529] motion-reduce:transition-none dark:fill-blue-300 dark:group-[[data-te-collapse-collapsed]]:fill-white">
-										<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="h-6 w-6">
-											<path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
-										</svg>
-									</span>
-								</button>
-							</h2>
-							<div id="collapseOne" className="!visible" data-te-collapse-item data-te-collapse-show aria-labelledby="headingOne" data-te-parent="#accordionExample">
-								<div className="px-5 py-4">
-									<ul className="ml-3 space-y-5">
-										<li>
-											<a href="/" title="Overview">
-												Overview
-											</a>
-										</li>
-										<li>
-											<a href="/" title="Link">
-												Details
-											</a>
-										</li>
+								</AccordionTrigger>
+								<AccordionContent>
+									<ul className="list-disc space-y-1">
+										<Link href="/admin" className="block p-3 rounded-sm hover:bg-slate-100 hover:text-slate-600" title="Zur Übersicht">
+											<HiChevronRight className="inline-block mr-2 mt-[-3px]" />
+											Admintest
+										</Link>
+										<Link href="/admin/users" className="block p-3 rounded-sm hover:bg-slate-100 hover:text-slate-600" title="Zur Übersicht">
+											<HiChevronRight className="inline-block mr-2 mt-[-3px]" />
+											Benutzerübersicht
+										</Link>
+										<Link href="/admin/system" className="block p-3 rounded-sm hover:bg-slate-100 hover:text-slate-600" title="Zur Übersicht">
+											<HiChevronRight className="inline-block mr-2 mt-[-3px]" />
+											Systemeinstellungen
+										</Link>
 									</ul>
-								</div>
-							</div>
-						</div>
-						<div className="accordion-element">
-							<h2 className="mb-0" id="headingTwo">
-								<button
-									className="group relative flex w-full items-center rounded-none border-0 bg-white px-5 py-4 text-left text-base text-neutral-800 transition [overflow-anchor:none] hover:z-[2] focus:z-[3] focus:outline-none dark:bg-neutral-800 dark:text-white [&:not([data-te-collapse-collapsed])]:bg-white [&:not([data-te-collapse-collapsed])]:text-primary [&:not([data-te-collapse-collapsed])]:[box-shadow:inset_0_-1px_0_rgba(229,231,235)] dark:[&:not([data-te-collapse-collapsed])]:bg-neutral-800 dark:[&:not([data-te-collapse-collapsed])]:text-primary-400 dark:[&:not([data-te-collapse-collapsed])]:[box-shadow:inset_0_-1px_0_rgba(75,85,99)]"
-									type="button"
-									data-te-collapse-init
-									data-te-collapse-collapsed
-									data-te-target="#collapseTwo"
-									aria-expanded="false"
-									aria-controls="collapseTwo"
-								>
-									<span className="w-4 h-4 mr-4 mt-[-6px]">
-										<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-buildings" viewBox="0 0 16 16">
-											<path d="M14.763.075A.5.5 0 0 1 15 .5v15a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5V14h-1v1.5a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5V10a.5.5 0 0 1 .342-.474L6 7.64V4.5a.5.5 0 0 1 .276-.447l8-4a.5.5 0 0 1 .487.022M6 8.694 1 10.36V15h5zM7 15h2v-1.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 .5.5V15h2V1.309l-7 3.5z" />
-											<path d="M2 11h1v1H2zm2 0h1v1H4zm-2 2h1v1H2zm2 0h1v1H4zm4-4h1v1H8zm2 0h1v1h-1zm-2 2h1v1H8zm2 0h1v1h-1zm2-2h1v1h-1zm0 2h1v1h-1zM8 7h1v1H8zm2 0h1v1h-1zm2 0h1v1h-1zM8 5h1v1H8zm2 0h1v1h-1zm2 0h1v1h-1zm0-2h1v1h-1z" />
-										</svg>
-									</span>
-									<span className="text-toggle">Projects</span>
-									<span className="text-toggle -mr-1 ml-auto h-5 w-5 shrink-0 rotate-[-180deg] fill-[#336dec] transition-transform duration-200 ease-in-out group-[[data-te-collapse-collapsed]]:mr-0 group-[[data-te-collapse-collapsed]]:rotate-0 group-[[data-te-collapse-collapsed]]:fill-[#212529] motion-reduce:transition-none dark:fill-blue-300 dark:group-[[data-te-collapse-collapsed]]:fill-white">
-										<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="h-6 w-6">
-											<path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
-										</svg>
-									</span>
-								</button>
-							</h2>
-							<div id="collapseTwo" className="!visible hidden" data-te-collapse-item aria-labelledby="headingTwo" data-te-parent="#accordionExample">
-								<div className="px-5 py-4">
-									<ul className="ml-3 space-y-5">
-										<li>
-											<a href="/" title="Overview">
-												Overview
-											</a>
-										</li>
-										<li>
-											<a href="/" title="Link">
-												Details
-											</a>
-										</li>
-									</ul>
-								</div>
-							</div>
-						</div>
-						<div className="accordion-element">
-							<h2 className="accordion-header mb-0" id="headingThree">
-								<button
-									className="group relative flex w-full items-center border-0 bg-white px-5 py-4 text-left text-base text-neutral-800 transition [overflow-anchor:none] hover:z-[2] focus:z-[3] focus:outline-none dark:bg-neutral-800 dark:text-white [&:not([data-te-collapse-collapsed])]:bg-white [&:not([data-te-collapse-collapsed])]:text-primary [&:not([data-te-collapse-collapsed])]:[box-shadow:inset_0_-1px_0_rgba(229,231,235)] dark:[&:not([data-te-collapse-collapsed])]:bg-neutral-800 dark:[&:not([data-te-collapse-collapsed])]:text-primary-400 dark:[&:not([data-te-collapse-collapsed])]:[box-shadow:inset_0_-1px_0_rgba(75,85,99)] [&[data-te-collapse-collapsed]]:rounded-b-[15px] [&[data-te-collapse-collapsed]]:transition-none"
-									type="button"
-									data-te-collapse-init
-									data-te-collapse-collapsed
-									data-te-target="#collapseThree"
-									aria-expanded="false"
-									aria-controls="collapseThree"
-								>
-									<span className="w-4 h-4 mr-4 mt-[-6px]">
-										<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-graph-up" viewBox="0 0 16 16">
-											<path
-												fillRule="evenodd"
-												d="M0 0h1v15h15v1H0zm14.817 3.113a.5.5 0 0 1 .07.704l-4.5 5.5a.5.5 0 0 1-.74.037L7.06 6.767l-3.656 5.027a.5.5 0 0 1-.808-.588l4-5.5a.5.5 0 0 1 .758-.06l2.609 2.61 4.15-5.073a.5.5 0 0 1 .704-.07"
-											/>
-										</svg>
-									</span>
-									<span className="text-toggle">Data</span>
-									<span className="text-toggle -mr-1 ml-auto h-5 w-5 shrink-0 rotate-[-180deg] fill-[#336dec] transition-transform duration-200 ease-in-out group-[[data-te-collapse-collapsed]]:mr-0 group-[[data-te-collapse-collapsed]]:rotate-0 group-[[data-te-collapse-collapsed]]:fill-[#212529] motion-reduce:transition-none dark:fill-blue-300 dark:group-[[data-te-collapse-collapsed]]:fill-white">
-										<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="h-6 w-6">
-											<path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
-										</svg>
-									</span>
-								</button>
-							</h2>
-							<div id="collapseThree" className="text-toggle" data-te-collapse-item aria-labelledby="headingThree" data-te-parent="#accordionExample">
-								<div className="px-5 py-4">
-									<ul className="ml-3 space-y-5">
-										<li>
-											<a href="/" title="Overview">
-												Overview
-											</a>
-										</li>
-										<li>
-											<a href="/" title="Link">
-												Details
-											</a>
-										</li>
-									</ul>
-								</div>
-							</div>
-						</div>
-					</div>
+								</AccordionContent>
+							</AccordionItem>
+						)}
+					</Accordion>
 				</section>
 				<div className="fixed left-0 bottom-5 w-64 p-4 flex bg-white" id="avatar-box">
-					<Image src="./favicon.svg" width={16} height={16} className="w-8 h-8 mr-2 rounded-full border border-slate-400" alt="Placekitten" />
+					<Avatar className="size-8 mt-1 mr-3">
+						<AvatarImage className="size-8" src={user?.image || ""} alt="User Avatar" />
+						<AvatarFallback className="bg-slate-200 border border-slate-400">
+							<FaUser className="text-slate-400" />
+						</AvatarFallback>
+					</Avatar>
 					<div className="text-toggle">
-						<h4 className="text-base text-neutral-600">JWT User</h4>
-						<span className="text-xs text-neutral-600">Administrator</span>
+						<h4 className="text-base text-neutral-600">{user?.name}</h4>
+						<span className="inline-flex items-center rounded-md bg-yellow-50 px-2 py-1 text-xs text-yellow-800 ring-1 ring-inset ring-yellow-600/20">{user?.role}</span>
 					</div>
 				</div>
 			</aside>
 			<header className="App-header flex fixed top-0 md:ml-64 w-screen p-2 border-b bg-white" id="header">
 				<nav className="flex justify-between w-max">
 					<span className="p-0">
+						{/* TODO: Mobile Button toggle */}
 						<Link href="/" className="border rounded w-8 h-8 p-2 md:hidden">
 							<Image src="./favicon.svg" width={16} height={16} className="logo w-6 h-6 inline -mt-1" alt="Tailwind Dashboard" />
 							<span className="text-base hidden">
@@ -209,71 +197,71 @@ export const SidebarNavbar = () => {
 										<a className="text-slate-600 bg-slate-50 p-2 mt-5 rounded-md">View</a>
 									</div>
 									<div className="p-8">
-										<span className="block font-medium mb-4">Authentication</span>
+										<span className="block font-medium mb-4">Empty Column</span>
 										<ul className="list-disc ml-5">
 											<li>
-												<a className="mb-2 block hover:text-slate-500" href="/">
-													Login
-												</a>
+												<Link href="#" className="mb-2 block hover:text-slate-500" target="_blank">
+													Empty Slot
+												</Link>
 											</li>
 											<li>
-												<a className="mb-2 block hover:text-slate-500" href="/">
-													Register
-												</a>
+												<Link href="#" className="mb-2 block hover:text-slate-500" target="_blank">
+													Empty Slot
+												</Link>
 											</li>
 											<li>
-												<a className="mb-2 block hover:text-slate-500" href="/">
-													Forgot Password
-												</a>
+												<Link href="#" className="mb-2 block hover:text-slate-500" target="_blank">
+													Empty Slot
+												</Link>
 											</li>
 											<li>
-												<a className="mb-2 block hover:text-slate-500" href="/">
-													Delete Account
-												</a>
+												<Link href="#" className="mb-2 block hover:text-slate-500" target="_blank">
+													Empty Slot
+												</Link>
 											</li>
 										</ul>
 									</div>
 									<div className="p-8">
-										<span className="block font-medium mb-4">Dashboard</span>
+										<span className="block font-medium mb-4">Empty Column</span>
 										<ul className="list-disc ml-5">
 											<li>
-												<a className="mb-2 block hover:text-slate-500" href="/">
-													Overview
-												</a>
+												<Link href="#" className="mb-2 block hover:text-slate-500" target="_blank">
+													Empty Slot
+												</Link>
 											</li>
 											<li>
-												<a className="mb-2 block hover:text-slate-500" href="/">
-													Data Sets
-												</a>
+												<Link href="#" className="mb-2 block hover:text-slate-500" target="_blank">
+													Empty Slot
+												</Link>
 											</li>
 											<li>
-												<a className="mb-2 block hover:text-slate-500" href="/">
-													Administration
-												</a>
+												<Link href="#" className="mb-2 block hover:text-slate-500" target="_blank">
+													Empty Slot
+												</Link>
 											</li>
 										</ul>
 									</div>
 									<div className="p-8">
-										<span className="block font-medium mb-4">Admin</span>
+										<span className="block font-medium mb-4">Empty Column</span>
 										<ul className="list-disc ml-5">
 											<li>
-												<Link href="/admin" className="mb-2 block hover:text-slate-500">
-													Admin Overview
+												<Link href="#" className="mb-2 block hover:text-slate-500">
+													Empty Slot
 												</Link>
 											</li>
 											<li>
-												<Link href="/admin/users" className="mb-2 block hover:text-slate-500">
-													Users
+												<Link href="#" className="mb-2 block hover:text-slate-500" target="_blank">
+													Empty Slot
 												</Link>
 											</li>
 											<li>
-												<Link href="/reports" className="mb-2 block hover:text-slate-500">
-													Reports
+												<Link href="#" className="mb-2 block hover:text-slate-500" target="_blank">
+													Empty Slot
 												</Link>
 											</li>
 											<li>
-												<Link href="/test" className="mb-2 block hover:text-slate-500">
-													Test
+												<Link href="#" className="mb-2 block hover:text-slate-500" target="_blank">
+													Empty Slot
 												</Link>
 											</li>
 										</ul>
@@ -305,42 +293,42 @@ export const SidebarNavbar = () => {
 							</button>
 						</li>
 						<li>
-							<button className="hover:bg-slate-200 mx-1 inline-flex p-3 rounded">
-								<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-arrows-fullscreen" viewBox="0 0 16 16">
-									<path
-										fillRule="evenodd"
-										d="M5.828 10.172a.5.5 0 0 0-.707 0l-4.096 4.096V11.5a.5.5 0 0 0-1 0v3.975a.5.5 0 0 0 .5.5H4.5a.5.5 0 0 0 0-1H1.732l4.096-4.096a.5.5 0 0 0 0-.707zm4.344 0a.5.5 0 0 1 .707 0l4.096 4.096V11.5a.5.5 0 1 1 1 0v3.975a.5.5 0 0 1-.5.5H11.5a.5.5 0 0 1 0-1h2.768l-4.096-4.096a.5.5 0 0 1 0-.707zm0-4.344a.5.5 0 0 0 .707 0l4.096-4.096V4.5a.5.5 0 1 0 1 0V.525a.5.5 0 0 0-.5-.5H11.5a.5.5 0 0 0 0 1h2.768l-4.096 4.096a.5.5 0 0 0 0 .707m-4.344 0a.5.5 0 0 1-.707 0L1.025 1.732V4.5a.5.5 0 0 1-1 0V.525a.5.5 0 0 1 .5-.5H4.5a.5.5 0 0 1 0 1H1.732l4.096 4.096a.5.5 0 0 1 0 .707"
-									/>
-								</svg>
+							<button onClick={goFullscreen} className="hover:bg-slate-200 mx-1 inline-flex p-3 rounded">
+								<BsArrowsFullscreen />
 							</button>
 						</li>
 						<li>
-							<button className="hover:bg-slate-200 mx-1 inline-flex p-3 rounded">
-								<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-gear" viewBox="0 0 16 16">
-									<path d="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492zM5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0z" />
-									<path d="M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 0 1-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 0 1-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 0 1 .52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 0 1 1.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 0 1 1.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 0 1 .52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 0 1-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 0 1-1.255-.52l-.094-.319zm-2.633.283c.246-.835 1.428-.835 1.674 0l.094.319a1.873 1.873 0 0 0 2.693 1.115l.291-.16c.764-.415 1.6.42 1.184 1.185l-.159.292a1.873 1.873 0 0 0 1.116 2.692l.318.094c.835.246.835 1.428 0 1.674l-.319.094a1.873 1.873 0 0 0-1.115 2.693l.16.291c.415.764-.42 1.6-1.185 1.184l-.291-.159a1.873 1.873 0 0 0-2.693 1.116l-.094.318c-.246.835-1.428.835-1.674 0l-.094-.319a1.873 1.873 0 0 0-2.692-1.115l-.292.16c-.764.415-1.6-.42-1.184-1.185l.159-.291A1.873 1.873 0 0 0 1.945 8.93l-.319-.094c-.835-.246-.835-1.428 0-1.674l.319-.094A1.873 1.873 0 0 0 3.06 4.377l-.16-.292c-.415-.764.42-1.6 1.185-1.184l.292.159a1.873 1.873 0 0 0 2.692-1.115l.094-.319z" />
-								</svg>
-							</button>
+							<Link href="/settings" className="hover:bg-slate-200 mx-1 inline-flex p-3 rounded mr-2">
+								<GoGear />
+							</Link>
 						</li>
 						<li>
 							<DropdownMenu>
-								<DropdownMenuTrigger className="mt-1.5">
-									<span className="text-base hidden">{user?.name}</span>
+								<DropdownMenuTrigger className="flex justify-between mt-1.5">
 									<Avatar className="size-8">
 										<AvatarImage className="size-8" src={user?.image || ""} alt="User Avatar" />
 										<AvatarFallback className="bg-slate-200 border border-slate-400">
-											<FaUser className="text-slate-400" />
+											<FaUser className="text-neutral-400" />
 										</AvatarFallback>
 									</Avatar>
+									<span className="mt-1 ml-2">{user?.name}</span>
 								</DropdownMenuTrigger>
 								<DropdownMenuContent className="mr-3">
 									<DropdownMenuLabel>Mein Account</DropdownMenuLabel>
 									<DropdownMenuSeparator />
-									<DropdownMenuItem>Einstellungen</DropdownMenuItem>
-									<DropdownMenuItem>Account</DropdownMenuItem>
-									<DropdownMenuItem>Team</DropdownMenuItem>
+									<DropdownMenuItem>
+										<Link href="/profil" title="Zum Profil">
+											<LuUser2 className="size-4 inline-block mr-2 mt-[-2px]" />
+											Profil
+										</Link>
+									</DropdownMenuItem>
+									<DropdownMenuItem>Empty Slot</DropdownMenuItem>
+									<DropdownMenuItem>Empty Slot</DropdownMenuItem>
 									<DropdownMenuSeparator />
-									<DropdownMenuItem>Logout</DropdownMenuItem>
+									<DropdownMenuItem>
+										<ExitIcon className="size-4 mr-2" />
+										Log out
+									</DropdownMenuItem>
 								</DropdownMenuContent>
 							</DropdownMenu>
 						</li>

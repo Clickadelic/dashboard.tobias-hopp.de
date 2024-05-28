@@ -1,6 +1,5 @@
 "use client";
 
-import { Card, CardHeader, CardContent } from "@/components/ui/card";
 import { RoleGate } from "@/components/auth/role-gate";
 import { FormSuccess } from "@/components/form-success";
 import { UserRole } from "@prisma/client";
@@ -19,6 +18,7 @@ const AdminPage = () => {
 			}
 		});
 	};
+	// TODO Investigate Functionality
 	const onApiRouteClick = () => {
 		fetch("/api/admin").then(response => {
 			if (response.ok) {
@@ -30,28 +30,24 @@ const AdminPage = () => {
 		});
 	};
 	return (
-		<Card className="w-[600px] m-auto">
-			<CardHeader>
-				<p className="text-2xl font-semibold text-center">Admin</p>
-			</CardHeader>
-			<CardContent className="space-y-4">
-				<RoleGate allowedRole={UserRole.ADMIN}>
-					<FormSuccess message="Admin-Power aktiviert." />
-				</RoleGate>
-				<div className="flex justify-between rounded-lg border p-3 shadow-md">
-					<p className="text-sm font-medium">Admin only API-Route.</p>
-					<button onClick={onApiRouteClick} className="bg-slate-500 text-white rounded-sm p-1 px-2 text-sm">
-						Click to test
-					</button>
-				</div>
-				<div className="flex justify-between rounded-lg border p-3 shadow-md">
-					<p className="text-sm font-medium">Admin only Server-Action.</p>
-					<button onClick={onServerActionclick} className="bg-slate-500 text-white rounded-sm p-1 px-2 text-sm">
-						Click to test
-					</button>
-				</div>
-			</CardContent>
-		</Card>
+		<div className="bg-white rounded-md px-3 py-2 space-y-3">
+			<h2 className="text-xl mb-3">Admin</h2>
+			<RoleGate allowedRole={UserRole.ADMIN}>
+				<FormSuccess message="Admin-Power aktiviert." />
+			</RoleGate>
+			<div className="flex justify-between rounded-lg border p-3">
+				<p className="text-sm font-medium mt-1">Admin only API-Route.</p>
+				<button onClick={onApiRouteClick} className="bg-slate-500 text-white rounded-sm p-1 px-2 text-sm">
+					Click to test
+				</button>
+			</div>
+			<div className="flex justify-between rounded-lg border p-3">
+				<p className="text-sm font-medium mt-1">Admin only Server-Action.</p>
+				<button onClick={onServerActionclick} className="bg-slate-500 text-white rounded-sm p-1 px-2 text-sm">
+					Click to test
+				</button>
+			</div>
+		</div>
 	);
 };
 
