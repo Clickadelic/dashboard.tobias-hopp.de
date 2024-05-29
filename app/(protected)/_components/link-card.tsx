@@ -32,7 +32,13 @@ export const LinkCard = () => {
 		const validatedFields = LinkSchema.safeParse(values);
 		startTransiton(() => {
 			addLink(values).then(data => {
-				console.log(data);
+				if (data.error) {
+					toast.error(data.error);
+				}
+
+				if (data.success) {
+					toast.success(data.success);
+				}
 			});
 		});
 	};
