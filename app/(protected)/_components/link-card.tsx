@@ -1,50 +1,49 @@
-"use client";
+"use client"
 
-import * as z from "zod";
+import * as z from "zod"
 
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { useForm } from "react-hook-form";
-import { useState, useTransition } from "react";
-import { zodResolver } from "@hookform/resolvers/zod";
-// import Link from "next/link";
-import { LinkSchema } from "@/schemas";
-import { Input } from "@/components/ui/input";
-import { Form, FormControl, FormLabel, FormField, FormItem, FormMessage } from "@/components/ui/form";
-import { toast } from "sonner";
-import { Button } from "@/components/ui/button";
-import { FiPlus } from "react-icons/fi";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
+import { useForm } from "react-hook-form"
+import { useState, useTransition, useEffect } from "react"
+import { zodResolver } from "@hookform/resolvers/zod"
 
-import { addLink } from "@/actions/add-link";
+import { LinkSchema } from "@/schemas"
+import { Input } from "@/components/ui/input"
+import { Form, FormControl, FormLabel, FormField, FormItem, FormMessage } from "@/components/ui/form"
+import { toast } from "sonner"
+import { Button } from "@/components/ui/button"
+import { FiPlus } from "react-icons/fi"
 
-// import { useCurrentUser } from "@/hooks/use-current-user";
+import { addLink } from "@/actions/links/add-link"
+
 export const LinkCard = () => {
-	const [error, setError] = useState<string | undefined>("");
-	const [success, setSuccess] = useState<string | undefined>("");
-	const [isPending, startTransiton] = useTransition();
-	// const currentUser = useCurrentUser();
+	const [isPending, startTransiton] = useTransition()
 
 	const form = useForm<z.infer<typeof LinkSchema>>({
 		resolver: zodResolver(LinkSchema),
 		defaultValues: { title: "", url: "" }
-	});
+	})
 
 	const onSubmit = async (values: z.infer<typeof LinkSchema>) => {
-		const validatedFields = LinkSchema.safeParse(values);
+		const validatedFields = LinkSchema.safeParse(values)
 		startTransiton(() => {
 			addLink(values).then(data => {
 				if (data.error) {
-					toast.error(data.error);
+					toast.error(data.error)
 				}
 
 				if (data.success) {
-					toast.success(data.success);
+					toast.success(data.success)
 				}
-			});
-		});
-	};
+			})
+			form.reset()
+		})
+	}
+
 	return (
 		<div className="bg-white rounded-lg shadow-sm border px-3 py-2">
-			<h2 className="text-sm border-bottom mb-3">Link</h2>
+			<h2 className="text-sm border-bottom mb-3">Links</h2>
+			<ul></ul>
 			<Popover>
 				<PopoverTrigger className="flex justify-center w-full px-3 py-2 bg-slate-100">
 					<FiPlus className="mt-1 mr-2" /> Link hinzufügen
@@ -86,5 +85,5 @@ export const LinkCard = () => {
 				</PopoverContent>
 			</Popover>
 		</div>
-	);
-};
+	)
+}
