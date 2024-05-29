@@ -6,12 +6,12 @@ html,
 body,
 :root {
 	height: 100%;
+	--radix-popover-trigger-width: 391px;
 }
 
-.custom-grid {
-	display: grid;
-	grid-template-columns: repeat(4, 1fr);
-	gap: 3rem;
+.PopoverContent {
+	width: var(--radix-popover-trigger-width);
+	max-height: var(--radix-popover-content-available-height);
 }
 
 @layer base {

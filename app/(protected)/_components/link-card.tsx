@@ -1,19 +1,84 @@
-"use client"
+"use client";
 
-import { FiPlus } from "react-icons/fi"
+import * as z from "zod";
 
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { useForm } from "react-hook-form";
+import { useState, useTransition } from "react";
+import { zodResolver } from "@hookform/resolvers/zod";
+// import Link from "next/link";
+import { LinkSchema } from "@/schemas";
+import { Input } from "@/components/ui/input";
+import { Form, FormControl, FormLabel, FormField, FormItem, FormMessage } from "@/components/ui/form";
+import { toast } from "sonner";
+import { Button } from "@/components/ui/button";
+import { FiPlus } from "react-icons/fi";
+
+import { addLink } from "@/actions/add-link";
+
+// import { useCurrentUser } from "@/hooks/use-current-user";
 export const LinkCard = () => {
-	const addLink = () => {
-		console.log("Link added ;D")
-	}
+	const [error, setError] = useState<string | undefined>("");
+	const [success, setSuccess] = useState<string | undefined>("");
+	const [isPending, startTransiton] = useTransition();
+	// const currentUser = useCurrentUser();
+
+	const form = useForm<z.infer<typeof LinkSchema>>({
+		resolver: zodResolver(LinkSchema),
+		defaultValues: { title: "", url: "" }
+	});
+
+	const onSubmit = async (values: z.infer<typeof LinkSchema>) => {
+		const validatedFields = LinkSchema.safeParse(values);
+		startTransiton(() => {
+			addLink(values).then(data => {
+				console.log(data);
+			});
+		});
+	};
 	return (
 		<div className="bg-white rounded-lg shadow-sm border px-3 py-2">
 			<h2 className="text-sm border-bottom mb-3">Link</h2>
-			<form onSubmit={addLink}>
-				<button type="submit" className="flex justify-center w-full px-1 py-2 rounded-md bg-slate-100 text-slate-900 border border-slate-200 hover:bg-slate-200 hover:border-slate-300">
-					<FiPlus />
-				</button>
-			</form>
+			<Popover>
+				<PopoverTrigger className="flex justify-center w-full px-3 py-2 bg-slate-100">
+					<FiPlus className="mt-1 mr-2" /> Link hinzufügen
+				</PopoverTrigger>
+				<PopoverContent>
+					<Form {...form}>
+						<form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2">
+							<FormField
+								control={form.control}
+								name="title"
+								disabled={isPending}
+								render={({ field }) => (
+									<FormItem>
+										<FormControl>
+											<Input {...field} placeholder="Titel" />
+										</FormControl>
+										<FormMessage />
+									</FormItem>
+								)}
+							/>
+							<FormField
+								control={form.control}
+								name="url"
+								disabled={isPending}
+								render={({ field }) => (
+									<FormItem>
+										<FormControl>
+											<Input {...field} placeholder="https://example.com" />
+										</FormControl>
+										<FormMessage />
+									</FormItem>
+								)}
+							/>
+							<Button disabled={isPending} variant="outline" type="submit" className="w-full">
+								Hinzufügen
+							</Button>
+						</form>
+					</Form>
+				</PopoverContent>
+			</Popover>
 		</div>
-	)
-}
+	);
+};
