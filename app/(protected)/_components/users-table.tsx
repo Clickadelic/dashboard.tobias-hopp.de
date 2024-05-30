@@ -1,5 +1,4 @@
 import { getUsers } from "@/data/user"
-import { UserDeleteButton } from "./user-delete-button"
 
 export const UsersTable = async () => {
 	const users = await getUsers()
@@ -32,7 +31,7 @@ export const UsersTable = async () => {
 												<button>Edit</button>
 											</td>
 											<td className="p-2">
-												<UserDeleteButton id={user.id} />
+												<button>Del</button>
 											</td>
 										</tr>
 									)

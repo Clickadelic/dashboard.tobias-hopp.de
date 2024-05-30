@@ -43,7 +43,7 @@ export const LinkCard = () => {
 	return (
 		<div className="bg-white rounded-lg shadow-sm border px-3 py-2">
 			<h2 className="text-sm border-bottom mb-3">Links</h2>
-			<ul></ul>
+			<h3 className="text-2xl mb-2">5 Links</h3>
 			<Popover>
 				<PopoverTrigger className="flex justify-center w-full px-3 py-2 bg-slate-100">
 					<FiPlus className="mt-1 mr-2" /> Link hinzufügen
