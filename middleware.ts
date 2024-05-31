@@ -38,7 +38,14 @@ export default auth(req => {
 		return Response.redirect(new URL(`/auth/login?${encodedCallbackUrl}`, nextUrl));
 	}
 
-	console.log(req);
+	/** if logged in, redirect to DEFAULT_LOGIN_REDIRECT
+	 * 	@type {string}
+	 */
+	if (isLoggedIn && nextUrl.pathname == "/") {
+		return Response.redirect(new URL(DEFAULT_LOGIN_REDIRECT, nextUrl));
+	}
+
+	// console.log(req);
 
 	return;
 });

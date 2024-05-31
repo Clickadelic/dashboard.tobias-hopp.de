@@ -29,6 +29,9 @@ model User {
     accounts      Account[]
 	isTwoFactorEnabled Boolean @default(false)
 	twoFactorConfirmation TwoFactorConfirmation?
+	
+	links Link[] // One-to-many relation with Link
+	@@unique([id])
 }
 
 model Account {
@@ -84,4 +87,15 @@ model TwoFactorConfirmation {
 	user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
 	@@unique([userId])
+}
+
+model Link {
+	id String @id @default(cuid())
+	title String
+	url String
+	
+	userId String
+  	user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  	@@unique([id])
 }

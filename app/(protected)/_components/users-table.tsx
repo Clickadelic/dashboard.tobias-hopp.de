@@ -1,12 +1,8 @@
-import { db } from "@/lib/db";
-import { getUsers } from "@/data/user";
-import { BsPencil } from "react-icons/bs";
-import { BsTrash3 } from "react-icons/bs";
+import { getUsers } from "@/data/user"
 
-const UsersTable = async () => {
-	const users = await getUsers();
-	console.log(users);
-
+export const UsersTable = async () => {
+	const users = await getUsers()
+	console.log(users)
 	return (
 		<div className="flex flex-col">
 			<div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -32,17 +28,13 @@ const UsersTable = async () => {
 											<td className="p-2">{user.email}</td>
 											<td className="p-2">{user.role}</td>
 											<td className="p-2">
-												<button className="size-8 text-slate-800 bg-neutral-100 rounded-sm py-3 flex justify-center items-center hover:text-emerald-500 p-2">
-													<BsPencil />
-												</button>
+												<button>Edit</button>
 											</td>
 											<td className="p-2">
-												<button className="size-8 text-white bg-rose-500 rounded-sm py-3 flex justify-center items-center hover:bg-rose-600 p-2">
-													<BsTrash3 />
-												</button>
+												<button>Del</button>
 											</td>
 										</tr>
-									);
+									)
 								})}
 							</tbody>
 						</table>
@@ -50,7 +42,5 @@ const UsersTable = async () => {
 				</div>
 			</div>
 		</div>
-	);
-};
-
-export default UsersTable;
+	)
+}

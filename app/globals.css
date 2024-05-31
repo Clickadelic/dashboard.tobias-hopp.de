@@ -8,13 +8,14 @@ body,
 	height: 100%;
 }
 
-.custom-grid {
-	display: grid;
-	grid-template-columns: repeat(4, 1fr);
-	gap: 3rem;
+@layer base {
 }
 
 @layer base {
+	* {
+		@apply border-border;
+	}
+
 	:root {
 		--background: 0 0% 100%;
 		--foreground: 222.2 84% 4.9%;
@@ -47,6 +48,10 @@ body,
 		--radius: 0.5rem;
 	}
 
+	body {
+		@apply bg-background text-foreground;
+	}
+
 	.dark {
 		--background: 222.2 84% 4.9%;
 		--foreground: 210 40% 98%;
@@ -75,14 +80,5 @@ body,
 		--border: 217.2 32.6% 17.5%;
 		--input: 217.2 32.6% 17.5%;
 		--ring: 212.7 26.8% 83.9%;
-	}
-}
-
-@layer base {
-	* {
-		@apply border-border;
-	}
-	body {
-		@apply bg-background text-foreground;
 	}
 }

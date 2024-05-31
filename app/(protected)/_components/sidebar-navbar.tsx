@@ -1,40 +1,34 @@
-"use client";
+"use client"
 
-import { useCurrentUser } from "@/hooks/use-current-user";
-import { UserRole } from "@prisma/client";
+import { useCurrentRole } from "@/hooks/use-current-role"
+import { useCurrentUser } from "@/hooks/use-current-user"
+import { UserRole } from "@prisma/client"
 
-import Image from "next/image";
-import Link from "next/link";
-import Logo from "./logo";
+import Image from "next/image"
+import Link from "next/link"
+import Logo from "./logo"
 
-import { MdOutlineChecklistRtl } from "react-icons/md";
-import { BsBuildings } from "react-icons/bs";
-import { AiOutlineWindows } from "react-icons/ai";
-import { FaUser } from "react-icons/fa";
-import { GoGear } from "react-icons/go";
-import { ExitIcon } from "@radix-ui/react-icons";
-import { HiChevronRight } from "react-icons/hi2";
-import { IoSpeedometerOutline } from "react-icons/io5";
-import { PiEye } from "react-icons/pi";
-import { BsArrowsFullscreen } from "react-icons/bs";
-import { GoLink } from "react-icons/go";
-import { LuUser2 } from "react-icons/lu";
+import { MdOutlineChecklistRtl } from "react-icons/md"
+import { BsBuildings } from "react-icons/bs"
+import { AiOutlineWindows } from "react-icons/ai"
+import { FaUser } from "react-icons/fa"
+import { GoGear } from "react-icons/go"
+import { ExitIcon } from "@radix-ui/react-icons"
+import { HiChevronRight } from "react-icons/hi2"
+import { IoSpeedometerOutline } from "react-icons/io5"
+import { PiEye } from "react-icons/pi"
+import { BsArrowsFullscreen } from "react-icons/bs"
+import { GoLink } from "react-icons/go"
+import { LuUser2 } from "react-icons/lu"
 
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-import { useCurrentRole } from "@/hooks/use-current-role";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar"
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 
 export const SidebarNavbar = () => {
-	const user = useCurrentUser();
-	const role = useCurrentRole();
+	const user = useCurrentUser()
+	const role = useCurrentRole()
 
-	const goFullscreen = () => {
-		var body = document.getElementsByTagName("body")[0];
-		if (body.requestFullscreen) {
-			body.requestFullscreen();
-		}
-	};
 	return (
 		<>
 			<aside className="App-sidebar hidden fixed md:block top-0 left-0 w-64 min-h-screen border-r bg-white" id="main-sidebar">
@@ -162,13 +156,13 @@ export const SidebarNavbar = () => {
 				<nav className="flex justify-between w-max">
 					<span className="p-0">
 						{/* TODO: Mobile Button toggle */}
-						<Link href="/" className="border rounded w-8 h-8 p-2 md:hidden">
-							<Image src="./favicon.svg" width={16} height={16} className="logo w-6 h-6 inline -mt-1" alt="Tailwind Dashboard" />
+						<button className="border rounded w-8 h-8 p-2 md:hidden active">
+							<Image src="./favicon.svg" width={16} height={16} className="logo size-6 inline -mt-1" alt="Tailwind Dashboard" />
 							<span className="text-base hidden">
 								<span className="font-medium">Toby&apos;s</span>
 								<span>Dashboard</span>
 							</span>
-						</Link>
+						</button>
 						<button className="hidden md:inline hover:bg-slate-100 ml-3 mr-1 rounded p-2 pt-1" id="btn-sidebar-toggle">
 							<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-text-indent-right" viewBox="0 0 16 16">
 								<path d="M2 3.5a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5m10.646 2.146a.5.5 0 0 1 .708.708L11.707 8l1.647 1.646a.5.5 0 0 1-.708.708l-2-2a.5.5 0 0 1 0-.708l2-2zM2 6.5a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5m0 3a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5m0 3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5" />
@@ -186,6 +180,7 @@ export const SidebarNavbar = () => {
 						<li>
 							<div className="group cursor-pointer relative">
 								<div>
+									{/* TODO: In ShadCN Komponente umbauen */}
 									<button className="mx-1 inline-flex p-3 rounded cursor-pointer group-hover:bg-slate-200">
 										<AiOutlineWindows />
 									</button>
@@ -293,7 +288,7 @@ export const SidebarNavbar = () => {
 							</button>
 						</li>
 						<li>
-							<button onClick={goFullscreen} className="hover:bg-slate-200 mx-1 inline-flex p-3 rounded">
+							<button className="hover:bg-slate-200 mx-1 inline-flex p-3 rounded">
 								<BsArrowsFullscreen />
 							</button>
 						</li>
@@ -336,5 +331,5 @@ export const SidebarNavbar = () => {
 				</nav>
 			</header>
 		</>
-	);
-};
+	)
+}

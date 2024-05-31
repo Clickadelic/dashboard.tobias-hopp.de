@@ -56,3 +56,8 @@ export const ResetSchema = z.object({
 export const NewPasswordSchema = z.object({
 	password: z.string().min(6, { message: "Mindestens 6 Buchstaben." })
 });
+
+export const LinkSchema = z.object({
+	title: z.string().min(1, "Titel fehlt"),
+	url: z.string().url("Ungültige URL")
+});
