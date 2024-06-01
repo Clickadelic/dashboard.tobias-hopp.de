@@ -4,7 +4,7 @@ import { Inter } from "next/font/google";
 import { SessionProvider } from "next-auth/react";
 import { siteConfig } from "@/config";
 import { Toaster } from "@/components/ui/sonner";
-
+import { auth } from "@/auth";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -23,10 +23,10 @@ export const metadata: Metadata = {
 
 interface RootLayoutProps {
 	children: React.ReactNode;
-	session: any;
 }
 
-const RootLayout = async ({ children, session }: RootLayoutProps) => {
+const RootLayout = async ({ children }: RootLayoutProps) => {
+	const session = await auth();
 	return (
 		<html lang="de">
 			<body className={inter.className}>
