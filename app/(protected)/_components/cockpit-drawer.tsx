@@ -22,7 +22,7 @@ export const CockpitDrawer = () => {
 						<DrawerTitle>Editor</DrawerTitle>
 						<DrawerDescription>Deine Schaltzentrale.</DrawerDescription>
 					</DrawerHeader>
-					<div className="container bg-red-100">
+					<div className="container bg-red-100 min-h-[300px]">
 						<div className="flex items-center justify-between space-x-2"></div>
 					</div>
 					<DrawerFooter>
