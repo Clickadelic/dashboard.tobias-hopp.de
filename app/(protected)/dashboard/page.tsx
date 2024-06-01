@@ -1,4 +1,4 @@
-import { LinkCard } from "../_components/link-card"
+import { LinkCard } from "../_components/link-card";
 
 const DashboardPage = () => {
 	return (
@@ -7,7 +7,6 @@ const DashboardPage = () => {
 			<div className="grid grid-cols-2 gap-3 md:grid-cols-4">
 				<div className="bg-white rounded shadow-sm border px-3 py-4">
 					<h2 className="text-sm mb-2">Projekte</h2>
-					<button>Plus</button>
 				</div>
 				<div className="bg-white rounded shadow-sm border px-3 py-4">
 					<h2 className="text-sm border-bottom">ToDo&apos;s</h2>
@@ -18,7 +17,7 @@ const DashboardPage = () => {
 				</div>
 			</div>
 		</div>
-	)
-}
+	);
+};
 
-export default DashboardPage
+export default DashboardPage;
