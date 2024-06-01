@@ -90,12 +90,14 @@ model TwoFactorConfirmation {
 }
 
 model Link {
-	id String @id @default(cuid())
-	title String
-	url String
-	
-	userId String
-  	user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+	id 				String @id @default(cuid())
+	title 			String
+	url 			String
+	description 	String
+	createdAt   	DateTime @default(now())
+
+	userId 			String
+	user User   	@relation(fields: [userId], references: [id], onDelete: Cascade)
 
   	@@unique([id])
 }

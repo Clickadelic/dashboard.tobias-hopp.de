@@ -35,10 +35,10 @@ export const SidebarNavbar = () => {
 				<div className="App-sidebar-logo hidden md:flex justify-center px-2 py-3">
 					<Logo />
 				</div>
-				<section className="sidebar-section mt-10 mb-6">
+				<section className="sidebar-section mt-1 mb-6">
 					<Accordion type="single" collapsible className="w-full">
-						<AccordionItem value="item-1" className="px-3">
-							<span className="text-xs text-neutral-400 ml-.5 inline-block mb-2">Dashboard</span>
+						<AccordionItem value="item-1" className="px-5">
+							<span className="text-xs text-neutral-400 inline-block mb-2">Dashboard</span>
 							<AccordionTrigger>
 								<span className="flex justify-between">
 									<IoSpeedometerOutline className="mt-1 mr-2" />
@@ -48,13 +48,13 @@ export const SidebarNavbar = () => {
 							<AccordionContent>
 								<ul className="space-y-1">
 									<li>
-										<Link href="/dashboard" className="block p-3 rounded-sm hover:bg-slate-100 hover:text-slate-600" title="Zur Übersicht">
+										<Link href="/dashboard" className="block p-3 rounded-sm hover:bg-blue-600 hover:text-white" title="Zur Übersicht">
 											<HiChevronRight className="inline-block mr-2 mt-[-3px]" />
 											Dashboard
 										</Link>
 									</li>
 									<li>
-										<Link href="/reports" className="block p-3 rounded-sm hover:bg-slate-100 hover:text-slate-600" title="Zu den Reports">
+										<Link href="/reports" className="block p-3 rounded-sm hover:bg-blue-600 hover:text-white" title="Zu den Reports">
 											<HiChevronRight className="inline-block mr-2 mt-[-3px]" />
 											Reports
 										</Link>
@@ -62,7 +62,7 @@ export const SidebarNavbar = () => {
 								</ul>
 							</AccordionContent>
 						</AccordionItem>
-						<AccordionItem value="item-2" className="px-3">
+						<AccordionItem value="item-2" className="px-5">
 							<AccordionTrigger>
 								<span className="flex justify-between">
 									<BsBuildings className="mt-1 mr-2" />
@@ -71,14 +71,14 @@ export const SidebarNavbar = () => {
 							</AccordionTrigger>
 							<AccordionContent>
 								<ul className="list-disc space-y-1">
-									<Link href="/projekte" className="block p-3 rounded-sm hover:bg-slate-100 hover:text-slate-600" title="Zur Projektübersicht">
+									<Link href="/projekte" className="block p-3 rounded-sm hover:bg-blue-600 hover:text-white" title="Zur Projektübersicht">
 										<HiChevronRight className="inline-block mr-2 mt-[-3px]" />
 										Projekt&uuml;bersicht
 									</Link>
 								</ul>
 							</AccordionContent>
 						</AccordionItem>
-						<AccordionItem value="item-3" className="px-3">
+						<AccordionItem value="item-3" className="px-5">
 							<AccordionTrigger>
 								<span className="flex justify-between">
 									<MdOutlineChecklistRtl className="mt-1 mr-2" />
@@ -87,14 +87,14 @@ export const SidebarNavbar = () => {
 							</AccordionTrigger>
 							<AccordionContent>
 								<ul className="list-disc space-y-1">
-									<Link href="/todos" className="block p-3 rounded-sm hover:bg-slate-100 hover:text-slate-600" title="Zu den Todo's">
+									<Link href="/todos" className="block p-3 rounded-sm hover:bg-blue-600 hover:text-white" title="Zu den Todo's">
 										<HiChevronRight className="inline-block mr-2 mt-[-3px]" />
 										ToDo-&Uuml;bersicht
 									</Link>
 								</ul>
 							</AccordionContent>
 						</AccordionItem>
-						<AccordionItem value="item-4" className="px-3">
+						<AccordionItem value="item-4" className="px-5">
 							<AccordionTrigger>
 								<span className="flex justify-between">
 									<GoLink className="mt-1 mr-2" />
@@ -103,7 +103,7 @@ export const SidebarNavbar = () => {
 							</AccordionTrigger>
 							<AccordionContent>
 								<ul className="list-disc space-y-1">
-									<Link href="/links" className="block p-3 rounded-sm hover:bg-slate-100 hover:text-slate-600" title="Zur Projektübersicht">
+									<Link href="/links" className="block p-3 rounded-sm hover:bg-blue-600 hover:text-white" title="Zur Projektübersicht">
 										<HiChevronRight className="inline-block mr-2 mt-[-3px]" />
 										Link-&Uuml;bersicht
 									</Link>
@@ -111,7 +111,7 @@ export const SidebarNavbar = () => {
 							</AccordionContent>
 						</AccordionItem>
 						{role === UserRole.ADMIN && (
-							<AccordionItem value="item-5" className="px-3">
+							<AccordionItem value="item-5" className="px-5">
 								<span className="text-xs text-neutral-400 ml-.5 inline-block mt-4 mb-2">Admin</span>
 								<AccordionTrigger>
 									<span className="flex justify-between">
@@ -121,15 +121,15 @@ export const SidebarNavbar = () => {
 								</AccordionTrigger>
 								<AccordionContent>
 									<ul className="list-disc space-y-1">
-										<Link href="/admin" className="block p-3 rounded-sm hover:bg-slate-100 hover:text-slate-600" title="Zur Übersicht">
+										<Link href="/admin" className="block p-3 rounded-sm hover:bg-blue-600 hover:text-white" title="Zur Übersicht">
 											<HiChevronRight className="inline-block mr-2 mt-[-3px]" />
 											Admintest
 										</Link>
-										<Link href="/admin/users" className="block p-3 rounded-sm hover:bg-slate-100 hover:text-slate-600" title="Zur Übersicht">
+										<Link href="/admin/users" className="block p-3 rounded-sm hover:bg-blue-600 hover:text-white" title="Zur Übersicht">
 											<HiChevronRight className="inline-block mr-2 mt-[-3px]" />
 											Benutzerübersicht
 										</Link>
-										<Link href="/admin/system" className="block p-3 rounded-sm hover:bg-slate-100 hover:text-slate-600" title="Zur Übersicht">
+										<Link href="/admin/system" className="block p-3 rounded-sm hover:bg-blue-600 hover:text-white" title="Zur Übersicht">
 											<HiChevronRight className="inline-block mr-2 mt-[-3px]" />
 											Systemeinstellungen
 										</Link>
@@ -163,7 +163,7 @@ export const SidebarNavbar = () => {
 								<span>Dashboard</span>
 							</span>
 						</button>
-						<button className="hidden md:inline hover:bg-slate-100 ml-3 mr-1 rounded p-2 pt-1" id="btn-sidebar-toggle">
+						<button className="hidden md:inline hover:bg-blue-600 ml-3 white rounded p-2 pt-1" id="btn-sidebar-toggle">
 							<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-text-indent-right" viewBox="0 0 16 16">
 								<path d="M2 3.5a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5m10.646 2.146a.5.5 0 0 1 .708.708L11.707 8l1.647 1.646a.5.5 0 0 1-.708.708l-2-2a.5.5 0 0 1 0-.708l2-2zM2 6.5a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5m0 3a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5m0 3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5" />
 							</svg>

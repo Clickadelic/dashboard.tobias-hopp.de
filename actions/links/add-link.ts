@@ -17,7 +17,7 @@ export const addLink = async (values: z.infer<typeof LinkSchema>) => {
 			return { error: "Ungültige Felder!" }
 		}
 
-		const { title, url } = validatedFields.data
+		const { title, url, description } = validatedFields.data
 
 		const existingLink = await db.link.findFirst({
 			where: {
@@ -31,8 +31,9 @@ export const addLink = async (values: z.infer<typeof LinkSchema>) => {
 
 		await db.link.create({
 			data: {
-				title: title,
+				title,
 				url,
+				description,
 				user: {
 					connect: { id: userId }
 				}
