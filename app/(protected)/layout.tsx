@@ -1,9 +1,9 @@
-import BreadcrumbNav from "./_components/breadcrumb-nav";
-import { SidebarNavbar } from "./_components/sidebar-navbar";
-import { CockpitDrawer } from "./_components/cockpit-drawer";
+import BreadcrumbNav from "./_components/breadcrumb-nav"
+import { SidebarNavbar } from "./_components/sidebar-navbar"
+import { CockpitDrawer } from "./_components/cockpit-drawer"
 
 interface ProtectedLayoutProps {
-	children: React.ReactNode;
+	children: React.ReactNode
 }
 
 // TODO Redirect merken after Logout
@@ -14,12 +14,12 @@ const ProtectedLayout = ({ children }: ProtectedLayoutProps) => {
 			<div className="pt-20 md:ml-72 md:pt-20 md:pr-8">
 				<BreadcrumbNav />
 			</div>
-			<main className="md:ml-72">
+			<main className="md:ml-64">
 				<div className="container">{children}</div>
 			</main>
 			<CockpitDrawer />
 		</div>
-	);
-};
+	)
+}
 
-export default ProtectedLayout;
+export default ProtectedLayout
