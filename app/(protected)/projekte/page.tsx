@@ -1,9 +1,10 @@
 const ProjectPage = () => {
 	return (
-		<div className="bg-white px-3 py-2 rounded-md">
-			<h2 className="text-xl mb-3">Projekte</h2>
+		<div className="page-wrapper">
+			<h2 className="text-md font-bold text-slate-700 mb-5">Projekte</h2>
+			<div className="bg-white rounded">A-Z Projekte</div>
 		</div>
-	);
-};
+	)
+}
 
-export default ProjectPage;
+export default ProjectPage

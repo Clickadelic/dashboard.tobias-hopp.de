@@ -10,7 +10,8 @@ import { useSession } from "next-auth/react"
 
 import { Form, FormField, FormControl, FormItem, FormLabel, FormDescription, FormMessage } from "@/components/ui/form"
 
-import { CardContent } from "@/components/ui/card"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { Card, CardHeader, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Switch } from "@/components/ui/switch"
 import { settings } from "@/actions/settings"
@@ -18,6 +19,7 @@ import { Input } from "@/components/ui/input"
 import { useCurrentUser } from "@/hooks/use-current-user"
 import { FormError } from "@/components/form-error"
 import { FormSuccess } from "@/components/form-success"
+import { UserRole } from "@prisma/client"
 
 const SettingsPage = () => {
 	const user = useCurrentUser()
@@ -35,6 +37,7 @@ const SettingsPage = () => {
 			email: user?.email || undefined,
 			password: undefined,
 			newPassword: undefined,
+			role: user?.role || undefined,
 			isTwoFactorEnabled: user?.isTwoFactorEnabled || undefined
 		}
 	})
@@ -119,7 +122,26 @@ const SettingsPage = () => {
 										/>
 									</>
 								)}
-
+								<FormField
+									control={form.control}
+									name="role"
+									render={({ field }) => (
+										<FormItem>
+											<FormLabel>Role:</FormLabel>
+											<Select disabled={isPending} onValueChange={field.onChange} defaultValue={field.value}>
+												<FormControl>
+													<SelectTrigger>
+														<SelectValue placeholder="Rolle auswählen" />
+													</SelectTrigger>
+												</FormControl>
+												<SelectContent>
+													<SelectItem value={UserRole.USER}>User</SelectItem>
+													<SelectItem value={UserRole.ADMIN}>Admin</SelectItem>
+												</SelectContent>
+											</Select>
+										</FormItem>
+									)}
+								/>
 								{user?.isOAuth === false && (
 									<FormField
 										control={form.control}
