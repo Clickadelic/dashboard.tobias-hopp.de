@@ -2,9 +2,9 @@ import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { SessionProvider } from "next-auth/react";
-import { auth } from "@/auth";
 import { siteConfig } from "@/config";
 import { Toaster } from "@/components/ui/sonner";
+
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -21,17 +21,21 @@ export const metadata: Metadata = {
 	]
 };
 
-const RootLayout = async ({ children }: Readonly<{ children: React.ReactNode }>) => {
-	const session = await auth();
+interface RootLayoutProps {
+	children: React.ReactNode;
+	session: any;
+}
+
+const RootLayout = async ({ children, session }: RootLayoutProps) => {
 	return (
-		<SessionProvider session={session}>
-			<html lang="de">
-				<body className={inter.className}>
+		<html lang="de">
+			<body className={inter.className}>
+				<SessionProvider session={session}>
 					<Toaster />
 					{children}
-				</body>
-			</html>
-		</SessionProvider>
+				</SessionProvider>
+			</body>
+		</html>
 	);
 };
 

@@ -1,33 +1,38 @@
-"use client"
+"use client";
 
-import { useCurrentRole } from "@/hooks/use-current-role"
-import { useCurrentUser } from "@/hooks/use-current-user"
-import { UserRole } from "@prisma/client"
+import Image from "next/image";
+import Link from "next/link";
 
-import Image from "next/image"
-import Link from "next/link"
-import Logo from "./logo"
+import { useSession } from "next-auth/react";
+import { useCurrentRole } from "@/hooks/use-current-role";
+import { useCurrentUser } from "@/hooks/use-current-user";
+import { UserRole } from "@prisma/client";
 
-import { MdOutlineChecklistRtl } from "react-icons/md"
-import { BsBuildings } from "react-icons/bs"
-import { AiOutlineWindows } from "react-icons/ai"
-import { FaUser } from "react-icons/fa"
-import { GoGear } from "react-icons/go"
-import { ExitIcon } from "@radix-ui/react-icons"
-import { HiChevronRight } from "react-icons/hi2"
-import { IoSpeedometerOutline } from "react-icons/io5"
-import { PiEye } from "react-icons/pi"
-import { BsArrowsFullscreen } from "react-icons/bs"
-import { GoLink } from "react-icons/go"
-import { LuUser2 } from "react-icons/lu"
+import { Skeleton } from "@/components/ui/skeleton";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
-import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
+import Logo from "./logo";
+
+import { MdOutlineChecklistRtl } from "react-icons/md";
+import { BsBuildings } from "react-icons/bs";
+import { AiOutlineWindows } from "react-icons/ai";
+import { FaUser } from "react-icons/fa";
+import { GoGear } from "react-icons/go";
+import { LuUser2 } from "react-icons/lu";
+import { ExitIcon } from "@radix-ui/react-icons";
+
+import { HiChevronRight } from "react-icons/hi2";
+import { IoSpeedometerOutline } from "react-icons/io5";
+import { PiEye } from "react-icons/pi";
+import { BsArrowsFullscreen } from "react-icons/bs";
+import { GoLink } from "react-icons/go";
 
 export const SidebarNavbar = () => {
-	const user = useCurrentUser()
-	const role = useCurrentRole()
+	const user = useCurrentUser();
+	const role = useCurrentRole();
+	const { status } = useSession({ required: true });
 
 	return (
 		<>
@@ -35,7 +40,7 @@ export const SidebarNavbar = () => {
 				<div className="App-sidebar-logo hidden md:flex justify-center px-2 py-3">
 					<Logo />
 				</div>
-				<section className="sidebar-section mt-1 mb-6">
+				<section className="sidebar-section mt-[18px] mb-6">
 					<Accordion type="single" collapsible className="w-full">
 						<AccordionItem value="item-1" className="px-5">
 							<span className="text-xs text-neutral-400 inline-block mb-2">Dashboard</span>
@@ -139,18 +144,32 @@ export const SidebarNavbar = () => {
 						)}
 					</Accordion>
 				</section>
-				<div className="fixed left-0 bottom-5 w-64 p-4 flex bg-white" id="avatar-box">
-					<Avatar className="size-8 mt-1 mr-3">
-						<AvatarImage className="size-8" src={user?.image || ""} alt="User Avatar" />
-						<AvatarFallback className="bg-slate-200 border border-slate-400">
-							<FaUser className="text-slate-400" />
-						</AvatarFallback>
-					</Avatar>
-					<div className="text-toggle">
-						<h4 className="text-base text-neutral-600">{user?.name}</h4>
-						<span className="inline-flex items-center rounded-md bg-yellow-50 px-2 py-1 text-xs text-yellow-800 ring-1 ring-inset ring-yellow-600/20">{user?.role}</span>
+				{status === "loading" ? (
+					<div className="fixed left-0 bottom-5 w-64 p-4 flex bg-white" id="avatar-box">
+						<Avatar className="size-8 mt-1 mr-3">
+							<Skeleton className="size-12" />
+						</Avatar>
+						<div className="text-toggle">
+							<Skeleton className="w-[100px] h-[20px] rounded mb-1" />
+							<Skeleton className="w-[60px] h-[16px] rounded" />
+						</div>
 					</div>
-				</div>
+				) : (
+					<>
+						<div className="fixed left-0 bottom-5 w-64 p-4 flex bg-white" id="avatar-box">
+							<Avatar className="size-8 mt-1 mr-3">
+								<AvatarImage className="size-8 mt-3" src={user?.image || ""} alt="User Avatar" />
+								<AvatarFallback className="bg-slate-200 border border-slate-300">
+									<FaUser className="text-slate-400" />
+								</AvatarFallback>
+							</Avatar>
+							<div className="text-toggle">
+								<h4 className="text-base text-neutral-600">{user?.name}</h4>
+								<span className="inline-flex items-center rounded-md bg-yellow-50 px-2 py-1 text-xs text-yellow-800 ring-1 ring-inset ring-yellow-600/20">{user?.role}</span>
+							</div>
+						</div>
+					</>
+				)}
 			</aside>
 			<header className="App-header flex fixed top-0 md:ml-64 w-screen p-2 border-b bg-white" id="header">
 				<nav className="flex justify-between w-max">
@@ -298,38 +317,45 @@ export const SidebarNavbar = () => {
 							</Link>
 						</li>
 						<li>
-							<DropdownMenu>
-								<DropdownMenuTrigger className="flex justify-between mt-1.5">
-									<Avatar className="size-8">
-										<AvatarImage className="size-8" src={user?.image || ""} alt="User Avatar" />
-										<AvatarFallback className="bg-slate-200 border border-slate-400">
-											<FaUser className="text-neutral-400" />
-										</AvatarFallback>
-									</Avatar>
-									<span className="mt-1 ml-2">{user?.name}</span>
-								</DropdownMenuTrigger>
-								<DropdownMenuContent className="mr-3">
-									<DropdownMenuLabel>Mein Account</DropdownMenuLabel>
-									<DropdownMenuSeparator />
-									<DropdownMenuItem>
-										<Link href="/profil" title="Zum Profil">
-											<LuUser2 className="size-4 inline-block mr-2 mt-[-2px]" />
-											Profil
-										</Link>
-									</DropdownMenuItem>
-									<DropdownMenuItem>Empty Slot</DropdownMenuItem>
-									<DropdownMenuItem>Empty Slot</DropdownMenuItem>
-									<DropdownMenuSeparator />
-									<DropdownMenuItem>
-										<ExitIcon className="size-4 mr-2" />
-										Log out
-									</DropdownMenuItem>
-								</DropdownMenuContent>
-							</DropdownMenu>
+							{status === "loading" ? (
+								<div className="flex justify-between w-[130px] mt-1">
+									<Skeleton className="size-6 mt-1 mr-1 rounded-full" />
+									<Skeleton className="w-[100px] h-6 mt-1" />
+								</div>
+							) : (
+								<DropdownMenu>
+									<DropdownMenuTrigger className="flex justify-between mt-1.5">
+										<Avatar className="size-8">
+											<AvatarImage className="size-8" src={user?.image || ""} alt="User Avatar" />
+											<AvatarFallback className="bg-slate-200 border border-slate-400">
+												<FaUser className="text-neutral-400" />
+											</AvatarFallback>
+										</Avatar>
+										<span className="mt-1 ml-2">{user?.name}</span>
+									</DropdownMenuTrigger>
+									<DropdownMenuContent className="mr-3">
+										<DropdownMenuLabel>Mein Account</DropdownMenuLabel>
+										<DropdownMenuSeparator />
+										<DropdownMenuItem>
+											<Link href="/profil" title="Zum Profil">
+												<LuUser2 className="size-4 inline-block mr-2 mt-[-2px]" />
+												Profil
+											</Link>
+										</DropdownMenuItem>
+										<DropdownMenuItem>Empty Slot</DropdownMenuItem>
+										<DropdownMenuItem>Empty Slot</DropdownMenuItem>
+										<DropdownMenuSeparator />
+										<DropdownMenuItem>
+											<ExitIcon className="size-4 mr-2" />
+											Log out
+										</DropdownMenuItem>
+									</DropdownMenuContent>
+								</DropdownMenu>
+							)}
 						</li>
 					</ul>
 				</nav>
 			</header>
 		</>
-	)
-}
+	);
+};
