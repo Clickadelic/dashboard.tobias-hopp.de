@@ -14,6 +14,7 @@ import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 
 import Logo from "./logo";
+import { LogoutButton } from "@/components/auth/logout-button";
 
 import { MdOutlineChecklistRtl } from "react-icons/md";
 import { BsBuildings } from "react-icons/bs";
@@ -21,8 +22,6 @@ import { AiOutlineWindows } from "react-icons/ai";
 import { FaUser } from "react-icons/fa";
 import { GoGear } from "react-icons/go";
 import { LuUser2 } from "react-icons/lu";
-import { ExitIcon } from "@radix-ui/react-icons";
-
 import { HiChevronRight } from "react-icons/hi2";
 import { IoSpeedometerOutline } from "react-icons/io5";
 import { PiEye } from "react-icons/pi";
@@ -346,8 +345,7 @@ export const SidebarNavbar = () => {
 										<DropdownMenuItem>Empty Slot</DropdownMenuItem>
 										<DropdownMenuSeparator />
 										<DropdownMenuItem>
-											<ExitIcon className="size-4 mr-2" />
-											Log out
+											<LogoutButton>Logout</LogoutButton>
 										</DropdownMenuItem>
 									</DropdownMenuContent>
 								</DropdownMenu>
