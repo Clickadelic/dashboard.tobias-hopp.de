@@ -157,7 +157,7 @@ export const SidebarNavbar = () => {
 					<>
 						<div className="fixed left-0 bottom-5 w-64 p-4 flex bg-white" id="avatar-box">
 							<Avatar className="size-8 mt-1 mr-3">
-								<AvatarImage className="size-8 mt-3" src={user?.image || ""} alt="User Avatar" />
+								<AvatarImage className="border border-slate-200" src={user?.image || ""} alt="User Avatar" />
 								<AvatarFallback className="bg-slate-200 border border-slate-300">
 									<FaUser className="text-slate-400" />
 								</AvatarFallback>
