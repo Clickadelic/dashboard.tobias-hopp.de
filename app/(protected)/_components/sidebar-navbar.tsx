@@ -30,9 +30,9 @@ import { BsArrowsFullscreen } from "react-icons/bs";
 import { GoLink } from "react-icons/go";
 
 export const SidebarNavbar = () => {
+	const { status } = useSession({ required: true });
 	const user = useCurrentUser();
 	const role = useCurrentRole();
-	const { status } = useSession({ required: true });
 
 	return (
 		<>
