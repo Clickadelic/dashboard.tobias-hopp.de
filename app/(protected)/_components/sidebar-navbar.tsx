@@ -1,37 +1,37 @@
-"use client"
+"use client";
 
-import Image from "next/image"
-import Link from "next/link"
+import Image from "next/image";
+import Link from "next/link";
 
-import { useSession } from "next-auth/react"
-import { useCurrentRole } from "@/hooks/use-current-role"
-import { useCurrentUser } from "@/hooks/use-current-user"
-import { UserRole } from "@prisma/client"
+import { useSession } from "next-auth/react";
+import { useCurrentRole } from "@/hooks/use-current-role";
+import { useCurrentUser } from "@/hooks/use-current-user";
+import { UserRole } from "@prisma/client";
 
-import { Skeleton } from "@/components/ui/skeleton"
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
-import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
+import { Skeleton } from "@/components/ui/skeleton";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 
-import Logo from "./logo"
-import { LogoutButton } from "@/components/auth/logout-button"
+import Logo from "./logo";
+import { LogoutButton } from "@/components/auth/logout-button";
 
-import { MdOutlineChecklistRtl } from "react-icons/md"
-import { BsBuildings } from "react-icons/bs"
-import { AiOutlineWindows } from "react-icons/ai"
-import { FaUser } from "react-icons/fa"
-import { GoGear } from "react-icons/go"
-import { LuUser2 } from "react-icons/lu"
-import { HiChevronRight } from "react-icons/hi2"
-import { IoSpeedometerOutline } from "react-icons/io5"
-import { PiEye } from "react-icons/pi"
-import { BsArrowsFullscreen } from "react-icons/bs"
-import { GoLink } from "react-icons/go"
+import { MdOutlineChecklistRtl } from "react-icons/md";
+import { BsBuildings } from "react-icons/bs";
+import { AiOutlineWindows } from "react-icons/ai";
+import { FaUser } from "react-icons/fa";
+import { GoGear } from "react-icons/go";
+import { LuUser2 } from "react-icons/lu";
+import { HiChevronRight } from "react-icons/hi2";
+import { IoSpeedometerOutline } from "react-icons/io5";
+import { PiEye } from "react-icons/pi";
+import { BsArrowsFullscreen } from "react-icons/bs";
+import { GoLink } from "react-icons/go";
 
 export const SidebarNavbar = () => {
-	const { status } = useSession({ required: true })
-	const user = useCurrentUser()
-	const role = useCurrentRole()
+	const { status } = useSession({ required: true });
+	const user = useCurrentUser();
+	const role = useCurrentRole();
 
 	return (
 		<>
@@ -311,7 +311,7 @@ export const SidebarNavbar = () => {
 							</button>
 						</li>
 						<li>
-							<Link href="/settings" className="hover:bg-slate-200 mx-1 inline-flex p-3 rounded mr-2">
+							<Link href="/" className="hover:bg-slate-200 mx-1 inline-flex p-3 rounded mr-2">
 								<GoGear />
 							</Link>
 						</li>
@@ -355,5 +355,5 @@ export const SidebarNavbar = () => {
 				</nav>
 			</header>
 		</>
-	)
-}
+	);
+};
