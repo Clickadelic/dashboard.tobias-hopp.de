@@ -8,7 +8,7 @@ export const publicRoutes = ["/", "/auth/new-verification", "/about"];
 
 /**
  * An array of routes that are used for authentication
- * These routes redirect logged in users to /settings
+ * These routes redirect logged in users to /DEFAULT_LOGIN_REDIRECT
  * @type {string[]}
  */
 export const authRoutes = ["/auth/login", "/auth/register", "/auth/error", "/auth/reset", "/auth/new-password"];
