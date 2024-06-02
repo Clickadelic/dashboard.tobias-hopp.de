@@ -46,6 +46,10 @@ const config = {
 				card: {
 					DEFAULT: "hsl(var(--card))",
 					foreground: "hsl(var(--card-foreground))"
+				},
+				mantis: {
+					primary: "#1677ff",
+					hover: "#e6f4ff"
 				}
 			},
 			borderRadius: {
