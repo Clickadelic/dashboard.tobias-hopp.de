@@ -1,9 +1,10 @@
 const TodosPage = () => {
 	return (
-		<div className="bg-white px-3 py-2 rounded-md">
-			<h2 className="text-xl mb-3">Todo&apos;s</h2>
+		<div className="page-wrapper">
+			<h2 className="text-md font-bold text-slate-700 mb-5">ToDo&apos;s</h2>
+			<div className="bg-white rounded shadow-sm border p-3">A-Z Todo&apos;s</div>
 		</div>
-	);
-};
+	)
+}
 
-export default TodosPage;
+export default TodosPage
