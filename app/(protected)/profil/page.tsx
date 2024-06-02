@@ -38,6 +38,12 @@ const SettingsPage = () => {
 			isTwoFactorEnabled: user?.isTwoFactorEnabled || undefined
 		}
 	})
+	/**
+	 * Handles the form submission for updating user settings.
+	 *
+	 * @param {z.infer<typeof SettingsSchema>} values - The form values to be submitted.
+	 * @return {void} This function does not return anything.
+	 */
 	const onSubmit = (values: z.infer<typeof SettingsSchema>) => {
 		startTransition(() => {
 			settings(values)
@@ -58,7 +64,7 @@ const SettingsPage = () => {
 	return (
 		<div className="page-wrapper">
 			<h2 className="text-md font-bold text-slate-700 mb-5">Profil</h2>
-			<div className="bg-white rounded px-12 pt-12">
+			<div className="bg-white rounded shadow-sm border p-3">
 				<CardContent>
 					<Form {...form}>
 						<form className="space-y-6" autoComplete="off" onSubmit={form.handleSubmit(onSubmit)}>
@@ -140,7 +146,7 @@ const SettingsPage = () => {
 							</div>
 							<FormError message={error} />
 							<FormSuccess message={success} />
-							<Button type="submit">Save</Button>
+							<Button type="submit">Speichern</Button>
 						</form>
 					</Form>
 				</CardContent>
