@@ -10,7 +10,6 @@ export const SettingsSchema = z
 		password: z.optional(z.string().min(6)),
 		newPassword: z.optional(z.string().min(6))
 	})
-	// TODO Check Refine Code
 	.refine(
 		data => {
 			if (data.password && !data.newPassword) {
