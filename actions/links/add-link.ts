@@ -19,11 +19,13 @@ export const addLink = async (values: z.infer<typeof LinkSchema>) => {
 
 		const { title, url, description } = validatedFields.data;
 		console.log("Title:", title, "URL:", url, "Description:", description);
+
 		const existingLink = await db.link.findFirst({
 			where: {
 				url
 			}
 		});
+		// BUG: Wird nicht geloggt
 		console.log("Existing Link:", existingLink);
 		if (existingLink) {
 			return { error: "Url bereits vorhanden." };

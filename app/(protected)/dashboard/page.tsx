@@ -1,4 +1,4 @@
-import { LinkCard } from "../_components/link-card";
+import LinkCard from "../_components/link-card";
 
 const DashboardPage = () => {
 	return (
