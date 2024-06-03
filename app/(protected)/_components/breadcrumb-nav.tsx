@@ -23,12 +23,12 @@ const BreadcrumbNav = () => {
 					let href = `/${pathNames.slice(0, index + 1).join("/")}`;
 					let itemLink = link[0].toUpperCase() + link.slice(1, link.length);
 					return (
-						<>
-							<BreadcrumbItem key={index}>
+						<span key={index}>
+							<BreadcrumbItem>
 								<BreadcrumbLink href={href}>{itemLink}</BreadcrumbLink>
 							</BreadcrumbItem>
 							{pathNames.length !== index + 1 && <BreadcrumbSeparator />}
-						</>
+						</span>
 					);
 				})}
 			</BreadcrumbList>
