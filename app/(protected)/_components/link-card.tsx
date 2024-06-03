@@ -17,6 +17,7 @@ import { Button } from "@/components/ui/button";
 import { FiPlus } from "react-icons/fi";
 
 import { addLink } from "@/actions/links/add-link";
+import { countLinks } from "@/data/links";
 
 const LinkCard = () => {
 	const [isPending, startTransiton] = useTransition();
@@ -26,12 +27,6 @@ const LinkCard = () => {
 		defaultValues: { title: "", url: "", description: "" }
 	});
 
-	/**
-	 * Handles the form submission for adding a link.
-	 *
-	 * @param {z.infer<typeof LinkSchema>} values - The form values to be submitted.
-	 * @return {Promise<void>} A promise that resolves when the submission is complete.
-	 */
 	const onSubmit = async (values: z.infer<typeof LinkSchema>) => {
 		const validatedFields = LinkSchema.safeParse(values);
 		startTransiton(() => {
@@ -50,7 +45,8 @@ const LinkCard = () => {
 
 	return (
 		<div className="bg-white rounded shadow-sm border px-3 py-4">
-			<h2 className="text-sm border-bottom">Links</h2>
+			<h2 className="text-sm border-bottom">Links Total</h2>
+			<h3 className="text-2xl my-3">{countLinks()}</h3>
 			<Popover>
 				<PopoverTrigger className="flex justify-center w-full px-3 py-2 bg-slate-100 text-slate-700 hover:text-slate-800 hover:bg-slate-200 text-xs md:text-base rounded-sm mb-1">
 					<FiPlus className="mt-[.125rem] md:mt-1 mr-2" /> Link hinzufügen
