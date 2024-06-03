@@ -9,5 +9,5 @@ export const admin = async () => {
 	if (role === UserRole.ADMIN) {
 		return { success: "Server Action Admin Powers." };
 	}
-	return { error: "Keine Berechtigung." };
+	return { error: "Keine Berechtigung für diese Aktion." };
 };

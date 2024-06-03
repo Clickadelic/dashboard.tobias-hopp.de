@@ -48,6 +48,7 @@ export const SidebarNavbar = () => {
 	const toggleSidebar = () => {
 		sidebarOpen ? setSidebarOpen(false) : setSidebarOpen(true);
 	};
+
 	return (
 		<>
 			<aside className={cn("App-sidebar hidden fixed md:block top-0 left-0 min-h-screen border-r bg-white", sidebarOpen ? "w-16" : "w-64")}>
@@ -270,12 +271,12 @@ export const SidebarNavbar = () => {
 					<span className="h-[40px]">
 						{/* TODO: Mobile Button toggle */}
 						<button className="ml-3 mr-2 md:hidden">
-							<Image src="./favicon.svg" width={32} height={32} className="logo size-8 inline -mt-1" alt="Tailwind Dashboard" />
+							<Image src={logoSrc} width={32} height={32} className="logo size-8 inline -mt-1" alt="Tailwind Dashboard" />
 						</button>
 						<button onClick={toggleSidebar} className="hidden md:inline hover:bg-slate-100 mt-1 ml-3 white rounded p-2">
 							{sidebarOpen ? <BsTextIndentLeft className="size-5" /> : <BsTextIndentRight className="size-5" />}
 						</button>
-						<input type="search" name="search" className="relative top-[-.25rem] md:inline p-2 text-sm border w-72 border-slate-400 rounded-sm ml-3 " placeholder="Suche / STRG + K" />
+						<input type="search" name="search" className="relative top-[-.25rem] md:inline p-2 text-sm border w-72 border-slate-400 rounded-sm ml-3" placeholder="Suche / STRG + K" />
 					</span>
 					<button className="fixed right-5 md:hidden bg-slate-100 rounded p-2 mt-1">
 						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-text-indent-right" viewBox="0 0 16 16">
