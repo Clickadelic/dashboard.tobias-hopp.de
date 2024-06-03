@@ -1,50 +1,50 @@
-"use client"
+"use client";
 
-import Image from "next/image"
-import Link from "next/link"
+import Image from "next/image";
+import Link from "next/link";
 
-import { useSession } from "next-auth/react"
-import { useCurrentRole } from "@/hooks/use-current-role"
-import { useCurrentUser } from "@/hooks/use-current-user"
-import { UserRole } from "@prisma/client"
+import { useSession } from "next-auth/react";
+import { useCurrentRole } from "@/hooks/use-current-role";
+import { useCurrentUser } from "@/hooks/use-current-user";
+import { UserRole } from "@prisma/client";
 
-import { Skeleton } from "@/components/ui/skeleton"
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
-import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
+import { Skeleton } from "@/components/ui/skeleton";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 
-import Logo from "./logo"
-import { LogoutButton } from "@/components/auth/logout-button"
-import { cn } from "@/lib/utils"
+import Logo from "./logo";
+import { LogoutButton } from "@/components/auth/logout-button";
+import { cn } from "@/lib/utils";
 
-import { MdOutlineChecklistRtl } from "react-icons/md"
-import { BsBuildings } from "react-icons/bs"
-import { AiOutlineWindows } from "react-icons/ai"
-import { FaUser } from "react-icons/fa"
-import { GoGear } from "react-icons/go"
-import { LuUser2 } from "react-icons/lu"
-import { HiChevronRight } from "react-icons/hi2"
-import { IoSpeedometerOutline } from "react-icons/io5"
-import { PiEye } from "react-icons/pi"
-import { BsArrowsFullscreen } from "react-icons/bs"
-import { GoLink } from "react-icons/go"
+import { MdOutlineChecklistRtl } from "react-icons/md";
+import { BsBuildings } from "react-icons/bs";
+import { AiOutlineWindows } from "react-icons/ai";
+import { FaUser } from "react-icons/fa";
+import { GoGear } from "react-icons/go";
+import { LuUser2 } from "react-icons/lu";
+import { HiChevronRight } from "react-icons/hi2";
+import { IoSpeedometerOutline } from "react-icons/io5";
+import { PiEye } from "react-icons/pi";
+import { BsArrowsFullscreen } from "react-icons/bs";
+import { GoLink } from "react-icons/go";
 
-import { usePathname } from "next/navigation"
+import { usePathname } from "next/navigation";
 
 export const SidebarNavbar = () => {
-	const { status } = useSession({ required: true })
-	const user = useCurrentUser()
-	const role = useCurrentRole()
-	const path = usePathname()
+	const { status } = useSession({ required: true });
+	const user = useCurrentUser();
+	const role = useCurrentRole();
+	const path = usePathname();
 
-	console.log(path)
+	console.log(path);
 	return (
 		<>
 			<aside className="App-sidebar hidden fixed md:block top-0 left-0 w-64 min-h-screen border-r bg-white" id="main-sidebar">
-				<div className="App-sidebar-logo hidden md:flex justify-center px-2 py-3">
+				<div className="sidebar-logo hidden md:flex justify-center px-2 py-3">
 					<Logo />
 				</div>
-				<section className="sidebar-section mt-[18px] mb-6">
+				<section className="sidebar-accordion mt-[18px] mb-6">
 					<Accordion type="multiple" className="w-full">
 						<AccordionItem value="item-1">
 							<span className="text-xs text-neutral-400 ml-4 inline-block mt-4">Dashboard</span>
@@ -63,7 +63,8 @@ export const SidebarNavbar = () => {
 												"block p-3 hover:bg-mantis-hover hover:text-mantis-primary",
 												path === "/dashboard" && "text-mantis-primary border-r-2 border-r-mantis-primary bg-mantis-hover"
 											)}
-											title="Zur Übersicht">
+											title="Zur Übersicht"
+										>
 											<HiChevronRight className="inline-block mr-2 mt-[-3px]" />
 											Dashboard
 										</Link>
@@ -75,7 +76,8 @@ export const SidebarNavbar = () => {
 												"block p-3 hover:bg-mantis-hover hover:text-mantis-primary",
 												path === "/reports" && "text-mantis-primary border-r-2 border-r-mantis-primary bg-mantis-hover"
 											)}
-											title="Zu den Reports">
+											title="Zu den Reports"
+										>
 											<HiChevronRight className="inline-block mr-2 mt-[-3px]" />
 											Reports
 										</Link>
@@ -99,7 +101,8 @@ export const SidebarNavbar = () => {
 												"block p-3 hover:bg-mantis-hover hover:text-mantis-primary",
 												path === "/projekte" && "text-mantis-primary border-r-2 border-r-mantis-primary bg-mantis-hover"
 											)}
-											title="Zur Projektübersicht">
+											title="Zur Projektübersicht"
+										>
 											<HiChevronRight className="inline-block mr-2 mt-[-3px]" />
 											Projekt&uuml;bersicht
 										</Link>
@@ -123,7 +126,8 @@ export const SidebarNavbar = () => {
 												"block p-3 hover:bg-mantis-hover hover:text-mantis-primary",
 												path === "/todos" && "text-mantis-primary border-r-2 border-r-mantis-primary bg-mantis-hover"
 											)}
-											title="Zu den Todo's">
+											title="Zu den Todo's"
+										>
 											<HiChevronRight className="inline-block mr-2 mt-[-3px]" />
 											ToDo-&Uuml;bersicht
 										</Link>
@@ -147,7 +151,8 @@ export const SidebarNavbar = () => {
 												"block p-3 hover:bg-mantis-hover hover:text-mantis-primary",
 												path === "/links" && "text-mantis-primary border-r-2 border-r-mantis-primary bg-mantis-hover"
 											)}
-											title="Zur Projektübersicht">
+											title="Zur Projektübersicht"
+										>
 											<HiChevronRight className="inline-block mr-2 mt-[-3px]" />
 											Link-&Uuml;bersicht
 										</Link>
@@ -173,19 +178,21 @@ export const SidebarNavbar = () => {
 													"block p-3 hover:bg-mantis-hover hover:text-mantis-primary",
 													path === "/admin" && "text-mantis-primary border-r-2 border-r-mantis-primary bg-mantis-hover"
 												)}
-												title="Zur Übersicht">
+												title="Zur Übersicht"
+											>
 												<HiChevronRight className="inline-block mr-2 mt-[-3px]" />
 												Übersicht
 											</Link>
 										</li>
 										<li>
 											<Link
-												href="/admin/users"
+												href="/admin/benutzer"
 												className={cn(
 													"block p-3 hover:bg-mantis-hover hover:text-mantis-primary",
-													path === "/admin/users" && "text-mantis-primary border-r-2 border-r-mantis-primary bg-mantis-hover"
+													path === "/admin/benutzer" && "text-mantis-primary border-r-2 border-r-mantis-primary bg-mantis-hover"
 												)}
-												title="Zur Übersicht">
+												title="Zur Übersicht"
+											>
 												<HiChevronRight className="inline-block mr-2 mt-[-3px]" />
 												Benutzer
 											</Link>
@@ -197,7 +204,8 @@ export const SidebarNavbar = () => {
 													"block p-3 hover:bg-mantis-hover hover:text-mantis-primary",
 													path === "/admin/system" && "text-mantis-primary border-r-2 border-r-mantis-primary bg-mantis-hover"
 												)}
-												title="Zur Übersicht">
+												title="Zur Übersicht"
+											>
 												<HiChevronRight className="inline-block mr-2 mt-[-3px]" />
 												Systemeinstellungen
 											</Link>
@@ -236,23 +244,18 @@ export const SidebarNavbar = () => {
 				)}
 			</aside>
 			<header className="App-header flex fixed top-0 md:ml-64 w-screen p-2 border-b bg-white" id="header">
-				<nav className="flex justify-between w-max">
+				<nav className="header-navflex justify-between w-max">
 					<span className="p-0">
 						{/* TODO: Mobile Button toggle */}
-						<button className="border rounded w-8 h-8 p-2 md:hidden active">
-							<Image src="./favicon.svg" width={16} height={16} className="logo size-6 inline -mt-1" alt="Tailwind Dashboard" />
-							<span className="text-base hidden">
-								<span className="font-medium">Toby&apos;s</span>
-								<span>Dashboard</span>
-							</span>
+						<button className="ml-3 mr-2 md:hidden">
+							<Image src="./favicon.svg" width={32} height={32} className="logo size-8 inline -mt-1" alt="Tailwind Dashboard" />
 						</button>
-						<button className="hidden md:inline hover:bg-blue-600 ml-3 white rounded p-2 pt-1" id="btn-sidebar-toggle">
+						<button className="hidden md:inline hover:bg-slate-200 ml-3 white rounded p-2 pt-1" id="btn-sidebar-toggle">
 							<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-text-indent-right" viewBox="0 0 16 16">
 								<path d="M2 3.5a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5m10.646 2.146a.5.5 0 0 1 .708.708L11.707 8l1.647 1.646a.5.5 0 0 1-.708.708l-2-2a.5.5 0 0 1 0-.708l2-2zM2 6.5a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5m0 3a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5m0 3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5" />
 							</svg>
 						</button>
-						<input type="search" name="search" className="search-input-mobile md:hidden p-2 border rounded-md ml-3 mt-1" placeholder="Search" />
-						<input type="search" name="search" className="search-input-desktop hidden md:inline p-2 border rounded-md ml-3 mt-1" placeholder="Search / CTRL + K" />
+						<input type="search" name="search" className=" md:inline p-2 border rounded-md ml-3 mt-1" placeholder="Search / CTRL + K" />
 					</span>
 					<button className="fixed right-5 md:hidden bg-slate-100 rounded p-2 mt-1" id="sidebar-toggle">
 						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-text-indent-right" viewBox="0 0 16 16">
@@ -268,6 +271,7 @@ export const SidebarNavbar = () => {
 										<AiOutlineWindows />
 									</button>
 								</div>
+								{/* TODO: In ShadCN Komponente umbauen */}
 								<div className="absolute w-[960px] h-80 top-10 right-[-220px] z-50 invisible group-hover:visible grid grid-cols-4 rounded-md overflow-hidden bg-white shadow-md border">
 									<div className="gradient bg-wave-pattern p-8 flex flex-col">
 										<h2 className="text-white text-2xl font-medium mb-6">Dashboard</h2>
@@ -420,5 +424,5 @@ export const SidebarNavbar = () => {
 				</nav>
 			</header>
 		</>
-	)
-}
+	);
+};

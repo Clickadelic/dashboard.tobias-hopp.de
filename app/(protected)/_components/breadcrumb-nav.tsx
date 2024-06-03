@@ -10,7 +10,6 @@ import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
 const BreadcrumbNav = () => {
 	const paths = usePathname();
 	const pathNames = paths.split("/").filter(path => path);
-	const capitalizeLinks = true;
 	return (
 		<Breadcrumb className="mb-4">
 			<BreadcrumbList>
@@ -22,7 +21,7 @@ const BreadcrumbNav = () => {
 				<BreadcrumbSeparator />
 				{pathNames.map((link, index) => {
 					let href = `/${pathNames.slice(0, index + 1).join("/")}`;
-					let itemLink = capitalizeLinks ? link[0].toUpperCase() + link.slice(1, link.length) : link;
+					let itemLink = link[0].toUpperCase() + link.slice(1, link.length);
 					return (
 						<BreadcrumbItem key={index}>
 							<BreadcrumbLink href={href}>{itemLink}</BreadcrumbLink>

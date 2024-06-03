@@ -1,6 +1,6 @@
-import { UsersTable } from "@/app/(protected)/_components/users-table"
+import { UsersTable } from "@/app/(protected)/_components/users-table";
 
-const UsersPage = () => {
+const BenutzerPage = () => {
 	return (
 		<div className="page-wrapper">
 			<h2 className="text-md font-bold text-slate-700 mb-5">Benutzer</h2>
@@ -8,7 +8,7 @@ const UsersPage = () => {
 				<UsersTable />
 			</div>
 		</div>
-	)
-}
+	);
+};
 
-export default UsersPage
+export default BenutzerPage;
