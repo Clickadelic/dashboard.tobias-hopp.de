@@ -27,12 +27,6 @@ const LinkCard = () => {
 		defaultValues: { title: "", url: "", description: "" }
 	});
 
-	/**
-	 * Handles the form submission for adding a link.
-	 *
-	 * @param {z.infer<typeof LinkSchema>} values - The form values to be submitted.
-	 * @return {Promise<void>} A promise that resolves when the submission is complete.
-	 */
 	const onSubmit = async (values: z.infer<typeof LinkSchema>) => {
 		const validatedFields = LinkSchema.safeParse(values);
 		startTransiton(() => {
