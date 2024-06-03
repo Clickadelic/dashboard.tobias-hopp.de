@@ -1,57 +1,77 @@
 "use client";
 
-import Image from "next/image";
-import Link from "next/link";
+import { La_Belle_Aurore } from "next/font/google";
 
+import { usePathname } from "next/navigation";
 import { useSession } from "next-auth/react";
+import { useState } from "react";
+
 import { useCurrentRole } from "@/hooks/use-current-role";
 import { useCurrentUser } from "@/hooks/use-current-user";
 import { UserRole } from "@prisma/client";
+
+import Image from "next/image";
+import Link from "next/link";
+import logoSrc from "@/public/favicon.svg";
 
 import { Skeleton } from "@/components/ui/skeleton";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 
-import Logo from "./logo";
 import { LogoutButton } from "@/components/auth/logout-button";
 import { cn } from "@/lib/utils";
+import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
 
 import { MdOutlineChecklistRtl } from "react-icons/md";
-import { BsBuildings } from "react-icons/bs";
 import { AiOutlineWindows } from "react-icons/ai";
 import { FaUser } from "react-icons/fa";
 import { GoGear } from "react-icons/go";
+import { GoLink } from "react-icons/go";
 import { LuUser2 } from "react-icons/lu";
 import { HiChevronRight } from "react-icons/hi2";
 import { IoSpeedometerOutline } from "react-icons/io5";
 import { PiEye } from "react-icons/pi";
+import { BsBuildings } from "react-icons/bs";
 import { BsArrowsFullscreen } from "react-icons/bs";
-import { GoLink } from "react-icons/go";
+import { BsTextIndentRight } from "react-icons/bs";
+import { BsTextIndentLeft } from "react-icons/bs";
 
-import { usePathname } from "next/navigation";
-
+const laBelleAurore = La_Belle_Aurore({ subsets: ["latin"], weight: ["400"] });
 export const SidebarNavbar = () => {
 	const { status } = useSession({ required: true });
 	const user = useCurrentUser();
 	const role = useCurrentRole();
 	const path = usePathname();
 
-	console.log(path);
+	const [sidebarOpen, setSidebarOpen] = useState<boolean>(false);
+	const toggleSidebar = () => {
+		sidebarOpen ? setSidebarOpen(false) : setSidebarOpen(true);
+	};
 	return (
 		<>
-			<aside className="App-sidebar hidden fixed md:block top-0 left-0 w-64 min-h-screen border-r bg-white" id="main-sidebar">
+			<aside className={cn("App-sidebar hidden fixed md:block top-0 left-0 min-h-screen border-r bg-white", sidebarOpen ? "w-16" : "w-64")}>
 				<div className="sidebar-logo hidden md:flex justify-center px-2 py-3">
-					<Logo />
+					<h1>
+						<Link href={DEFAULT_LOGIN_REDIRECT} className="flex justify-between mt-2 text-slate-900 hover:opacity-75">
+							<Image src={logoSrc} width={16} height={16} className="logo inline -mt-1 size-8" alt="Tailwind Dashboard" />
+							{!sidebarOpen && (
+								<span className="ml-2">
+									<span className={cn("md:inline-block font-medium mr-1 text-2xl", laBelleAurore.className)}>Toby&apos;s</span>
+									<span className="md:inline-block font-bold">Dashboard</span>
+								</span>
+							)}
+						</Link>
+					</h1>
 				</div>
 				<section className="sidebar-accordion mt-[18px] mb-6">
 					<Accordion type="multiple" className="w-full">
 						<AccordionItem value="item-1">
-							<span className="text-xs text-neutral-400 ml-4 inline-block mt-4">Dashboard</span>
+							<span className={cn("text-xs text-neutral-400 ml-4 inline-block mt-4", sidebarOpen && "hidden")}>Dashboard</span>
 							<AccordionTrigger>
 								<span className="flex justify-between">
 									<IoSpeedometerOutline className="mt-1 mr-2" />
-									Dashboard
+									{!sidebarOpen && "Dashboard"}
 								</span>
 							</AccordionTrigger>
 							<AccordionContent>
@@ -66,7 +86,7 @@ export const SidebarNavbar = () => {
 											title="Zur Übersicht"
 										>
 											<HiChevronRight className="inline-block mr-2 mt-[-3px]" />
-											Dashboard
+											{!sidebarOpen && "Dashboard"}
 										</Link>
 									</li>
 									<li>
@@ -79,7 +99,7 @@ export const SidebarNavbar = () => {
 											title="Zu den Reports"
 										>
 											<HiChevronRight className="inline-block mr-2 mt-[-3px]" />
-											Reports
+											{!sidebarOpen && "Reports"}
 										</Link>
 									</li>
 								</ul>
@@ -89,7 +109,7 @@ export const SidebarNavbar = () => {
 							<AccordionTrigger>
 								<span className="flex justify-between">
 									<BsBuildings className="mt-1 mr-2" />
-									Projekte
+									{!sidebarOpen && "Projekte"}
 								</span>
 							</AccordionTrigger>
 							<AccordionContent>
@@ -104,7 +124,7 @@ export const SidebarNavbar = () => {
 											title="Zur Projektübersicht"
 										>
 											<HiChevronRight className="inline-block mr-2 mt-[-3px]" />
-											Projekt&uuml;bersicht
+											{!sidebarOpen && "Projektübersicht"}
 										</Link>
 									</li>
 								</ul>
@@ -114,7 +134,7 @@ export const SidebarNavbar = () => {
 							<AccordionTrigger>
 								<span className="flex justify-between">
 									<MdOutlineChecklistRtl className="mt-1 mr-2" />
-									ToDo&apos;s
+									{!sidebarOpen && "Todo's"}
 								</span>
 							</AccordionTrigger>
 							<AccordionContent>
@@ -129,7 +149,7 @@ export const SidebarNavbar = () => {
 											title="Zu den Todo's"
 										>
 											<HiChevronRight className="inline-block mr-2 mt-[-3px]" />
-											ToDo-&Uuml;bersicht
+											{!sidebarOpen && "ToDo-Übersicht"}
 										</Link>
 									</li>
 								</ul>
@@ -139,7 +159,7 @@ export const SidebarNavbar = () => {
 							<AccordionTrigger>
 								<span className="flex justify-between">
 									<GoLink className="mt-1 mr-2" />
-									Links
+									{!sidebarOpen && "Links"}
 								</span>
 							</AccordionTrigger>
 							<AccordionContent>
@@ -154,7 +174,7 @@ export const SidebarNavbar = () => {
 											title="Zur Projektübersicht"
 										>
 											<HiChevronRight className="inline-block mr-2 mt-[-3px]" />
-											Link-&Uuml;bersicht
+											{!sidebarOpen && "Link-&Uuml;bersicht"}
 										</Link>
 									</li>
 								</ul>
@@ -162,11 +182,11 @@ export const SidebarNavbar = () => {
 						</AccordionItem>
 						{role === UserRole.ADMIN && (
 							<AccordionItem value="item-5">
-								<span className="text-xs text-neutral-400 ml-4 inline-block mt-4">Admin</span>
+								<span className={cn("text-xs text-neutral-400 ml-4 inline-block mt-4", sidebarOpen && "hidden")}>Admin</span>
 								<AccordionTrigger>
 									<span className="flex justify-between">
 										<PiEye className="mt-1 mr-2" />
-										Admin
+										{!sidebarOpen && "Admin"}
 									</span>
 								</AccordionTrigger>
 								<AccordionContent>
@@ -181,7 +201,7 @@ export const SidebarNavbar = () => {
 												title="Zur Übersicht"
 											>
 												<HiChevronRight className="inline-block mr-2 mt-[-3px]" />
-												Übersicht
+												{!sidebarOpen && "Übersicht"}
 											</Link>
 										</li>
 										<li>
@@ -191,10 +211,10 @@ export const SidebarNavbar = () => {
 													"block p-3 hover:bg-mantis-hover hover:text-mantis-primary",
 													path === "/admin/benutzer" && "text-mantis-primary border-r-2 border-r-mantis-primary bg-mantis-hover"
 												)}
-												title="Zur Übersicht"
+												title="Zur Benutzerübersicht"
 											>
 												<HiChevronRight className="inline-block mr-2 mt-[-3px]" />
-												Benutzer
+												{!sidebarOpen && "Benutzer"}
 											</Link>
 										</li>
 										<li>
@@ -204,10 +224,10 @@ export const SidebarNavbar = () => {
 													"block p-3 hover:bg-mantis-hover hover:text-mantis-primary",
 													path === "/admin/system" && "text-mantis-primary border-r-2 border-r-mantis-primary bg-mantis-hover"
 												)}
-												title="Zur Übersicht"
+												title="Zu den Systemeinstellungen"
 											>
 												<HiChevronRight className="inline-block mr-2 mt-[-3px]" />
-												Systemeinstellungen
+												{!sidebarOpen && "Systemeinstellungen"}
 											</Link>
 										</li>
 									</ul>
@@ -228,36 +248,36 @@ export const SidebarNavbar = () => {
 					</div>
 				) : (
 					<>
-						<div className="fixed left-[-1px] bottom-5 w-64 p-4 flex bg-white mr-[1px]" id="avatar-box">
+						<div className={cn("fixed left-[-1px] bottom-5 w-64 p-4 flex bg-white mr-[1px]", sidebarOpen ? "w-16" : "w-64")}>
 							<Avatar className="size-8 mt-1 mr-3">
 								<AvatarImage className="border border-slate-200" src={user?.image || ""} alt="User Avatar" />
 								<AvatarFallback className="bg-slate-200 border border-slate-300">
 									<FaUser className="text-slate-400" />
 								</AvatarFallback>
 							</Avatar>
-							<div className="text-toggle">
-								<h4 className="text-base text-neutral-600">{user?.name}</h4>
-								<span className="inline-flex items-center rounded-md bg-yellow-50 px-2 py-1 text-xs text-yellow-800 ring-1 ring-inset ring-yellow-600/20">{user?.role}</span>
-							</div>
+							{!sidebarOpen && (
+								<div className="text-toggle">
+									<h4 className="text-base text-neutral-600">{user?.name}</h4>
+									<span className="inline-flex items-center rounded-md bg-yellow-50 px-2 py-1 text-xs text-yellow-800 ring-1 ring-inset ring-yellow-600/20">{user?.role}</span>
+								</div>
+							)}
 						</div>
 					</>
 				)}
 			</aside>
-			<header className="App-header flex fixed top-0 md:ml-64 w-screen p-2 border-b bg-white" id="header">
+			<header className={cn("App-header flex fixed top-0 md:ml-64 w-screen p-2 border-b bg-white", sidebarOpen ? "md:ml-16" : "md:ml-64")} id="header">
 				<nav className="header-navflex justify-between w-max">
-					<span className="p-0">
+					<span className="h-[40px]">
 						{/* TODO: Mobile Button toggle */}
 						<button className="ml-3 mr-2 md:hidden">
 							<Image src="./favicon.svg" width={32} height={32} className="logo size-8 inline -mt-1" alt="Tailwind Dashboard" />
 						</button>
-						<button className="hidden md:inline hover:bg-slate-200 ml-3 white rounded p-2 pt-1" id="btn-sidebar-toggle">
-							<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-text-indent-right" viewBox="0 0 16 16">
-								<path d="M2 3.5a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5m10.646 2.146a.5.5 0 0 1 .708.708L11.707 8l1.647 1.646a.5.5 0 0 1-.708.708l-2-2a.5.5 0 0 1 0-.708l2-2zM2 6.5a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5m0 3a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5m0 3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5" />
-							</svg>
+						<button onClick={toggleSidebar} className="hidden md:inline hover:bg-slate-100 mt-1 ml-3 white rounded p-2">
+							{sidebarOpen ? <BsTextIndentLeft className="size-5" /> : <BsTextIndentRight className="size-5" />}
 						</button>
-						<input type="search" name="search" className=" md:inline p-2 border rounded-md ml-3 mt-1" placeholder="Search / CTRL + K" />
+						<input type="search" name="search" className="relative top-[-.25rem] md:inline p-2 text-sm border w-72 border-slate-400 rounded-sm ml-3 " placeholder="Suche / STRG + K" />
 					</span>
-					<button className="fixed right-5 md:hidden bg-slate-100 rounded p-2 mt-1" id="sidebar-toggle">
+					<button className="fixed right-5 md:hidden bg-slate-100 rounded p-2 mt-1">
 						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-text-indent-right" viewBox="0 0 16 16">
 							<path d="M2 3.5a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5m10.646 2.146a.5.5 0 0 1 .708.708L11.707 8l1.647 1.646a.5.5 0 0 1-.708.708l-2-2a.5.5 0 0 1 0-.708l2-2zM2 6.5a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5m0 3a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5m0 3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5" />
 						</svg>
