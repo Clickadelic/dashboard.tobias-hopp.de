@@ -1,22 +1,18 @@
-"use client"
-import { Breadcrumb, BreadcrumbEllipsis, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb"
-import { DEFAULT_LOGIN_REDIRECT } from "@/routes"
-// import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-import { BiHomeAlt2 } from "react-icons/bi"
+"use client";
 
-import { usePathname } from "next/navigation"
+import { usePathname } from "next/navigation";
 
-function capitalizeFirstLetter(string: string) {
-	return string.charAt(0).toUpperCase() + string.slice(1)
-}
+import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
+import { BiHomeAlt2 } from "react-icons/bi";
+
+import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
 
 const BreadcrumbNav = () => {
-	// TODO: Improve Breadcrumb logic
-	let path = usePathname()
-	let cleanedPath = path.replace("/", "")
-	let capitalizedPath = capitalizeFirstLetter(cleanedPath)
+	const paths = usePathname();
+	const pathNames = paths.split("/").filter(path => path);
+	const capitalizeLinks = true;
 	return (
-		<Breadcrumb className="mb-2 md:mb-4">
+		<Breadcrumb className="mb-4">
 			<BreadcrumbList>
 				<BreadcrumbItem>
 					<BreadcrumbLink href={DEFAULT_LOGIN_REDIRECT}>
@@ -24,10 +20,19 @@ const BreadcrumbNav = () => {
 					</BreadcrumbLink>
 				</BreadcrumbItem>
 				<BreadcrumbSeparator />
-				<BreadcrumbItem className="cursor-default">{capitalizedPath}</BreadcrumbItem>
+				{pathNames.map((link, index) => {
+					let href = `/${pathNames.slice(0, index + 1).join("/")}`;
+					let itemLink = capitalizeLinks ? link[0].toUpperCase() + link.slice(1, link.length) : link;
+					return (
+						<BreadcrumbItem key={index}>
+							<BreadcrumbLink href={href}>{itemLink}</BreadcrumbLink>
+							{pathNames.length !== index + 1 && <BreadcrumbSeparator />}
+						</BreadcrumbItem>
+					);
+				})}
 			</BreadcrumbList>
 		</Breadcrumb>
-	)
-}
+	);
+};
 
-export default BreadcrumbNav
+export default BreadcrumbNav;
