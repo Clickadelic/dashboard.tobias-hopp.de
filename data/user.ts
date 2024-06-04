@@ -19,6 +19,9 @@ export const getUserById = async (id: string) => {
 	}
 }
 
+/**
+ * Returns a user object without password key
+ */
 type UserWithoutPassword = Omit<User, "password">
 
 /**

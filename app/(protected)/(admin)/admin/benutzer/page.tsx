@@ -1,4 +1,4 @@
-import { UsersTable } from "@/app/(protected)/_components/users-table";
+import UsersTable from "@/app/(protected)/_components/users-table";
 
 const BenutzerPage = () => {
 	return (

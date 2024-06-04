@@ -1,30 +1,25 @@
-"use client";
+"use client"
 
-import { useTransition, useState, useEffect } from "react";
+import { useTransition, useState, useEffect } from "react"
 
 const LinksPage = () => {
-	const [isLoading, setIsLoading] = useState<boolean>(false);
-	const [links, setLinks] = useState<any[]>([]);
-
-	const collection = fetch("/api/links/").then(async res => {
-		const response = await res.json();
-		console.log(response);
-	});
+	const [isLoading, setIsLoading] = useState<boolean>(false)
+	const [links, setLinks] = useState<any[]>([])
 
 	const fetchLinks = async () => {
 		await fetch("/api/links/").then(async res => {
-			setIsLoading(true);
-			const response = await res.json();
-			setLinks(response);
-			setIsLoading(false);
-		});
-	};
+			setIsLoading(true)
+			const response = await res.json()
+			setLinks(response)
+			setIsLoading(false)
+		})
+	}
 
 	useEffect(() => {
-		setIsLoading(true);
-		fetchLinks();
-		setIsLoading(false);
-	}, []);
+		setIsLoading(true)
+		fetchLinks()
+		setIsLoading(false)
+	}, [])
 
 	return (
 		<div className="page-wrapper">
@@ -55,9 +50,8 @@ const LinksPage = () => {
 								<td colSpan={3}>
 									<button
 										onClick={() => {
-											fetchLinks();
-										}}
-									>
+											fetchLinks()
+										}}>
 										Reload
 									</button>
 								</td>
@@ -67,7 +61,7 @@ const LinksPage = () => {
 				)}
 			</div>
 		</div>
-	);
-};
+	)
+}
 
-export default LinksPage;
+export default LinksPage
