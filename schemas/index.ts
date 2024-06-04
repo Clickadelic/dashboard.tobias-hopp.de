@@ -63,8 +63,8 @@ export const ProjectSchema = z.object({
 });
 
 export const TodoSchema = z.object({
-	title: z.string().min(1, "Projekttitel fehlt"),
-	description: z.optional(z.string().max(300, "Projektbeschreibung zu lang")),
+	title: z.string().min(1, "Was gibt es zu erledigen?"),
+	description: z.optional(z.string().max(300, "Beschreibung zu lang")),
 	isCompleted: z.boolean()
 });
 
