@@ -1,19 +1,41 @@
-import { getUsers } from "@/data/user"
+"use client"
 
-export const UsersTable = async () => {
-	const users = await getUsers()
-	console.log(users)
+import { useTransition, useState, useEffect } from "react"
+
+import { UserRow } from "./user-row"
+export const UsersTable = () => {
+	const [isLoading, setIsLoading] = useState<boolean>(false)
+	const [users, setUsers] = useState<any[]>([])
+
+	const fetchUsers = async () => {
+		setIsLoading(true)
+		try {
+			await fetch("/api/users/").then(async res => {
+				const response = await res.json()
+				setUsers(response)
+				setIsLoading(false)
+			})
+		} catch (error) {
+			console.error("Error fetching users:", error)
+		}
+	}
+
+	useEffect(() => {
+		setIsLoading(true)
+		fetchUsers()
+		setIsLoading(false)
+	}, [])
+
 	return (
 		<div className="flex flex-col">
 			<div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
 				<div className="inline-block min-w-full py-2 sm:px-6 lg:px-8">
 					<div className="overflow-hidden">
-						<table className="min-w-full text-left text-sm font-light text-surface dark:text-white">
+						<table className="min-w-full text-left text-sm dark:text-white">
 							<thead className="p-2">
 								<tr>
 									<td className="p-2">Id</td>
 									<td className="p-2">Name</td>
-									<td className="p-2">E-Mail</td>
 									<td className="p-2">Benutzerrolle</td>
 									<td className="p-2">Bearbeiten</td>
 									<td className="p-2">Löschen</td>
@@ -21,20 +43,7 @@ export const UsersTable = async () => {
 							</thead>
 							<tbody>
 								{users.map(user => {
-									return (
-										<tr key={user.id}>
-											<td className="p-2">{user.id}</td>
-											<td className="p-2">{user.name}</td>
-											<td className="p-2">{user.email}</td>
-											<td className="p-2">{user.role}</td>
-											<td className="p-2">
-												<button>Edit</button>
-											</td>
-											<td className="p-2">
-												<button>Del</button>
-											</td>
-										</tr>
-									)
+									return <UserRow key={user.id} user={user} />
 								})}
 							</tbody>
 						</table>
