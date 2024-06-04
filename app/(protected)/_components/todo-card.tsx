@@ -115,7 +115,7 @@ const TodoCard = () => {
 								render={({ field }) => (
 									<FormItem>
 										<FormControl>
-											<Checkbox checked={field.value} onCheckedChange={field.onChange} />
+											<Checkbox className="mr-2" checked={field.value} onCheckedChange={field.onChange} />
 										</FormControl>
 										<FormLabel>Erledigt</FormLabel>
 										<FormMessage />
