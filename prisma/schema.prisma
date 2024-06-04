@@ -19,19 +19,23 @@ enum UserRole {
 }
 
 model User {
-    id            String    @id @default(cuid())
-    name          String?
-    email         String?   @unique
-    emailVerified DateTime?
-    image         String?
-    password      String?
-    role          UserRole  @default(USER)
-    accounts      Account[]
-	isTwoFactorEnabled Boolean @default(false)
-	twoFactorConfirmation TwoFactorConfirmation?
-	
-	links Link[] // One-to-many relation with Link
-	@@unique([id])
+    id                    String                 @id @default(cuid())
+    name                  String?
+    email                 String?                @unique
+    emailVerified         DateTime?
+    image                 String?
+    password              String?
+    role                  UserRole               @default(USER)
+    accounts              Account[]
+    isTwoFactorEnabled    Boolean                @default(false)
+    twoFactorConfirmation TwoFactorConfirmation?
+
+    links    Link[] // One-to-many relation with Link
+    projects Project[]
+    todos    Todo[]
+    notices  Notice[]
+
+    @@unique([id])
 }
 
 model Account {
@@ -81,24 +85,67 @@ model TwoFactorToken {
 }
 
 model TwoFactorConfirmation {
-	id String @id @default(cuid())
+    id String @id @default(cuid())
 
-	userId String
-	user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+    userId String
+    user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-	@@unique([userId])
+    @@unique([userId])
 }
 
 model Link {
-	id 				String @id @default(cuid())
-	title 			String
-	url 			String
-	description 	String
-	createdAt 		DateTime @default(now())
-	updatedAt 		DateTime @default(now())
+    id          String   @id @default(cuid())
+    title       String
+    url         String
+    description String?
+    createdAt   DateTime @default(now())
+    updatedAt   DateTime @default(now())
 
-	userId 			String
-	user User   	@relation(fields: [userId], references: [id], onDelete: Cascade)
+    userId String
+    user   User   @relation(fields: [userId], references: [id], onDelete: NoAction)
 
-  	@@unique([id])
+    @@unique([id])
+}
+
+model Todo {
+    id          String  @id @default(cuid())
+    title       String
+    description String?
+    isCompleted Boolean @default(false)
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @default(now())
+
+    userId String
+    user   User   @relation(fields: [userId], references: [id], onDelete: NoAction)
+
+    @@unique([id])
+}
+
+model Notice {
+    id         String @id @default(cuid())
+    noticetext String
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @default(now())
+
+    userId String
+    user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+    @@unique([id])
+}
+
+model Project {
+    id          String  @id @default(cuid())
+    title       String
+    url         String
+    description String?
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @default(now())
+
+    userId String
+    user   User   @relation(fields: [userId], references: [id], onDelete: NoAction)
+
+    @@unique([id])
 }

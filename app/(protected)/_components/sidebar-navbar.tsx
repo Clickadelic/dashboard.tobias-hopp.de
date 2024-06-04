@@ -175,7 +175,7 @@ export const SidebarNavbar = () => {
 											title="Zur Projektübersicht"
 										>
 											<HiChevronRight className="inline-block mr-2 mt-[-3px]" />
-											{!sidebarOpen && "Link-&Uuml;bersicht"}
+											{!sidebarOpen && "Link-Übersicht"}
 										</Link>
 									</li>
 								</ul>

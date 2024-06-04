@@ -5,14 +5,14 @@ import { zodResolver } from "@hookform/resolvers/zod";
 
 import { useTransition, useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { revalidatePath } from "next/cache";
 
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { LinkSchema } from "@/schemas";
+import { TodoSchema } from "@/schemas";
 import { Input } from "@/components/ui/input";
 import { Form, FormControl, FormLabel, FormField, FormItem, FormMessage } from "@/components/ui/form";
 import { Textarea } from "@/components/ui/textarea";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Checkbox } from "@/components/ui/checkbox";
+
 import { Skeleton } from "@/components/ui/skeleton";
 
 import { toast } from "sonner";
@@ -21,39 +21,37 @@ import { Button } from "@/components/ui/button";
 import { MdOutlineInfo } from "react-icons/md";
 import { FiPlus } from "react-icons/fi";
 
-import { addLink } from "@/actions/link/add-link";
+import { addTodo } from "@/actions/todo/add-todo";
 
-const LinkCard = () => {
+const TodoCard = () => {
 	const [isPending, startTransiton] = useTransition();
-
 	const [isLoading, setIsLoading] = useState<boolean>(false);
-	const [links, setLinks] = useState<any[]>([]);
+	const [todos, setTodos] = useState<any[]>([]);
 
-	const fetchLinks = async () => {
-		await fetch("/api/links/").then(async res => {
+	const fetchTodos = async () => {
+		await fetch("/api/todos/").then(async res => {
 			setIsLoading(true);
 			const response = await res.json();
-			console.log(response);
-			setLinks(response);
+			setTodos(response);
 			setIsLoading(false);
 		});
 	};
 
 	useEffect(() => {
 		setIsLoading(true);
-		fetchLinks();
+		fetchTodos();
 		setIsLoading(false);
 	}, []);
 
-	const form = useForm<z.infer<typeof LinkSchema>>({
-		resolver: zodResolver(LinkSchema),
-		defaultValues: { title: "", url: "", description: "" }
+	const form = useForm<z.infer<typeof TodoSchema>>({
+		resolver: zodResolver(TodoSchema),
+		defaultValues: { title: "", description: "", isCompleted: false }
 	});
 
-	const onSubmit = async (values: z.infer<typeof LinkSchema>) => {
-		const validatedFields = LinkSchema.safeParse(values);
+	const onSubmit = async (values: z.infer<typeof TodoSchema>) => {
+		const validatedFields = TodoSchema.safeParse(values);
 		startTransiton(() => {
-			addLink(values).then(data => {
+			addTodo(values).then(data => {
 				if (data.error) {
 					toast.error(data.error);
 				}
@@ -69,15 +67,15 @@ const LinkCard = () => {
 	return (
 		<div className="bg-white rounded shadow-sm border p-3">
 			<h2 className="text-sm border-bottom text-neutral-500 flex justify-between">
-				<span>Links</span>
+				<span>Todo&apos;s</span>
 				<span>
 					<MdOutlineInfo />
 				</span>
 			</h2>
-			<h3 className="text-md font-semibold mt-2 mb-4">{isLoading ? "0" : links.length}</h3>
+			<h3 className="text-md font-semibold mt-2 mb-4">{isLoading ? "0" : todos.length}</h3>
 			<Popover>
 				<PopoverTrigger className="flex justify-center w-full p-3 py-2 bg-slate-100 text-slate-700 hover:text-slate-800 hover:bg-slate-200 text-xs md:text-base rounded-sm">
-					<FiPlus className="mt-[.125rem] md:mt-1 mr-2" /> Link hinzufügen
+					<FiPlus className="mt-[.125rem] md:mt-1 mr-2" /> Todo hinzufügen
 				</PopoverTrigger>
 				<PopoverContent>
 					<Form {...form}>
@@ -95,19 +93,6 @@ const LinkCard = () => {
 									</FormItem>
 								)}
 							/>
-							<FormField
-								control={form.control}
-								name="url"
-								disabled={isPending}
-								render={({ field }) => (
-									<FormItem>
-										<FormControl>
-											<Input {...field} placeholder="Url" />
-										</FormControl>
-										<FormMessage />
-									</FormItem>
-								)}
-							/>
 
 							<FormField
 								control={form.control}
@@ -116,8 +101,23 @@ const LinkCard = () => {
 								render={({ field }) => (
 									<FormItem>
 										<FormControl>
-											<Textarea {...field} placeholder="Beschreibung..." />
+											<Textarea {...field} placeholder="Beschreibung" />
 										</FormControl>
+										<FormMessage />
+									</FormItem>
+								)}
+							/>
+
+							<FormField
+								control={form.control}
+								name="isCompleted"
+								disabled={isPending}
+								render={({ field }) => (
+									<FormItem>
+										<FormControl>
+											<Checkbox className="mr-2" checked={field.value} onCheckedChange={field.onChange} />
+										</FormControl>
+										<FormLabel>Erledigt</FormLabel>
 										<FormMessage />
 									</FormItem>
 								)}
@@ -134,4 +134,4 @@ const LinkCard = () => {
 	);
 };
 
-export default LinkCard;
+export default TodoCard;
