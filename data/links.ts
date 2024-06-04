@@ -1,6 +1,9 @@
 import { db } from "@/lib/db";
 
 export const countLinks = async () => {
-	const count = await db.link.count();
-	return count;
+	return await db.link.count();
+};
+
+export const getLinks = async () => {
+	return await db.link.findMany();
 };

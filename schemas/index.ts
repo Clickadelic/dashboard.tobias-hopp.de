@@ -1,5 +1,5 @@
-import * as z from "zod"
-import { UserRole } from "@prisma/client"
+import * as z from "zod";
+import { UserRole } from "@prisma/client";
 
 export const SettingsSchema = z
 	.object({
@@ -13,10 +13,10 @@ export const SettingsSchema = z
 	.refine(
 		data => {
 			if (data.password && !data.newPassword) {
-				return false
+				return false;
 			}
 
-			return true
+			return true;
 		},
 		{
 			message: "Neues Passwort ist notwendig.",
@@ -26,38 +26,54 @@ export const SettingsSchema = z
 	.refine(
 		data => {
 			if (data.newPassword && !data.password) {
-				return false
+				return false;
 			}
-			return true
+			return true;
 		},
 		{
 			message: "Altes Passwort ist notwendig.",
 			path: ["password"]
 		}
-	)
+	);
 
 export const LoginSchema = z.object({
 	email: z.string().email({ message: "E-Mail ist notwendig." }),
 	password: z.string().min(1, { message: "Passwort ist notwendig." }),
 	code: z.optional(z.string())
-})
+});
 
 export const RegisterSchema = z.object({
 	email: z.string().email({ message: "E-Mail ist ein Pflichtfeld." }),
 	password: z.string().min(6, { message: "Mindestens 6 Buchstaben." }),
 	name: z.string().min(1, { message: "Name ist ein Pflichtfeld." })
-})
+});
 
 export const ResetSchema = z.object({
 	email: z.string().email({ message: "E-Mail ist notwendig." })
-})
+});
 
 export const NewPasswordSchema = z.object({
 	password: z.string().min(6, { message: "Mindestens 6 Buchstaben." })
-})
+});
+
+export const ProjectSchema = z.object({
+	title: z.string().min(1, "Projekttitel fehlt"),
+	url: z.string().url("Ungültige URL"),
+	description: z.optional(z.string().max(300, "Projektbeschreibung zu lang"))
+});
+
+export const TodoSchema = z.object({
+	title: z.string().min(1, "Projekttitel fehlt"),
+	description: z.optional(z.string().max(300, "Projektbeschreibung zu lang")),
+	isCompleted: z.boolean()
+});
+
+export const NoticeSchema = z.object({
+	noticetext: z.string().max(1000, "Notiz zu lang")
+});
 
 export const LinkSchema = z.object({
 	title: z.string().min(1, "Titel fehlt"),
 	url: z.string().url("Ungültige URL"),
-	description: z.string()
-})
+	description: z.optional(z.string().max(300, "Beschreibung zu lang"))
+});
