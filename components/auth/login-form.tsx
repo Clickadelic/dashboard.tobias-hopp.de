@@ -1,63 +1,63 @@
-"use client";
+"use client"
 
-import * as z from "zod";
+import * as z from "zod"
 
-import { useForm } from "react-hook-form";
-import { useState, useTransition } from "react";
-import { zodResolver } from "@hookform/resolvers/zod";
-import Link from "next/link";
-import { LoginSchema } from "@/schemas";
-import { Input } from "@/components/ui/input";
-import { Form, FormControl, FormLabel, FormField, FormItem, FormMessage } from "@/components/ui/form";
+import { useForm } from "react-hook-form"
+import { useState, useTransition } from "react"
+import { zodResolver } from "@hookform/resolvers/zod"
+import Link from "next/link"
+import { LoginSchema } from "@/schemas"
+import { Input } from "@/components/ui/input"
+import { Form, FormControl, FormLabel, FormField, FormItem, FormMessage } from "@/components/ui/form"
 
-import { CardWrapper } from "./card-wrapper";
-import { Button } from "@/components/ui/button";
-import { FormError } from "@/components/form-error";
-import { FormSuccess } from "@/components/form-success";
-import { useSearchParams } from "next/navigation";
+import { CardWrapper } from "./card-wrapper"
+import { Button } from "@/components/ui/button"
+import { FormError } from "@/components/form-error"
+import { FormSuccess } from "@/components/form-success"
+import { useSearchParams } from "next/navigation"
 
-import { login } from "@/actions/login";
+import { login } from "@/actions/login"
 
 export const LoginForm = () => {
-	const searchParams = useSearchParams();
-	const urlError = searchParams.get("error") === "OAuthAccountNotLinked" ? "E-Mail bereits in Verwendung." : "";
+	const searchParams = useSearchParams()
+	const callbackUrl = useSearchParams().get("callbackUrl")
+	const urlError = searchParams.get("error") === "OAuthAccountNotLinked" ? "E-Mail bereits in Verwendung." : ""
 
-	const [showTwoFactor, setShowTwoFactor] = useState<boolean>(false);
-	const [error, setError] = useState<string | undefined>(undefined);
-	const [success, setSuccess] = useState<string | undefined>(undefined);
-	const [isPending, startTransition] = useTransition();
+	const [showTwoFactor, setShowTwoFactor] = useState<boolean>(false)
+	const [error, setError] = useState<string | undefined>(undefined)
+	const [success, setSuccess] = useState<string | undefined>(undefined)
+	const [isPending, startTransition] = useTransition()
 
 	const form = useForm<z.infer<typeof LoginSchema>>({
 		resolver: zodResolver(LoginSchema),
 		defaultValues: { email: "", password: "" }
-	});
+	})
 
 	const onSubmit = async (values: z.infer<typeof LoginSchema>) => {
-		setError(undefined);
-		setSuccess(undefined);
-
+		setError(undefined)
+		setSuccess(undefined)
 		startTransition(() => {
-			login(values)
+			login(values, callbackUrl)
 				.then(data => {
 					if (data?.error) {
 						if (!showTwoFactor) {
-							form.reset();
+							form.reset()
 						}
-						setError(data.error);
+						setError(data.error)
 					}
 
 					if (data?.success) {
-						form.reset();
-						setSuccess(data.success);
+						form.reset()
+						setSuccess(data.success)
 					}
 
 					if (data?.twoFactor) {
-						setShowTwoFactor(true);
+						setShowTwoFactor(true)
 					}
 				})
-				.catch(() => setError("Unbekannter Fehler."));
-		});
-	};
+				.catch(() => setError("Unbekannter Fehler."))
+		})
+	}
 
 	return (
 		<CardWrapper headerLabel="Willkommen zurück!" backButtonLabel="zur Registrierung" backButtonHref="/auth/register" showSocial>
@@ -121,5 +121,5 @@ export const LoginForm = () => {
 				</form>
 			</Form>
 		</CardWrapper>
-	);
-};
+	)
+}
