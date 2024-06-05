@@ -47,7 +47,7 @@ const UsersTable = () => {
 
 	return (
 		<Table>
-			<TableCaption>Query Time</TableCaption>
+			<TableCaption>{isLoading ? "Lade Benutzer..." : `${users.length} Benutzer registriert.`}</TableCaption>
 			<TableHeader>
 				<TableRow>
 					<TableHead className="w-[20px]">Id</TableHead>
