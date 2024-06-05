@@ -20,7 +20,7 @@ import { login } from "@/actions/login"
 
 export const LoginForm = () => {
 	const searchParams = useSearchParams()
-	const callbackUrl = useSearchParams().get("callbackUrl")
+	const callbackUrl = searchParams.get("callbackUrl")
 	const urlError = searchParams.get("error") === "OAuthAccountNotLinked" ? "E-Mail bereits in Verwendung." : ""
 
 	const [showTwoFactor, setShowTwoFactor] = useState<boolean>(false)
