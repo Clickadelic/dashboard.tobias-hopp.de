@@ -18,6 +18,10 @@ export const addNotice = async (values: z.infer<typeof NoticeSchema>) => {
 
 		const { noticetext } = validatedFields.data;
 
+		if (noticetext === "") {
+			return { error: "Notiztext fehlt." };
+		}
+
 		await db.notice.create({
 			data: {
 				noticetext,
