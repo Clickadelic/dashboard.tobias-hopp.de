@@ -3,12 +3,14 @@
 import { useState, useEffect } from "react";
 import { Table, TableBody, TableCaption, TableCell, TableFooter, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-
-import UserRow from "./user-row";
+import { toast } from "sonner";
+import { ExclamationTriangleIcon } from "@radix-ui/react-icons";
+import { CheckCircledIcon } from "@radix-ui/react-icons";
+import { BsInfoCircle } from "react-icons/bs";
+import { BsFillTrash3Fill } from "react-icons/bs";
+import { LiaEdit } from "react-icons/lia";
+import { capitalizeFirstLetter } from "@/lib/utils";
 
 const UsersTable = () => {
 	const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -20,6 +22,20 @@ const UsersTable = () => {
 			const response = await res.json();
 			setUsers(response);
 		});
+		setIsLoading(false);
+	};
+
+	const deleteUserByEmail = async (email: string) => {
+		setIsLoading(true);
+		const result = await fetch(`/api/user/${email}`, {
+			method: "DELETE"
+		});
+		if (!result.ok) {
+			toast.error("Fehler beim Loeschen des Benutzers.");
+		} else {
+			toast.success("Benutzer gelöscht.");
+			fetchUsers();
+		}
 		setIsLoading(false);
 	};
 
@@ -36,7 +52,7 @@ const UsersTable = () => {
 				<TableRow>
 					<TableHead className="w-[20px]">Id</TableHead>
 					<TableHead className="w-[160px]">Name</TableHead>
-					<TableHead className="w-[180px]">E-Mail Adresse</TableHead>
+					<TableHead className="w-[250px]">E-Mail Adresse</TableHead>
 					<TableHead className="w-[130px]">E-Mail verifiziert</TableHead>
 					<TableHead className="w-[120px]">2FA-Status</TableHead>
 					<TableHead>Rolle</TableHead>
@@ -46,7 +62,35 @@ const UsersTable = () => {
 			</TableHeader>
 			<TableBody>
 				{users.map((user: any) => (
-					<UserRow key={user.id} user={user} />
+					<TableRow key={user?.id}>
+						<TableCell>
+							<Popover>
+								<PopoverTrigger>
+									<BsInfoCircle />
+								</PopoverTrigger>
+								<PopoverContent>{user?.id}</PopoverContent>
+							</Popover>
+						</TableCell>
+						<TableCell>{user?.name}</TableCell>
+						<TableCell>{user?.email}</TableCell>
+						<TableCell>
+							{user?.emailVerified ? <CheckCircledIcon className="size-4 mx-auto text-emerald-500" /> : <ExclamationTriangleIcon className="size-4 mx-auto text-rose-500" />}
+						</TableCell>
+						<TableCell>
+							{user?.isTwoFactorEnabled ? <CheckCircledIcon className="size-4 mx-auto text-emerald-500" /> : <ExclamationTriangleIcon className="size-4 mx-auto text-rose-500" />}
+						</TableCell>
+						<TableCell>{capitalizeFirstLetter(user?.role)}</TableCell>
+						<TableCell>
+							<button className=" text-slate-800 hover:text-emerald-500">
+								<LiaEdit className="size-4 mx-auto" />
+							</button>
+						</TableCell>
+						<TableCell>
+							<button onClick={() => deleteUserByEmail(user?.email)} className="text-rose-500 hover:text-rose-600">
+								<BsFillTrash3Fill className="size-4 mx-auto" />
+							</button>
+						</TableCell>
+					</TableRow>
 				))}
 			</TableBody>
 		</Table>
