@@ -10,11 +10,35 @@ export function capitalizeFirstLetter(string: string) {
 	return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
-export function slugify(s: string) {
-	s = s
+export function slugify(string: string) {
+	string = string
 		.toLowerCase()
 		.replace(/[^a-z0-9 -]/g, "")
 		.replace(/\s+/g, "-")
 		.replace(/-+/g, "-");
-	return s;
+	return string;
+}
+
+export function germanDateFormat(date: Date | string) {
+	const options: Intl.DateTimeFormatOptions = {
+		year: "numeric",
+		month: "long",
+		day: "2-digit",
+		hour: "2-digit",
+		minute: "2-digit",
+		timeZone: "UTC",
+		timeZoneName: "short"
+	};
+
+	// Ensure date is a Date object
+	const dateObj = typeof date === "string" ? new Date(date) : date;
+
+	// Check if the date is valid
+	if (isNaN(dateObj.getTime())) {
+		throw new Error("Invalid date format");
+	}
+
+	const germanDate = new Intl.DateTimeFormat("de-DE", options).format(dateObj).replace(" um", " ").replace(" UTC", " Uhr");
+
+	return germanDate;
 }

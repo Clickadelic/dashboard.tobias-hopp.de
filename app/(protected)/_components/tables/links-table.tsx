@@ -14,23 +14,15 @@ import { BsInfoCircle } from "react-icons/bs";
 import { BsFillTrash3Fill } from "react-icons/bs";
 import { LiaEdit } from "react-icons/lia";
 
-import { capitalizeFirstLetter } from "@/lib/utils";
+import { germanDateFormat } from "@/lib/utils";
+
 const LinksTable = () => {
-	const options: Intl.DateTimeFormatOptions = {
-		year: "numeric",
-		month: "long",
-		day: "numeric",
-		hour: "2-digit",
-		minute: "2-digit",
-		second: "2-digit",
-		timeZone: "UTC",
-		timeZoneName: "short"
-	};
+	const { status } = useSession({ required: true });
+	const userId = useCurrentUser()?.id;
 
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 	const [links, setUsers] = useState<any[]>([]);
 
-	const userId = useCurrentUser()?.id;
 	const fetchLinks = async () => {
 		setIsLoading(true);
 		await fetch(`/api/links/${userId}`).then(async res => {
@@ -52,10 +44,10 @@ const LinksTable = () => {
 			<TableHeader>
 				<TableRow>
 					<TableHead className="w-[20px]">Id</TableHead>
-					<TableHead className="w-[]">Titel</TableHead>
-					<TableHead className="w-[]">Url</TableHead>
-					<TableHead className="w-[]">Beschreibung</TableHead>
-					<TableHead className="w-[]">Hinzugefügt am</TableHead>
+					<TableHead>Titel</TableHead>
+					<TableHead>Url</TableHead>
+					<TableHead>Beschreibung</TableHead>
+					<TableHead>Hinzugefügt am</TableHead>
 					<TableHead>Letzte Änderung</TableHead>
 					<TableHead>bearbeiten</TableHead>
 					<TableHead>löschen</TableHead>
@@ -64,20 +56,20 @@ const LinksTable = () => {
 			<TableBody>
 				{links.map((link: any) => (
 					<>
-						<TableRow key={link?.id}>
+						<TableRow key={link.id}>
 							<TableCell>
 								<Popover>
 									<PopoverTrigger>
 										<BsInfoCircle />
 									</PopoverTrigger>
-									<PopoverContent>{link?.id}</PopoverContent>
+									<PopoverContent>{link.id}</PopoverContent>
 								</Popover>
 							</TableCell>
-							<TableCell>{link?.title}</TableCell>
-							<TableCell>{link?.url}</TableCell>
-							<TableCell>{link.description}</TableCell>
-							<TableCell>{link?.createdAt}</TableCell>
-							<TableCell>{link?.updatedAt}</TableCell>
+							<TableCell>{link.title}</TableCell>
+							<TableCell>{link.url}</TableCell>
+							<TableCell>{link?.description}</TableCell>
+							<TableCell>{germanDateFormat(link.createdAt)}</TableCell>
+							<TableCell>{germanDateFormat(link.updatedAt)}</TableCell>
 							<TableCell>
 								<button className=" text-slate-800 hover:text-emerald-500">
 									<LiaEdit className="size-4 mx-auto" />
