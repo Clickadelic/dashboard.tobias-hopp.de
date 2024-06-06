@@ -7,7 +7,7 @@ export async function GET(request: NextRequest, { params }: { params: { userId: 
 	const path = request.nextUrl.searchParams.get("path") || ""
 
 	if (!userId) {
-		return NextResponse.json({ message: "Fehlende Benutzer-Id." })
+		return NextResponse.json({ message: "Benutzer-Id fehlt." })
 	}
 
 	const relatedUser = await db.user.findFirst({
@@ -20,7 +20,7 @@ export async function GET(request: NextRequest, { params }: { params: { userId: 
 		return NextResponse.json({ message: "Benutzer nicht gefunden." })
 	}
 
-	const data = await db.notice.findMany({
+	const data = await db.todo.findMany({
 		where: {
 			userId
 		}

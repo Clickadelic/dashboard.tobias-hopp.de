@@ -1,69 +1,72 @@
-"use client";
+"use client"
 
-import * as z from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod"
+import { zodResolver } from "@hookform/resolvers/zod"
 
-import { useTransition, useState, useEffect } from "react";
-import { useForm } from "react-hook-form";
+import { useTransition, useState, useEffect } from "react"
+import { useForm } from "react-hook-form"
+import { useSession } from "next-auth/react"
+import { useCurrentUser } from "@/hooks/use-current-user"
 
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { Input } from "@/components/ui/input";
-import { Form, FormControl, FormLabel, FormField, FormItem, FormMessage } from "@/components/ui/form";
-import { Textarea } from "@/components/ui/textarea";
-import { Skeleton } from "@/components/ui/skeleton";
-import { toast } from "sonner";
-import { Button } from "@/components/ui/button";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
+import { Input } from "@/components/ui/input"
+import { Form, FormControl, FormLabel, FormField, FormItem, FormMessage } from "@/components/ui/form"
+import { Textarea } from "@/components/ui/textarea"
+import { Skeleton } from "@/components/ui/skeleton"
+import { toast } from "sonner"
+import { Button } from "@/components/ui/button"
 
-import { FiPlus } from "react-icons/fi";
-import { MdOutlineInfo } from "react-icons/md";
+import { FiPlus } from "react-icons/fi"
+import { MdOutlineInfo } from "react-icons/md"
 
-import { ProjectSchema } from "@/schemas";
-import { addProject } from "@/actions/project/add-project";
+import { ProjectSchema } from "@/schemas"
+import { addProject } from "@/actions/project/add-project"
 
 const ProjectCard = () => {
-	const [isPending, startTransition] = useTransition();
-	const [isLoading, setIsLoading] = useState<boolean>(false);
-	const [projects, setProjects] = useState<any[]>([]);
+	const userId = useCurrentUser()?.id
+	const [isPending, startTransition] = useTransition()
+	const [isLoading, setIsLoading] = useState<boolean>(false)
+	const [projects, setProjects] = useState<any[]>([])
 
 	const fetchProjects = async () => {
-		setIsLoading(true);
+		setIsLoading(true)
 		try {
-			const res = await fetch("/api/projects/");
-			const response = await res.json();
-			setProjects(response);
+			const res = await fetch(`/api/projects/${userId}`)
+			const response = await res.json()
+			setProjects(response)
 		} catch (error) {
-			console.error("Error fetching links:", error);
-			toast.error("Failed to fetch links.");
+			console.error("Error fetching links:", error)
+			toast.error("Failed to fetch links.")
 		} finally {
-			setIsLoading(false);
+			setIsLoading(false)
 		}
-	};
+	}
 
 	useEffect(() => {
-		setIsLoading(true);
-		fetchProjects();
-		setIsLoading(false);
-	}, []);
+		setIsLoading(true)
+		fetchProjects()
+		setIsLoading(false)
+	}, [])
 
 	const form = useForm<z.infer<typeof ProjectSchema>>({
 		resolver: zodResolver(ProjectSchema),
 		defaultValues: { title: "", url: "", description: "" }
-	});
+	})
 
 	const onSubmit = async (values: z.infer<typeof ProjectSchema>) => {
-		const validatedFields = ProjectSchema.safeParse(values);
+		const validatedFields = ProjectSchema.safeParse(values)
 		startTransition(async () => {
-			const result = await addProject(values);
+			const result = await addProject(values)
 			if (result.error) {
-				toast.error(result.error);
+				toast.error(result.error)
 			} else if (result.success) {
-				toast.success(result.success);
-				form.reset();
-				fetchProjects(); // Fetch the updated list of links
+				toast.success(result.success)
+				form.reset()
+				fetchProjects()
 			}
-		});
-	};
+		})
+	}
 
 	return (
 		<div className="bg-white rounded shadow-sm border p-3">
@@ -138,7 +141,7 @@ const ProjectCard = () => {
 				</PopoverContent>
 			</Popover>
 		</div>
-	);
-};
+	)
+}
 
-export default ProjectCard;
+export default ProjectCard

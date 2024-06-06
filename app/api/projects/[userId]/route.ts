@@ -20,7 +20,7 @@ export async function GET(request: NextRequest, { params }: { params: { userId: 
 		return NextResponse.json({ message: "Benutzer nicht gefunden." })
 	}
 
-	const data = await db.notice.findMany({
+	const data = await db.project.findMany({
 		where: {
 			userId
 		}
