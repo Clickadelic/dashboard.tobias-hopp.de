@@ -3,13 +3,14 @@
 import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import { useCurrentUser } from "@/hooks/use-current-user";
-
+import Link from "next/link";
 import { Table, TableBody, TableCaption, TableCell, TableFooter, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { toast } from "sonner";
 import { ExclamationTriangleIcon } from "@radix-ui/react-icons";
 import { CheckCircledIcon } from "@radix-ui/react-icons";
+import { FiExternalLink } from "react-icons/fi";
 import { BsInfoCircle } from "react-icons/bs";
 import { BsFillTrash3Fill } from "react-icons/bs";
 import { LiaEdit } from "react-icons/lia";
@@ -66,7 +67,12 @@ const LinksTable = () => {
 								</Popover>
 							</TableCell>
 							<TableCell>{link.title}</TableCell>
-							<TableCell>{link.url}</TableCell>
+							<TableCell>
+								<FiExternalLink className="inline mr-2 mt--1" />
+								<Link href={link.url} title={link.title} className="inline hover:text-sky-500" target="_blank">
+									{link.url}
+								</Link>
+							</TableCell>
 							<TableCell>{link?.description}</TableCell>
 							<TableCell>{germanDateFormat(link.createdAt)}</TableCell>
 							<TableCell>{germanDateFormat(link.updatedAt)}</TableCell>
