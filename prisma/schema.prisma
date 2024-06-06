@@ -102,7 +102,7 @@ model Link {
     updatedAt   DateTime @default(now())
 
     userId String
-    user   User   @relation(fields: [userId], references: [id], onDelete: NoAction)
+    user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
     @@unique([id])
 }
@@ -117,7 +117,7 @@ model Todo {
     updatedAt DateTime @default(now())
 
     userId String
-    user   User   @relation(fields: [userId], references: [id], onDelete: NoAction)
+    user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
     @@unique([id])
 }
