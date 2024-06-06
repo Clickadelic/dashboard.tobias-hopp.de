@@ -1,14 +1,6 @@
-import { transporter } from "@/config";
 import * as handlebars from "handlebars";
-import { accountConfirmationTemplate } from "./templates";
-
-const compileEmail = async (template: string, url: string) => {
-	const newTemplate = handlebars.compile(template);
-	const htmlBody = newTemplate({
-		url: url
-	});
-	return newTemplate;
-};
+import { transporter } from "@/config";
+import { accountConfirmationTemplate } from "./templates/account-confirmation";
 
 export const sendTwoFactorTokenEmail = async (email: string, token: string) => {
 	try {
@@ -42,16 +34,17 @@ export const sendPasswordResetEmail = async (email: string, token: string) => {
 	}
 };
 
-export const sendVerificationEmail = async (email: string, token: string) => {
+export const sendVerificationEmail = async (name: string, email: string, token: string) => {
 	const confirmationLink = process.env.NEXT_PUBLIC_APP_URL + `/auth/new-verification?token=${token}`;
-
+	const template = handlebars.compile(accountConfirmationTemplate);
+	const html = template({ name, confirmationLink });
 	try {
 		const sendResult = await transporter.sendMail({
 			sender: process.env.EMAIL_SENDER,
 			from: process.env.EMAIL_FROM,
 			to: email,
 			subject: "Account-Bestätigung - Toby's Dashboard",
-			html: `<p>Hi und danke für Deine Registrierung. Bitte aktivier Deinen Account mit einem Klick auf den folgenden <a href="${confirmationLink}" title="Please click here.">Link</a>.</p>`
+			html: html
 		});
 		console.log(sendResult);
 	} catch (error) {

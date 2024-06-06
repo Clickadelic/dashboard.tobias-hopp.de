@@ -1,6 +1,6 @@
-import LinkCard from "../_components/cards/link-card";
-import TodoCard from "../_components/cards/todo-card";
 import ProjectCard from "../_components/cards/project-card";
+import TodoCard from "../_components/cards/todo-card";
+import LinkCard from "../_components/cards/link-card";
 import NoticeCard from "../_components/cards/notice-card";
 
 const DashboardPage = () => {

@@ -1,5 +1,4 @@
-export const accountConfirmationTemplate = (confirmationLink: string) => {
-	return `<!DOCTYPE html>
+export const accountConfirmationTemplate = `<!DOCTYPE html>
 	<html lang="en" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:v="urn:schemas-microsoft-com:vml">
 	<head>
 		<title></title>
@@ -114,10 +113,10 @@ export const accountConfirmationTemplate = (confirmationLink: string) => {
 																<div align="center" class="alignment"
 																	style="line-height:10px">
 																	<div style="max-width: 125px;"><img
-																			alt="I'm an image" height="auto"
+																			alt="Account-Bestätigung Check" height="auto"
 																			src="${process.env.NEXT_PUBLIC_APP_URL}/images/email/confirm.png"
 																			style="display: block; height: auto; border: 0; width: 100%;"
-																			title="I'm an image" width="125" /></div>
+																			title="Dashboard Account-Bestätigung" width="125" /></div>
 																</div>
 															</td>
 														</tr>
@@ -173,7 +172,7 @@ export const accountConfirmationTemplate = (confirmationLink: string) => {
 																		style="font-size: 12px; font-family: Arial, Helvetica, sans-serif; mso-line-height-alt: 14.399999999999999px; color: #555555; line-height: 1.2;">
 																		<p
 																			style="margin: 0; font-size: 14px; text-align: center; mso-line-height-alt: 16.8px;">
-																			Hi und willkommen auf meinem Dashboard,</p>
+																			Hi {{name}}, willkommen auf meinem Dashboard.</p>
 																		<p
 																			style="margin: 0; font-size: 14px; text-align: center; mso-line-height-alt: 14.399999999999999px;">
 																			 </p>
@@ -207,9 +206,9 @@ export const accountConfirmationTemplate = (confirmationLink: string) => {
 <![endif]-->
 																	<div
 																		style="text-decoration:none;display:inline-block;color:#ffffff;background-color:#3AAEE0;border-radius:4px;width:auto;border-top:0px solid transparent;font-weight:undefined;border-right:0px solid transparent;border-bottom:0px solid transparent;border-left:0px solid transparent;padding-top:5px;padding-bottom:5px;font-family:Arial, Helvetica, sans-serif;font-size:16px;text-align:center;mso-border-alt:none;word-break:keep-all;">
-																		<a href="${confirmationLink}"
+																		<a href="{{confirmationLink}}"
 																			style="padding-left:20px;padding-right:20px;font-size:16px;display:inline-block;letter-spacing:normal;"><span
-																				style="margin: 0; word-break: break-word; line-height: 32px;">Jetzt
+																				style="margin: 0; word-break: break-word; line-height: 32px; color:#ffffff;">Dashboard-Account
 																				bestätigen</span></a></div>
 																	<!--[if mso]></center></v:textbox></v:roundrect><![endif]-->
 																</div>
@@ -230,4 +229,3 @@ export const accountConfirmationTemplate = (confirmationLink: string) => {
 	</table><!-- End -->
 </body>
 </html>`;
-};
