@@ -1,71 +1,74 @@
-"use client";
+"use client"
 
-import * as z from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod"
+import { zodResolver } from "@hookform/resolvers/zod"
 
-import { useTransition, useState, useEffect } from "react";
-import { useForm } from "react-hook-form";
+import { useTransition, useState, useEffect } from "react"
+import { useForm } from "react-hook-form"
+import { useSession } from "next-auth/react"
+import { useCurrentUser } from "@/hooks/use-current-user"
 
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { NoticeSchema } from "@/schemas";
-import { Input } from "@/components/ui/input";
-import { Form, FormControl, FormLabel, FormField, FormItem, FormMessage } from "@/components/ui/form";
-import { Textarea } from "@/components/ui/textarea";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Skeleton } from "@/components/ui/skeleton";
-import { toast } from "sonner";
-import { Button } from "@/components/ui/button";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
+import { NoticeSchema } from "@/schemas"
+import { Form, FormControl, FormLabel, FormField, FormItem, FormMessage } from "@/components/ui/form"
+import { Textarea } from "@/components/ui/textarea"
+import { Skeleton } from "@/components/ui/skeleton"
+import { toast } from "sonner"
+import { Button } from "@/components/ui/button"
 
-import { MdOutlineInfo } from "react-icons/md";
-import { FiPlus } from "react-icons/fi";
+import { MdOutlineInfo } from "react-icons/md"
+import { FiPlus } from "react-icons/fi"
 
-import { addNotice } from "@/actions/notice/add-notice";
+import { addNotice } from "@/actions/notice/add-notice"
 
 const NoticeCard = () => {
-	const [isPending, startTransition] = useTransition();
+	const userId = useCurrentUser()?.id
+	const { status } = useSession({ required: true })
 
-	const [isLoading, setIsLoading] = useState<boolean>(false);
-	const [notices, setNotices] = useState<any[]>([]);
+	const [isPending, startTransition] = useTransition()
+	const [isLoading, setIsLoading] = useState<boolean>(false)
+	const [notices, setNotices] = useState<any[]>([])
 
 	const fetchNotices = async () => {
-		setIsLoading(true);
+		setIsLoading(true)
 		try {
-			const res = await fetch("/api/notices/");
-			const response = await res.json();
-			setNotices(response);
+			const res = await fetch(`/api/notices/${userId}`)
+			const response = await res.json()
+			console.log(response)
+			setNotices(response)
 		} catch (error) {
-			console.error("Error fetching Notices.", error);
-			toast.error("Fehler beim Laden der Notizen.");
+			console.error("Error fetching Notices.", error)
+			toast.error("Fehler beim Laden der Notizen.")
 		} finally {
-			setIsLoading(false);
+			setIsLoading(false)
 		}
-	};
+	}
 
 	useEffect(() => {
-		setIsLoading(true);
-		fetchNotices();
-		setIsLoading(false);
-	}, []);
+		setIsLoading(true)
+		fetchNotices()
+		setIsLoading(false)
+	}, [])
 
 	const form = useForm<z.infer<typeof NoticeSchema>>({
 		resolver: zodResolver(NoticeSchema),
 		defaultValues: { noticetext: "" }
-	});
+	})
 
 	const onSubmit = async (values: z.infer<typeof NoticeSchema>) => {
-		const validatedFields = NoticeSchema.safeParse(values);
+		const validatedFields = NoticeSchema.safeParse(values)
 		startTransition(async () => {
-			const result = await addNotice(values);
+			const result = await addNotice(values)
 			if (result.error) {
-				toast.error(result.error);
+				toast.error(result.error)
 			} else if (result.success) {
-				toast.success(result.success);
-				form.reset();
-				fetchNotices();
+				toast.success(result.success)
+				form.reset()
+				fetchNotices()
 			}
-		});
-	};
+		})
+	}
 
 	return (
 		<div className="bg-white rounded shadow-sm border p-3">
@@ -114,7 +117,7 @@ const NoticeCard = () => {
 				</PopoverContent>
 			</Popover>
 		</div>
-	);
-};
+	)
+}
 
-export default NoticeCard;
+export default NoticeCard
