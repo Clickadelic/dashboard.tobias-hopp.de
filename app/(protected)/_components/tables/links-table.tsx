@@ -14,7 +14,7 @@ import { FiExternalLink } from "react-icons/fi";
 import { BsInfoCircle } from "react-icons/bs";
 import { BsFillTrash3Fill } from "react-icons/bs";
 import { LiaEdit } from "react-icons/lia";
-
+import { deleteLink } from "@/actions/link/delete-link";
 import { germanDateFormat } from "@/lib/utils";
 
 const LinksTable = () => {
@@ -31,6 +31,11 @@ const LinksTable = () => {
 			setUsers(response);
 		});
 		setIsLoading(false);
+	};
+
+	const deleteLinkById = async (id: string) => {
+		await deleteLink(id);
+		fetchLinks();
 	};
 
 	useEffect(() => {
@@ -82,7 +87,7 @@ const LinksTable = () => {
 								</button>
 							</TableCell>
 							<TableCell>
-								<button className="text-rose-500 hover:text-rose-600">
+								<button onClick={() => deleteLinkById(link.id)} className="text-rose-500 hover:text-rose-600">
 									<BsFillTrash3Fill className="size-4 mx-auto" />
 								</button>
 							</TableCell>
