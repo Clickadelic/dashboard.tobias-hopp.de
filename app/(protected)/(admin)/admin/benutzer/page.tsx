@@ -1,4 +1,4 @@
-import UsersTable from "@/app/(protected)/_components/users-table";
+import UsersTable from "@/app/(protected)/_components/tables/users-table"
 
 const BenutzerPage = () => {
 	return (
@@ -8,7 +8,7 @@ const BenutzerPage = () => {
 				<UsersTable />
 			</div>
 		</div>
-	);
-};
+	)
+}
 
-export default BenutzerPage;
+export default BenutzerPage

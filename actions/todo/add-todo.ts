@@ -1,22 +1,22 @@
-"use server";
+"use server"
 
-import * as z from "zod";
+import * as z from "zod"
 
-import { db } from "@/lib/db";
-import { TodoSchema } from "@/schemas";
-import { auth } from "@/auth";
+import { db } from "@/lib/db"
+import { TodoSchema } from "@/schemas"
+import { auth } from "@/auth"
 
 export const addTodo = async (values: z.infer<typeof TodoSchema>) => {
-	const session = await auth();
-	const user = session?.user;
-	const userId = user?.id;
+	const session = await auth()
+	const user = session?.user
+	const userId = user?.id
 	try {
-		const validatedFields = TodoSchema.safeParse(values);
+		const validatedFields = TodoSchema.safeParse(values)
 		if (!validatedFields.success) {
-			return { error: "Ungültige Felder!" };
+			return { error: "Ungültige Felder!" }
 		}
 
-		const { title, description, isCompleted } = validatedFields.data;
+		const { title, description, isCompleted } = validatedFields.data
 
 		await db.todo.create({
 			data: {
@@ -27,10 +27,10 @@ export const addTodo = async (values: z.infer<typeof TodoSchema>) => {
 					connect: { id: userId }
 				}
 			}
-		});
+		})
 
-		return { success: "Todo hinzugefügt." };
+		return { success: "Todo hinzugefügt." }
 	} catch (error) {
-		return { error: "Interner Server-Fehler." };
+		return { error: "Interner Server-Fehler." }
 	}
-};
+}

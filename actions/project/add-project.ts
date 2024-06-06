@@ -1,32 +1,35 @@
-"use server";
+"use server"
 
-import * as z from "zod";
+import * as z from "zod"
 
-import { db } from "@/lib/db";
-import { ProjectSchema } from "@/schemas";
-import { auth } from "@/auth";
+import { db } from "@/lib/db"
+import { ProjectSchema } from "@/schemas"
+import { auth } from "@/auth"
 
 export const addProject = async (values: z.infer<typeof ProjectSchema>) => {
-	const session = await auth();
-	const user = session?.user;
-	const userId = user?.id;
+	const session = await auth()
+	const user = session?.user
+	const userId = user?.id
 	try {
-		const validatedFields = ProjectSchema.safeParse(values);
+		const validatedFields = ProjectSchema.safeParse(values)
 
 		if (!validatedFields.success) {
-			return { error: "Ungültige Felder!" };
+			return { error: "Ungültige Felder!" }
 		}
 
-		const { title, url, description } = validatedFields.data;
+		const { title, url, description } = validatedFields.data
 
 		const existingLink = await db.project.findFirst({
 			where: {
-				url
+				url,
+				user: {
+					id: userId
+				}
 			}
-		});
+		})
 
 		if (existingLink) {
-			return { error: "Projekt-Url existiert bereits." };
+			return { error: "Projekt-Url existiert bereits." }
 		}
 		await db.project.create({
 			data: {
@@ -37,9 +40,9 @@ export const addProject = async (values: z.infer<typeof ProjectSchema>) => {
 					connect: { id: userId }
 				}
 			}
-		});
-		return { success: "Projekt hinzugefügt." };
+		})
+		return { success: "Projekt hinzugefügt." }
 	} catch (error) {
-		return { error: "Interner Server-Fehler." };
+		return { error: "Interner Server-Fehler." }
 	}
-};
+}
