@@ -34,8 +34,13 @@ const LinksTable = () => {
 	};
 
 	const deleteLinkById = async (id: string) => {
-		await deleteLink(id);
-		fetchLinks();
+		const result = await deleteLink(id);
+		if (result.error) {
+			toast.error(result.error);
+		} else if (result.success) {
+			toast.success(result.success);
+			fetchLinks();
+		}
 	};
 
 	useEffect(() => {

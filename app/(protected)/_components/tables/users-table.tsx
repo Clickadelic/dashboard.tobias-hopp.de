@@ -1,49 +1,62 @@
-"use client"
+"use client";
 
-import { useState, useEffect } from "react"
-import { Table, TableBody, TableCaption, TableCell, TableFooter, TableHead, TableHeader, TableRow } from "@/components/ui/table"
+import { useState, useEffect } from "react";
+import { Table, TableBody, TableCaption, TableCell, TableFooter, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
-import { toast } from "sonner"
-import { ExclamationTriangleIcon } from "@radix-ui/react-icons"
-import { CheckCircledIcon } from "@radix-ui/react-icons"
-import { BsInfoCircle } from "react-icons/bs"
-import { BsFillTrash3Fill } from "react-icons/bs"
-import { LiaEdit } from "react-icons/lia"
-import { capitalizeFirstLetter } from "@/lib/utils"
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { toast } from "sonner";
+import { ExclamationTriangleIcon } from "@radix-ui/react-icons";
+import { CheckCircledIcon } from "@radix-ui/react-icons";
+import { BsInfoCircle } from "react-icons/bs";
+import { BsFillTrash3Fill } from "react-icons/bs";
+import { LiaEdit } from "react-icons/lia";
+import { capitalizeFirstLetter } from "@/lib/utils";
+
+import { deleteUser } from "@/actions/user/delete-user";
 
 const UsersTable = () => {
-	const [isLoading, setIsLoading] = useState<boolean>(false)
-	const [users, setUsers] = useState<any[]>([])
+	const [isLoading, setIsLoading] = useState<boolean>(false);
+	const [users, setUsers] = useState<any[]>([]);
 
 	const fetchUsers = async () => {
-		setIsLoading(true)
+		setIsLoading(true);
 		await fetch("/api/users/").then(async res => {
-			const response = await res.json()
-			setUsers(response)
-		})
-		setIsLoading(false)
-	}
+			const response = await res.json();
+			setUsers(response);
+		});
+		setIsLoading(false);
+	};
+
+	// Obsolote
+	// const deleteUserByEmail = async (email: string) => {
+	// 	setIsLoading(true)
+	// 	const result = await fetch(`/api/user/${email}`, {
+	// 		method: "DELETE"
+	// 	})
+	// 	if (!result.ok) {
+	// 		toast.error("Fehler beim Loeschen des Benutzers.")
+	// 	} else {
+	// 		toast.success("Benutzer gelöscht.")
+	// 		fetchUsers()
+	// 	}
+	// 	setIsLoading(false)
+	// }
 
 	const deleteUserByEmail = async (email: string) => {
-		setIsLoading(true)
-		const result = await fetch(`/api/user/${email}`, {
-			method: "DELETE"
-		})
-		if (!result.ok) {
-			toast.error("Fehler beim Loeschen des Benutzers.")
-		} else {
-			toast.success("Benutzer gelöscht.")
-			fetchUsers()
+		const result = await deleteUser(email);
+		if (result.error) {
+			toast.error(result.error);
+		} else if (result.success) {
+			toast.success(result.success);
+			fetchUsers();
 		}
-		setIsLoading(false)
-	}
+	};
 
 	useEffect(() => {
-		setIsLoading(true)
-		fetchUsers()
-		setIsLoading(false)
-	}, [])
+		setIsLoading(true);
+		fetchUsers();
+		setIsLoading(false);
+	}, []);
 
 	return (
 		<Table>
@@ -94,7 +107,7 @@ const UsersTable = () => {
 				))}
 			</TableBody>
 		</Table>
-	)
-}
+	);
+};
 
-export default UsersTable
+export default UsersTable;
