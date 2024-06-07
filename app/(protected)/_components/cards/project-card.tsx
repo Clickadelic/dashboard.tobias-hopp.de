@@ -72,7 +72,7 @@ const ProjectCard = () => {
 			<h2 className="text-sm border-bottom text-neutral-500 flex justify-between mb-2">
 				<span>Projekte</span>
 				<Link href="/projekte" className="hover:text-slate-900">
-					Zur Übersicht <FaArrowRightLong className="text-neutral-500 inline ml-2 mt-[-3px]" />
+					Zur Übersicht
 				</Link>
 			</h2>
 			<h3 className="text-md font-semibold mb-4">{projects.length === 0 ? <Skeleton className="mt-3 mb-5 w-8 h-4" /> : projects.length}</h3>
