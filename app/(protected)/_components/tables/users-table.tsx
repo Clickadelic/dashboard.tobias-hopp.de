@@ -27,21 +27,6 @@ const UsersTable = () => {
 		setIsLoading(false);
 	};
 
-	// Obsolote
-	// const deleteUserByEmail = async (email: string) => {
-	// 	setIsLoading(true)
-	// 	const result = await fetch(`/api/user/${email}`, {
-	// 		method: "DELETE"
-	// 	})
-	// 	if (!result.ok) {
-	// 		toast.error("Fehler beim Loeschen des Benutzers.")
-	// 	} else {
-	// 		toast.success("Benutzer gelöscht.")
-	// 		fetchUsers()
-	// 	}
-	// 	setIsLoading(false)
-	// }
-
 	const deleteUserByEmail = async (email: string) => {
 		const result = await deleteUser(email);
 		if (result.error) {
@@ -60,13 +45,13 @@ const UsersTable = () => {
 
 	return (
 		<Table>
-			<TableCaption>{isLoading ? "Lade Benutzer..." : `${users.length} Benutzer registriert.`}</TableCaption>
+			<TableCaption>{isLoading ? "Lade Benutzer..." : `${users.length} Benutzer.`}</TableCaption>
 			<TableHeader>
 				<TableRow>
 					<TableHead className="w-[20px]">Id</TableHead>
 					<TableHead className="w-[160px]">Name</TableHead>
 					<TableHead className="w-[250px]">E-Mail Adresse</TableHead>
-					<TableHead className="w-[130px]">E-Mail verifiziert</TableHead>
+					<TableHead className="w-[160px]">E-Mail verifiziert</TableHead>
 					<TableHead className="w-[120px]">2FA-Status</TableHead>
 					<TableHead>Rolle</TableHead>
 					<TableHead>bearbeiten</TableHead>

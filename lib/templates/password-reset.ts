@@ -1,5 +1,4 @@
-export const accountConfirmationTemplate = (confirmationLink: string) => {
-	return `<!DOCTYPE html>
+export const passwordResetTemplate = `<!DOCTYPE html>
 	<html lang="en" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:v="urn:schemas-microsoft-com:vml">
 	<head>
 		<title></title>
@@ -114,10 +113,10 @@ export const accountConfirmationTemplate = (confirmationLink: string) => {
 																<div align="center" class="alignment"
 																	style="line-height:10px">
 																	<div style="max-width: 125px;"><img
-																			alt="I'm an image" height="auto"
+																			alt="Account-Bestätigung Check" height="auto"
 																			src="${process.env.NEXT_PUBLIC_APP_URL}/images/email/confirm.png"
 																			style="display: block; height: auto; border: 0; width: 100%;"
-																			title="I'm an image" width="125" /></div>
+																			title="Dashboard Account-Bestätigung" width="125" /></div>
 																</div>
 															</td>
 														</tr>
@@ -173,45 +172,8 @@ export const accountConfirmationTemplate = (confirmationLink: string) => {
 																		style="font-size: 12px; font-family: Arial, Helvetica, sans-serif; mso-line-height-alt: 14.399999999999999px; color: #555555; line-height: 1.2;">
 																		<p
 																			style="margin: 0; font-size: 14px; text-align: center; mso-line-height-alt: 16.8px;">
-																			Hi und willkommen auf meinem Dashboard,</p>
-																		<p
-																			style="margin: 0; font-size: 14px; text-align: center; mso-line-height-alt: 14.399999999999999px;">
-																			 </p>
-																		<p
-																			style="margin: 0; font-size: 14px; text-align: center; mso-line-height-alt: 16.8px;">
-																			bitte bestätige Deinen Benutzeraccount mit
-																			einem Klick auf den unten stehenden Link.
-																		</p>
-																		<p
-																			style="margin: 0; font-size: 14px; text-align: center; mso-line-height-alt: 14.399999999999999px;">
-																			 </p>
-																		<p
-																			style="margin: 0; font-size: 14px; text-align: center; mso-line-height-alt: 16.8px;">
-																			Vielen Dank</p>
+																			Dein Passwort-Reset-Link: {{resetLink}}</p>
 																	</div>
-																</div>
-															</td>
-														</tr>
-													</table>
-													<table border="0" cellpadding="10" cellspacing="0"
-														class="button_block block-3" role="presentation"
-														style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;"
-														width="100%">
-														<tr>
-															<td class="pad">
-																<div align="center" class="alignment"><!--[if mso]>
-<v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" style="height:42px;width:144px;v-text-anchor:middle;" arcsize="10%" stroke="false" fillcolor="#3AAEE0">
-<w:anchorlock/>
-<v:textbox inset="0px,0px,0px,0px">
-<center style="color:#ffffff; font-family:Arial, sans-serif; font-size:16px">
-<![endif]-->
-																	<div
-																		style="text-decoration:none;display:inline-block;color:#ffffff;background-color:#3AAEE0;border-radius:4px;width:auto;border-top:0px solid transparent;font-weight:undefined;border-right:0px solid transparent;border-bottom:0px solid transparent;border-left:0px solid transparent;padding-top:5px;padding-bottom:5px;font-family:Arial, Helvetica, sans-serif;font-size:16px;text-align:center;mso-border-alt:none;word-break:keep-all;">
-																		<a href="${confirmationLink}"
-																			style="padding-left:20px;padding-right:20px;font-size:16px;display:inline-block;letter-spacing:normal;"><span
-																				style="margin: 0; word-break: break-word; line-height: 32px;">Jetzt
-																				bestätigen</span></a></div>
-																	<!--[if mso]></center></v:textbox></v:roundrect><![endif]-->
 																</div>
 															</td>
 														</tr>
@@ -230,4 +192,3 @@ export const accountConfirmationTemplate = (confirmationLink: string) => {
 	</table><!-- End -->
 </body>
 </html>`;
-};
