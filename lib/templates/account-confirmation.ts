@@ -142,7 +142,7 @@ export const accountConfirmationTemplate = `<!DOCTYPE html>
 													<table class="heading_block block-3" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
 														<tr>
 															<td class="pad" style="padding-bottom:30px;padding-left:60px;padding-right:60px;padding-top:30px;text-align:center;width:100%;">
-																<h1 style="margin: 0; color: #020b22; direction: ltr; font-family: Poppins, Arial, Helvetica, sans-serif; font-size: 22px; font-weight: 700; letter-spacing: normal; line-height: 150%; text-align: center; margin-top: 0; margin-bottom: 0; mso-line-height-alt: 33px;"><span class="tinyMce-placeholder">Hi, Du hast Dich registriert, richtig?</span></h1>
+																<h1 style="margin: 0; color: #020b22; direction: ltr; font-family: Poppins, Arial, Helvetica, sans-serif; font-size: 22px; font-weight: 700; letter-spacing: normal; line-height: 150%; text-align: center; margin-top: 0; margin-bottom: 0; mso-line-height-alt: 33px;"><span class="tinyMce-placeholder">Hi {{name}}, Du hast Dich registriert, richtig?</span></h1>
 															</td>
 														</tr>
 													</table>
@@ -178,11 +178,11 @@ export const accountConfirmationTemplate = `<!DOCTYPE html>
 														<tr>
 															<td class="pad">
 																<div class="alignment" align="center"><!--[if mso]>
-<v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="https://dashboard.tobias-hopp.de/new-ver" style="height:42px;width:197px;v-text-anchor:middle;" arcsize="10%" stroke="false" fillcolor="#1677ff">
+<v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="https://dashboard.tobias-hopp.de/new-ver" style="height:42px;width:197px;v-text-anchor:middle;" arcsize="10%" stroke="false" fillcolor="#000000">
 <w:anchorlock/>
 <v:textbox inset="0px,0px,0px,0px">
 <center dir="false" style="color:#ffffff;font-family:Arial, sans-serif;font-size:16px">
-<![endif]--><a href="{{confirmationLink}}" target="_blank" style="background-color:#1677ff;border-bottom:0px solid transparent;border-left:0px solid transparent;border-radius:4px;border-right:0px solid transparent;border-top:0px solid transparent;color:#ffffff;display:inline-block;font-family:Poppins, Arial, Helvetica, sans-serif;font-size:16px;font-weight:undefined;mso-border-alt:none;padding-bottom:5px;padding-top:5px;text-align:center;text-decoration:none;width:auto;word-break:keep-all;"><span style="padding-left:20px;padding-right:20px;font-size:16px;display:inline-block;letter-spacing:normal;"><span style="margin: 0; word-break: break-word; line-height: 32px;">Account bestätigen</span></span></a><!--[if mso]></center></v:textbox></v:roundrect><![endif]--></div>
+<![endif]--><a href="https://dashboard.tobias-hopp.de/new-ver" target="_blank" style="background-color:#000000;border-bottom:0px solid transparent;border-left:0px solid transparent;border-radius:4px;border-right:0px solid transparent;border-top:0px solid transparent;color:#ffffff;display:inline-block;font-family:Poppins, Arial, Helvetica, sans-serif;font-size:16px;font-weight:undefined;mso-border-alt:none;padding-bottom:5px;padding-top:5px;text-align:center;text-decoration:none;width:auto;word-break:keep-all;"><span style="padding-left:20px;padding-right:20px;font-size:16px;display:inline-block;letter-spacing:normal;"><span style="margin: 0; word-break: break-word; line-height: 32px;">Account bestätigen</span></span></a><!--[if mso]></center></v:textbox></v:roundrect><![endif]--></div>
 															</td>
 														</tr>
 													</table>
