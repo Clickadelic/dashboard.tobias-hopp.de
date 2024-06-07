@@ -233,8 +233,8 @@ export const accountConfirmationTemplate = `<!DOCTYPE html>
 													<table class="paragraph_block block-1" width="100%" border="0" cellpadding="20" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; word-break: break-word;">
 														<tr>
 															<td class="pad">
-																<div style="color:#fafafa;font-family:Poppins, Arial, Helvetica, sans-serif;font-size:10px;font-weight:400;line-height:150%;text-align:center;mso-line-height-alt:15px;">
-																	<p style="margin: 0;">https://www.tobias-hopp.de.</p>
+																<div style="color:#fafafa;font-family:Poppins, Arial, Helvetica, sans-serif;font-size:14px;font-weight:400;line-height:150%;text-align:center;mso-line-height-alt:15px;">
+																	<p style="margin: 0;"><a href="https://www.tobias-hopp.de/" target="_blank" style="text-decoration:underline;color:#ffffff;" title="Webseite">Tobias Hopp</a></p>
 																	<p style="margin: 0;">Full-Stack Developer</p>
 																	<p style="margin: 0;">Fremdsprachenkorrespondent</p>
 																</div>
