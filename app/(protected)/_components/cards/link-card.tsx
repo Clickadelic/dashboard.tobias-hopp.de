@@ -17,7 +17,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 
-import { MdOutlineInfo } from "react-icons/md";
+import { IoIosLink } from "react-icons/io";
 import { FiPlus } from "react-icons/fi";
 
 import { LinkSchema } from "@/schemas";
@@ -71,23 +71,23 @@ const LinkCard = () => {
 	};
 
 	return (
-		<div className="bg-white rounded shadow-sm border">
+		<div className="bg-white rounded shadow-sm border p-3">
 			<h2 className="text-sm border-bottom text-neutral-500 flex justify-between mb-2">
 				<span>Links</span>
 				<span>
 					<TooltipProvider>
 						<Tooltip>
-							<TooltipTrigger>
-								<MdOutlineInfo />
+							<TooltipTrigger className="hover:text-mantis-primary">
+								<IoIosLink />
 							</TooltipTrigger>
 							<TooltipContent>
-								<p>Deine Link-Kollektion</p>
+								<p>Deine private Link-Sammlung.</p>
 							</TooltipContent>
 						</Tooltip>
 					</TooltipProvider>
 				</span>
 			</h2>
-			<h3 className="text-md font-semibold mb-4">{links.length === 0 ? <Skeleton className="mt-3 mb-5 w-8 h-4" /> : links.length}</h3>
+			<h3 className="text-md font-semibold mb-4">{links.length === 0 || status === "loading" ? <Skeleton className="mt-3 mb-5 w-8 h-4" /> : links.length}</h3>
 			<Popover>
 				<PopoverTrigger className="flex justify-center w-full p-3 py-2 bg-slate-100 text-slate-700 hover:text-slate-800 hover:bg-slate-200 text-xs md:text-base rounded-sm">
 					<FiPlus className="mt-[.125rem] md:mt-1 mr-2" /> Link hinzufügen
