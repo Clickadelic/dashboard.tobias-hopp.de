@@ -9,7 +9,6 @@ import { useForm } from "react-hook-form";
 import { useSession } from "next-auth/react";
 import { useCurrentUser } from "@/hooks/use-current-user";
 
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Input } from "@/components/ui/input";
 import { Form, FormControl, FormLabel, FormField, FormItem, FormMessage } from "@/components/ui/form";
@@ -75,7 +74,7 @@ const TodoCard = () => {
 		<div className="bg-white rounded shadow-sm border p-3">
 			<h2 className="text-sm border-bottom text-neutral-500 flex justify-between mb-2">
 				<span>Todo&apos;s</span>
-				<Link href="/notizen" className="hover:text-slate-900">
+				<Link href="/todos" className="hover:text-slate-900">
 					Zur Übersicht
 				</Link>
 			</h2>
