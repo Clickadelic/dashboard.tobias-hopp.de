@@ -45,13 +45,13 @@ export const sendPasswordResetEmail = async (email: string, token: string) => {
 	}
 };
 
-export const sendVerificationEmail = async (name: string, email: string, token: string) => {
+export const sendVerificationEmail = async (email: string, token: string) => {
 	const confirmationLink = process.env.NEXT_PUBLIC_APP_URL + `/auth/new-verification?token=${token}`;
 	const template = handlebars.compile(accountConfirmationTemplate);
 	/** Takes the name and the confirmationLink as parameters
 	 * @param {string, string}
 	 */
-	const html = template({ name, confirmationLink });
+	const html = template({ confirmationLink });
 	try {
 		const sendResult = await transporter.sendMail({
 			sender: process.env.EMAIL_SENDER,

@@ -142,7 +142,7 @@ export const accountConfirmationTemplate = `<!DOCTYPE html>
 													<table class="heading_block block-3" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
 														<tr>
 															<td class="pad" style="padding-bottom:30px;padding-left:60px;padding-right:60px;padding-top:30px;text-align:center;width:100%;">
-																<h1 style="margin: 0; color: #020b22; direction: ltr; font-family: Poppins, Arial, Helvetica, sans-serif; font-size: 22px; font-weight: 700; letter-spacing: normal; line-height: 150%; text-align: center; margin-top: 0; margin-bottom: 0; mso-line-height-alt: 33px;"><span class="tinyMce-placeholder">Hi {{name}}, Du hast Dich registriert, richtig?</span></h1>
+																<h1 style="margin: 0; color: #020b22; direction: ltr; font-family: Poppins, Arial, Helvetica, sans-serif; font-size: 22px; font-weight: 700; letter-spacing: normal; line-height: 150%; text-align: center; margin-top: 0; margin-bottom: 0; mso-line-height-alt: 33px;"><span class="tinyMce-placeholder">Hi, Du hast Dich registriert, richtig?</span></h1>
 															</td>
 														</tr>
 													</table>
