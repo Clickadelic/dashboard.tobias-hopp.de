@@ -134,7 +134,7 @@ export const accountConfirmationTemplate = `<!DOCTYPE html>
 														<tr>
 															<td class="pad" style="width:100%;">
 																<div class="alignment" align="center" style="line-height:10px">
-																	<div style="max-width: 251px;"><img src="https://6f888fb6f3.imgdist.com/pub/bfra/b3dk3mbl/vez/ama/iuu/Logo-Tobys-Dashboard.jpg" style="display: block; height: auto; border: 0; width: 100%;" width="251" height="auto"></div>
+																	<div style="max-width: 251px;"><img src="process.env.NEXT_PUBLIC_APP_URL/images/email/Logo-Tobys-Dashboard.jpg" style="display: block; height: auto; border: 0; width: 100%;" width="251" height="auto"></div>
 																</div>
 															</td>
 														</tr>
@@ -142,7 +142,7 @@ export const accountConfirmationTemplate = `<!DOCTYPE html>
 													<table class="heading_block block-3" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
 														<tr>
 															<td class="pad" style="padding-bottom:30px;padding-left:60px;padding-right:60px;padding-top:30px;text-align:center;width:100%;">
-																<h1 style="margin: 0; color: #020b22; direction: ltr; font-family: Poppins, Arial, Helvetica, sans-serif; font-size: 22px; font-weight: 700; letter-spacing: normal; line-height: 150%; text-align: center; margin-top: 0; margin-bottom: 0; mso-line-height-alt: 33px;"><span class="tinyMce-placeholder">Hi {{name}}, Du hast Dich registriert, richtig?</span></h1>
+																<h1 style="margin: 0; color: #020b22; direction: ltr; font-family: Poppins, Arial, Helvetica, sans-serif; font-size: 22px; font-weight: 700; letter-spacing: normal; line-height: 150%; text-align: center; margin-top: 0; margin-bottom: 0; mso-line-height-alt: 33px;"><span class="tinyMce-placeholder">Hi, Du hast Dich registriert, richtig?</span></h1>
 															</td>
 														</tr>
 													</table>
