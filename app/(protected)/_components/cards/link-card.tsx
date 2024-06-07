@@ -2,13 +2,12 @@
 
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-
+import Link from "next/link";
 import { useTransition, useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useSession } from "next-auth/react";
 import { useCurrentUser } from "@/hooks/use-current-user";
 
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Input } from "@/components/ui/input";
 import { Form, FormControl, FormLabel, FormField, FormItem, FormMessage } from "@/components/ui/form";
@@ -17,7 +16,6 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 
-import { IoIosLink } from "react-icons/io";
 import { FiPlus } from "react-icons/fi";
 
 import { LinkSchema } from "@/schemas";
@@ -39,7 +37,6 @@ const LinkCard = () => {
 			const response = await res.json();
 			setLinks(response);
 		} catch (error) {
-			console.error("Error fetching links:", error);
 			toast.error("Fehler beim Laden der Links.");
 		} finally {
 			setIsLoading(false);
@@ -74,20 +71,11 @@ const LinkCard = () => {
 		<div className="bg-white rounded shadow-sm border p-3">
 			<h2 className="text-sm border-bottom text-neutral-500 flex justify-between mb-2">
 				<span>Links</span>
-				<span>
-					<TooltipProvider>
-						<Tooltip>
-							<TooltipTrigger className="hover:text-mantis-primary">
-								<IoIosLink />
-							</TooltipTrigger>
-							<TooltipContent>
-								<p>Deine private Link-Sammlung.</p>
-							</TooltipContent>
-						</Tooltip>
-					</TooltipProvider>
-				</span>
+				<Link href="/links" className="hover:text-slate-900">
+					Zur Übersicht
+				</Link>
 			</h2>
-			<h3 className="text-md font-semibold mb-4">{links.length === 0 || status === "loading" ? <Skeleton className="mt-3 mb-5 w-8 h-4" /> : links.length}</h3>
+			<h3 className="text-md font-semibold mb-4">{status === "loading" ? <Skeleton className="mt-3 mb-5 w-8 h-4" /> : links.length}</h3>
 			<Popover>
 				<PopoverTrigger className="flex justify-center w-full p-3 py-2 bg-slate-100 text-slate-700 hover:text-slate-800 hover:bg-slate-200 text-xs md:text-base rounded-sm">
 					<FiPlus className="mt-[.125rem] md:mt-1 mr-2" /> Link hinzufügen
