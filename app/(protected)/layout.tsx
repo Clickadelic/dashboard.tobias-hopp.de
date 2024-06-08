@@ -9,7 +9,7 @@ interface ProtectedLayoutProps {
 // TODO Redirect merken after Logout
 const ProtectedLayout = ({ children }: ProtectedLayoutProps) => {
 	return (
-		<div className="min-h-screen bg-[url('/images/Test.jpg')] bg-cover">
+		<div className="min-h-screen bg-mantis-background">
 			<SidebarNavbar />
 
 			<main className="md:ml-64">

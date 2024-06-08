@@ -10,7 +10,6 @@ import { useCurrentUser } from "@/hooks/use-current-user";
 
 import Link from "next/link";
 
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { NoticeSchema } from "@/schemas";
 import { Form, FormControl, FormLabel, FormField, FormItem, FormMessage } from "@/components/ui/form";
@@ -21,7 +20,7 @@ import { Button } from "@/components/ui/button";
 
 import { FiPlus } from "react-icons/fi";
 
-import { addNotice } from "@/actions/notice/add-notice";
+import { addNotice } from "@/actions/notice";
 
 const NoticeCard = () => {
 	const userId = useCurrentUser()?.id;
@@ -70,7 +69,7 @@ const NoticeCard = () => {
 	};
 
 	return (
-		<div className="bg-white rounded shadow-sm border p-3">
+		<div className="bg-white rounded-xl shadow-sm border p-4">
 			<h2 className="text-sm border-bottom text-neutral-500 flex justify-between mb-2">
 				<span>Notizen</span>
 				<Link href="/notizen" className="hover:text-slate-900">

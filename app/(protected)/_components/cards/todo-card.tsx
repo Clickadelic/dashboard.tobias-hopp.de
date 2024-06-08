@@ -21,7 +21,7 @@ import { Button } from "@/components/ui/button";
 import { FiPlus } from "react-icons/fi";
 
 import { TodoSchema } from "@/schemas";
-import { addTodo } from "@/actions/todo/add-todo";
+import { addTodo } from "@/actions/todo";
 
 const TodoCard = () => {
 	const userId = useCurrentUser()?.id;
@@ -71,7 +71,7 @@ const TodoCard = () => {
 	};
 
 	return (
-		<div className="bg-white rounded shadow-sm border p-3">
+		<div className="bg-white rounded-xl shadow-sm border p-4">
 			<h2 className="text-sm border-bottom text-neutral-500 flex justify-between mb-2">
 				<span>Todo&apos;s</span>
 				<Link href="/todos" className="hover:text-slate-900">
