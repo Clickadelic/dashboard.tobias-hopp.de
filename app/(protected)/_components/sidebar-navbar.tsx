@@ -26,7 +26,6 @@ import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
 import { MdOutlineChecklistRtl } from "react-icons/md";
 import { AiOutlineWindows } from "react-icons/ai";
 import { FaUser } from "react-icons/fa";
-import { GoGear } from "react-icons/go";
 import { GoLink } from "react-icons/go";
 import { LuUser2 } from "react-icons/lu";
 import { HiChevronRight } from "react-icons/hi2";
@@ -36,8 +35,10 @@ import { BsBuildings } from "react-icons/bs";
 import { BsArrowsFullscreen } from "react-icons/bs";
 import { BsTextIndentRight } from "react-icons/bs";
 import { BsTextIndentLeft } from "react-icons/bs";
+import SidebarSheet from "./sidebar-sheet";
 
 const laBelleAurore = La_Belle_Aurore({ subsets: ["latin"], weight: ["400"] });
+
 export const SidebarNavbar = () => {
 	const { status } = useSession({ required: true });
 	const user = useCurrentUser();
@@ -66,7 +67,7 @@ export const SidebarNavbar = () => {
 					</h1>
 				</div>
 				<section className="sidebar-accordion mt-[18px] mb-6">
-					<Accordion type="multiple" className="w-full">
+					<Accordion type="multiple" defaultValue={["item-1"]} className="w-full">
 						<AccordionItem value="item-1">
 							<span className={cn("text-xs text-neutral-400 ml-4 inline-block mt-4", sidebarOpen && "hidden")}>Dashboard</span>
 							<AccordionTrigger>
@@ -276,7 +277,12 @@ export const SidebarNavbar = () => {
 						<button onClick={toggleSidebar} className="hidden md:inline hover:bg-slate-100 mt-1 ml-3 white rounded p-2">
 							{sidebarOpen ? <BsTextIndentLeft className="size-5" /> : <BsTextIndentRight className="size-5" />}
 						</button>
-						<input type="search" name="search" className="relative top-[-.25rem] md:inline p-2 text-sm border w-72 border-slate-400 rounded-sm ml-3" placeholder="Suche / STRG + K" />
+						<input
+							type="search"
+							name="search"
+							className="relative top-[-.25rem] md:inline p-2 text-sm w-64 focus:border-mantis-primary focus:outline-none focus-within:border-mantis-primary border-2 rounded-sm ml-3"
+							placeholder="Suche / STRG + K"
+						/>
 					</span>
 					<button className="fixed right-5 md:hidden bg-slate-100 rounded p-2 mt-1">
 						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-text-indent-right" viewBox="0 0 16 16">
@@ -400,11 +406,7 @@ export const SidebarNavbar = () => {
 								<BsArrowsFullscreen />
 							</button>
 						</li>
-						<li>
-							<Link href="/" className="hover:bg-slate-200 mx-1 inline-flex p-3 rounded mr-2">
-								<GoGear />
-							</Link>
-						</li>
+						<li>{status === "loading" ? <Skeleton className="size-4 mt-1 mr-1 rounded-xl" /> : <SidebarSheet />}</li>
 						<li>
 							{status === "loading" ? (
 								<div className="flex justify-between w-[130px] mt-1">

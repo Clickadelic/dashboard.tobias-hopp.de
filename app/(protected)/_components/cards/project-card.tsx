@@ -68,7 +68,7 @@ const ProjectCard = () => {
 	};
 
 	return (
-		<div className="bg-white rounded shadow-sm border p-3">
+		<div className="bg-white rounded-xl shadow-sm border p-4">
 			<h2 className="text-sm border-bottom text-neutral-500 flex justify-between mb-2">
 				<span>Projekte</span>
 				<Link href="/projekte" className="hover:text-slate-900">
