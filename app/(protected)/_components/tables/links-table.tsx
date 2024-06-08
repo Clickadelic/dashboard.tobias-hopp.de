@@ -134,7 +134,7 @@ const LinksTable = () => {
 								</Link>
 							</TableCell>
 							<TableCell>
-								<ClipboardButton className="hover:text-emerald-500" textToCopy={link.url} />
+								<ClipboardButton classNames="hover:text-emerald-500" textToCopy={link.url} />
 							</TableCell>
 							<TableCell>{link?.description}</TableCell>
 							<TableCell>{germanDateFormat(link.createdAt)}</TableCell>
