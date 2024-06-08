@@ -406,7 +406,7 @@ export const SidebarNavbar = () => {
 								<BsArrowsFullscreen />
 							</button>
 						</li>
-						<li>{status === "loading" ? <Skeleton className="size-4 mt-1 mr-1 rounded-xl" /> : <SidebarSheet />}</li>
+						<li>{status === "loading" ? <Skeleton className="size-4 mt-1 mr-1 rounded-sm" /> : <SidebarSheet />}</li>
 						<li>
 							{status === "loading" ? (
 								<div className="flex justify-between w-[130px] mt-1">

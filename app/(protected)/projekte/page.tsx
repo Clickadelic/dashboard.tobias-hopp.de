@@ -1,4 +1,4 @@
-import ProjectOverview from "@/app/(protected)/_components/projects/project-overview";
+import ProjectOverview from "@/app/(protected)/_components/project-overview";
 
 const ProjectPage = () => {
 	return (

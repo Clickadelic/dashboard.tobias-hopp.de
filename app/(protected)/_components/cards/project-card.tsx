@@ -20,7 +20,7 @@ import { Button } from "@/components/ui/button";
 import { FiPlus } from "react-icons/fi";
 
 import { ProjectSchema } from "@/schemas";
-import { addProject } from "@/actions/project/add-project";
+import { addProject } from "@/actions/project";
 
 const ProjectCard = () => {
 	const userId = useCurrentUser()?.id;
