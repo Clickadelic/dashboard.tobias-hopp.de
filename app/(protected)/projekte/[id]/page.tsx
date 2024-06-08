@@ -1,15 +1,19 @@
 import { getProjectById } from "@/actions/project";
-import { useSearchParams } from "next/navigation";
-import { useSession } from "next-auth/react";
-import { useCurrentUser } from "@/hooks/use-current-user";
 
-const ProjectByIdPage = () => {
-	const { status } = useSession({ required: true });
-	const user = useCurrentUser();
-	const id = useSearchParams().get("id") || "";
-	const project = getProjectById(id);
-	console.log({ project });
-	return <div>Projektdetails</div>;
+const ProjectByIdPage = async ({ params }: { params: { id: string } }) => {
+	const id = params.id;
+	const project = await getProjectById(id);
+	return (
+		<div className="page-wrapper">
+			<h2 className="text-md font-bold text-slate-700 mb-5">Projektdetails</h2>
+			<div className="bg-white rounded-xl shadow-sm border p-3">
+				<div>{project?.id}</div>
+				<div>{project?.title}</div>
+				<div>{project?.url}</div>
+				<div>{project?.description}</div>
+			</div>
+		</div>
+	);
 };
 
 export default ProjectByIdPage;
