@@ -63,7 +63,7 @@ const LinksTable = () => {
 		setIsLoading(false);
 	}, []);
 
-	const setDefaultValues = (linkId: string) => {
+	const setEditValues = (linkId: string) => {
 		const link = links.find(link => link.id === linkId);
 		if (link) {
 			form.reset({
@@ -132,7 +132,7 @@ const LinksTable = () => {
 							<TableCell>
 								<Popover>
 									<PopoverTrigger asChild>
-										<button onClick={() => setDefaultValues(link.id)} className="inline">
+										<button onClick={() => setEditValues(link.id)} className="inline">
 											<LiaEdit className="size-6" />
 										</button>
 									</PopoverTrigger>

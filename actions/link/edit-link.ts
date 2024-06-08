@@ -12,7 +12,6 @@ export const editLink = async (id: string, values: z.infer<typeof LinkSchema>) =
 			return { error: "Ungültige Felder!" };
 		}
 		const { title, url, description } = validatedFields.data;
-		console.log("Title:", title, "URL:", url, "Description:", description);
 
 		const existingLink = await db.link.findFirst({
 			where: {
@@ -22,7 +21,6 @@ export const editLink = async (id: string, values: z.infer<typeof LinkSchema>) =
 		if (!existingLink) {
 			return { error: "Link-Id nicht gefunden." };
 		}
-		console.log("Trying to update link...");
 
 		await db.link.update({
 			where: {
@@ -31,7 +29,8 @@ export const editLink = async (id: string, values: z.infer<typeof LinkSchema>) =
 			data: {
 				title,
 				url,
-				description
+				description,
+				updatedAt: new Date()
 			}
 		});
 
