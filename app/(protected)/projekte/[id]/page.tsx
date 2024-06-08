@@ -14,7 +14,7 @@ import { UserRole } from "@prisma/client";
 const ProjectByIdPage = () => {
 	const { status } = useSession({ required: true });
 	const user = useCurrentUser();
-
+	console.log(user);
 	const id = useSearchParams().get("id") || "";
 	const project = getProjectByProjectId(id);
 	console.log(user);

@@ -45,8 +45,8 @@ export const addProject = async (values: z.infer<typeof ProjectSchema>) => {
 	}
 };
 
-export const getProjectByProjectId = async (userId: string, projectId: string) => {
-	const project = await db.project.findFirst({ where: { userId, id: projectId } });
+export const getProjectByProjectId = async (projectId: string) => {
+	const project = await db.project.findFirst({ where: { id: projectId } });
 	return project;
 };
 
