@@ -21,6 +21,7 @@ import { ExclamationTriangleIcon } from "@radix-ui/react-icons";
 import { CheckCircledIcon } from "@radix-ui/react-icons";
 import { FiExternalLink } from "react-icons/fi";
 import { BsInfoCircle } from "react-icons/bs";
+import { LiaClipboard } from "react-icons/lia";
 import { BsFillTrash3Fill } from "react-icons/bs";
 import { LiaEdit } from "react-icons/lia";
 import { deleteLink } from "@/actions/link/delete-link";
@@ -29,7 +30,7 @@ import { germanDateFormat } from "@/lib/utils";
 import { LinkSchema } from "@/schemas";
 // import { addLink } from "@/actions/link/add-link";
 import { editLink } from "@/actions/link/edit-link";
-
+import { ClipboardButton } from "../clipboard-button";
 const LinksTable = () => {
 	const { status } = useSession({ required: true });
 	const userId = useCurrentUser()?.id;
@@ -37,6 +38,9 @@ const LinksTable = () => {
 	const [isPending, startTransition] = useTransition();
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 	const [links, setUsers] = useState<any[]>([]);
+
+	const [textToCopy, setTextToCopy] = useState(""); // The text you want to copy
+	const [copyStatus, setCopyStatus] = useState(false); //
 
 	const fetchLinks = async () => {
 		setIsLoading(true);
@@ -100,6 +104,9 @@ const LinksTable = () => {
 					<TableHead className="w-[20px]">Id</TableHead>
 					<TableHead>Titel</TableHead>
 					<TableHead>Url</TableHead>
+					<TableHead>
+						<LiaClipboard />
+					</TableHead>
 					<TableHead>Beschreibung</TableHead>
 					<TableHead>Hinzugefügt am</TableHead>
 					<TableHead>Letzte Änderung</TableHead>
@@ -125,6 +132,9 @@ const LinksTable = () => {
 								<Link href={link.url} title={link.title} className="inline hover:text-sky-500" target="_blank">
 									{link.url}
 								</Link>
+							</TableCell>
+							<TableCell>
+								<ClipboardButton className="hover:text-emerald-500" textToCopy={link.url} />
 							</TableCell>
 							<TableCell>{link?.description}</TableCell>
 							<TableCell>{germanDateFormat(link.createdAt)}</TableCell>
