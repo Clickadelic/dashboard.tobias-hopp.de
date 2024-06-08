@@ -21,7 +21,7 @@ import { Button } from "@/components/ui/button";
 import { FiPlus } from "react-icons/fi";
 
 import { TodoSchema } from "@/schemas";
-import { addTodo } from "@/actions/todo/add-todo";
+import { addTodo } from "@/actions/todo";
 
 const TodoCard = () => {
 	const userId = useCurrentUser()?.id;

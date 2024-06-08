@@ -19,7 +19,7 @@ import { Button } from "@/components/ui/button";
 import { FiPlus } from "react-icons/fi";
 
 import { LinkSchema } from "@/schemas";
-import { addLink } from "@/actions/link/add-link";
+import { addLink } from "@/actions/link";
 
 const LinkCard = () => {
 	const { status } = useSession({ required: true });

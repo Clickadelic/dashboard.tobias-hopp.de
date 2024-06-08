@@ -28,7 +28,7 @@ import { LiaEdit } from "react-icons/lia";
 import { capitalizeFirstLetter } from "@/lib/utils";
 
 import { settings } from "@/actions/settings";
-import { deleteUser } from "@/actions/user/delete-user";
+import { deleteUser } from "@/actions/user";
 
 const UsersTable = () => {
 	const user = useCurrentUser();

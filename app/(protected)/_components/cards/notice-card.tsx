@@ -20,7 +20,7 @@ import { Button } from "@/components/ui/button";
 
 import { FiPlus } from "react-icons/fi";
 
-import { addNotice } from "@/actions/notice/add-notice";
+import { addNotice } from "@/actions/notice";
 
 const NoticeCard = () => {
 	const userId = useCurrentUser()?.id;
