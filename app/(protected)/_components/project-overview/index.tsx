@@ -17,6 +17,9 @@ const ProjectOverview = async () => {
 						<Link className="inline text-xl font-medium hover:text-mantis-primary" href={`/projekte/${project.id}`}>
 							{project.title}
 						</Link>
+						<Link className="inline text-xl font-medium hover:text-mantis-primary" href={`/projekte/${project.id}`}>
+							{project.url}
+						</Link>
 					</CardHeader>
 					<CardContent className="h-28 overflow-hidden text-truncate text-ellipsis">
 						<p className="text-sm text-muted-foreground">{project.description}</p>
