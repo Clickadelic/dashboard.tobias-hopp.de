@@ -406,7 +406,9 @@ export const SidebarNavbar = () => {
 								<BsArrowsFullscreen />
 							</button>
 						</li>
-						<li>{status === "loading" ? <Skeleton className="size-4 mt-1 mr-1 rounded-sm" /> : <SidebarSheet />}</li>
+						<li>
+							<SidebarSheet />
+						</li>
 						<li>
 							{status === "loading" ? (
 								<div className="flex justify-between w-[130px] mt-1">
@@ -415,14 +417,14 @@ export const SidebarNavbar = () => {
 								</div>
 							) : (
 								<DropdownMenu>
-									<DropdownMenuTrigger className="flex justify-between mt-1.5">
-										<Avatar className="size-8">
-											<AvatarImage className="size-8" src={user?.image || ""} alt="User Avatar" />
-											<AvatarFallback className="bg-slate-200 border border-slate-400">
+									<DropdownMenuTrigger className="flex justify-between">
+										<Avatar>
+											<AvatarImage className="size-6" src={user?.image || ""} alt="User Avatar" />
+											<AvatarFallback>
 												<FaUser className="text-neutral-400" />
 											</AvatarFallback>
 										</Avatar>
-										<span className="mt-1 ml-2">{user?.name}</span>
+										<span className="mt-2 ml-2 hover:text-slate-700">{user?.name}</span>
 									</DropdownMenuTrigger>
 									<DropdownMenuContent className="mr-3">
 										<DropdownMenuLabel>Mein Account</DropdownMenuLabel>

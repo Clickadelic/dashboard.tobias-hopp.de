@@ -1,11 +1,10 @@
-import { Skeleton } from "@/components/ui/skeleton"
+import Logo from "./_components/logo";
 
 const MainLoader = () => {
 	return (
-		<div className="flex h-screen items-center justify-center">
-			<Skeleton className="h-16 w-16" />
+		<div className="flex flex-col h-screen items-center justify-start">
+			<Logo />
 		</div>
-	)
-}
-
-export default MainLoader
+	);
+};
+export default MainLoader;

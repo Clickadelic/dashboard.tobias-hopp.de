@@ -6,12 +6,10 @@ interface ProtectedLayoutProps {
 	children: React.ReactNode;
 }
 
-// TODO Redirect merken after Logout
 const ProtectedLayout = ({ children }: ProtectedLayoutProps) => {
 	return (
 		<div className="min-h-screen bg-mantis-background">
 			<SidebarNavbar />
-
 			<main className="md:ml-64">
 				<div className="container pt-20">
 					{/* <div className="pt-20">

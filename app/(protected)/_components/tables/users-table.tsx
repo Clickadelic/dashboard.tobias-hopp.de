@@ -64,7 +64,7 @@ const UsersTable = () => {
 						update();
 						setSuccess(data.success);
 					}
-				})
+				}) 
 				.catch(() => {
 					setError("Irgendwas ging serverseitig schief.");
 				});
@@ -128,6 +128,10 @@ const UsersTable = () => {
 							{user?.emailVerified ? <CheckCircledIcon className="size-4 mx-auto text-emerald-500" /> : <ExclamationTriangleIcon className="size-4 mx-auto text-rose-500" />}
 						</TableCell>
 						<TableCell>
+							<Switch>
+								<CheckCircledIcon className="size-4 mx-auto text-emerald-500" />
+								<ExclamationTriangleIcon className="size-4 mx-auto text-rose-500" />
+							</Switch>
 							{user?.isTwoFactorEnabled ? <CheckCircledIcon className="size-4 mx-auto text-emerald-500" /> : <ExclamationTriangleIcon className="size-4 mx-auto text-rose-500" />}
 						</TableCell>
 						<TableCell>{capitalizeFirstLetter(user?.role)}</TableCell>
