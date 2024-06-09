@@ -29,11 +29,14 @@ model User {
     accounts              Account[]
     isTwoFactorEnabled    Boolean                @default(false)
     twoFactorConfirmation TwoFactorConfirmation?
+    backgroundImage       String?
+    profileImage          String?
 
-    links    Link[] // One-to-many relation with Link
-    projects Project[]
-    todos    Todo[]
-    notices  Notice[]
+    links        Link[] // One-to-many relation with Link
+    projects     Project[]
+    todos        Todo[]
+    notices      Notice[]
+    Organization Organization[]
 
     @@unique([id])
 }
@@ -93,11 +96,26 @@ model TwoFactorConfirmation {
     @@unique([userId])
 }
 
+model Organization {
+    id          String   @id @default(cuid())
+    name        String
+    url         String
+    description String?
+    createdAt   DateTime @default(now())
+    updatedAt   DateTime @default(now())
+
+    userId String
+    user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+    @@unique([id])
+}
+
 model Link {
     id          String   @id @default(cuid())
     title       String
     url         String
     description String?
+    isPinned    Boolean  @default(false)
     createdAt   DateTime @default(now())
     updatedAt   DateTime @default(now())
 
