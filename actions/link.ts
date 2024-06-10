@@ -17,7 +17,7 @@ export const addLink = async (values: z.infer<typeof LinkSchema>) => {
 			return { error: "Ungültige Felder!" };
 		}
 
-		const { title, url, description } = validatedFields.data;
+		const { title, url, description, isPinned } = validatedFields.data;
 		console.log("Title:", title, "URL:", url, "Description:", description);
 
 		const existingLink = await db.link.findFirst({
@@ -37,6 +37,7 @@ export const addLink = async (values: z.infer<typeof LinkSchema>) => {
 				title,
 				url,
 				description,
+				isPinned,
 				user: {
 					connect: { id: userId }
 				}
@@ -109,7 +110,7 @@ export const deleteLink = async (id: string) => {
 	}
 };
 
-export const getLinksForAppBar = async () => {
+export const getAppLinksByUser = async () => {
 	const session = await auth();
 	const user = session?.user;
 	const userId = user?.id;
