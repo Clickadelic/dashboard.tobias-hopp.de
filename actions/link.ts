@@ -58,7 +58,7 @@ export const editLink = async (id: string, values: z.infer<typeof LinkSchema>) =
 		if (!validatedFields.success) {
 			return { error: "Ungültige Felder!" };
 		}
-		const { title, url, description } = validatedFields.data;
+		const { title, url, description, isPinned } = validatedFields.data;
 
 		const existingLink = await db.link.findFirst({
 			where: {
@@ -77,6 +77,7 @@ export const editLink = async (id: string, values: z.infer<typeof LinkSchema>) =
 				title,
 				url,
 				description,
+				isPinned,
 				updatedAt: new Date()
 			}
 		});
