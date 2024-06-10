@@ -1,32 +1,32 @@
-"use client"
+"use client";
 
-import * as z from "zod"
-import { useForm } from "react-hook-form"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { SettingsSchema } from "@/schemas"
+import * as z from "zod";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { SettingsSchema } from "@/schemas";
 
-import { useTransition, useState } from "react"
-import { useSession } from "next-auth/react"
+import { useTransition, useState } from "react";
+import { useSession } from "next-auth/react";
 
-import { Form, FormField, FormControl, FormItem, FormLabel, FormDescription, FormMessage } from "@/components/ui/form"
+import { Form, FormField, FormControl, FormItem, FormLabel, FormDescription, FormMessage } from "@/components/ui/form";
 
-import { CardContent } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Switch } from "@/components/ui/switch"
-import { settings } from "@/actions/settings"
-import { Input } from "@/components/ui/input"
-import { useCurrentUser } from "@/hooks/use-current-user"
-import { FormError } from "@/components/form-error"
-import { FormSuccess } from "@/components/form-success"
+import { CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Switch } from "@/components/ui/switch";
+import { settings } from "@/actions/settings";
+import { Input } from "@/components/ui/input";
+import { useCurrentUser } from "@/hooks/use-current-user";
+import { FormError } from "@/components/form-error";
+import { FormSuccess } from "@/components/form-success";
 
 const SettingsPage = () => {
-	const user = useCurrentUser()
-	const { update } = useSession()
+	const user = useCurrentUser();
+	const { update } = useSession();
 
-	const [error, setError] = useState<string | undefined>("")
-	const [success, setSuccess] = useState<string | undefined>("")
+	const [error, setError] = useState<string | undefined>("");
+	const [success, setSuccess] = useState<string | undefined>("");
 
-	const [isPending, startTransition] = useTransition()
+	const [isPending, startTransition] = useTransition();
 
 	const form = useForm<z.infer<typeof SettingsSchema>>({
 		resolver: zodResolver(SettingsSchema),
@@ -37,7 +37,7 @@ const SettingsPage = () => {
 			newPassword: undefined,
 			isTwoFactorEnabled: user?.isTwoFactorEnabled || undefined
 		}
-	})
+	});
 	/**
 	 * Handles the form submission for updating user settings.
 	 *
@@ -49,18 +49,18 @@ const SettingsPage = () => {
 			settings(values)
 				.then(data => {
 					if (data.error) {
-						setError(data.error)
+						setError(data.error);
 					}
 					if (data.success) {
-						update()
-						setSuccess(data.success)
+						update();
+						setSuccess(data.success);
 					}
 				})
 				.catch(() => {
-					setError("Irgendwas ging serverseitig schief.")
-				})
-		})
-	}
+					setError("Irgendwas ging serverseitig schief.");
+				});
+		});
+	};
 	return (
 		<div className="page-wrapper">
 			<h2 className="text-md font-bold text-slate-700 mb-5">Profil</h2>
@@ -97,6 +97,7 @@ const SettingsPage = () => {
 												</FormItem>
 											)}
 										/>
+										{/* //BUG: Prevents correct form submission name="password" */}
 										<FormField
 											control={form.control}
 											name="password"
@@ -152,7 +153,7 @@ const SettingsPage = () => {
 				</CardContent>
 			</div>
 		</div>
-	)
-}
+	);
+};
 
-export default SettingsPage
+export default SettingsPage;
