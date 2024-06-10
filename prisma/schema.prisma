@@ -13,6 +13,20 @@ datasource db {
     url      = env("DATABASE_URL")
 }
 
+model Organization {
+    id          String   @id @default(cuid())
+    name        String
+    url         String
+    description String?
+    createdAt   DateTime @default(now())
+    updatedAt   DateTime @default(now())
+
+    userId String
+    user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+    @@unique([id])
+}
+
 enum UserRole {
     ADMIN
     USER
@@ -32,7 +46,8 @@ model User {
     backgroundImage       String?
     profileImage          String?
 
-    links         Link[] // One-to-many relation with Link
+    apps		  App[]
+    links         Link[]
     projects      Project[]
     todos         Todo[]
     notices       Notice[]
@@ -96,9 +111,9 @@ model TwoFactorConfirmation {
     @@unique([userId])
 }
 
-model Organization {
+model App {
     id          String   @id @default(cuid())
-    name        String
+    title       String
     url         String
     description String?
     createdAt   DateTime @default(now())
