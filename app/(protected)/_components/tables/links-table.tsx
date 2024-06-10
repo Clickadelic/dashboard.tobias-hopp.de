@@ -94,7 +94,7 @@ const LinksTable = () => {
 				toast.error(result.error);
 			} else if (result.success) {
 				toast.success(result.success);
-				dynamicForm.reset();
+				newForm.reset();
 				fetchLinks();
 			}
 		});
