@@ -17,13 +17,14 @@ import { Table, TableBody, TableCaption, TableCell, TableFooter, TableHead, Tabl
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { toast } from "sonner";
 
-import { FiExternalLink } from "react-icons/fi";
-import { CgInternal } from "react-icons/cg";
-import { BsInfoCircle } from "react-icons/bs";
-import { LiaClipboard } from "react-icons/lia";
 import { BsFillTrash3Fill } from "react-icons/bs";
+import { BsInfoCircle } from "react-icons/bs";
+import { FiExternalLink } from "react-icons/fi";
+import { FiPlus } from "react-icons/fi";
+import { LiaClipboard } from "react-icons/lia";
 import { LiaEdit } from "react-icons/lia";
 
+import { CgInternal } from "react-icons/cg";
 import Link from "next/link";
 import { LinkSchema } from "@/schemas";
 import { addLink, editLink, deleteLink } from "@/actions/link";
@@ -119,36 +120,42 @@ const LinksTable = () => {
 					<h2 className="text-lg font-medium mb-2">Neuer Link</h2>
 					<Form {...newForm}>
 						<form onSubmit={newForm.handleSubmit(addNewLink)} className="space-y-3">
-							<FormField
-								control={newForm.control}
-								name="title"
-								render={({ field }) => (
-									<FormItem>
-										<Input {...field} placeholder="Titel" />
-										<FormMessage />
-									</FormItem>
-								)}
-							/>
-							<FormField
-								control={newForm.control}
-								name="url"
-								render={({ field }) => (
-									<FormItem>
-										<FormMessage />
-										<Input {...field} placeholder="URL" />
-									</FormItem>
-								)}
-							/>
-							<FormField
-								control={newForm.control}
-								name="description"
-								render={({ field }) => (
-									<FormItem>
-										<FormMessage />
-										<Textarea {...field} placeholder="Beschreibung" />
-									</FormItem>
-								)}
-							/>
+							<div className="grid grid-cols-2 gap-5">
+								<div className="space-y-5">
+									<FormField
+										control={newForm.control}
+										name="title"
+										render={({ field }) => (
+											<FormItem>
+												<Input {...field} placeholder="Titel" />
+												<FormMessage />
+											</FormItem>
+										)}
+									/>
+									<FormField
+										control={newForm.control}
+										name="url"
+										render={({ field }) => (
+											<FormItem>
+												<Input {...field} placeholder="URL" />
+												<FormMessage />
+											</FormItem>
+										)}
+									/>
+								</div>
+								<div>
+									<FormField
+										control={newForm.control}
+										name="description"
+										render={({ field }) => (
+											<FormItem>
+												<Textarea {...field} rows={4} placeholder="Beschreibung" />
+												<FormMessage />
+											</FormItem>
+										)}
+									/>
+								</div>
+							</div>
 							<FormField
 								control={newForm.control}
 								name="isPinned"
@@ -165,7 +172,7 @@ const LinksTable = () => {
 								)}
 							/>
 							<Button disabled={isPending} variant="outline" className="w-full">
-								Neuen Link hinzufügen
+								<FiPlus className="mt-[.125rem] md:mt-1 mr-2" /> Link hinzufügen
 							</Button>
 						</form>
 					</Form>
@@ -194,6 +201,14 @@ const LinksTable = () => {
 						</TableRow>
 					</TableHeader>
 					<TableBody>
+						{status === "loading" && (
+							<TableRow>
+								<TableCell colSpan={10}>
+									<Skeleton className="h-5 w-full" />
+								</TableCell>
+							</TableRow>
+						)}
+
 						{links.map((link: any) => (
 							<>
 								<TableRow key={link.id}>
