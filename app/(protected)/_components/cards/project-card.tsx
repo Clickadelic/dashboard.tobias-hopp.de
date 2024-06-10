@@ -75,7 +75,7 @@ export const ProjectCard = () => {
 					zur Übersicht
 				</Link>
 			</h2>
-			<h3 className="text-md font-semibold mb-4">{projects.length === 0 ? <Skeleton className="mt-3 mb-5 w-8 h-4" /> : projects.length}</h3>
+			<h3 className="text-md font-semibold mb-4">{projects.length === 0 ? <Skeleton className="mt-3 mb-5 w-8 h-4 bg-primary/10 animate-pulse" /> : projects.length}</h3>
 			<Popover>
 				<PopoverTrigger className="flex justify-center w-full px-3 py-2 bg-slate-100 text-slate-700 hover:text-slate-800 hover:bg-slate-200 text-xs md:text-base rounded-sm">
 					<FiPlus className="mt-[.125rem] md:mt-1 mr-2" /> Projekt hinzufügen

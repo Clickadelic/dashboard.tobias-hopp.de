@@ -1,34 +1,16 @@
 "use client";
 
-import * as z from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-
 import Link from "next/link";
 
-import { useTransition, useState, useEffect } from "react";
-import { useForm } from "react-hook-form";
+import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import { useCurrentUser } from "@/hooks/use-current-user";
-
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { Input } from "@/components/ui/input";
-import { Switch } from "@/components/ui/switch";
-import { Form, FormControl, FormLabel, FormField, FormItem, FormMessage } from "@/components/ui/form";
-import { Textarea } from "@/components/ui/textarea";
 import { Skeleton } from "@/components/ui/skeleton";
 import { toast } from "sonner";
-import { Button } from "@/components/ui/button";
-
-import { FiPlus } from "react-icons/fi";
-
-import { LinkSchema } from "@/schemas";
-import { addLink } from "@/actions/link";
 
 export const AppBar = () => {
 	const { status } = useSession({ required: true });
 	const userId = useCurrentUser()?.id;
-
-	const [isPending, startTransition] = useTransition();
 
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 	const [links, setLinks] = useState<any[]>([]);
@@ -52,34 +34,14 @@ export const AppBar = () => {
 		setIsLoading(false);
 	}, []);
 
-	const form = useForm<z.infer<typeof LinkSchema>>({
-		resolver: zodResolver(LinkSchema),
-		defaultValues: { title: "", url: "", description: "", isPinned: false }
-	});
-
-	const onSubmit = async (values: z.infer<typeof LinkSchema>) => {
-		startTransition(async () => {
-			const result = await addLink(values);
-			if (result.error) {
-				toast.error(result.error);
-			} else if (result.success) {
-				toast.success(result.success);
-				form.reset();
-				fetchLinks();
-			}
-		});
-	};
 	return (
 		<div className="w-full">
 			<div className="flex items-start justify-start space-x-3">
-				{links.length === 0 || isLoading || isPending ? (
+				{links.length === 0 || status === "loading" || isLoading ? (
 					<>
-						<Skeleton className="w-16 h-16 bg-primary/10 animate-pulse" />
-						<Skeleton className="w-16 h-16 bg-primary/10 animate-pulse" />
-						<Skeleton className="w-16 h-16 bg-primary/10 animate-pulse" />
-						<Skeleton className="w-16 h-16 bg-primary/10 animate-pulse" />
-						<Skeleton className="w-16 h-16 bg-primary/10 animate-pulse" />
-						<Skeleton className="w-16 h-16 bg-primary/10 animate-pulse" />
+						<Skeleton className="size-16 bg-primary/10 animate-pulse" />
+						<Skeleton className="size-16 bg-primary/10 animate-pulse" />
+						<Skeleton className="size-16 bg-primary/10 animate-pulse" />
 					</>
 				) : (
 					<>
@@ -87,11 +49,11 @@ export const AppBar = () => {
 							<Link
 								key={link.id}
 								href={link.url}
-								className="size-16 rounded-md flex justify-center items-center border shadow-sm hover:shadow-lg bg-white"
+								className="size-16 rounded-lg font-medium flex justify-center items-center border shadow-sm hover:shadow-lg bg-white"
 								target="_blank"
 								rel="noopener noreferrer"
 							>
-								SVG
+								{link.title.charAt(0).toUpperCase()}
 							</Link>
 						))}
 					</>

@@ -64,7 +64,7 @@ const UsersTable = () => {
 						update();
 						setSuccess(data.success);
 					}
-				}) 
+				})
 				.catch(() => {
 					setError("Irgendwas ging serverseitig schief.");
 				});
