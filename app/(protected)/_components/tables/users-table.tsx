@@ -30,6 +30,9 @@ const UsersTable = () => {
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 	const [users, setUsers] = useState<any[]>([]);
 
+	const [error, setError] = useState<string | undefined>("");
+	const [success, setSuccess] = useState<string | undefined>("");
+
 	const [isPending, startTransition] = useTransition();
 
 	const form = useForm<z.infer<typeof SettingsSchema>>({
