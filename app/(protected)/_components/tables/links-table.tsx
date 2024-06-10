@@ -172,7 +172,7 @@ const LinksTable = () => {
 								)}
 							/>
 							<Button disabled={isPending} variant="outline" className="w-full">
-								<FiPlus className="mt-[.125rem] md:mt-1 mr-2" /> Link hinzufügen
+								<FiPlus className=" mr-2" /> Link hinzufügen
 							</Button>
 						</form>
 					</Form>
