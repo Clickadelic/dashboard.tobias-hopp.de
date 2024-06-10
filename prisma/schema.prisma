@@ -32,11 +32,11 @@ model User {
     backgroundImage       String?
     profileImage          String?
 
-    links        Link[] // One-to-many relation with Link
-    projects     Project[]
-    todos        Todo[]
-    notices      Notice[]
-    Organization Organization[]
+    links         Link[] // One-to-many relation with Link
+    projects      Project[]
+    todos         Todo[]
+    notices       Notice[]
+    organizations Organization[]
 
     @@unique([id])
 }

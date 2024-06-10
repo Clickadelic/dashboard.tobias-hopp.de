@@ -39,12 +39,9 @@ export const AppBar = () => {
 			<div className="flex items-start justify-start space-x-3">
 				{links.length === 0 || status === "loading" || isLoading ? (
 					<>
-						<Skeleton className="w-16 h-16 bg-primary/10 animate-pulse" />
-						<Skeleton className="w-16 h-16 bg-primary/10 animate-pulse" />
-						<Skeleton className="w-16 h-16 bg-primary/10 animate-pulse" />
-						<Skeleton className="w-16 h-16 bg-primary/10 animate-pulse" />
-						<Skeleton className="w-16 h-16 bg-primary/10 animate-pulse" />
-						<Skeleton className="w-16 h-16 bg-primary/10 animate-pulse" />
+						<Skeleton className="size-16 bg-primary/10 animate-pulse" />
+						<Skeleton className="size-16 bg-primary/10 animate-pulse" />
+						<Skeleton className="size-16 bg-primary/10 animate-pulse" />
 					</>
 				) : (
 					<>

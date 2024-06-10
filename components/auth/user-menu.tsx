@@ -11,7 +11,7 @@ export const UserMenu = () => {
 
 	return (
 		<DropdownMenu>
-			<DropdownMenuTrigger>
+			<DropdownMenuTrigger className="hover:bg-slate-200 rounded-md">
 				<Avatar>
 					<AvatarImage className="size-10" src={user?.image || ""} alt="User Avatar" />
 					<AvatarFallback className="bg-slate-200 border border-slate-400">
