@@ -8,27 +8,28 @@ import { useSession } from "next-auth/react";
 import { useCurrentUser } from "@/hooks/use-current-user";
 
 import { Input } from "@/components/ui/input";
-import { Form, FormControl, FormLabel, FormField, FormItem, FormMessage } from "@/components/ui/form";
+import { Form, FormControl, FormLabel, FormField, FormItem, FormMessage, FormDescription } from "@/components/ui/form";
 import { Textarea } from "@/components/ui/textarea";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Switch } from "@/components/ui/switch";
 import { Button } from "@/components/ui/button";
-import Link from "next/link";
 import { Table, TableBody, TableCaption, TableCell, TableFooter, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { toast } from "sonner";
+
 import { FiExternalLink } from "react-icons/fi";
+import { CgInternal } from "react-icons/cg";
 import { BsInfoCircle } from "react-icons/bs";
 import { LiaClipboard } from "react-icons/lia";
 import { BsFillTrash3Fill } from "react-icons/bs";
 import { LiaEdit } from "react-icons/lia";
 
+import Link from "next/link";
 import { LinkSchema } from "@/schemas";
 import { addLink, editLink, deleteLink } from "@/actions/link";
 
 import { ClipboardButton } from "../clipboard-button";
 import { germanDateFormat } from "@/lib/utils";
-import { ExternalLinkIcon } from "@radix-ui/react-icons";
 
 const LinksTable = () => {
 	const { status } = useSession({ required: true });
@@ -66,17 +67,23 @@ const LinksTable = () => {
 	const setEditValues = (linkId: string) => {
 		const link = links.find(link => link.id === linkId);
 		if (link) {
-			form.reset({
+			dynamicForm.reset({
 				title: link.title,
 				url: link.url,
-				description: link.description
+				description: link.description,
+				isPinned: link.isPinned
 			});
 		}
 	};
 
-	const form = useForm<z.infer<typeof LinkSchema>>({
+	const newForm = useForm<z.infer<typeof LinkSchema>>({
 		resolver: zodResolver(LinkSchema),
-		defaultValues: { title: "", url: "", description: "" }
+		defaultValues: { title: "", url: "", description: "", isPinned: false }
+	});
+
+	const dynamicForm = useForm<z.infer<typeof LinkSchema>>({
+		resolver: zodResolver(LinkSchema),
+		defaultValues: { title: "", url: "", description: "", isPinned: false }
 	});
 
 	const addNewLink = async (values: z.infer<typeof LinkSchema>) => {
@@ -86,20 +93,20 @@ const LinksTable = () => {
 				toast.error(result.error);
 			} else if (result.success) {
 				toast.success(result.success);
-				form.reset();
+				dynamicForm.reset();
 				fetchLinks();
 			}
 		});
 	};
 
-	const onSubmit = async (id: string, values: z.infer<typeof LinkSchema>) => {
+	const editCurrentLink = async (id: string, values: z.infer<typeof LinkSchema>) => {
 		startTransition(async () => {
 			const result = await editLink(id, values);
 			if (result.error) {
 				toast.error(result.error);
 			} else if (result.success) {
 				toast.success(result.success);
-				form.reset();
+				dynamicForm.reset();
 				fetchLinks();
 			}
 		});
@@ -107,61 +114,78 @@ const LinksTable = () => {
 
 	return (
 		<>
-			<h2 className="text-md font-bold text-slate-700 mb-5">Neuer Link</h2>
-			{/* <div className="bg-rose-200 w-50 mb-5">
-				<div className="">
-					<Form {...form}>
-						<form>
-							<FormField
-								control={form.control}
-								name="title"
-								render={({ field }) => (
-									<FormItem>
-										<FormLabel>Titel</FormLabel>
-										<Input {...field} />
-										<FormMessage />
-									</FormItem>
-								)}
-							/>
-							<FormField
-								control={form.control}
-								name="url"
-								render={({ field }) => (
-									<FormItem>
-										<FormLabel>Url</FormLabel>
-										<FormMessage />
-										<Input {...field} />
-									</FormItem>
-								)}
-							/>
-							<FormField
-								control={form.control}
-								name="description"
-								render={({ field }) => (
-									<FormItem>
-										<FormLabel>Beschreibung</FormLabel>
-										<FormMessage />
-										<Textarea {...field} />
-									</FormItem>
-								)}
-							/>
-						</form>
-					</Form>
-				</div>
-			</div> */}
+			<div className="mb-5 p-4">
+				<Form {...newForm}>
+					<form onSubmit={newForm.handleSubmit(addNewLink)} className="space-y-3">
+						<FormField
+							control={newForm.control}
+							name="title"
+							render={({ field }) => (
+								<FormItem>
+									<FormLabel>Titel</FormLabel>
+									<Input {...field} />
+									<FormMessage />
+								</FormItem>
+							)}
+						/>
+						<FormField
+							control={newForm.control}
+							name="url"
+							render={({ field }) => (
+								<FormItem>
+									<FormLabel>Url</FormLabel>
+									<FormMessage />
+									<Input {...field} />
+								</FormItem>
+							)}
+						/>
+						<FormField
+							control={newForm.control}
+							name="description"
+							render={({ field }) => (
+								<FormItem>
+									<FormLabel>Beschreibung</FormLabel>
+									<FormMessage />
+									<Textarea {...field} />
+								</FormItem>
+							)}
+						/>
+						<FormField
+							control={newForm.control}
+							name="isPinned"
+							render={({ field }) => (
+								<FormItem className="flex flex-row items-center justify-between rounded-lg border p-3 shadow-sm">
+									<div className="space-y-.5">
+										<FormLabel>Pinned</FormLabel>
+										<FormDescription>Zeigt den Link als App-Icon auf dem Dashboard an.</FormDescription>
+									</div>
+									<FormControl>
+										<Switch disabled={isPending} checked={field.value} onCheckedChange={field.onChange} />
+									</FormControl>
+								</FormItem>
+							)}
+						/>
+						<Button disabled={isPending} variant="outline" className="w-full">
+							Neuen Link hinzufügen
+						</Button>
+					</form>
+				</Form>
+			</div>
 			<Table>
 				<TableHeader>
 					<TableRow>
 						<TableHead className="w-[20px]">Id</TableHead>
 						<TableHead>Titel</TableHead>
-						<TableHead className="w-[150px] truncate overflow-hidden">Url</TableHead>
+						<TableHead className="truncate overflow-hidden">Url</TableHead>
+						<TableHead className="">Target</TableHead>
+						<TableHead className="w-[160px]">Beschreibung</TableHead>
+						<TableHead>Ist angepinned</TableHead>
 						<TableHead>
 							<LiaClipboard />
 						</TableHead>
-						<TableHead className="w-[160px]">Beschreibung</TableHead>
-						<TableHead>Hinzugefügt am</TableHead>
-						<TableHead>Letzte Änderung</TableHead>
 						<TableHead>bearbeiten</TableHead>
+						<TableHead className="w-[180px]">Hinzugefügt am</TableHead>
+						<TableHead className="w-[180px]">Letzte Änderung</TableHead>
 						<TableHead>löschen</TableHead>
 					</TableRow>
 				</TableHeader>
@@ -183,15 +207,15 @@ const LinksTable = () => {
 										<Link href={link.url} title={link.title + " in neuen Fenster öffnen"} className="inline hover:text-sky-500" target="_blank">
 											{link.url}
 										</Link>
-										<ExternalLinkIcon className="ml-2 mt-1 inline" />
 									</span>
 								</TableCell>
+								<TableCell>{link.target === "_blank" ? <CgInternal className="ml-2 mt-1 inline" /> : <FiExternalLink className="ml-2 mt-1 inline" />}</TableCell>
+
+								<TableCell className="truncate">{link?.description}</TableCell>
+								<TableCell>{link.isPinned ? "Ja" : "Nein"}</TableCell>
 								<TableCell>
 									<ClipboardButton classNames="mt-1.5 hover:text-emerald-500" textToCopy={link.url} />
 								</TableCell>
-								<TableCell className="truncate">{link?.description}</TableCell>
-								<TableCell>{germanDateFormat(link.createdAt)}</TableCell>
-								<TableCell>{germanDateFormat(link.updatedAt)}</TableCell>
 								<TableCell>
 									<Popover>
 										<PopoverTrigger asChild>
@@ -199,11 +223,11 @@ const LinksTable = () => {
 												<LiaEdit className="size-4" />
 											</button>
 										</PopoverTrigger>
-										<PopoverContent>
-											<Form {...form}>
-												<form onSubmit={form.handleSubmit(() => onSubmit(link.id, form.getValues()))} className="space-y-2">
+										<PopoverContent align="end">
+											<Form {...dynamicForm}>
+												<form onSubmit={dynamicForm.handleSubmit(() => editCurrentLink(link.id, dynamicForm.getValues()))} className="space-y-2">
 													<FormField
-														control={form.control}
+														control={dynamicForm.control}
 														name="title"
 														defaultValue={link.title}
 														disabled={isPending}
@@ -217,7 +241,7 @@ const LinksTable = () => {
 														)}
 													/>
 													<FormField
-														control={form.control}
+														control={dynamicForm.control}
 														name="url"
 														defaultValue={link.url}
 														disabled={isPending}
@@ -232,7 +256,7 @@ const LinksTable = () => {
 													/>
 
 													<FormField
-														control={form.control}
+														control={dynamicForm.control}
 														name="description"
 														disabled={isPending}
 														render={({ field }) => (
@@ -241,6 +265,21 @@ const LinksTable = () => {
 																	<Textarea {...field} placeholder="Beschreibung..." />
 																</FormControl>
 																<FormMessage />
+															</FormItem>
+														)}
+													/>
+													<FormField
+														control={dynamicForm.control}
+														name="isPinned"
+														render={({ field }) => (
+															<FormItem className="flex flex-row items-center justify-between rounded-lg border p-3 shadow-sm">
+																<div className="space-y-.5">
+																	<FormLabel>Pinned</FormLabel>
+																	<FormDescription>Zeigt den Link als App-Icon auf dem Dashboard an.</FormDescription>
+																</div>
+																<FormControl>
+																	<Switch disabled={isPending} checked={field.value} onCheckedChange={field.onChange} />
+																</FormControl>
 															</FormItem>
 														)}
 													/>
@@ -253,6 +292,10 @@ const LinksTable = () => {
 										</PopoverContent>
 									</Popover>
 								</TableCell>
+
+								<TableCell>{germanDateFormat(link.createdAt)}</TableCell>
+								<TableCell>{germanDateFormat(link.updatedAt)}</TableCell>
+
 								<TableCell>
 									<button onClick={() => deleteLinkById(link.id)} className="text-rose-500 hover:text-rose-600">
 										<BsFillTrash3Fill className="size-4 mx-auto" />

@@ -13,7 +13,7 @@ const ProjectOverview = async () => {
 		<div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4">
 			{projects.map(project => (
 				<Card key={project.id}>
-					<CardHeader>
+					<CardHeader className="p-3">
 						<Link className="inline text-xl font-medium hover:text-mantis-primary" href={`/projekte/${project.id}`}>
 							{project.title}
 						</Link>

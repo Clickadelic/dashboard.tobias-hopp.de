@@ -78,79 +78,11 @@ export const AppBar = () => {
 						<Skeleton className="w-16 h-16 bg-primary/10 animate-pulse" />
 						<Skeleton className="w-16 h-16 bg-primary/10 animate-pulse" />
 						<Skeleton className="w-16 h-16 bg-primary/10 animate-pulse" />
+						<Skeleton className="w-16 h-16 bg-primary/10 animate-pulse" />
+						<Skeleton className="w-16 h-16 bg-primary/10 animate-pulse" />
 					</>
 				) : (
 					<>
-						<Popover>
-							<PopoverTrigger className="size-16 rounded-md flex justify-center items-center border shadow-sm hover:shadow-lg bg-slate-200">
-								<FiPlus className="mt-[.125rem] md:mt-1" />
-							</PopoverTrigger>
-							<PopoverContent align="start">
-								<Form {...form}>
-									<form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2">
-										<FormField
-											control={form.control}
-											name="title"
-											disabled={isPending}
-											render={({ field }) => (
-												<FormItem>
-													<FormControl>
-														<Input {...field} placeholder="Titel" />
-													</FormControl>
-													<FormMessage />
-												</FormItem>
-											)}
-										/>
-										<FormField
-											control={form.control}
-											name="url"
-											disabled={isPending}
-											render={({ field }) => (
-												<FormItem>
-													<FormControl>
-														<Input {...field} placeholder="Url" />
-													</FormControl>
-													<FormMessage />
-												</FormItem>
-											)}
-										/>
-
-										<FormField
-											control={form.control}
-											name="description"
-											disabled={isPending}
-											render={({ field }) => (
-												<FormItem>
-													<FormControl>
-														<Textarea {...field} placeholder="Beschreibung..." />
-													</FormControl>
-													<FormMessage />
-												</FormItem>
-											)}
-										/>
-
-										<FormField
-											control={form.control}
-											name="isPinned"
-											render={({ field }) => (
-												<FormItem className="flex flex-row items-center justify-between rounded-lg border p-3 shadow-sm">
-													<div className="space-y-.5">
-														<FormLabel>als App angepinned</FormLabel>
-													</div>
-													<FormControl>
-														<Switch disabled={isPending} checked={field.value} onCheckedChange={field.onChange} />
-													</FormControl>
-												</FormItem>
-											)}
-										/>
-
-										<Button disabled={isPending} variant="outline" type="submit" className="w-full">
-											Hinzufügen
-										</Button>
-									</form>
-								</Form>
-							</PopoverContent>
-						</Popover>
 						{links.map(link => (
 							<Link
 								key={link.id}
