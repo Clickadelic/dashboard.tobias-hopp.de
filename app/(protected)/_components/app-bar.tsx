@@ -1,8 +1,5 @@
 "use client";
 
-import * as z from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-
 import Link from "next/link";
 
 import { useState, useEffect } from "react";
@@ -40,7 +37,7 @@ export const AppBar = () => {
 	return (
 		<div className="w-full">
 			<div className="flex items-start justify-start space-x-3">
-				{links.length === 0 || status === "loading" ? (
+				{links.length === 0 || status === "loading" || isLoading ? (
 					<>
 						<Skeleton className="w-16 h-16 bg-primary/10 animate-pulse" />
 						<Skeleton className="w-16 h-16 bg-primary/10 animate-pulse" />
@@ -55,11 +52,11 @@ export const AppBar = () => {
 							<Link
 								key={link.id}
 								href={link.url}
-								className="size-16 rounded-lg flex justify-center items-center border shadow-sm hover:shadow-lg bg-white"
+								className="size-16 rounded-lg font-medium flex justify-center items-center border shadow-sm hover:shadow-lg bg-white"
 								target="_blank"
 								rel="noopener noreferrer"
 							>
-								SVG
+								{link.title.charAt(0).toUpperCase()}
 							</Link>
 						))}
 					</>

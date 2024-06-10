@@ -8,15 +8,9 @@ import { SettingsSchema } from "@/schemas";
 import { useState, useEffect, useTransition } from "react";
 import { useSession } from "next-auth/react";
 
-import { Table, TableBody, TableCaption, TableCell, TableFooter, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Form, FormField, FormControl, FormItem, FormLabel, FormDescription, FormMessage } from "@/components/ui/form";
-import { CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Switch } from "@/components/ui/switch";
-import { Input } from "@/components/ui/input";
 import { useCurrentUser } from "@/hooks/use-current-user";
-import { FormError } from "@/components/form-error";
-import { FormSuccess } from "@/components/form-success";
 
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { toast } from "sonner";
@@ -24,7 +18,6 @@ import { ExclamationTriangleIcon } from "@radix-ui/react-icons";
 import { CheckCircledIcon } from "@radix-ui/react-icons";
 import { BsInfoCircle } from "react-icons/bs";
 import { BsFillTrash3Fill } from "react-icons/bs";
-import { LiaEdit } from "react-icons/lia";
 import { capitalizeFirstLetter } from "@/lib/utils";
 
 import { settings } from "@/actions/settings";
@@ -36,9 +29,6 @@ const UsersTable = () => {
 
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 	const [users, setUsers] = useState<any[]>([]);
-
-	const [error, setError] = useState<string | undefined>("");
-	const [success, setSuccess] = useState<string | undefined>("");
 
 	const [isPending, startTransition] = useTransition();
 
@@ -64,7 +54,7 @@ const UsersTable = () => {
 						update();
 						setSuccess(data.success);
 					}
-				}) 
+				})
 				.catch(() => {
 					setError("Irgendwas ging serverseitig schief.");
 				});
