@@ -75,5 +75,6 @@ export const NoticeSchema = z.object({
 export const LinkSchema = z.object({
 	title: z.string().min(1, "Titel fehlt"),
 	url: z.string().url("Ungültige URL"),
-	description: z.optional(z.string().max(300, "Beschreibung zu lang"))
+	description: z.optional(z.string().max(300, "Beschreibung zu lang")),
+	isPinned: z.boolean()
 });

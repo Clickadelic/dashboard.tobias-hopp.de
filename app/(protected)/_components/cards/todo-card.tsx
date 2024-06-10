@@ -21,9 +21,9 @@ import { Button } from "@/components/ui/button";
 import { FiPlus } from "react-icons/fi";
 
 import { TodoSchema } from "@/schemas";
-import { addTodo } from "@/actions/todo/add-todo";
+import { addTodo } from "@/actions/todo";
 
-const TodoCard = () => {
+export const TodoCard = () => {
 	const userId = useCurrentUser()?.id;
 	const { status } = useSession({ required: true });
 
@@ -71,16 +71,16 @@ const TodoCard = () => {
 	};
 
 	return (
-		<div className="bg-white rounded shadow-sm border p-3">
+		<div className="bg-white rounded-xl shadow-sm border p-4">
 			<h2 className="text-sm border-bottom text-neutral-500 flex justify-between mb-2">
 				<span>Todo&apos;s</span>
 				<Link href="/todos" className="hover:text-slate-900">
-					Zur Übersicht
+					zur Übersicht
 				</Link>
 			</h2>
 			<h3 className="text-md font-semibold mb-4">{todos.length === 0 ? <Skeleton className="mt-3 mb-5 w-8 h-4" /> : todos.length}</h3>
 			<Popover>
-				<PopoverTrigger className="flex justify-center w-full p-3 py-2 bg-slate-100 text-slate-700 hover:text-slate-800 hover:bg-slate-200 text-xs md:text-base rounded-sm">
+				<PopoverTrigger className="flex justify-center text-sm w-full p-3 py-2 bg-slate-100 text-slate-700 hover:text-slate-800 hover:bg-slate-200 md:text-base rounded-sm">
 					<FiPlus className="mt-[.125rem] md:mt-1 mr-2" /> Todo hinzufügen
 				</PopoverTrigger>
 				<PopoverContent>
@@ -139,5 +139,3 @@ const TodoCard = () => {
 		</div>
 	);
 };
-
-export default TodoCard;

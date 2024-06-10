@@ -10,6 +10,7 @@ import { useCurrentUser } from "@/hooks/use-current-user";
 
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Input } from "@/components/ui/input";
+import { Switch } from "@/components/ui/switch";
 import { Form, FormControl, FormLabel, FormField, FormItem, FormMessage } from "@/components/ui/form";
 import { Textarea } from "@/components/ui/textarea";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -19,9 +20,9 @@ import { Button } from "@/components/ui/button";
 import { FiPlus } from "react-icons/fi";
 
 import { LinkSchema } from "@/schemas";
-import { addLink } from "@/actions/link/add-link";
+import { addLink } from "@/actions/link";
 
-const LinkCard = () => {
+export const LinkCard = () => {
 	const { status } = useSession({ required: true });
 	const userId = useCurrentUser()?.id;
 
@@ -51,7 +52,7 @@ const LinkCard = () => {
 
 	const form = useForm<z.infer<typeof LinkSchema>>({
 		resolver: zodResolver(LinkSchema),
-		defaultValues: { title: "", url: "", description: "" }
+		defaultValues: { title: "", url: "", description: "", isPinned: false }
 	});
 
 	const onSubmit = async (values: z.infer<typeof LinkSchema>) => {
@@ -68,14 +69,14 @@ const LinkCard = () => {
 	};
 
 	return (
-		<div className="bg-white rounded shadow-sm border p-3">
+		<div className="bg-white rounded-xl shadow border p-4">
 			<h2 className="text-sm border-bottom text-neutral-500 flex justify-between mb-2">
 				<span>Links</span>
 				<Link href="/links" className="hover:text-slate-900">
-					Zur Übersicht
+					zur Übersicht
 				</Link>
 			</h2>
-			<h3 className="text-md font-semibold mb-4">{status === "loading" ? <Skeleton className="mt-3 mb-5 w-8 h-4" /> : links.length}</h3>
+			<h3 className="text-md font-semibold mb-4">{links.length === 0 ? <Skeleton className="mt-3 mb-5 w-8 h-4" /> : links.length}</h3>
 			<Popover>
 				<PopoverTrigger className="flex justify-center w-full p-3 py-2 bg-slate-100 text-slate-700 hover:text-slate-800 hover:bg-slate-200 text-xs md:text-base rounded-sm">
 					<FiPlus className="mt-[.125rem] md:mt-1 mr-2" /> Link hinzufügen
@@ -124,6 +125,21 @@ const LinkCard = () => {
 								)}
 							/>
 
+							<FormField
+								control={form.control}
+								name="isPinned"
+								render={({ field }) => (
+									<FormItem className="flex flex-row items-center justify-between rounded-lg border p-3 shadow-sm">
+										<div className="space-y-.5">
+											<FormLabel>als App angepinned</FormLabel>
+										</div>
+										<FormControl>
+											<Switch disabled={isPending} checked={field.value} onCheckedChange={field.onChange} />
+										</FormControl>
+									</FormItem>
+								)}
+							/>
+
 							<Button disabled={isPending} variant="outline" type="submit" className="w-full">
 								Hinzufügen
 							</Button>
@@ -134,5 +150,3 @@ const LinkCard = () => {
 		</div>
 	);
 };
-
-export default LinkCard;
