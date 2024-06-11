@@ -120,7 +120,7 @@ export const AppBar = () => {
 									)}
 								/>
 
-								<Button disabled={isPending} variant="outline" type="submit" className="w-full">
+								<Button disabled={isPending} type="submit" className="w-full">
 									Hinzufügen
 								</Button>
 							</form>
@@ -135,7 +135,12 @@ export const AppBar = () => {
 						</Link>
 					))
 				) : (
-					<Skeleton className="w-32 h-6 mt-1 mr-1 rounded-full" />
+					<>
+						<Skeleton className="size-16 bg-primary/10 animate-pulse" />
+						<Skeleton className="size-16 bg-primary/10 animate-pulse" />
+						<Skeleton className="size-16 bg-primary/10 animate-pulse" />
+						<Skeleton className="size-16 bg-primary/10 animate-pulse" />
+					</>
 				)}
 			</div>
 		</div>
