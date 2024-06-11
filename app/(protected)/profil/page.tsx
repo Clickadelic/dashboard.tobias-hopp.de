@@ -67,7 +67,7 @@ const SettingsPage = () => {
 			<div className="bg-white rounded shadow-sm border p-3">
 				<CardContent>
 					<Form {...form}>
-						<form className="space-y-6" onSubmit={form.handleSubmit(onSubmit)}>
+						<form className="space-y-6" autoComplete="off" onSubmit={form.handleSubmit(onSubmit)}>
 							<div className="space-y-4">
 								<FormField
 									control={form.control}
@@ -97,10 +97,6 @@ const SettingsPage = () => {
 												</FormItem>
 											)}
 										/>
-										{/* //BUG: Prevents correct form submission name="password" */}
-										{/* fake fields are a workaround for chrome autofill getting the wrong fields */}
-										<input className="hidden" type="text" name="fakeusernameremembered" />
-										<input className="hidden" type="password" name="fakepasswordremembered" />
 										<FormField
 											control={form.control}
 											name="password"
@@ -108,7 +104,7 @@ const SettingsPage = () => {
 												<FormItem>
 													<FormLabel>Passwort</FormLabel>
 													<FormControl>
-														<Input {...field} type="password" autoComplete="off" placeholder="******" disabled={isPending} />
+														<Input {...field} type="password" placeholder="******" disabled={isPending} />
 													</FormControl>
 													<FormMessage />
 												</FormItem>
