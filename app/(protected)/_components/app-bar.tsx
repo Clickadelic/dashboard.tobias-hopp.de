@@ -1,28 +1,43 @@
 "use client";
 
-import Link from "next/link";
+import * as z from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 
-import { useState, useEffect } from "react";
+import Link from "next/link";
+import { useState, useEffect, useTransition } from "react";
 import { useSession } from "next-auth/react";
 import { useCurrentUser } from "@/hooks/use-current-user";
-import { Skeleton } from "@/components/ui/skeleton";
+import { useForm } from "react-hook-form";
+import { AppSchema } from "@/schemas";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Input } from "@/components/ui/input";
+import { Form, FormControl, FormLabel, FormField, FormItem, FormMessage } from "@/components/ui/form";
+import { Textarea } from "@/components/ui/textarea";
+import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
+import { Skeleton } from "@/components/ui/skeleton";
+
+import { FiPlus } from "react-icons/fi";
+import { addApp } from "@/actions/app";
+import { BsApp } from "react-icons/bs";
 
 export const AppBar = () => {
 	const { status } = useSession({ required: true });
 	const userId = useCurrentUser()?.id;
+	const [isPending, startTransition] = useTransition();
 
 	const [isLoading, setIsLoading] = useState<boolean>(false);
-	const [links, setLinks] = useState<any[]>([]);
+	const [apps, setApps] = useState<any[]>([]);
 
-	const fetchLinks = async () => {
+	const fetchApps = async () => {
 		setIsLoading(true);
 		try {
 			const res = await fetch(`/api/apps/${userId}`);
 			const response = await res.json();
-			setLinks(response);
+			setApps(response);
+			console.log(response);
 		} catch (error) {
-			toast.error("Fehler beim Laden der Links.");
+			toast.error("Fehler beim Laden der Apps.");
 		} finally {
 			setIsLoading(false);
 		}
@@ -30,33 +45,97 @@ export const AppBar = () => {
 
 	useEffect(() => {
 		setIsLoading(true);
-		fetchLinks();
+		fetchApps();
 		setIsLoading(false);
 	}, []);
+
+	const form = useForm<z.infer<typeof AppSchema>>({
+		resolver: zodResolver(AppSchema),
+		defaultValues: { title: "", url: "", description: "" }
+	});
+
+	const onSubmit = async (values: z.infer<typeof AppSchema>) => {
+		startTransition(async () => {
+			const result = await addApp(values);
+			if (result.error) {
+				toast.error(result.error);
+			} else if (result.success) {
+				toast.success(result.success);
+				form.reset();
+				fetchApps();
+			}
+		});
+	};
 
 	return (
 		<div className="w-full">
 			<div className="flex items-start justify-start space-x-3">
-				{links.length === 0 || status === "loading" || isLoading ? (
-					<>
-						<Skeleton className="size-16 bg-primary/10 animate-pulse" />
-						<Skeleton className="size-16 bg-primary/10 animate-pulse" />
-						<Skeleton className="size-16 bg-primary/10 animate-pulse" />
-					</>
+				<Popover>
+					<PopoverTrigger asChild>
+						<Button variant="outline" className="size-16 rounded-lg shadow hover:shadow:lg p-0">
+							<FiPlus className="h-5 w-5" />
+						</Button>
+					</PopoverTrigger>
+					<PopoverContent align="start" className="w-96">
+						<Form {...form}>
+							<form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2">
+								<FormField
+									control={form.control}
+									name="title"
+									disabled={isPending}
+									render={({ field }) => (
+										<FormItem>
+											<FormControl>
+												<Input {...field} placeholder="Titel" />
+											</FormControl>
+											<FormMessage />
+										</FormItem>
+									)}
+								/>
+								<FormField
+									control={form.control}
+									name="url"
+									disabled={isPending}
+									render={({ field }) => (
+										<FormItem>
+											<FormControl>
+												<Input {...field} placeholder="Url" />
+											</FormControl>
+											<FormMessage />
+										</FormItem>
+									)}
+								/>
+
+								<FormField
+									control={form.control}
+									name="description"
+									disabled={isPending}
+									render={({ field }) => (
+										<FormItem>
+											<FormControl>
+												<Textarea {...field} placeholder="Beschreibung..." />
+											</FormControl>
+											<FormMessage />
+										</FormItem>
+									)}
+								/>
+
+								<Button disabled={isPending} variant="outline" type="submit" className="w-full">
+									Hinzufügen
+								</Button>
+							</form>
+						</Form>
+					</PopoverContent>
+				</Popover>
+				{apps.length > 0 ? (
+					apps.map(app => (
+						// TODO: Mal testen, url mit params: href={`/app/${app.id}`}
+						<Link key={app.id} href={app.url} target="_blank" title="Zum Profil" className="bg-white size-16 flex items-center justify-center rounded-lg shadow hover:shadow-lg p-1 border">
+							<BsApp className="size-4" />
+						</Link>
+					))
 				) : (
-					<>
-						{links.map(link => (
-							<Link
-								key={link.id}
-								href={link.url}
-								className="size-16 rounded-lg font-medium flex justify-center items-center border shadow-sm hover:shadow-lg bg-white"
-								target="_blank"
-								rel="noopener noreferrer"
-							>
-								{link.title.charAt(0).toUpperCase()}
-							</Link>
-						))}
-					</>
+					<Skeleton className="w-32 h-6 mt-1 mr-1 rounded-full" />
 				)}
 			</div>
 		</div>

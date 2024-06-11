@@ -439,7 +439,7 @@ export const SidebarNavbar = () => {
 										<DropdownMenuItem>
 											<Link href="/apps" title="Zum Profil">
 												<GrAppsRounded className="size-4 inline-block mr-2 mt-[-2px]" />
-												Apps
+												Meine Apps
 											</Link>
 										</DropdownMenuItem>
 										<DropdownMenuItem>
