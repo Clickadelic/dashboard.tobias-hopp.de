@@ -32,7 +32,7 @@ import { HiChevronRight } from "react-icons/hi2";
 import { IoSpeedometerOutline } from "react-icons/io5";
 import { PiEye } from "react-icons/pi";
 import { BsBuildings } from "react-icons/bs";
-import { BsArrowsFullscreen } from "react-icons/bs";
+import { FullscreenButton } from "./fullscreen-button";
 import { BsTextIndentRight } from "react-icons/bs";
 import { BsTextIndentLeft } from "react-icons/bs";
 import { GiOrganigram } from "react-icons/gi";
@@ -405,9 +405,7 @@ export const SidebarNavbar = () => {
 							</button>
 						</li>
 						<li>
-							<button className="hover:bg-slate-200 mx-1 inline-flex p-3 rounded">
-								<BsArrowsFullscreen />
-							</button>
+							<FullscreenButton />
 						</li>
 						<li>
 							<SidebarSheet />

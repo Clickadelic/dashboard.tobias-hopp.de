@@ -67,7 +67,7 @@ const SettingsPage = () => {
 			<div className="bg-white rounded shadow-sm border p-3">
 				<CardContent>
 					<Form {...form}>
-						<form className="space-y-6" autoComplete="off" onSubmit={form.handleSubmit(onSubmit)}>
+						<form className="space-y-6" onSubmit={form.handleSubmit(onSubmit)}>
 							<div className="space-y-4">
 								<FormField
 									control={form.control}
@@ -105,7 +105,7 @@ const SettingsPage = () => {
 												<FormItem>
 													<FormLabel>Passwort</FormLabel>
 													<FormControl>
-														<Input {...field} type="password" placeholder="******" disabled={isPending} />
+														<Input {...field} type="password" autoComplete="false" placeholder="******" disabled={isPending} />
 													</FormControl>
 													<FormMessage />
 												</FormItem>
