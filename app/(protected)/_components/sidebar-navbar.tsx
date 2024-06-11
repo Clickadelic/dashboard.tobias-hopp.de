@@ -2,6 +2,7 @@
 
 import { La_Belle_Aurore } from "next/font/google";
 
+import { useAppContext } from "@/context/app-context";
 import { usePathname } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { useState } from "react";
@@ -48,19 +49,16 @@ export const SidebarNavbar = () => {
 	const role = useCurrentRole();
 	const path = usePathname();
 
-	const [sidebarOpen, setSidebarOpen] = useState<boolean>(false);
-	const toggleSidebar = () => {
-		sidebarOpen ? setSidebarOpen(false) : setSidebarOpen(true);
-	};
+	const { isToggled, setToggle } = useAppContext();
 
 	return (
 		<>
-			<aside className={cn("App-sidebar hidden fixed md:block top-0 left-0 min-h-screen border-r bg-white", sidebarOpen ? "w-16" : "w-64")}>
+			<aside className={cn("App-sidebar hidden fixed md:block top-0 left-0 min-h-screen border-r bg-white", isToggled ? "w-16" : "w-64")}>
 				<div className="sidebar-logo hidden md:flex justify-center px-2 py-3">
 					<h1>
 						<Link href={DEFAULT_LOGIN_REDIRECT} className="flex justify-between mt-2 text-slate-900 hover:opacity-75">
 							<Image src={logoSrc} width={16} height={16} className="logo inline -mt-1 size-8" alt="Tailwind Dashboard" />
-							{!sidebarOpen && (
+							{!isToggled && (
 								<span className="ml-2">
 									<span className={cn("md:inline-block font-medium mr-1 text-2xl", laBelleAurore.className)}>Toby&apos;s</span>
 									<span className="md:inline-block font-bold">Dashboard</span>
@@ -72,11 +70,11 @@ export const SidebarNavbar = () => {
 				<section className="sidebar-accordion mt-[18px] mb-6">
 					<Accordion type="multiple" defaultValue={["item-1"]} className="w-full">
 						<AccordionItem value="item-1">
-							<span className={cn("text-xs text-neutral-400 ml-4 inline-block mt-4", sidebarOpen && "hidden")}>Dashboard</span>
+							<span className={cn("text-xs text-neutral-400 ml-4 inline-block mt-4", isToggled && "hidden")}>Dashboard</span>
 							<AccordionTrigger>
 								<span className="flex justify-between">
 									<IoSpeedometerOutline className="mt-1 mr-2" />
-									{!sidebarOpen && "Dashboard"}
+									{!isToggled && "Dashboard"}
 								</span>
 							</AccordionTrigger>
 							<AccordionContent>
@@ -91,7 +89,7 @@ export const SidebarNavbar = () => {
 											title="Zur Übersicht"
 										>
 											<HiChevronRight className="inline-block mr-2 mt-[-3px]" />
-											{!sidebarOpen && "Dashboard"}
+											{!isToggled && "Dashboard"}
 										</Link>
 									</li>
 									<li>
@@ -104,7 +102,7 @@ export const SidebarNavbar = () => {
 											title="Zu den Reports"
 										>
 											<HiChevronRight className="inline-block mr-2 mt-[-3px]" />
-											{!sidebarOpen && "Reports"}
+											{!isToggled && "Reports"}
 										</Link>
 									</li>
 								</ul>
@@ -114,7 +112,7 @@ export const SidebarNavbar = () => {
 							<AccordionTrigger>
 								<span className="flex justify-between">
 									<BsBuildings className="mt-1 mr-2" />
-									{!sidebarOpen && "Projekte"}
+									{!isToggled && "Projekte"}
 								</span>
 							</AccordionTrigger>
 							<AccordionContent>
@@ -129,7 +127,7 @@ export const SidebarNavbar = () => {
 											title="Zur Projektübersicht"
 										>
 											<HiChevronRight className="inline-block mr-2 mt-[-3px]" />
-											{!sidebarOpen && "Projektübersicht"}
+											{!isToggled && "Projektübersicht"}
 										</Link>
 									</li>
 								</ul>
@@ -139,7 +137,7 @@ export const SidebarNavbar = () => {
 							<AccordionTrigger>
 								<span className="flex justify-between">
 									<MdOutlineChecklistRtl className="mt-1 mr-2" />
-									{!sidebarOpen && "Todo's"}
+									{!isToggled && "Todo's"}
 								</span>
 							</AccordionTrigger>
 							<AccordionContent>
@@ -154,7 +152,7 @@ export const SidebarNavbar = () => {
 											title="Zu den Todo's"
 										>
 											<HiChevronRight className="inline-block mr-2 mt-[-3px]" />
-											{!sidebarOpen && "ToDo-Übersicht"}
+											{!isToggled && "ToDo-Übersicht"}
 										</Link>
 									</li>
 								</ul>
@@ -164,7 +162,7 @@ export const SidebarNavbar = () => {
 							<AccordionTrigger>
 								<span className="flex justify-between">
 									<GoLink className="mt-1 mr-2" />
-									{!sidebarOpen && "Links"}
+									{!isToggled && "Links"}
 								</span>
 							</AccordionTrigger>
 							<AccordionContent>
@@ -179,7 +177,7 @@ export const SidebarNavbar = () => {
 											title="Zur Projektübersicht"
 										>
 											<HiChevronRight className="inline-block mr-2 mt-[-3px]" />
-											{!sidebarOpen && "Link-Übersicht"}
+											{!isToggled && "Link-Übersicht"}
 										</Link>
 									</li>
 								</ul>
@@ -187,11 +185,11 @@ export const SidebarNavbar = () => {
 						</AccordionItem>
 						{role === UserRole.ADMIN && (
 							<AccordionItem value="item-5">
-								<span className={cn("text-xs text-neutral-400 ml-4 inline-block mt-4", sidebarOpen && "hidden")}>Admin</span>
+								<span className={cn("text-xs text-neutral-400 ml-4 inline-block mt-4", isToggled && "hidden")}>Admin</span>
 								<AccordionTrigger>
 									<span className="flex justify-between">
 										<PiEye className="mt-1 mr-2" />
-										{!sidebarOpen && "Admin"}
+										{!isToggled && "Admin"}
 									</span>
 								</AccordionTrigger>
 								<AccordionContent>
@@ -206,7 +204,7 @@ export const SidebarNavbar = () => {
 												title="Zur Übersicht"
 											>
 												<HiChevronRight className="inline-block mr-2 mt-[-3px]" />
-												{!sidebarOpen && "Übersicht"}
+												{!isToggled && "Übersicht"}
 											</Link>
 										</li>
 										<li>
@@ -219,7 +217,7 @@ export const SidebarNavbar = () => {
 												title="Zur Benutzerübersicht"
 											>
 												<HiChevronRight className="inline-block mr-2 mt-[-3px]" />
-												{!sidebarOpen && "Benutzer"}
+												{!isToggled && "Benutzer"}
 											</Link>
 										</li>
 										<li>
@@ -232,7 +230,7 @@ export const SidebarNavbar = () => {
 												title="Zu den Systemeinstellungen"
 											>
 												<HiChevronRight className="inline-block mr-2 mt-[-3px]" />
-												{!sidebarOpen && "Systemeinstellungen"}
+												{!isToggled && "Systemeinstellungen"}
 											</Link>
 										</li>
 									</ul>
@@ -253,14 +251,14 @@ export const SidebarNavbar = () => {
 					</div>
 				) : (
 					<>
-						<div className={cn("fixed left-[-1px] bottom-5 w-64 p-4 flex bg-white mr-[1px]", sidebarOpen ? "w-16" : "w-64")}>
+						<div className={cn("fixed left-[-1px] bottom-5 w-64 p-4 flex bg-white mr-[1px]", isToggled ? "w-16" : "w-64")}>
 							<Avatar className="size-8 mt-1 mr-3">
 								<AvatarImage className="border border-slate-200" src={user?.image || ""} alt="User Avatar" />
 								<AvatarFallback className="bg-slate-200 border border-slate-300">
 									<FaUser className="text-slate-400" />
 								</AvatarFallback>
 							</Avatar>
-							{!sidebarOpen && (
+							{!isToggled && (
 								<div className="text-toggle">
 									<h4 className="text-base text-neutral-600">{user?.name}</h4>
 									<span className="inline-flex items-center rounded-md bg-yellow-50 px-2 py-1 text-xs text-yellow-800 ring-1 ring-inset ring-yellow-600/20">{user?.role}</span>
@@ -270,15 +268,15 @@ export const SidebarNavbar = () => {
 					</>
 				)}
 			</aside>
-			<header className={cn("App-header flex fixed top-0 md:ml-64 w-screen p-2 border-b bg-white", sidebarOpen ? "md:ml-16" : "md:ml-64")} id="header">
+			<header className={cn("App-header flex fixed top-0 md:ml-64 w-screen p-2 border-b bg-white", isToggled ? "md:ml-16" : "md:ml-64")} id="header">
 				<nav className="header-navflex justify-between w-max">
 					<span className="h-[40px]">
 						{/* TODO: Mobile Button toggle */}
 						<button className="ml-3 mr-2 md:hidden">
 							<Image src={logoSrc} width={32} height={32} className="logo size-8 inline -mt-1" alt="Tailwind Dashboard" />
 						</button>
-						<button onClick={toggleSidebar} className="hidden md:inline hover:bg-slate-100 mt-1 ml-3 white rounded p-2">
-							{sidebarOpen ? <BsTextIndentLeft className="size-5" /> : <BsTextIndentRight className="size-5" />}
+						<button onClick={() => setToggle(prev => !prev)} className="hidden md:inline hover:bg-slate-100 mt-1 ml-3 white rounded p-2">
+							{isToggled ? <BsTextIndentLeft className="size-5" /> : <BsTextIndentRight className="size-5" />}
 						</button>
 						<input
 							type="search"
