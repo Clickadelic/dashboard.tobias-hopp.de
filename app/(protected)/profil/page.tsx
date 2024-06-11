@@ -7,6 +7,7 @@ import { SettingsSchema } from "@/schemas";
 
 import { useTransition, useState } from "react";
 import { useSession } from "next-auth/react";
+import { useCurrentUser } from "@/hooks/use-current-user";
 
 import { Form, FormField, FormControl, FormItem, FormLabel, FormDescription, FormMessage } from "@/components/ui/form";
 
@@ -15,9 +16,11 @@ import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
 import { settings } from "@/actions/settings";
 import { Input } from "@/components/ui/input";
-import { useCurrentUser } from "@/hooks/use-current-user";
 import { FormError } from "@/components/form-error";
 import { FormSuccess } from "@/components/form-success";
+
+import { BsInfoCircle } from "react-icons/bs";
+import Link from "next/link";
 
 const SettingsPage = () => {
 	const user = useCurrentUser();
@@ -97,7 +100,6 @@ const SettingsPage = () => {
 												</FormItem>
 											)}
 										/>
-										{/* //BUG: Prevents correct form submission name="password" */}
 										<FormField
 											control={form.control}
 											name="password"
@@ -105,7 +107,7 @@ const SettingsPage = () => {
 												<FormItem>
 													<FormLabel>Passwort</FormLabel>
 													<FormControl>
-														<Input {...field} type="password" autoComplete="false" placeholder="******" disabled={isPending} />
+														<Input {...field} type="password" placeholder="******" disabled={isPending} />
 													</FormControl>
 													<FormMessage />
 												</FormItem>
