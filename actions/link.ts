@@ -37,7 +37,6 @@ export const addLink = async (values: z.infer<typeof LinkSchema>) => {
 				title,
 				url,
 				description,
-				isPinned,
 				user: {
 					connect: { id: userId }
 				}
