@@ -94,6 +94,9 @@ export const LoginForm = () => {
 										</FormItem>
 									)}
 								/>
+								{/* fake fields are a workaround for chrome autofill getting the wrong fields */}
+								<input style="display: none" type="text" name="fakeusernameremembered" />
+								<input style="display: none" type="password" name="fakepasswordremembered" />
 								<FormField
 									control={form.control}
 									name="password"
