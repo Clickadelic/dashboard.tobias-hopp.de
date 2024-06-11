@@ -18,7 +18,7 @@ export const AppBar = () => {
 	const fetchLinks = async () => {
 		setIsLoading(true);
 		try {
-			const res = await fetch(`/api/links/isPinned/${userId}`);
+			const res = await fetch(`/api/apps/${userId}`);
 			const response = await res.json();
 			setLinks(response);
 		} catch (error) {
