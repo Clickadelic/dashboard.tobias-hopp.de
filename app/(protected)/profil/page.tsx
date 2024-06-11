@@ -7,18 +7,20 @@ import { SettingsSchema } from "@/schemas";
 
 import { useTransition, useState } from "react";
 import { useSession } from "next-auth/react";
+import { useCurrentUser } from "@/hooks/use-current-user";
 
 import { Form, FormField, FormControl, FormItem, FormLabel, FormDescription, FormMessage } from "@/components/ui/form";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 
 import { CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
 import { settings } from "@/actions/settings";
 import { Input } from "@/components/ui/input";
-import { useCurrentUser } from "@/hooks/use-current-user";
 import { FormError } from "@/components/form-error";
 import { FormSuccess } from "@/components/form-success";
+
+import { BsInfoCircle } from "react-icons/bs";
+import Link from "next/link";
 
 const SettingsPage = () => {
 	const user = useCurrentUser();
@@ -98,31 +100,19 @@ const SettingsPage = () => {
 												</FormItem>
 											)}
 										/>
-										<span>
-											<Popover>
-												<PopoverTrigger asChild>
-													<Button variant="outline" disabled={isPending}>
-														Passwort ändern
-													</Button>
-												</PopoverTrigger>
-												<PopoverContent>
-													<p>Ein neriver Chrome-Bug verhindert aktuell die Eingabe eines neuen Passworts. Bitte versuche es in FireFox oder einem anderen Browser.</p>
-												</PopoverContent>
-											</Popover>
-											<FormField
-												control={form.control}
-												name="password"
-												render={({ field }) => (
-													<FormItem>
-														<FormLabel>Passwort</FormLabel>
-														<FormControl>
-															<Input {...field} type="password" placeholder="******" disabled={isPending} />
-														</FormControl>
-														<FormMessage />
-													</FormItem>
-												)}
-											/>
-										</span>
+										<FormField
+											control={form.control}
+											name="password"
+											render={({ field }) => (
+												<FormItem>
+													<FormLabel>Passwort</FormLabel>
+													<FormControl>
+														<Input {...field} type="password" placeholder="******" disabled={isPending} />
+													</FormControl>
+													<FormMessage />
+												</FormItem>
+											)}
+										/>
 										<FormField
 											control={form.control}
 											name="newPassword"
