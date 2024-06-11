@@ -98,6 +98,9 @@ const SettingsPage = () => {
 											)}
 										/>
 										{/* //BUG: Prevents correct form submission name="password" */}
+										{/* fake fields are a workaround for chrome autofill getting the wrong fields */}
+										<input className="hidden" type="text" name="fakeusernameremembered" />
+										<input className="hidden" type="password" name="fakepasswordremembered" />
 										<FormField
 											control={form.control}
 											name="password"
