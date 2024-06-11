@@ -17,7 +17,7 @@ export const addLink = async (values: z.infer<typeof LinkSchema>) => {
 			return { error: "Ungültige Felder!" };
 		}
 
-		const { title, url, description, isPinned } = validatedFields.data;
+		const { title, url, description } = validatedFields.data;
 		console.log("Title:", title, "URL:", url, "Description:", description);
 
 		const existingLink = await db.link.findFirst({
@@ -58,7 +58,7 @@ export const editLink = async (id: string, values: z.infer<typeof LinkSchema>) =
 		if (!validatedFields.success) {
 			return { error: "Ungültige Felder!" };
 		}
-		const { title, url, description, isPinned } = validatedFields.data;
+		const { title, url, description } = validatedFields.data;
 
 		const existingLink = await db.link.findFirst({
 			where: {
@@ -77,7 +77,6 @@ export const editLink = async (id: string, values: z.infer<typeof LinkSchema>) =
 				title,
 				url,
 				description,
-				isPinned,
 				updatedAt: new Date()
 			}
 		});
@@ -119,9 +118,6 @@ export const getAppLinksByUser = async () => {
 		where: {
 			user: {
 				id: userId
-			},
-			AND: {
-				isPinned: true
 			}
 		}
 	});
