@@ -9,6 +9,7 @@ import { useTransition, useState } from "react";
 import { useSession } from "next-auth/react";
 
 import { Form, FormField, FormControl, FormItem, FormLabel, FormDescription, FormMessage } from "@/components/ui/form";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 
 import { CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -67,7 +68,7 @@ const SettingsPage = () => {
 			<div className="bg-white rounded shadow-sm border p-3">
 				<CardContent>
 					<Form {...form}>
-						<form className="space-y-6" autoComplete="off" onSubmit={form.handleSubmit(onSubmit)}>
+						<form className="space-y-6" onSubmit={form.handleSubmit(onSubmit)}>
 							<div className="space-y-4">
 								<FormField
 									control={form.control}
@@ -97,19 +98,31 @@ const SettingsPage = () => {
 												</FormItem>
 											)}
 										/>
-										<FormField
-											control={form.control}
-											name="password"
-											render={({ field }) => (
-												<FormItem>
-													<FormLabel>Passwort</FormLabel>
-													<FormControl>
-														<Input {...field} type="password" placeholder="******" disabled={isPending} />
-													</FormControl>
-													<FormMessage />
-												</FormItem>
-											)}
-										/>
+										<span>
+											<Popover>
+												<PopoverTrigger asChild>
+													<Button variant="outline" disabled={isPending}>
+														Passwort ändern
+													</Button>
+												</PopoverTrigger>
+												<PopoverContent>
+													<p>Ein neriver Chrome-Bug verhindert aktuell die Eingabe eines neuen Passworts. Bitte versuche es in FireFox oder einem anderen Browser.</p>
+												</PopoverContent>
+											</Popover>
+											<FormField
+												control={form.control}
+												name="password"
+												render={({ field }) => (
+													<FormItem>
+														<FormLabel>Passwort</FormLabel>
+														<FormControl>
+															<Input {...field} type="password" placeholder="******" disabled={isPending} />
+														</FormControl>
+														<FormMessage />
+													</FormItem>
+												)}
+											/>
+										</span>
 										<FormField
 											control={form.control}
 											name="newPassword"
