@@ -19,17 +19,12 @@ import { toast } from "sonner";
 
 import { BsFillTrash3Fill } from "react-icons/bs";
 import { BsInfoCircle } from "react-icons/bs";
-import { FiExternalLink } from "react-icons/fi";
 import { FiPlus } from "react-icons/fi";
-import { LiaClipboard } from "react-icons/lia";
 import { LiaEdit } from "react-icons/lia";
 
-import { CgInternal } from "react-icons/cg";
-import Link from "next/link";
 import { TodoSchema } from "@/schemas";
 import { addTodo, editTodo, deleteTodo } from "@/actions/todo";
 
-import { ClipboardButton } from "../clipboard-button";
 import { germanDateFormat } from "@/lib/utils";
 
 export const TodosTable = () => {
@@ -115,35 +110,29 @@ export const TodosTable = () => {
 		<>
 			<div className="bg-white rounded-lg shadow-sm border mb-5 p-4 md:grid md:grid-cols-2 md:gap-5">
 				<div>
-					<h2 className="text-lg font-medium mb-2">Neues Todok</h2>
+					<h2 className="text-md font-bold text-slate-700 mb-5">Neues Todo</h2>
 					<Form {...newForm}>
 						<form onSubmit={newForm.handleSubmit(addNewTodo)} className="space-y-3">
-							<div className="grid grid-cols-2 gap-5">
-								<div className="space-y-5">
-									<FormField
-										control={newForm.control}
-										name="title"
-										render={({ field }) => (
-											<FormItem>
-												<Input {...field} placeholder="Titel" />
-												<FormMessage />
-											</FormItem>
-										)}
-									/>
-								</div>
-								<div>
-									<FormField
-										control={newForm.control}
-										name="description"
-										render={({ field }) => (
-											<FormItem>
-												<Textarea {...field} rows={4} placeholder="Beschreibung" />
-												<FormMessage />
-											</FormItem>
-										)}
-									/>
-								</div>
-							</div>
+							<FormField
+								control={newForm.control}
+								name="title"
+								render={({ field }) => (
+									<FormItem>
+										<Input {...field} placeholder="Titel" />
+										<FormMessage />
+									</FormItem>
+								)}
+							/>
+							<FormField
+								control={newForm.control}
+								name="description"
+								render={({ field }) => (
+									<FormItem>
+										<Textarea {...field} rows={4} placeholder="Beschreibung" />
+										<FormMessage />
+									</FormItem>
+								)}
+							/>
 							<FormField
 								control={newForm.control}
 								name="isCompleted"
@@ -159,14 +148,15 @@ export const TodosTable = () => {
 									</FormItem>
 								)}
 							/>
-							<Button disabled={isPending} variant="outline" className="w-full">
-								<FiPlus className=" mr-2" /> Todo hinzufügen
+							<Button disabled={isPending} variant="default" className="w-full">
+								<FiPlus className="mr-2" />
+								Todo hinzufügen
 							</Button>
 						</form>
 					</Form>
 				</div>
 				<div>
-					<h2 className="text-lg font-medium mb-2">Informationen zur Benutzung</h2>
+					<h2 className="text-md font-bold text-slate-700 mb-5">Infos</h2>
 				</div>
 			</div>
 			<div className="bg-white rounded-lg shadow-sm border p-4">
