@@ -35,6 +35,9 @@ import { BsBuildings } from "react-icons/bs";
 import { BsArrowsFullscreen } from "react-icons/bs";
 import { BsTextIndentRight } from "react-icons/bs";
 import { BsTextIndentLeft } from "react-icons/bs";
+import { GiOrganigram } from "react-icons/gi";
+import { GrAppsRounded } from "react-icons/gr";
+
 import SidebarSheet from "./sidebar-sheet";
 
 const laBelleAurore = La_Belle_Aurore({ subsets: ["latin"], weight: ["400"] });
@@ -432,11 +435,21 @@ export const SidebarNavbar = () => {
 										<DropdownMenuItem>
 											<Link href="/profil" title="Zum Profil">
 												<LuUser2 className="size-4 inline-block mr-2 mt-[-2px]" />
-												Profil
+												Mein Profil
 											</Link>
 										</DropdownMenuItem>
-										<DropdownMenuItem>Empty Slot</DropdownMenuItem>
-										<DropdownMenuItem>Empty Slot</DropdownMenuItem>
+										<DropdownMenuItem>
+											<Link href="/apps" title="Zum Profil">
+												<GrAppsRounded className="size-4 inline-block mr-2 mt-[-2px]" />
+												Apps
+											</Link>
+										</DropdownMenuItem>
+										<DropdownMenuItem>
+											<Link href="/organisationen" title="Zum Profil">
+												<GiOrganigram className="size-4 inline-block mr-2 mt-[-2px]" />
+												Organisationen
+											</Link>
+										</DropdownMenuItem>
 										<DropdownMenuSeparator />
 										<DropdownMenuItem>
 											<LogoutButton>Logout</LogoutButton>

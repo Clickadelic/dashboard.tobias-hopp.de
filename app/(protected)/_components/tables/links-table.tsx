@@ -71,20 +71,19 @@ const LinksTable = () => {
 			dynamicForm.reset({
 				title: link.title,
 				url: link.url,
-				description: link.description,
-				isPinned: link.isPinned
+				description: link.description
 			});
 		}
 	};
 
 	const newForm = useForm<z.infer<typeof LinkSchema>>({
 		resolver: zodResolver(LinkSchema),
-		defaultValues: { title: "", url: "", description: "", isPinned: false }
+		defaultValues: { title: "", url: "", description: "" }
 	});
 
 	const dynamicForm = useForm<z.infer<typeof LinkSchema>>({
 		resolver: zodResolver(LinkSchema),
-		defaultValues: { title: "", url: "", description: "", isPinned: false }
+		defaultValues: { title: "", url: "", description: "" }
 	});
 
 	const addNewLink = async (values: z.infer<typeof LinkSchema>) => {
@@ -156,21 +155,6 @@ const LinksTable = () => {
 									/>
 								</div>
 							</div>
-							<FormField
-								control={newForm.control}
-								name="isPinned"
-								render={({ field }) => (
-									<FormItem className="flex flex-row items-center justify-between rounded-lg p-3">
-										<div className="space-y-.5">
-											<FormLabel>Pinned</FormLabel>
-											<FormDescription>Zeigt den Link als App-Icon auf dem Dashboard an.</FormDescription>
-										</div>
-										<FormControl>
-											<Switch disabled={isPending} checked={field.value} onCheckedChange={field.onChange} />
-										</FormControl>
-									</FormItem>
-								)}
-							/>
 							<Button disabled={isPending} variant="outline" className="w-full">
 								<FiPlus className=" mr-2" /> Link hinzufügen
 							</Button>
@@ -190,7 +174,6 @@ const LinksTable = () => {
 							<TableHead className="truncate text-ellipsis max-w-[120px]">Url</TableHead>
 							<TableHead className="">Target</TableHead>
 							<TableHead className="w-[160px]">Beschreibung</TableHead>
-							<TableHead>isPinned</TableHead>
 							<TableHead>
 								<LiaClipboard />
 							</TableHead>
@@ -229,7 +212,6 @@ const LinksTable = () => {
 									<TableCell>{link.target === "_blank" ? <CgInternal className="ml-2 mt-1 inline" /> : <FiExternalLink className="ml-2 mt-1 inline" />}</TableCell>
 
 									<TableCell className="truncate">{link?.description}</TableCell>
-									<TableCell>{link.isPinned ? "Ja" : "Nein"}</TableCell>
 									<TableCell>
 										<ClipboardButton classNames="mt-1.5 hover:text-emerald-500" textToCopy={link.url} />
 									</TableCell>
@@ -282,21 +264,6 @@ const LinksTable = () => {
 																		<Textarea {...field} placeholder="Beschreibung..." />
 																	</FormControl>
 																	<FormMessage />
-																</FormItem>
-															)}
-														/>
-														<FormField
-															control={dynamicForm.control}
-															name="isPinned"
-															render={({ field }) => (
-																<FormItem className="flex flex-row items-center justify-between rounded-lg border p-3 shadow-sm">
-																	<div className="space-y-.5">
-																		<FormLabel>Pinned</FormLabel>
-																		<FormDescription>Zeigt den Link als App-Icon auf dem Dashboard an.</FormDescription>
-																	</div>
-																	<FormControl>
-																		<Switch disabled={isPending} checked={field.value} onCheckedChange={field.onChange} />
-																	</FormControl>
 																</FormItem>
 															)}
 														/>
