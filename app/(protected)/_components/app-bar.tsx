@@ -9,7 +9,9 @@ import { useSession } from "next-auth/react";
 import { useCurrentUser } from "@/hooks/use-current-user";
 import { useForm } from "react-hook-form";
 import { AppSchema } from "@/schemas";
+
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { Input } from "@/components/ui/input";
 import { Form, FormControl, FormLabel, FormField, FormItem, FormMessage } from "@/components/ui/form";
 import { Textarea } from "@/components/ui/textarea";
@@ -18,8 +20,9 @@ import { toast } from "sonner";
 import { Skeleton } from "@/components/ui/skeleton";
 
 import { FiPlus } from "react-icons/fi";
-import { addApp } from "@/actions/app";
 import { BsApp } from "react-icons/bs";
+
+import { addApp } from "@/actions/app";
 
 export const AppBar = () => {
 	const { status } = useSession({ required: true });
@@ -130,8 +133,11 @@ export const AppBar = () => {
 				{apps.length > 0 ? (
 					apps.map(app => (
 						// TODO: Mal testen, url mit params: href={`/app/${app.id}`}
-						<Link key={app.id} href={app.url} target="_blank" title="Zum Profil" className="bg-white size-16 flex items-center justify-center rounded-lg shadow hover:shadow-lg p-1 border">
-							<BsApp className="size-4" />
+						<Link key={app.id} href={app.url} target="_blank" title={app.title}>
+							<span className="text-xs font-medium">{app.title}</span>
+							<span className="bg-white size-16 flex flex-col align-middle items-center justify-center rounded-lg shadow hover:shadow-lg p-1 border">
+								<BsApp className="size-4" />
+							</span>
 						</Link>
 					))
 				) : (

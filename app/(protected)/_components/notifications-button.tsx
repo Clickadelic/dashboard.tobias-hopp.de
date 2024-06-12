@@ -1,14 +1,15 @@
 import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from "@radix-ui/react-dropdown-menu";
-import { Button } from "./ui/button";
-import { PiTranslate } from "react-icons/pi";
+import { Button } from "../../../components/ui/button";
 
-export const LanguagesButton = () => {
+import { IoIosNotificationsOutline } from "react-icons/io";
+
+export const NotificationsButton = () => {
 	return (
 		<li>
 			<DropdownMenu>
 				<DropdownMenuTrigger asChild>
 					<Button variant="link" className="hover:bg-slate-200 mx-1 inline-flex p-3 rounded">
-						<PiTranslate className="size-5" />
+						<IoIosNotificationsOutline className="size-5" />
 					</Button>
 				</DropdownMenuTrigger>
 				<DropdownMenuContent className="w-[200px]">
