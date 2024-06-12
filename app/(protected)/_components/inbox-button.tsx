@@ -1,5 +1,5 @@
 import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from "@radix-ui/react-dropdown-menu";
-import { Button } from "./ui/button";
+import { Button } from "../../../components/ui/button";
 import { CiMail } from "react-icons/ci";
 
 export const InboxButton = () => {

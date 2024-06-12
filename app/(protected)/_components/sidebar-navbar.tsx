@@ -30,13 +30,14 @@ import { BsTextIndentLeft } from "react-icons/bs";
 import { cn } from "@/lib/utils";
 import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
 
+// TODO: Imports korrigieren
 import { MegaMenu } from "./mega-menu";
-import { InboxButton } from "@/components/inbox-button";
-import { NotificationsButton } from "@/components/notifications-button";
+import { InboxButton } from "./inbox-button";
+import { NotificationsButton } from "./notifications-button";
 import { FullscreenButton } from "./fullscreen-button";
 import { SidebarSheet } from "./sidebar-sheet";
-import { ProfileDropdown } from "@/components/auth/profile-drowndown";
-import { LanguagesButton } from "@/components/languages-button";
+import { ProfileDropdown } from "./profile-drowndown";
+import { LanguagesButton } from "./languages-button";
 
 const laBelleAurore = La_Belle_Aurore({ subsets: ["latin"], weight: ["400"] });
 
@@ -45,7 +46,7 @@ export const SidebarNavbar = () => {
 	const user = useCurrentUser();
 	const role = useCurrentRole();
 	const path = usePathname();
-
+	console.log(user);
 	const { isToggled, setToggle } = useAppContext();
 
 	return (
@@ -265,7 +266,7 @@ export const SidebarNavbar = () => {
 					</>
 				)}
 			</aside>
-			<header className={cn("App-header flex fixed top-0 md:ml-64 w-screen p-2 border-b bg-white", isToggled ? "md:ml-16" : "md:ml-64")} >
+			<header className={cn("App-header flex fixed top-0 md:ml-64 w-screen p-2 border-b bg-white", isToggled ? "md:ml-16" : "md:ml-64")}>
 				<nav className="header-navflex justify-between w-max">
 					<span className="h-[40px]">
 						{/* TODO: Mobile Button toggle */}
