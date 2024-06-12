@@ -1,116 +1,116 @@
-"use client";
+"use client"
 
-import * as z from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useTransition, useState, useEffect } from "react";
-import { useForm } from "react-hook-form";
-import { useSession } from "next-auth/react";
-import { useCurrentUser } from "@/hooks/use-current-user";
+import * as z from "zod"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useTransition, useState, useEffect } from "react"
+import { useForm } from "react-hook-form"
+import { useSession } from "next-auth/react"
+import { useCurrentUser } from "@/hooks/use-current-user"
 
-import { Input } from "@/components/ui/input";
-import { Form, FormControl, FormLabel, FormField, FormItem, FormMessage, FormDescription } from "@/components/ui/form";
-import { Textarea } from "@/components/ui/textarea";
-import { Skeleton } from "@/components/ui/skeleton";
-import { Switch } from "@/components/ui/switch";
-import { Button } from "@/components/ui/button";
-import { Table, TableBody, TableCaption, TableCell, TableFooter, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { toast } from "sonner";
+import { Input } from "@/components/ui/input"
+import { Form, FormControl, FormLabel, FormField, FormItem, FormMessage, FormDescription } from "@/components/ui/form"
+import { Textarea } from "@/components/ui/textarea"
+import { Skeleton } from "@/components/ui/skeleton"
+import { Switch } from "@/components/ui/switch"
+import { Button } from "@/components/ui/button"
+import { Table, TableBody, TableCaption, TableCell, TableFooter, TableHead, TableHeader, TableRow } from "@/components/ui/table"
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
+import { toast } from "sonner"
 
-import { BsFillTrash3Fill } from "react-icons/bs";
-import { BsInfoCircle } from "react-icons/bs";
-import { FiExternalLink } from "react-icons/fi";
-import { FiPlus } from "react-icons/fi";
-import { LiaClipboard } from "react-icons/lia";
-import { LiaEdit } from "react-icons/lia";
+import { BsFillTrash3Fill } from "react-icons/bs"
+import { BsInfoCircle } from "react-icons/bs"
+import { FiExternalLink } from "react-icons/fi"
+import { FiPlus } from "react-icons/fi"
+import { LiaClipboard } from "react-icons/lia"
+import { LiaEdit } from "react-icons/lia"
 
-import { CgInternal } from "react-icons/cg";
-import Link from "next/link";
-import { LinkSchema } from "@/schemas";
-import { addLink, editLink, deleteLink } from "@/actions/link";
+import { CgInternal } from "react-icons/cg"
+import Link from "next/link"
+import { LinkSchema } from "@/schemas"
+import { addLink, editLink, deleteLink } from "@/actions/link"
 
-import { ClipboardButton } from "../clipboard-button";
-import { germanDateFormat } from "@/lib/utils";
+import { ClipboardButton } from "../clipboard-button"
+import { germanDateFormat } from "@/lib/utils"
 
 const LinksTable = () => {
-	const { status } = useSession({ required: true });
-	const userId = useCurrentUser()?.id;
+	const { status } = useSession({ required: true })
+	const userId = useCurrentUser()?.id
 
-	const [isPending, startTransition] = useTransition();
-	const [isLoading, setIsLoading] = useState<boolean>(false);
-	const [links, setUsers] = useState<any[]>([]);
+	const [isPending, startTransition] = useTransition()
+	const [isLoading, setIsLoading] = useState<boolean>(false)
+	const [links, setUsers] = useState<any[]>([])
 
 	const fetchLinks = async () => {
-		setIsLoading(true);
+		setIsLoading(true)
 		await fetch(`/api/links/${userId}`).then(async res => {
-			const response = await res.json();
-			setUsers(response);
-		});
-		setIsLoading(false);
-	};
+			const response = await res.json()
+			setUsers(response)
+		})
+		setIsLoading(false)
+	}
 
 	const deleteLinkById = async (id: string) => {
-		const result = await deleteLink(id);
+		const result = await deleteLink(id)
 		if (result.error) {
-			toast.error(result.error);
+			toast.error(result.error)
 		} else if (result.success) {
-			toast.success(result.success);
-			fetchLinks();
+			toast.success(result.success)
+			fetchLinks()
 		}
-	};
+	}
 
 	useEffect(() => {
-		setIsLoading(true);
-		fetchLinks();
-		setIsLoading(false);
-	}, []);
+		setIsLoading(true)
+		fetchLinks()
+		setIsLoading(false)
+	}, [])
 
 	const setEditValues = (linkId: string) => {
-		const link = links.find(link => link.id === linkId);
+		const link = links.find(link => link.id === linkId)
 		if (link) {
 			dynamicForm.reset({
 				title: link.title,
 				url: link.url,
 				description: link.description
-			});
+			})
 		}
-	};
+	}
 
 	const newForm = useForm<z.infer<typeof LinkSchema>>({
 		resolver: zodResolver(LinkSchema),
 		defaultValues: { title: "", url: "", description: "" }
-	});
+	})
 
 	const dynamicForm = useForm<z.infer<typeof LinkSchema>>({
 		resolver: zodResolver(LinkSchema),
 		defaultValues: { title: "", url: "", description: "" }
-	});
+	})
 
 	const addNewLink = async (values: z.infer<typeof LinkSchema>) => {
 		startTransition(async () => {
-			const result = await addLink(values);
+			const result = await addLink(values)
 			if (result.error) {
-				toast.error(result.error);
+				toast.error(result.error)
 			} else if (result.success) {
-				toast.success(result.success);
-				newForm.reset();
-				fetchLinks();
+				toast.success(result.success)
+				newForm.reset()
+				fetchLinks()
 			}
-		});
-	};
+		})
+	}
 
 	const editCurrentLink = async (id: string, values: z.infer<typeof LinkSchema>) => {
 		startTransition(async () => {
-			const result = await editLink(id, values);
+			const result = await editLink(id, values)
 			if (result.error) {
-				toast.error(result.error);
+				toast.error(result.error)
 			} else if (result.success) {
-				toast.success(result.success);
-				dynamicForm.reset();
-				fetchLinks();
+				toast.success(result.success)
+				dynamicForm.reset()
+				fetchLinks()
 			}
-		});
-	};
+		})
+	}
 
 	return (
 		<>
@@ -155,7 +155,7 @@ const LinksTable = () => {
 									/>
 								</div>
 							</div>
-							<Button disabled={isPending} variant="outline" className="w-full">
+							<Button disabled={isPending} className="w-full">
 								<FiPlus className=" mr-2" /> Link hinzufügen
 							</Button>
 						</form>
@@ -292,7 +292,7 @@ const LinksTable = () => {
 				</Table>
 			</div>
 		</>
-	);
-};
+	)
+}
 
-export default LinksTable;
+export default LinksTable
