@@ -280,15 +280,27 @@ export const SidebarNavbar = () => {
 						</svg>
 					</button>
 					<ul className="hidden fixed right-5 md:inline-flex md:mt-1 p-3 md:p-0 md:pl-3">
-						<MegaMenu />
+						<li>
+							<MegaMenu />
+						</li>
 						<li>
 							<LanguagesButton />
 						</li>
-						<NotificationsButton />
-						<InboxButton />
-						<FullscreenButton />
-						<SidebarSheet />
-						<ProfileDropdown />
+						<li>
+							<NotificationsButton />
+						</li>
+						<li>
+							<InboxButton />
+						</li>
+						<li>
+							<FullscreenButton />
+						</li>
+						<li>
+							<SidebarSheet />
+						</li>
+						<li>
+							<ProfileDropdown />
+						</li>
 					</ul>
 				</nav>
 			</header>

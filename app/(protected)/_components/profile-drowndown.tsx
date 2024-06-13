@@ -1,34 +1,34 @@
-"use client";
+"use client"
 
-import { useAppContext } from "@/context/app-context";
-import { usePathname } from "next/navigation";
-import { useSession } from "next-auth/react";
-import { useCurrentRole } from "@/hooks/use-current-role";
-import { useCurrentUser } from "@/hooks/use-current-user";
+import { useAppContext } from "@/context/app-context"
+import { usePathname } from "next/navigation"
+import { useSession } from "next-auth/react"
+import { useCurrentRole } from "@/hooks/use-current-role"
+import { useCurrentUser } from "@/hooks/use-current-user"
 
-import Link from "next/link";
+import Link from "next/link"
 
-import { Skeleton } from "@/components/ui/skeleton";
-import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { Skeleton } from "@/components/ui/skeleton"
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar"
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 
-import { FaUser } from "react-icons/fa";
-import { LuUser2 } from "react-icons/lu";
-import { GiOrganigram } from "react-icons/gi";
-import { GrAppsRounded } from "react-icons/gr";
+import { FaUser } from "react-icons/fa"
+import { LuUser2 } from "react-icons/lu"
+import { GiOrganigram } from "react-icons/gi"
+import { GrAppsRounded } from "react-icons/gr"
 
-import { LogoutButton } from "@/components/auth/logout-button";
+import { LogoutButton } from "@/components/auth/logout-button"
 
 export const ProfileDropdown = () => {
-	const { status } = useSession({ required: true });
-	const user = useCurrentUser();
-	const role = useCurrentRole();
-	const path = usePathname();
+	const { status } = useSession({ required: true })
+	const user = useCurrentUser()
+	const role = useCurrentRole()
+	const path = usePathname()
 
-	const { isToggled, setToggle } = useAppContext();
-	
+	const { isToggled, setToggle } = useAppContext()
+
 	return (
-		<li>
+		<>
 			{status === "loading" ? (
 				<div className="flex justify-between w-[130px] mt-1">
 					<Skeleton className="size-6 mt-1 mr-1 rounded-full" />
@@ -73,6 +73,6 @@ export const ProfileDropdown = () => {
 					</DropdownMenuContent>
 				</DropdownMenu>
 			)}
-		</li>
-	);
-};
+		</>
+	)
+}
