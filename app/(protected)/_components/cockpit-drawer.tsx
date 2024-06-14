@@ -10,9 +10,9 @@ export const CockpitDrawer = () => {
 	// TODO: Deactivate Demo Function
 	const { isToggled, setToggle } = useAppContext();
 	return (
-		<Drawer open={isToggled} onOpenChange={setToggle}>
+		<Drawer>
 			<DrawerTrigger asChild>
-				<button className="absolute right-8 bottom-8 rounded-full bg-blue-600 text-white p-2 md:p-4 shadow-sm border border-slate-300 hover:bg-blue-500">
+				<button className="absolute right-8 bottom-8 text-white bg-primary rounded-full md:p-4 shadow-sm">
 					<PlusCircledIcon className="size-6" />
 				</button>
 			</DrawerTrigger>
