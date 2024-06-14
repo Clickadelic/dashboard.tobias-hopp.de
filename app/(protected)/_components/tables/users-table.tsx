@@ -20,7 +20,7 @@ import { FormSuccess } from "@/components/form-success";
 
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { toast } from "sonner";
-import { ExclamationTriangleIcon } from "@radix-ui/react-icons";
+import { AiOutlineExclamationCircle } from "react-icons/ai";
 import { CheckCircledIcon } from "@radix-ui/react-icons";
 import { BsInfoCircle } from "react-icons/bs";
 import { BsFillTrash3Fill } from "react-icons/bs";
@@ -125,14 +125,14 @@ const UsersTable = () => {
 						<TableCell>{user?.name}</TableCell>
 						<TableCell>{user?.email}</TableCell>
 						<TableCell>
-							{user?.emailVerified ? <CheckCircledIcon className="size-4 mx-auto text-emerald-500" /> : <ExclamationTriangleIcon className="size-4 mx-auto text-rose-500" />}
+							{user?.emailVerified ? <CheckCircledIcon className="size-4 mx-auto text-emerald-500" /> : <AiOutlineExclamationCircle className="size-4 mx-auto text-rose-500" />}
 						</TableCell>
 						<TableCell>
 							<Switch>
 								<CheckCircledIcon className="size-4 mx-auto text-emerald-500" />
-								<ExclamationTriangleIcon className="size-4 mx-auto text-rose-500" />
+								<AiOutlineExclamationCircle className="size-4 mx-auto text-rose-500" />
 							</Switch>
-							{user?.isTwoFactorEnabled ? <CheckCircledIcon className="size-4 mx-auto text-emerald-500" /> : <ExclamationTriangleIcon className="size-4 mx-auto text-rose-500" />}
+							{user?.isTwoFactorEnabled ? <CheckCircledIcon className="size-4 mx-auto text-emerald-500" /> : <AiOutlineExclamationCircle className="size-4 mx-auto text-rose-500" />}
 						</TableCell>
 						<TableCell>{capitalizeFirstLetter(user?.role)}</TableCell>
 						<TableCell>asd</TableCell>

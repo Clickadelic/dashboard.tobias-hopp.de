@@ -17,8 +17,10 @@ import { Table, TableBody, TableCaption, TableCell, TableFooter, TableHead, Tabl
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { toast } from "sonner";
 
-import { BsFillTrash3Fill } from "react-icons/bs";
+import { AiOutlineExclamationCircle } from "react-icons/ai";
+import { CheckCircledIcon } from "@radix-ui/react-icons";
 import { BsInfoCircle } from "react-icons/bs";
+import { BsFillTrash3Fill } from "react-icons/bs";
 import { FiPlus } from "react-icons/fi";
 import { LiaEdit } from "react-icons/lia";
 import { TodoSchema } from "@/schemas";
@@ -197,7 +199,9 @@ export const TodosTable = () => {
 									</TableCell>
 									<TableCell className={cn("truncate ellipsis", todo.isCompleted ? "line-through" : "")}>{todo.title}</TableCell>
 									<TableCell className={cn("truncate ellipsis", todo.isCompleted ? "line-through" : "")}>{todo.description}</TableCell>
-									<TableCell className="truncate ellipsis">{todo.isCompleted ? "Ja" : "Nein"}</TableCell>
+									<TableCell className="truncate ellipsis">
+										{todo.isCompleted ? <CheckCircledIcon className="size-5 text-emerald-500" /> : <AiOutlineExclamationCircle className="size-5 text-rose-500" />}
+									</TableCell>
 									<TableCell>
 										<Popover>
 											<PopoverTrigger asChild>
