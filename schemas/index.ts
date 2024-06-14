@@ -87,6 +87,6 @@ export const NoticeSchema = z.object({
 
 export const ProjectSchema = z.object({
 	title: z.string().min(1, "Projekttitel fehlt"),
-	url: z.optional(z.string().url("Ungültige URL")),
+	url: z.string().url("Ungültige URL"),
 	description: z.optional(z.string().max(300, "Projektbeschreibung zu lang"))
 });

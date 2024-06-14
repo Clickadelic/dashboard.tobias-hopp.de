@@ -176,7 +176,7 @@ model Notice {
 model Project {
     id          String  @id @default(cuid())
     title       String
-    url         String?
+    url         String
     description String?
 
     createdAt DateTime @default(now())
