@@ -17,14 +17,16 @@ import { Table, TableBody, TableCaption, TableCell, TableFooter, TableHead, Tabl
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { toast } from "sonner";
 
-import { BsFillTrash3Fill } from "react-icons/bs";
+import { AiOutlineExclamationCircle } from "react-icons/ai";
+import { CheckCircledIcon } from "@radix-ui/react-icons";
 import { BsInfoCircle } from "react-icons/bs";
+import { BsFillTrash3Fill } from "react-icons/bs";
 import { FiPlus } from "react-icons/fi";
 import { LiaEdit } from "react-icons/lia";
-
 import { TodoSchema } from "@/schemas";
 import { addTodo, editTodo, deleteTodo } from "@/actions/todo";
 
+import { cn } from "@/lib/utils";
 import { germanDateFormat } from "@/lib/utils";
 
 export const TodosTable = () => {
@@ -65,7 +67,8 @@ export const TodosTable = () => {
 		if (todo) {
 			dynamicForm.reset({
 				title: todo.title,
-				description: todo.description
+				description: todo.description,
+				isCompleted: todo.isCompleted
 			});
 		}
 	};
@@ -106,6 +109,7 @@ export const TodosTable = () => {
 		});
 	};
 
+	// TODO: IDEE isEditable, setIsEditable für Rows, dann Buttons für Edit, Delete, etc.
 	return (
 		<>
 			<div className="bg-white rounded-lg shadow-sm border mb-5 p-4 md:grid md:grid-cols-2 md:gap-5">
@@ -166,6 +170,7 @@ export const TodosTable = () => {
 							<TableHead className="w-[20px]">Id</TableHead>
 							<TableHead>Titel</TableHead>
 							<TableHead className="w-[160px]">Beschreibung</TableHead>
+							<TableHead className="w-[160px]">erledigt</TableHead>
 							<TableHead>bearbeiten</TableHead>
 							<TableHead className="w-[180px]">Hinzugefügt am</TableHead>
 							<TableHead className="w-[180px]">Letzte Änderung</TableHead>
@@ -192,8 +197,11 @@ export const TodosTable = () => {
 											<PopoverContent>{todo.id}</PopoverContent>
 										</Popover>
 									</TableCell>
-									<TableCell className="truncate ellipsis">{todo.title}</TableCell>
-									<TableCell className="truncate ellipsis">{todo.description}</TableCell>
+									<TableCell className={cn("truncate ellipsis", todo.isCompleted ? "line-through" : "")}>{todo.title}</TableCell>
+									<TableCell className={cn("truncate ellipsis", todo.isCompleted ? "line-through" : "")}>{todo.description}</TableCell>
+									<TableCell className="truncate ellipsis">
+										{todo.isCompleted ? <CheckCircledIcon className="size-5 text-emerald-500" /> : <AiOutlineExclamationCircle className="size-5 text-rose-500" />}
+									</TableCell>
 									<TableCell>
 										<Popover>
 											<PopoverTrigger asChild>
@@ -232,8 +240,23 @@ export const TodosTable = () => {
 																</FormItem>
 															)}
 														/>
+														<FormField
+															control={dynamicForm.control}
+															name="isCompleted"
+															render={({ field }) => (
+																<FormItem className="flex flex-row items-center justify-between rounded-lg p-3">
+																	<div className="space-y-.5">
+																		<FormLabel>erledigt</FormLabel>
+																		<FormDescription>Wird als erledigt markiert.</FormDescription>
+																	</div>
+																	<FormControl>
+																		<Switch disabled={isPending} checked={field.value} onCheckedChange={field.onChange} />
+																	</FormControl>
+																</FormItem>
+															)}
+														/>
 
-														<Button disabled={isPending} variant="outline" type="submit" className="w-full">
+														<Button disabled={isPending} variant="default" type="submit" className="w-full">
 															Bearbeiten
 														</Button>
 													</form>

@@ -108,17 +108,3 @@ export const deleteLink = async (id: string) => {
 		return { error: "Interner Server-Fehler." };
 	}
 };
-
-export const getAppLinksByUser = async () => {
-	const session = await auth();
-	const user = session?.user;
-	const userId = user?.id;
-	const links = await db.link.findMany({
-		where: {
-			user: {
-				id: userId
-			}
-		}
-	});
-	return links;
-};

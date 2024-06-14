@@ -119,8 +119,8 @@ const LinksTable = () => {
 					<h2 className="text-lg font-medium mb-2">Neuer Link</h2>
 					<Form {...newForm}>
 						<form onSubmit={newForm.handleSubmit(addNewLink)} className="space-y-3">
-							<div className="grid grid-cols-2 gap-5">
-								<div className="space-y-5">
+							<div className="grid grid-cols-2 gap-5 mb-3">
+								<div className="flex flex-col justify-between">
 									<FormField
 										control={newForm.control}
 										name="title"
@@ -155,7 +155,7 @@ const LinksTable = () => {
 									/>
 								</div>
 							</div>
-							<Button disabled={isPending} variant="outline" className="w-full">
+							<Button variant="default" type="submit" disabled={isPending} className="w-full">
 								<FiPlus className=" mr-2" /> Link hinzufügen
 							</Button>
 						</form>
@@ -171,12 +171,12 @@ const LinksTable = () => {
 						<TableRow>
 							<TableHead className="w-[20px]">Id</TableHead>
 							<TableHead>Titel</TableHead>
-							<TableHead className="truncate text-ellipsis max-w-[120px]">Url</TableHead>
-							<TableHead className="">Target</TableHead>
-							<TableHead className="w-[160px]">Beschreibung</TableHead>
 							<TableHead>
 								<LiaClipboard />
 							</TableHead>
+							<TableHead className="text-truncate overflow-hidden text-ellipsis max-w-[120px]">Url</TableHead>
+							<TableHead className="">Target</TableHead>
+							<TableHead className="w-[160px]">Beschreibung</TableHead>
 							<TableHead>bearbeiten</TableHead>
 							<TableHead className="w-[180px]">Hinzugefügt am</TableHead>
 							<TableHead className="w-[180px]">Letzte Änderung</TableHead>
@@ -204,6 +204,9 @@ const LinksTable = () => {
 										</Popover>
 									</TableCell>
 									<TableCell className="truncate ellipsis">{link.title}</TableCell>
+									<TableCell>
+										<ClipboardButton classNames="mt-1.5 hover:text-emerald-500" title="In die Zwischenablage kopieren" textToCopy={link.url} />
+									</TableCell>
 									<TableCell className="truncate ellipsis">
 										<Link href={link.url} title={link.title + " in neuen Fenster öffnen"} className="inline hover:text-sky-500" target="_blank">
 											{link.url}
@@ -212,9 +215,6 @@ const LinksTable = () => {
 									<TableCell>{link.target === "_blank" ? <CgInternal className="ml-2 mt-1 inline" /> : <FiExternalLink className="ml-2 mt-1 inline" />}</TableCell>
 
 									<TableCell className="truncate">{link?.description}</TableCell>
-									<TableCell>
-										<ClipboardButton classNames="mt-1.5 hover:text-emerald-500" textToCopy={link.url} />
-									</TableCell>
 									<TableCell>
 										<Popover>
 											<PopoverTrigger asChild>

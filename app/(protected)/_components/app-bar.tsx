@@ -1,74 +1,74 @@
-"use client";
+"use client"
 
-import * as z from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod"
+import { zodResolver } from "@hookform/resolvers/zod"
 
-import Link from "next/link";
-import { useState, useEffect, useTransition } from "react";
-import { useSession } from "next-auth/react";
-import { useCurrentUser } from "@/hooks/use-current-user";
-import { useForm } from "react-hook-form";
-import { AppSchema } from "@/schemas";
+import Link from "next/link"
+import { useState, useEffect, useTransition } from "react"
+import { useSession } from "next-auth/react"
+import { useCurrentUser } from "@/hooks/use-current-user"
+import { useForm } from "react-hook-form"
+import { AppSchema } from "@/schemas"
 
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
-import { Input } from "@/components/ui/input";
-import { Form, FormControl, FormLabel, FormField, FormItem, FormMessage } from "@/components/ui/form";
-import { Textarea } from "@/components/ui/textarea";
-import { Button } from "@/components/ui/button";
-import { toast } from "sonner";
-import { Skeleton } from "@/components/ui/skeleton";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
+import { Input } from "@/components/ui/input"
+import { Form, FormControl, FormLabel, FormField, FormItem, FormMessage } from "@/components/ui/form"
+import { Textarea } from "@/components/ui/textarea"
+import { Button } from "@/components/ui/button"
+import { toast } from "sonner"
+import { Skeleton } from "@/components/ui/skeleton"
 
-import { FiPlus } from "react-icons/fi";
-import { BsApp } from "react-icons/bs";
+import { FiPlus } from "react-icons/fi"
+import { BsApp } from "react-icons/bs"
 
-import { addApp } from "@/actions/app";
+import { addApp } from "@/actions/app"
 
 export const AppBar = () => {
-	const { status } = useSession({ required: true });
-	const userId = useCurrentUser()?.id;
-	const [isPending, startTransition] = useTransition();
+	const { status } = useSession({ required: true })
+	const userId = useCurrentUser()?.id
+	const [isPending, startTransition] = useTransition()
 
-	const [isLoading, setIsLoading] = useState<boolean>(false);
-	const [apps, setApps] = useState<any[]>([]);
+	const [isLoading, setIsLoading] = useState<boolean>(false)
+	const [apps, setApps] = useState<any[]>([])
 
 	const fetchApps = async () => {
-		setIsLoading(true);
+		setIsLoading(true)
 		try {
-			const res = await fetch(`/api/apps/${userId}`);
-			const response = await res.json();
-			setApps(response);
-			console.log(response);
+			const res = await fetch(`/api/apps/${userId}`)
+			const response = await res.json()
+			setApps(response)
+			console.log(response)
 		} catch (error) {
-			toast.error("Fehler beim Laden der Apps.");
+			toast.error("Fehler beim Laden der Apps.")
 		} finally {
-			setIsLoading(false);
+			setIsLoading(false)
 		}
-	};
+	}
 
 	useEffect(() => {
-		setIsLoading(true);
-		fetchApps();
-		setIsLoading(false);
-	}, []);
+		setIsLoading(true)
+		fetchApps()
+		setIsLoading(false)
+	}, [])
 
 	const form = useForm<z.infer<typeof AppSchema>>({
 		resolver: zodResolver(AppSchema),
 		defaultValues: { title: "", url: "", description: "" }
-	});
+	})
 
 	const onSubmit = async (values: z.infer<typeof AppSchema>) => {
 		startTransition(async () => {
-			const result = await addApp(values);
+			const result = await addApp(values)
 			if (result.error) {
-				toast.error(result.error);
+				toast.error(result.error)
 			} else if (result.success) {
-				toast.success(result.success);
-				form.reset();
-				fetchApps();
+				toast.success(result.success)
+				form.reset()
+				fetchApps()
 			}
-		});
-	};
+		})
+	}
 
 	return (
 		<div className="w-full">
@@ -134,10 +134,10 @@ export const AppBar = () => {
 					apps.map(app => (
 						// TODO: Mal testen, url mit params: href={`/app/${app.id}`}
 						<Link key={app.id} href={app.url} target="_blank" title={app.title}>
-							<span className="text-xs font-medium">{app.title}</span>
 							<span className="bg-white size-16 flex flex-col align-middle items-center justify-center rounded-lg shadow hover:shadow-lg p-1 border">
 								<BsApp className="size-4" />
 							</span>
+							<span className="text-xs font-medium">{app.title}</span>
 						</Link>
 					))
 				) : (
@@ -150,5 +150,5 @@ export const AppBar = () => {
 				)}
 			</div>
 		</div>
-	);
-};
+	)
+}

@@ -4,7 +4,6 @@ import { ProjectCard } from "../_components/cards/project-card";
 import { TodoCard } from "../_components/cards/todo-card";
 import { LinkCard } from "../_components/cards/link-card";
 import { NoticeCard } from "../_components/cards/notice-card";
-import { ContextComponent } from "../_components/child-context";
 
 const DashboardPage = () => {
 	return (
@@ -18,9 +17,6 @@ const DashboardPage = () => {
 				<TodoCard />
 				<NoticeCard />
 				<LinkCard />
-			</div>
-			<div>
-				<ContextComponent />
 			</div>
 		</div>
 	);

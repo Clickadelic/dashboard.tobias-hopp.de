@@ -1,5 +1,9 @@
 import ProjectOverview from "@/app/(protected)/_components/project-overview";
 
+import { HiOutlineChevronRight } from "react-icons/hi";
+import Link from "next/link";
+import { BiHomeAlt2 } from "react-icons/bi";
+
 const ProjectPage = () => {
 	return (
 		<div className="page-wrapper">

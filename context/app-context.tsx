@@ -1,7 +1,7 @@
 "use client";
 
 import { createContext, useState, ReactNode, Dispatch, SetStateAction, useContext } from "react";
-
+import { useSession } from "next-auth/react";
 interface AppContextProps {
 	isToggled: boolean;
 	setToggle: Dispatch<SetStateAction<boolean>>;
@@ -15,7 +15,6 @@ interface AppProviderProps {
 
 const AppProvider = ({ children }: AppProviderProps) => {
 	const [isToggled, setToggle] = useState<boolean>(false);
-
 	return <AppContext.Provider value={{ isToggled, setToggle }}>{children}</AppContext.Provider>;
 };
 
