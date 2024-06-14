@@ -63,13 +63,15 @@ export const NewPasswordSchema = z.object({
 
 export const AppSchema = z.object({
 	title: z.string().min(1, "Titel fehlt"),
-	url: z.optional(z.string().url("Ungültige Url")),
+	url: z.string().url("Ungültige Url"),
 	description: z.optional(z.string().max(300, "Beschreibung zu lang"))
 });
 
 export const LinkSchema = z.object({
 	title: z.string().min(1, "Titel fehlt"),
 	url: z.string().url("Ungültige Url"),
+	isPinned: z.optional(z.boolean()),
+	target: z.optional(z.string()),
 	description: z.optional(z.string().max(300, "Beschreibung zu lang"))
 });
 
@@ -85,6 +87,6 @@ export const NoticeSchema = z.object({
 
 export const ProjectSchema = z.object({
 	title: z.string().min(1, "Projekttitel fehlt"),
-	url: z.string().url("Ungültige URL"),
+	url: z.optional(z.string().url("Ungültige URL")),
 	description: z.optional(z.string().max(300, "Projektbeschreibung zu lang"))
 });
