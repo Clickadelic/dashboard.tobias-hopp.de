@@ -28,7 +28,7 @@ export const CockpitDrawer = () => {
 						<DrawerDescription>Deine Schaltzentrale.</DrawerDescription>
 					</DrawerHeader>
 					<div className="container min-h-[500px]">
-						<div className="flex items-center justify-between space-x-2"></div>
+						<div className="flex items-center justify-between space-x-2">Forms forms forms forms...</div>
 					</div>
 					<DrawerFooter>
 						<Button>Submit</Button>
