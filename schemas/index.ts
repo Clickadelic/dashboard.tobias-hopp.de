@@ -70,6 +70,8 @@ export const AppSchema = z.object({
 export const LinkSchema = z.object({
 	title: z.string().min(1, "Titel fehlt"),
 	url: z.string().url("Ungültige Url"),
+	isPinned: z.optional(z.boolean()),
+	target: z.optional(z.string()),
 	description: z.optional(z.string().max(300, "Beschreibung zu lang"))
 });
 

@@ -1,6 +1,4 @@
-import BreadcrumbNav from "./_components/breadcrumb-nav";
-import { SidebarNavbar } from "./_components/sidebar-navbar";
-import { CockpitDrawer } from "./_components/cockpit-drawer";
+import LayoutContext from "./layout-context";
 
 interface ProtectedLayoutProps {
 	children: React.ReactNode;
@@ -8,17 +6,8 @@ interface ProtectedLayoutProps {
 
 const ProtectedLayout = ({ children }: ProtectedLayoutProps) => {
 	return (
-		<div className="min-h-screen bg-mantis-background">
-			<SidebarNavbar />
-			<main className="md:ml-64">
-				<div className="container pt-20">
-					{/* <div className="pt-20">
-						<BreadcrumbNav />
-					</div> */}
-					{children}
-				</div>
-			</main>
-			<CockpitDrawer />
+		<div className="min-h-screen bg-mantis-background flex">
+			<LayoutContext>{children}</LayoutContext>
 		</div>
 	);
 };

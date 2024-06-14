@@ -16,7 +16,7 @@ datasource db {
 model Organization {
     id          String   @id @default(cuid())
     name        String
-    url         String
+    url         String?
     description String?
     createdAt   DateTime @default(now())
     updatedAt   DateTime @default(now())
@@ -46,7 +46,7 @@ model User {
     backgroundImage       String?
     profileImage          String?
 
-    apps		  App[]
+    apps          App[]
     links         Link[]
     projects      Project[]
     todos         Todo[]
@@ -112,12 +112,11 @@ model TwoFactorConfirmation {
 }
 
 model App {
-    id          String   @id @default(cuid())
-    title       String
-    url         String
-    description String?
-    createdAt   DateTime @default(now())
-    updatedAt   DateTime @default(now())
+    id        String   @id @default(cuid())
+    title     String
+    url       String
+    createdAt DateTime @default(now())
+    updatedAt DateTime @default(now())
 
     userId String
     user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
@@ -125,14 +124,20 @@ model App {
     @@unique([id])
 }
 
+enum LinkTarget {
+    self
+    blank
+}
+
 model Link {
-    id          String   @id @default(cuid())
+    id          String     @id @default(cuid())
     title       String
     url         String
     description String?
-    isPinned    Boolean  @default(false)
-    createdAt   DateTime @default(now())
-    updatedAt   DateTime @default(now())
+    isPinned    Boolean    @default(false)
+    target      LinkTarget @default(blank)
+    createdAt   DateTime   @default(now())
+    updatedAt   DateTime   @default(now())
 
     userId String
     user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)

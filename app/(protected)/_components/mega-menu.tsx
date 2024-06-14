@@ -11,11 +11,11 @@ export const MegaMenu = () => {
 					<AiOutlineWindows className="size-5" />
 				</Button>
 			</DropdownMenuTrigger>
-			<DropdownMenuContent className="w-[800px] grid md:grid-cols-4 gap-4 p-0 overflow-hidden">
-				<div className="gradient bg-sky-500 p-8 flex flex-col">
-					<h2 className="text-md font-bold text-slate-700 mb-3">Dashboard</h2>
-					<p className="text-white mb-4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat, quod.</p>
-					<a className="text-slate-600 bg-slate-50 p-2 mt-5 rounded-md">View</a>
+			<DropdownMenuContent className="w-[840px] grid md:grid-cols-4 gap-4 p-0 overflow-hidden md:mr-8">
+				<div className="gradient bg-mantis-primary p-6 flex flex-col">
+					<h2 className="text-md font-bold text-white mb-3">Toby&apos;s Dashboard</h2>
+					<p className="text-white text-sm mb-4">Management von Web-Projekten, Entwicklung und Reports.</p>
+					<a className="text-slate-600 bg-slate-50 p-2 mt-5 rounded-md">About</a>
 				</div>
 				<div className="p-8">
 					<h3 className="text-md font-bold mb-3">Empty Column</h3>

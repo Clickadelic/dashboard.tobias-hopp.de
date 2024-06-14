@@ -18,7 +18,7 @@ export const addApp = async (values: z.infer<typeof AppSchema>) => {
 		}
 
 		const { title, url, description } = validatedFields.data;
-		console.log("Title:", title, "URL:", url, "Description:", description);
+		console.log("Title:", title, "URL:", url);
 
 		const existingLink = await db.app.findFirst({
 			where: {
@@ -35,7 +35,6 @@ export const addApp = async (values: z.infer<typeof AppSchema>) => {
 			data: {
 				title,
 				url,
-				description,
 				user: {
 					connect: { id: userId }
 				}
@@ -55,7 +54,7 @@ export const editApp = async (id: string, values: z.infer<typeof AppSchema>) => 
 		if (!validatedFields.success) {
 			return { error: "Ungültige Felder!" };
 		}
-		const { title, url, description } = validatedFields.data;
+		const { title, url } = validatedFields.data;
 
 		const existingLink = await db.app.findFirst({
 			where: {
@@ -63,17 +62,16 @@ export const editApp = async (id: string, values: z.infer<typeof AppSchema>) => 
 			}
 		});
 		if (!existingLink) {
-			return { error: "Link-Id nicht gefunden." };
+			return { error: "App-Id nicht gefunden." };
 		}
 
-		await db.link.update({
+		await db.app.update({
 			where: {
 				id
 			},
 			data: {
 				title,
 				url,
-				description,
 				updatedAt: new Date()
 			}
 		});
@@ -95,7 +93,7 @@ export const deleteApp = async (id: string) => {
 			return { error: "Link nicht vorhanden." };
 		}
 
-		await db.link.delete({
+		await db.app.delete({
 			where: {
 				id
 			}

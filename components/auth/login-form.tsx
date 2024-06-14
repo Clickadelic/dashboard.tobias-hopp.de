@@ -101,7 +101,7 @@ export const LoginForm = () => {
 										<FormItem>
 											<FormLabel>Passwort:</FormLabel>
 											<FormControl>
-												<Input {...field} autoComplete="current-password" placeholder="******" type="password" />
+												<Input {...field} placeholder="******" type="password" />
 											</FormControl>
 											<Button size="sm" variant="link" className="px-0 font-normal">
 												<Link href="/auth/reset">Passwort vergessen?</Link>
