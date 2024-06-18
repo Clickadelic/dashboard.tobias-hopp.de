@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react"
 import { BsArrowsFullscreen } from "react-icons/bs"
 import { AiOutlineFullscreenExit } from "react-icons/ai"
+import { Button } from "@/components/ui/button"
 
 export const FullscreenButton = () => {
 	const [isFullscreen, setIsFullscreen] = useState(false)
@@ -27,8 +28,8 @@ export const FullscreenButton = () => {
 	}
 
 	return (
-		<button onClick={requestFullscreen} className="hover:bg-slate-200 mx-1 inline-flex p-3 rounded">
-			{isFullscreen ? <AiOutlineFullscreenExit /> : <BsArrowsFullscreen />}
-		</button>
+		<Button onClick={requestFullscreen} variant="link" className="hover:bg-slate-200 size-10 p-3 rounded">
+			{isFullscreen ? <AiOutlineFullscreenExit className="size-5" /> : <BsArrowsFullscreen className="size-5" />}
+		</Button>
 	)
 }
