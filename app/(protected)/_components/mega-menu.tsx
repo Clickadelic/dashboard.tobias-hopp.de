@@ -1,13 +1,13 @@
-import Link from "next/link";
-import { AiOutlineWindows } from "react-icons/ai";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-import { Button } from "@/components/ui/button";
+import Link from "next/link"
+import { AiOutlineWindows } from "react-icons/ai"
+import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
+import { Button } from "@/components/ui/button"
 
 export const MegaMenu = () => {
 	return (
 		<DropdownMenu>
 			<DropdownMenuTrigger asChild>
-				<Button variant="link" className="hover:bg-slate-200 inline-flex p-3 rounded">
+				<Button variant="link" className="hover:bg-slate-200 size-10 p-3 rounded">
 					<AiOutlineWindows className="size-5" />
 				</Button>
 			</DropdownMenuTrigger>
@@ -89,5 +89,5 @@ export const MegaMenu = () => {
 				</div>
 			</DropdownMenuContent>
 		</DropdownMenu>
-	);
-};
+	)
+}

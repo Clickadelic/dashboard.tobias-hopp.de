@@ -1,13 +1,12 @@
 import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from "@radix-ui/react-dropdown-menu"
-import { Button } from "../../../components/ui/button"
-
+import { Button } from "@/components/ui/button"
 import { IoIosNotificationsOutline } from "react-icons/io"
 
 export const NotificationsButton = () => {
 	return (
 		<DropdownMenu>
 			<DropdownMenuTrigger asChild>
-				<Button variant="link" className="hover:bg-slate-200 mx-1 inline-flex p-3 rounded">
+				<Button variant="link" className="hover:bg-slate-200 size-10 p-3 rounded">
 					<IoIosNotificationsOutline className="size-5" />
 				</Button>
 			</DropdownMenuTrigger>

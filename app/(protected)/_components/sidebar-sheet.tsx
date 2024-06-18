@@ -1,17 +1,17 @@
-"use client";
+"use client"
 
-import { useAppContext } from "@/context/app-context";
+import { useAppContext } from "@/context/app-context"
 
-import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
-import { GoGear } from "react-icons/go";
-import { Button } from "@/components/ui/button";
+import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet"
+import { GoGear } from "react-icons/go"
+import { Button } from "@/components/ui/button"
 
 export const SidebarSheet = () => {
-	const { isToggled } = useAppContext();
+	const { isToggled } = useAppContext()
 	return (
 		<Sheet>
 			<SheetTrigger asChild>
-				<Button variant="link" className="hover:bg-slate-200 inline-flex p-3 rounded">
+				<Button variant="link" className="hover:bg-slate-200 size-10 p-3 rounded">
 					<GoGear className="size-5" />
 				</Button>
 			</SheetTrigger>
@@ -28,5 +28,5 @@ export const SidebarSheet = () => {
 				</SheetHeader>
 			</SheetContent>
 		</Sheet>
-	);
-};
+	)
+}
