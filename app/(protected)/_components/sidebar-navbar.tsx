@@ -1,52 +1,51 @@
-"use client"
+"use client";
 
-import { La_Belle_Aurore } from "next/font/google"
+import { La_Belle_Aurore } from "next/font/google";
 
-import { useAppContext } from "@/context/app-context"
-import { usePathname } from "next/navigation"
-import { useSession } from "next-auth/react"
-import { useCurrentRole } from "@/hooks/use-current-role"
-import { useCurrentUser } from "@/hooks/use-current-user"
-import { UserRole } from "@prisma/client"
+import { useAppContext } from "@/context/app-context";
+import { usePathname } from "next/navigation";
+import { useSession } from "next-auth/react";
+import { useCurrentRole } from "@/hooks/use-current-role";
+import { useCurrentUser } from "@/hooks/use-current-user";
+import { UserRole } from "@prisma/client";
 
-import Image from "next/image"
-import Link from "next/link"
-import logoSrc from "@/public/favicon.svg"
+import Image from "next/image";
+import Link from "next/link";
+import logoSrc from "@/public/favicon.svg";
 
-import { Skeleton } from "@/components/ui/skeleton"
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
-import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar"
+import { Skeleton } from "@/components/ui/skeleton";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 
-import { MdOutlineChecklistRtl } from "react-icons/md"
-import { FaUser } from "react-icons/fa"
-import { GoLink } from "react-icons/go"
-import { HiChevronRight } from "react-icons/hi2"
-import { IoSpeedometerOutline } from "react-icons/io5"
-import { PiEye } from "react-icons/pi"
-import { BsBuildings } from "react-icons/bs"
-import { BsTextIndentRight } from "react-icons/bs"
-import { BsTextIndentLeft } from "react-icons/bs"
+import { MdOutlineChecklistRtl } from "react-icons/md";
+import { FaUser } from "react-icons/fa";
+import { GoLink } from "react-icons/go";
+import { HiChevronRight } from "react-icons/hi2";
+import { IoSpeedometerOutline } from "react-icons/io5";
+import { PiEye } from "react-icons/pi";
+import { BsBuildings } from "react-icons/bs";
+import { BsTextIndentRight } from "react-icons/bs";
+import { BsTextIndentLeft } from "react-icons/bs";
 
-import { cn } from "@/lib/utils"
-import { DEFAULT_LOGIN_REDIRECT } from "@/routes"
+import { cn } from "@/lib/utils";
+import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
 
-// TODO: Imports korrigieren
-import { MegaMenu } from "./mega-menu"
-import { InboxButton } from "./inbox-button"
-import { NotificationsButton } from "./notifications-button"
-import { FullscreenButton } from "./fullscreen-button"
-import { SidebarSheet } from "./sidebar-sheet"
-import { ProfileDropdown } from "./profile-drowndown"
-import { LanguagesButton } from "./languages-button"
+import { MegaMenu } from "./mega-menu";
+import { InboxButton } from "./inbox-button";
+import { NotificationsButton } from "./notifications-button";
+import { FullscreenButton } from "./fullscreen-button";
+import { SidebarSheet } from "./sidebar-sheet";
+import { ProfileDropdown } from "./profile-drowndown";
+import { LanguagesButton } from "./languages-button";
 
-const laBelleAurore = La_Belle_Aurore({ subsets: ["latin"], weight: ["400"] })
+const laBelleAurore = La_Belle_Aurore({ subsets: ["latin"], weight: ["400"] });
 
 export const SidebarNavbar = () => {
-	const { status } = useSession({ required: true })
-	const user = useCurrentUser()
-	const role = useCurrentRole()
-	const path = usePathname()
-	const { isToggled, setToggle } = useAppContext()
+	const { status } = useSession({ required: true });
+	const user = useCurrentUser();
+	const role = useCurrentRole();
+	const path = usePathname();
+	const { isToggled, setToggle } = useAppContext();
 
 	return (
 		<>
@@ -83,7 +82,8 @@ export const SidebarNavbar = () => {
 												"block p-3 hover:bg-mantis-hover hover:text-mantis-primary",
 												path === "/dashboard" && "text-mantis-primary border-r-2 border-r-mantis-primary bg-mantis-hover"
 											)}
-											title="Zur Übersicht">
+											title="Zur Übersicht"
+										>
 											<HiChevronRight className="inline-block mr-2 mt-[-3px]" />
 											{!isToggled && "Dashboard"}
 										</Link>
@@ -95,7 +95,8 @@ export const SidebarNavbar = () => {
 												"block p-3 hover:bg-mantis-hover hover:text-mantis-primary",
 												path === "/reports" && "text-mantis-primary border-r-2 border-r-mantis-primary bg-mantis-hover"
 											)}
-											title="Zu den Reports">
+											title="Zu den Reports"
+										>
 											<HiChevronRight className="inline-block mr-2 mt-[-3px]" />
 											{!isToggled && "Reports"}
 										</Link>
@@ -119,7 +120,8 @@ export const SidebarNavbar = () => {
 												"block p-3 hover:bg-mantis-hover hover:text-mantis-primary",
 												path === "/projekte" && "text-mantis-primary border-r-2 border-r-mantis-primary bg-mantis-hover"
 											)}
-											title="Zur Projektübersicht">
+											title="Zur Projektübersicht"
+										>
 											<HiChevronRight className="inline-block mr-2 mt-[-3px]" />
 											{!isToggled && "Projektübersicht"}
 										</Link>
@@ -143,7 +145,8 @@ export const SidebarNavbar = () => {
 												"block p-3 hover:bg-mantis-hover hover:text-mantis-primary",
 												path === "/todos" && "text-mantis-primary border-r-2 border-r-mantis-primary bg-mantis-hover"
 											)}
-											title="Zu den Todo's">
+											title="Zu den Todo's"
+										>
 											<HiChevronRight className="inline-block mr-2 mt-[-3px]" />
 											{!isToggled && "ToDo-Übersicht"}
 										</Link>
@@ -167,7 +170,8 @@ export const SidebarNavbar = () => {
 												"block p-3 hover:bg-mantis-hover hover:text-mantis-primary",
 												path === "/links" && "text-mantis-primary border-r-2 border-r-mantis-primary bg-mantis-hover"
 											)}
-											title="Zur Projektübersicht">
+											title="Zur Projektübersicht"
+										>
 											<HiChevronRight className="inline-block mr-2 mt-[-3px]" />
 											{!isToggled && "Link-Übersicht"}
 										</Link>
@@ -193,7 +197,8 @@ export const SidebarNavbar = () => {
 													"block p-3 hover:bg-mantis-hover hover:text-mantis-primary",
 													path === "/admin" && "text-mantis-primary border-r-2 border-r-mantis-primary bg-mantis-hover"
 												)}
-												title="Zur Übersicht">
+												title="Zur Übersicht"
+											>
 												<HiChevronRight className="inline-block mr-2 mt-[-3px]" />
 												{!isToggled && "Übersicht"}
 											</Link>
@@ -205,7 +210,8 @@ export const SidebarNavbar = () => {
 													"block p-3 hover:bg-mantis-hover hover:text-mantis-primary",
 													path === "/admin/benutzer" && "text-mantis-primary border-r-2 border-r-mantis-primary bg-mantis-hover"
 												)}
-												title="Zur Benutzerübersicht">
+												title="Zur Benutzerübersicht"
+											>
 												<HiChevronRight className="inline-block mr-2 mt-[-3px]" />
 												{!isToggled && "Benutzer"}
 											</Link>
@@ -217,7 +223,8 @@ export const SidebarNavbar = () => {
 													"block p-3 hover:bg-mantis-hover hover:text-mantis-primary",
 													path === "/admin/system" && "text-mantis-primary border-r-2 border-r-mantis-primary bg-mantis-hover"
 												)}
-												title="Zu den Systemeinstellungen">
+												title="Zu den Systemeinstellungen"
+											>
 												<HiChevronRight className="inline-block mr-2 mt-[-3px]" />
 												{!isToggled && "Systemeinstellungen"}
 											</Link>
@@ -259,9 +266,9 @@ export const SidebarNavbar = () => {
 			</aside>
 			<header className={cn("App-header flex fixed top-0 md:ml-64 w-screen p-2 border-b bg-white", isToggled ? "md:ml-16" : "md:ml-64")}>
 				<nav className="header-navflex justify-between w-max">
-					<span className="h-[40px]">
+					<div className="inline h-[47px]">
 						{/* TODO: Mobile Button toggle */}
-						<button className="ml-3 mr-2 md:hidden">
+						<button className="mr-2 md:hidden">
 							<Image src={logoSrc} width={32} height={32} className="logo size-8 inline -mt-1" alt="Tailwind Dashboard" />
 						</button>
 						<button onClick={() => setToggle(prev => !prev)} className="hidden md:inline hover:bg-slate-100 mt-1 ml-3 white rounded p-2">
@@ -273,7 +280,7 @@ export const SidebarNavbar = () => {
 							className="relative top-[-.25rem] md:inline p-2 text-sm w-64 focus:border-mantis-primary focus:outline-none focus-within:border-mantis-primary border-2 rounded-sm ml-3"
 							placeholder="Suche / STRG + K"
 						/>
-					</span>
+					</div>
 					<button className="fixed right-5 md:hidden bg-slate-100 rounded p-2 mt-1">
 						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-text-indent-right" viewBox="0 0 16 16">
 							<path d="M2 3.5a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5m10.646 2.146a.5.5 0 0 1 .708.708L11.707 8l1.647 1.646a.5.5 0 0 1-.708.708l-2-2a.5.5 0 0 1 0-.708l2-2zM2 6.5a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5m0 3a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5m0 3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5" />
@@ -305,5 +312,5 @@ export const SidebarNavbar = () => {
 				</nav>
 			</header>
 		</>
-	)
-}
+	);
+};

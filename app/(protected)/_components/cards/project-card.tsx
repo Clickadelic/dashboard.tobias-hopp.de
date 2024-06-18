@@ -6,7 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useTransition, useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useCurrentUser } from "@/hooks/use-current-user";
-
+import { useSession } from "next-auth/react";
 import Link from "next/link";
 
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
@@ -24,10 +24,10 @@ import { addProject } from "@/actions/project";
 
 export const ProjectCard = () => {
 	const userId = useCurrentUser()?.id;
+	const { status } = useSession({ required: true });
 	const [isPending, startTransition] = useTransition();
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 	const [projects, setProjects] = useState<any[]>([]);
-
 	const fetchProjects = async () => {
 		setIsLoading(true);
 		try {
