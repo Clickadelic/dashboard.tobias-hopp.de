@@ -8,7 +8,7 @@ import { useSession } from "next-auth/react";
 import { useCurrentUser } from "@/hooks/use-current-user";
 
 import { Input } from "@/components/ui/input";
-import { Form, FormControl, FormLabel, FormField, FormItem, FormMessage, FormDescription } from "@/components/ui/form";
+import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";
 import { Textarea } from "@/components/ui/textarea";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Switch } from "@/components/ui/switch";
@@ -114,56 +114,45 @@ const LinksTable = () => {
 
 	return (
 		<>
-			<div className="bg-white rounded-lg shadow-sm border mb-5 p-4 md:grid md:grid-cols-2 md:gap-5">
-				<div>
-					<h2 className="text-lg font-medium mb-2">Neuer Link</h2>
-					<Form {...newForm}>
-						<form onSubmit={newForm.handleSubmit(addNewLink)} className="space-y-3">
-							<div className="grid grid-cols-2 gap-5 mb-3">
-								<div className="flex flex-col justify-between">
-									<FormField
-										control={newForm.control}
-										name="title"
-										render={({ field }) => (
-											<FormItem>
-												<Input {...field} placeholder="Titel" />
-												<FormMessage />
-											</FormItem>
-										)}
-									/>
-									<FormField
-										control={newForm.control}
-										name="url"
-										render={({ field }) => (
-											<FormItem>
-												<Input {...field} placeholder="URL" />
-												<FormMessage />
-											</FormItem>
-										)}
-									/>
-								</div>
-								<div>
-									<FormField
-										control={newForm.control}
-										name="description"
-										render={({ field }) => (
-											<FormItem>
-												<Textarea {...field} rows={4} placeholder="Beschreibung" />
-												<FormMessage />
-											</FormItem>
-										)}
-									/>
-								</div>
-							</div>
-							<Button variant="default" type="submit" disabled={isPending} className="w-full">
-								<FiPlus className=" mr-2" /> Link hinzufügen
-							</Button>
-						</form>
-					</Form>
-				</div>
-				<div>
-					<h2 className="text-lg font-medium mb-2">Informationen zur Benutzung</h2>
-				</div>
+			<div className="bg-white rounded-lg shadow-sm border p-5 mb-5">
+				<h2 className="text-md font-bold text-slate-700 mb-5">Neuer Link</h2>
+				<Form {...newForm}>
+					<form onSubmit={newForm.handleSubmit(addNewLink)} className="md:grid md:grid-cols-4 gap-4">
+						<FormField
+							control={newForm.control}
+							name="title"
+							render={({ field }) => (
+								<FormItem>
+									<Input {...field} className="w-full" placeholder="Titel" />
+									<FormMessage />
+								</FormItem>
+							)}
+						/>
+						<FormField
+							control={newForm.control}
+							name="url"
+							render={({ field }) => (
+								<FormItem>
+									<Input {...field} className="w-full" placeholder="URL" />
+									<FormMessage />
+								</FormItem>
+							)}
+						/>
+						<FormField
+							control={newForm.control}
+							name="description"
+							render={({ field }) => (
+								<FormItem>
+									<Input {...field} className="w-full" placeholder="Beschreibung" />
+									<FormMessage />
+								</FormItem>
+							)}
+						/>
+						<Button variant="default" className="w-full" type="submit" disabled={isPending}>
+							<FiPlus className=" mr-2" /> Link hinzufügen
+						</Button>
+					</form>
+				</Form>
 			</div>
 			<div className="bg-white rounded-lg shadow-sm border p-4">
 				<Table className="w-full">
