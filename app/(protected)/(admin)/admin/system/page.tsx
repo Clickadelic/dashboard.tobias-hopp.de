@@ -1,34 +1,35 @@
-"use client"
+"use client";
 
-import { RoleGate } from "@/components/auth/role-gate"
-import { FormSuccess } from "@/components/form-success"
-import { UserRole } from "@prisma/client"
-import { toast } from "sonner"
-import { admin } from "@/actions/admin"
+import { RoleGate } from "@/components/auth/role-gate";
+import { FormSuccess } from "@/components/form-success";
+import { UserRole } from "@prisma/client";
+import { toast } from "sonner";
+import { admin } from "@/actions/admin";
 
 const SystemPage = () => {
+	// Server side code
 	const onServerActionclick = () => {
 		admin().then(data => {
 			if (data.error) {
-				toast.error(data.error)
+				toast.error(data.error);
 			}
 
 			if (data.success) {
-				toast.success(data.success)
+				toast.success(data.success);
 			}
-		})
-	}
-	// TODO Investigate Functionality
+		});
+	};
+	// Client side code
 	const onApiRouteClick = () => {
 		fetch("/api/admin").then(response => {
 			if (response.ok) {
-				toast.success("Yes, you have admin.")
+				toast.success("Yes, you have admin.");
 			} else {
-				toast.error("No permissions to view admin content.")
-				console.log("Error fetching Admin.")
+				toast.error("No permissions to view admin content.");
+				console.log("Error fetching Admin.");
 			}
-		})
-	}
+		});
+	};
 	return (
 		<div className="page-wrapper">
 			<h2 className="text-md font-bold text-slate-700 mb-5">Admin</h2>
@@ -50,7 +51,7 @@ const SystemPage = () => {
 				</div>
 			</div>
 		</div>
-	)
-}
+	);
+};
 
-export default SystemPage
+export default SystemPage;

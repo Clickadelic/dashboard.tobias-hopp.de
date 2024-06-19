@@ -26,6 +26,7 @@ import { PiEye } from "react-icons/pi";
 import { BsBuildings } from "react-icons/bs";
 import { BsTextIndentRight } from "react-icons/bs";
 import { BsTextIndentLeft } from "react-icons/bs";
+import { PiNotePencilLight } from "react-icons/pi";
 
 import { cn } from "@/lib/utils";
 import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
@@ -74,7 +75,7 @@ export const SidebarNavbar = () => {
 								</span>
 							</AccordionTrigger>
 							<AccordionContent>
-								<ul className="space-y-1">
+								<ul>
 									<li>
 										<Link
 											href="/dashboard"
@@ -179,8 +180,33 @@ export const SidebarNavbar = () => {
 								</ul>
 							</AccordionContent>
 						</AccordionItem>
+						<AccordionItem value="item-5">
+							<AccordionTrigger>
+								<span className="flex justify-between">
+									<PiNotePencilLight className="mt-1 mr-2" />
+									{!isToggled && "Notizen"}
+								</span>
+							</AccordionTrigger>
+							<AccordionContent>
+								<ul>
+									<li>
+										<Link
+											href="/notizen"
+											className={cn(
+												"block p-3 hover:bg-mantis-hover hover:text-mantis-primary",
+												path === "/notizen" && "text-mantis-primary border-r-2 border-r-mantis-primary bg-mantis-hover"
+											)}
+											title="Zur Notizübersicht"
+										>
+											<HiChevronRight className="inline-block mr-2 mt-[-3px]" />
+											{!isToggled && "Notiz-Übersicht"}
+										</Link>
+									</li>
+								</ul>
+							</AccordionContent>
+						</AccordionItem>
 						{role === UserRole.ADMIN && (
-							<AccordionItem value="item-5">
+							<AccordionItem value="item-6">
 								<span className={cn("text-xs text-neutral-400 ml-4 inline-block mt-4", isToggled && "hidden")}>Admin</span>
 								<AccordionTrigger>
 									<span className="flex justify-between">
@@ -266,18 +292,18 @@ export const SidebarNavbar = () => {
 			</aside>
 			<header className={cn("App-header flex fixed top-0 md:ml-64 w-screen p-2 border-b bg-white", isToggled ? "md:ml-16" : "md:ml-64")}>
 				<nav className="header-navflex justify-between w-max">
-					<div className="inline h-[47px]">
+					<div className="inline-block">
 						{/* TODO: Mobile Button toggle */}
-						<button className="mr-2 md:hidden">
+						{/* <button className="mr-2 md:hidden">
 							<Image src={logoSrc} width={32} height={32} className="logo size-8 inline -mt-1" alt="Tailwind Dashboard" />
-						</button>
+						</button> */}
 						<button onClick={() => setToggle(prev => !prev)} className="hidden md:inline hover:bg-slate-100 mt-1 ml-3 white rounded p-2">
 							{isToggled ? <BsTextIndentLeft className="size-5" /> : <BsTextIndentRight className="size-5" />}
 						</button>
 						<input
 							type="search"
 							name="search"
-							className="relative top-[-.25rem] md:inline p-2 text-sm w-64 focus:border-mantis-primary focus:outline-none focus-within:border-mantis-primary border-2 rounded-sm ml-3"
+							className="relative top-[-.25rem] md:inline mt-2 p-2 text-sm w-64 focus:border-mantis-primary focus:outline-none focus-within:border-mantis-primary border-2 rounded-sm ml-3"
 							placeholder="Suche / STRG + K"
 						/>
 					</div>
