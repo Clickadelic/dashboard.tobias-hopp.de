@@ -6,13 +6,11 @@ import { IoMdClose } from "react-icons/io";
 import { useAppContext } from "@/context/app-context";
 
 export const CockpitDrawer = () => {
-	// TODO: Implement CockpitDrawer
-	// TODO: Deactivate Demo Function
 	const { isToggled, setToggle } = useAppContext();
 	return (
 		<Drawer>
 			<DrawerTrigger asChild>
-				<button className="absolute right-8 bottom-8 text-white bg-primary rounded-full md:p-4 shadow-sm">
+				<button className="fixed right-8 bottom-8 text-white bg-primary rounded-full md:p-4 shadow-sm">
 					<PlusCircledIcon className="size-6" />
 				</button>
 			</DrawerTrigger>

@@ -1,72 +1,72 @@
-"use client";
+"use client"
 
-import * as z from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import Link from "next/link";
-import { useTransition, useState, useEffect } from "react";
-import { useForm } from "react-hook-form";
-import { useSession } from "next-auth/react";
-import { useCurrentUser } from "@/hooks/use-current-user";
+import * as z from "zod"
+import { zodResolver } from "@hookform/resolvers/zod"
+import Link from "next/link"
+import { useTransition, useState, useEffect } from "react"
+import { useForm } from "react-hook-form"
+import { useSession } from "next-auth/react"
+import { useCurrentUser } from "@/hooks/use-current-user"
 
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { Input } from "@/components/ui/input";
-import { Switch } from "@/components/ui/switch";
-import { Form, FormControl, FormLabel, FormField, FormItem, FormMessage } from "@/components/ui/form";
-import { Textarea } from "@/components/ui/textarea";
-import { Skeleton } from "@/components/ui/skeleton";
-import { toast } from "sonner";
-import { Button } from "@/components/ui/button";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
+import { Input } from "@/components/ui/input"
+import { Switch } from "@/components/ui/switch"
+import { Form, FormControl, FormLabel, FormField, FormItem, FormMessage } from "@/components/ui/form"
+import { Textarea } from "@/components/ui/textarea"
+import { Skeleton } from "@/components/ui/skeleton"
+import { toast } from "sonner"
+import { Button } from "@/components/ui/button"
 
-import { FiPlus } from "react-icons/fi";
+import { FiPlus } from "react-icons/fi"
 
-import { LinkSchema } from "@/schemas";
-import { addLink } from "@/actions/link";
+import { LinkSchema } from "@/schemas"
+import { addLink } from "@/actions/link"
 
 export const LinkCard = () => {
-	const { status } = useSession({ required: true });
-	const userId = useCurrentUser()?.id;
+	const { status } = useSession({ required: true })
+	const userId = useCurrentUser()?.id
 
-	const [isPending, startTransition] = useTransition();
+	const [isPending, startTransition] = useTransition()
 
-	const [isLoading, setIsLoading] = useState<boolean>(false);
-	const [links, setLinks] = useState<any[]>([]);
+	const [isLoading, setIsLoading] = useState<boolean>(false)
+	const [links, setLinks] = useState<any[]>([])
 
 	const fetchLinks = async () => {
-		setIsLoading(true);
+		setIsLoading(true)
 		try {
-			const res = await fetch(`/api/links/${userId}`);
-			const response = await res.json();
-			setLinks(response);
+			const res = await fetch(`/api/links/${userId}`)
+			const response = await res.json()
+			setLinks(response)
 		} catch (error) {
-			toast.error("Fehler beim Laden der Links.");
+			toast.error("Fehler beim Laden der Links.")
 		} finally {
-			setIsLoading(false);
+			setIsLoading(false)
 		}
-	};
+	}
 
 	useEffect(() => {
-		setIsLoading(true);
-		fetchLinks();
-		setIsLoading(false);
-	}, []);
+		setIsLoading(true)
+		fetchLinks()
+		setIsLoading(false)
+	}, [])
 
 	const form = useForm<z.infer<typeof LinkSchema>>({
 		resolver: zodResolver(LinkSchema),
 		defaultValues: { title: "", url: "", description: "" }
-	});
+	})
 
 	const onSubmit = async (values: z.infer<typeof LinkSchema>) => {
 		startTransition(async () => {
-			const result = await addLink(values);
+			const result = await addLink(values)
 			if (result.error) {
-				toast.error(result.error);
+				toast.error(result.error)
 			} else if (result.success) {
-				toast.success(result.success);
-				form.reset();
-				fetchLinks();
+				toast.success(result.success)
+				form.reset()
+				fetchLinks()
 			}
-		});
-	};
+		})
+	}
 
 	return (
 		<div className="bg-white rounded-xl shadow border p-4">
@@ -76,7 +76,7 @@ export const LinkCard = () => {
 					zur Übersicht
 				</Link>
 			</h2>
-			<h3 className="text-md font-semibold mb-4">{links.length === 0 ? <Skeleton className="mt-3 mb-5 w-8 h-4 bg-primary/10 animate-pulse" /> : links.length}</h3>
+			<h3 className="text-md font-semibold mb-4">{status === "loading" || isLoading ? <Skeleton className="mt-3 mb-5 w-8 h-4 bg-primary/10 animate-pulse" /> : links.length}</h3>
 			<Popover>
 				<PopoverTrigger className="flex justify-center w-full p-3 py-2 bg-slate-100 text-slate-700 hover:text-slate-800 hover:bg-slate-200 text-xs md:text-base rounded-sm">
 					<FiPlus className="mt-[.125rem] md:mt-1 mr-2" />
@@ -134,5 +134,5 @@ export const LinkCard = () => {
 				</PopoverContent>
 			</Popover>
 		</div>
-	);
-};
+	)
+}
