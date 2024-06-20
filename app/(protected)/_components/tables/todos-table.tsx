@@ -112,58 +112,50 @@ export const TodosTable = () => {
 	// TODO: IDEE isEditable, setIsEditable für Rows, dann Buttons für Edit, Delete, etc.
 	return (
 		<>
-			<div className="bg-white rounded-lg shadow-sm border mb-5 p-4 md:grid md:grid-cols-2 md:gap-5">
-				<div>
-					<h2 className="text-md font-bold text-slate-700 mb-5">Neues Todo</h2>
-					<Form {...newForm}>
-						<form onSubmit={newForm.handleSubmit(addNewTodo)} className="space-y-3">
-							<FormField
-								control={newForm.control}
-								name="title"
-								render={({ field }) => (
-									<FormItem>
-										<Input {...field} placeholder="Titel" />
-										<FormMessage />
-									</FormItem>
-								)}
-							/>
-							<FormField
-								control={newForm.control}
-								name="description"
-								render={({ field }) => (
-									<FormItem>
-										<Textarea {...field} rows={4} placeholder="Beschreibung" />
-										<FormMessage />
-									</FormItem>
-								)}
-							/>
-							<FormField
-								control={newForm.control}
-								name="isCompleted"
-								render={({ field }) => (
-									<FormItem className="flex flex-row items-center justify-between rounded-lg p-3">
-										<div className="space-y-.5">
-											<FormLabel>erledigt</FormLabel>
-											<FormDescription>Wird als erledigt markiert.</FormDescription>
-										</div>
-										<FormControl>
-											<Switch disabled={isPending} checked={field.value} onCheckedChange={field.onChange} />
-										</FormControl>
-									</FormItem>
-								)}
-							/>
-							<Button disabled={isPending} variant="default" className="w-full">
-								<FiPlus className="mr-2" />
-								Todo hinzufügen
-							</Button>
-						</form>
-					</Form>
-				</div>
-				<div>
-					<h2 className="text-md font-bold text-slate-700 mb-5">Infos</h2>
-				</div>
+			<div className="bg-white rounded-lg shadow-sm border p-5 mb-5">
+				<h2 className="text-md font-bold text-slate-700 mb-5">Neues Todo</h2>
+				<Form {...newForm}>
+					<form onSubmit={newForm.handleSubmit(addNewTodo)} className="md:grid md:grid-cols-4 gap-5">
+						<FormField
+							control={newForm.control}
+							name="title"
+							render={({ field }) => (
+								<FormItem>
+									<Input {...field} placeholder="Titel" />
+									<FormMessage />
+								</FormItem>
+							)}
+						/>
+						<FormField
+							control={newForm.control}
+							name="title"
+							render={({ field }) => (
+								<FormItem>
+									<Input {...field} placeholder="Beschreibung" />
+									<FormMessage />
+								</FormItem>
+							)}
+						/>
+						<FormField
+							control={newForm.control}
+							name="isCompleted"
+							render={({ field }) => (
+								<FormItem className="flex justify-center items-center p-0">
+									<FormLabel className="font-normal mr-3">erledigt</FormLabel>
+									<FormControl>
+										<Switch className="mt-[-10px]" disabled={isPending} checked={field.value} onCheckedChange={field.onChange} />
+									</FormControl>
+								</FormItem>
+							)}
+						/>
+						<Button disabled={isPending} variant="default" className="w-full">
+							<FiPlus className="mr-2" />
+							Todo hinzufügen
+						</Button>
+					</form>
+				</Form>
 			</div>
-			<div className="bg-white rounded-lg shadow-sm border p-4">
+			<div className="bg-white rounded-lg shadow-sm border p-5">
 				<Table className="w-full">
 					<TableHeader>
 						<TableRow>
@@ -182,6 +174,12 @@ export const TodosTable = () => {
 							<TableRow>
 								<TableCell colSpan={10}>
 									<Skeleton className="h-5 w-full" />
+									<Skeleton className="h-5 w-full" />
+									<Skeleton className="h-5 w-full" />
+									<Skeleton className="h-5 w-full" />
+									<Skeleton className="h-5 w-75" />
+									<Skeleton className="h-5 w-75" />
+									<Skeleton className="h-5 w-50" />
 								</TableCell>
 							</TableRow>
 						)}

@@ -154,7 +154,7 @@ const LinksTable = () => {
 					</form>
 				</Form>
 			</div>
-			<div className="bg-white rounded-lg shadow-sm border p-4">
+			<div className="bg-white rounded-lg shadow-sm border p-5">
 				<Table className="w-full">
 					<TableHeader>
 						<TableRow>
@@ -194,7 +194,7 @@ const LinksTable = () => {
 									</TableCell>
 									<TableCell className="truncate ellipsis">{link.title}</TableCell>
 									<TableCell>
-										<ClipboardButton classNames="mt-1.5 hover:text-emerald-500" title="In die Zwischenablage kopieren" textToCopy={link.url} />
+										<ClipboardButton classNames="mt-1.5 p-0 hover:text-emerald-500" title="In die Zwischenablage kopieren" textToCopy={link.url} />
 									</TableCell>
 									<TableCell className="truncate ellipsis">
 										<Link href={link.url} title={link.title + " in neuen Fenster öffnen"} className="inline hover:text-sky-500" target="_blank">
@@ -266,8 +266,22 @@ const LinksTable = () => {
 										</Popover>
 									</TableCell>
 
-									<TableCell>{germanDateFormat(link.createdAt)}</TableCell>
-									<TableCell>{germanDateFormat(link.updatedAt)}</TableCell>
+									<TableCell>
+										<Popover>
+											<PopoverTrigger>
+												<BsInfoCircle />
+											</PopoverTrigger>
+											<PopoverContent>{germanDateFormat(link.createdAt)}</PopoverContent>
+										</Popover>
+									</TableCell>
+									<TableCell>
+										<Popover>
+											<PopoverTrigger>
+												<BsInfoCircle />
+											</PopoverTrigger>
+											<PopoverContent>{germanDateFormat(link.updatedAt)}</PopoverContent>
+										</Popover>
+									</TableCell>
 
 									<TableCell>
 										<button onClick={() => deleteLinkById(link.id)} className="text-rose-500 hover:text-rose-600">
