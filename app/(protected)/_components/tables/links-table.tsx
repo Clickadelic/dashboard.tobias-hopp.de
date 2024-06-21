@@ -182,114 +182,112 @@ const LinksTable = () => {
 						)}
 
 						{links.map((link: any) => (
-							<>
-								<TableRow key={link.id}>
-									<TableCell>
-										<Popover>
-											<PopoverTrigger>
-												<BsInfoCircle />
-											</PopoverTrigger>
-											<PopoverContent>{link.id}</PopoverContent>
-										</Popover>
-									</TableCell>
-									<TableCell className="truncate ellipsis">{link.title}</TableCell>
-									<TableCell>
-										<ClipboardButton classNames="mt-1.5 p-0 hover:text-emerald-500" title="In die Zwischenablage kopieren" textToCopy={link.url} />
-									</TableCell>
-									<TableCell className="truncate ellipsis">
-										<Link href={link.url} title={link.title + " in neuen Fenster öffnen"} className="inline hover:text-sky-500" target="_blank">
-											{link.url}
-										</Link>
-									</TableCell>
-									<TableCell>{link.target === "_blank" ? <CgInternal className="ml-2 mt-1 inline" /> : <FiExternalLink className="ml-2 mt-1 inline" />}</TableCell>
+							<TableRow key={link.id}>
+								<TableCell>
+									<Popover>
+										<PopoverTrigger>
+											<BsInfoCircle />
+										</PopoverTrigger>
+										<PopoverContent>{link.id}</PopoverContent>
+									</Popover>
+								</TableCell>
+								<TableCell className="truncate ellipsis">{link.title}</TableCell>
+								<TableCell>
+									<ClipboardButton classNames="mt-1.5 p-0 hover:text-emerald-500" title="In die Zwischenablage kopieren" textToCopy={link.url} />
+								</TableCell>
+								<TableCell className="truncate ellipsis">
+									<Link href={link.url} title={link.title + " in neuen Fenster öffnen"} className="inline hover:text-sky-500" target="_blank">
+										{link.url}
+									</Link>
+								</TableCell>
+								<TableCell>{link.target === "_blank" ? <CgInternal className="ml-2 mt-1 inline" /> : <FiExternalLink className="ml-2 mt-1 inline" />}</TableCell>
 
-									<TableCell className="truncate">{link?.description}</TableCell>
-									<TableCell>
-										<Popover>
-											<PopoverTrigger asChild>
-												<button onClick={() => setEditValues(link.id)} className="hover:text-mantis-primary rounded-md inline">
-													<LiaEdit className="size-4" />
-												</button>
-											</PopoverTrigger>
-											<PopoverContent align="end">
-												<Form {...dynamicForm}>
-													<form onSubmit={dynamicForm.handleSubmit(() => editCurrentLink(link.id, dynamicForm.getValues()))} className="space-y-2">
-														<FormField
-															control={dynamicForm.control}
-															name="title"
-															defaultValue={link.title}
-															disabled={isPending}
-															render={({ field }) => (
-																<FormItem>
-																	<FormControl>
-																		<Input {...field} placeholder="Titel" />
-																	</FormControl>
-																	<FormMessage />
-																</FormItem>
-															)}
-														/>
-														<FormField
-															control={dynamicForm.control}
-															name="url"
-															defaultValue={link.url}
-															disabled={isPending}
-															render={({ field }) => (
-																<FormItem>
-																	<FormControl>
-																		<Input {...field} placeholder="Url" />
-																	</FormControl>
-																	<FormMessage />
-																</FormItem>
-															)}
-														/>
+								<TableCell className="truncate">{link?.description}</TableCell>
+								<TableCell>
+									<Popover>
+										<PopoverTrigger asChild>
+											<button onClick={() => setEditValues(link.id)} className="hover:text-mantis-primary rounded-md inline">
+												<LiaEdit className="size-4" />
+											</button>
+										</PopoverTrigger>
+										<PopoverContent align="end">
+											<Form {...dynamicForm}>
+												<form onSubmit={dynamicForm.handleSubmit(() => editCurrentLink(link.id, dynamicForm.getValues()))} className="space-y-2">
+													<FormField
+														control={dynamicForm.control}
+														name="title"
+														defaultValue={link.title}
+														disabled={isPending}
+														render={({ field }) => (
+															<FormItem>
+																<FormControl>
+																	<Input {...field} placeholder="Titel" />
+																</FormControl>
+																<FormMessage />
+															</FormItem>
+														)}
+													/>
+													<FormField
+														control={dynamicForm.control}
+														name="url"
+														defaultValue={link.url}
+														disabled={isPending}
+														render={({ field }) => (
+															<FormItem>
+																<FormControl>
+																	<Input {...field} placeholder="Url" />
+																</FormControl>
+																<FormMessage />
+															</FormItem>
+														)}
+													/>
 
-														<FormField
-															control={dynamicForm.control}
-															name="description"
-															disabled={isPending}
-															render={({ field }) => (
-																<FormItem>
-																	<FormControl>
-																		<Textarea {...field} placeholder="Beschreibung..." />
-																	</FormControl>
-																	<FormMessage />
-																</FormItem>
-															)}
-														/>
+													<FormField
+														control={dynamicForm.control}
+														name="description"
+														disabled={isPending}
+														render={({ field }) => (
+															<FormItem>
+																<FormControl>
+																	<Textarea {...field} placeholder="Beschreibung..." />
+																</FormControl>
+																<FormMessage />
+															</FormItem>
+														)}
+													/>
 
-														<Button disabled={isPending} variant="outline" type="submit" className="w-full">
-															Bearbeiten
-														</Button>
-													</form>
-												</Form>
-											</PopoverContent>
-										</Popover>
-									</TableCell>
+													<Button disabled={isPending} variant="outline" type="submit" className="w-full">
+														Bearbeiten
+													</Button>
+												</form>
+											</Form>
+										</PopoverContent>
+									</Popover>
+								</TableCell>
 
-									<TableCell>
-										<Popover>
-											<PopoverTrigger>
-												<BsInfoCircle />
-											</PopoverTrigger>
-											<PopoverContent>{germanDateFormat(link.createdAt)}</PopoverContent>
-										</Popover>
-									</TableCell>
-									<TableCell>
-										<Popover>
-											<PopoverTrigger>
-												<BsInfoCircle />
-											</PopoverTrigger>
-											<PopoverContent>{germanDateFormat(link.updatedAt)}</PopoverContent>
-										</Popover>
-									</TableCell>
+								<TableCell>
+									<Popover>
+										<PopoverTrigger>
+											<BsInfoCircle />
+										</PopoverTrigger>
+										<PopoverContent>{germanDateFormat(link.createdAt)}</PopoverContent>
+									</Popover>
+								</TableCell>
+								<TableCell>
+									<Popover>
+										<PopoverTrigger>
+											<BsInfoCircle />
+										</PopoverTrigger>
+										<PopoverContent>{germanDateFormat(link.updatedAt)}</PopoverContent>
+									</Popover>
+								</TableCell>
 
-									<TableCell>
-										<button onClick={() => deleteLinkById(link.id)} className="text-rose-500 hover:text-rose-600">
-											<BsFillTrash3Fill className="size-4 mx-auto" />
-										</button>
-									</TableCell>
-								</TableRow>
-							</>
+								<TableCell>
+									<button onClick={() => deleteLinkById(link.id)} className="text-rose-500 hover:text-rose-600">
+										<BsFillTrash3Fill className="size-4 mx-auto" />
+									</button>
+								</TableCell>
+							</TableRow>
 						))}
 					</TableBody>
 				</Table>
