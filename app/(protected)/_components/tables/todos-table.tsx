@@ -128,7 +128,7 @@ export const TodosTable = () => {
 						/>
 						<FormField
 							control={newForm.control}
-							name="title"
+							name="description"
 							render={({ field }) => (
 								<FormItem>
 									<Input {...field} placeholder="Beschreibung" />
@@ -185,94 +185,92 @@ export const TodosTable = () => {
 						)}
 
 						{todos.map((todo: any) => (
-							<>
-								<TableRow key={todo.id}>
-									<TableCell>
-										<Popover>
-											<PopoverTrigger>
-												<BsInfoCircle />
-											</PopoverTrigger>
-											<PopoverContent>{todo.id}</PopoverContent>
-										</Popover>
-									</TableCell>
-									<TableCell className={cn("truncate ellipsis", todo.isCompleted ? "line-through" : "")}>{todo.title}</TableCell>
-									<TableCell className={cn("truncate ellipsis", todo.isCompleted ? "line-through" : "")}>{todo.description}</TableCell>
-									<TableCell className="truncate ellipsis">
-										{todo.isCompleted ? <CheckCircledIcon className="size-5 text-emerald-500" /> : <AiOutlineExclamationCircle className="size-5 text-rose-500" />}
-									</TableCell>
-									<TableCell>
-										<Popover>
-											<PopoverTrigger asChild>
-												<button onClick={() => setEditValues(todo.id)} className="hover:text-mantis-primary rounded-md inline">
-													<LiaEdit className="size-4" />
-												</button>
-											</PopoverTrigger>
-											<PopoverContent align="end">
-												<Form {...dynamicForm}>
-													<form onSubmit={dynamicForm.handleSubmit(() => editCurrentTodo(todo.id, dynamicForm.getValues()))} className="space-y-2">
-														<FormField
-															control={dynamicForm.control}
-															name="title"
-															defaultValue={todo.title}
-															disabled={isPending}
-															render={({ field }) => (
-																<FormItem>
-																	<FormControl>
-																		<Input {...field} placeholder="Titel" />
-																	</FormControl>
-																	<FormMessage />
-																</FormItem>
-															)}
-														/>
+							<TableRow key={todo.id}>
+								<TableCell>
+									<Popover>
+										<PopoverTrigger>
+											<BsInfoCircle />
+										</PopoverTrigger>
+										<PopoverContent>{todo.id}</PopoverContent>
+									</Popover>
+								</TableCell>
+								<TableCell className={cn("truncate ellipsis", todo.isCompleted ? "line-through" : "")}>{todo.title}</TableCell>
+								<TableCell className={cn("truncate ellipsis", todo.isCompleted ? "line-through" : "")}>{todo.description}</TableCell>
+								<TableCell className="truncate ellipsis">
+									{todo.isCompleted ? <CheckCircledIcon className="size-5 text-emerald-500" /> : <AiOutlineExclamationCircle className="size-5 text-rose-500" />}
+								</TableCell>
+								<TableCell>
+									<Popover>
+										<PopoverTrigger asChild>
+											<button onClick={() => setEditValues(todo.id)} className="hover:text-mantis-primary rounded-md inline">
+												<LiaEdit className="size-4" />
+											</button>
+										</PopoverTrigger>
+										<PopoverContent align="end">
+											<Form {...dynamicForm}>
+												<form onSubmit={dynamicForm.handleSubmit(() => editCurrentTodo(todo.id, dynamicForm.getValues()))} className="space-y-2">
+													<FormField
+														control={dynamicForm.control}
+														name="title"
+														defaultValue={todo.title}
+														disabled={isPending}
+														render={({ field }) => (
+															<FormItem>
+																<FormControl>
+																	<Input {...field} placeholder="Titel" />
+																</FormControl>
+																<FormMessage />
+															</FormItem>
+														)}
+													/>
 
-														<FormField
-															control={dynamicForm.control}
-															name="description"
-															disabled={isPending}
-															render={({ field }) => (
-																<FormItem>
-																	<FormControl>
-																		<Textarea {...field} placeholder="Beschreibung..." />
-																	</FormControl>
-																	<FormMessage />
-																</FormItem>
-															)}
-														/>
-														<FormField
-															control={dynamicForm.control}
-															name="isCompleted"
-															render={({ field }) => (
-																<FormItem className="flex flex-row items-center justify-between rounded-lg p-3">
-																	<div className="space-y-.5">
-																		<FormLabel>erledigt</FormLabel>
-																		<FormDescription>Wird als erledigt markiert.</FormDescription>
-																	</div>
-																	<FormControl>
-																		<Switch disabled={isPending} checked={field.value} onCheckedChange={field.onChange} />
-																	</FormControl>
-																</FormItem>
-															)}
-														/>
+													<FormField
+														control={dynamicForm.control}
+														name="description"
+														disabled={isPending}
+														render={({ field }) => (
+															<FormItem>
+																<FormControl>
+																	<Textarea {...field} placeholder="Beschreibung..." />
+																</FormControl>
+																<FormMessage />
+															</FormItem>
+														)}
+													/>
+													<FormField
+														control={dynamicForm.control}
+														name="isCompleted"
+														render={({ field }) => (
+															<FormItem className="flex flex-row items-center justify-between rounded-lg p-3">
+																<div className="space-y-.5">
+																	<FormLabel>erledigt</FormLabel>
+																	<FormDescription>Wird als erledigt markiert.</FormDescription>
+																</div>
+																<FormControl>
+																	<Switch disabled={isPending} checked={field.value} onCheckedChange={field.onChange} />
+																</FormControl>
+															</FormItem>
+														)}
+													/>
 
-														<Button disabled={isPending} variant="default" type="submit" className="w-full">
-															Bearbeiten
-														</Button>
-													</form>
-												</Form>
-											</PopoverContent>
-										</Popover>
-									</TableCell>
+													<Button disabled={isPending} variant="default" type="submit" className="w-full">
+														Bearbeiten
+													</Button>
+												</form>
+											</Form>
+										</PopoverContent>
+									</Popover>
+								</TableCell>
 
-									<TableCell>{germanDateFormat(todo.createdAt)}</TableCell>
-									<TableCell>{germanDateFormat(todo.updatedAt)}</TableCell>
+								<TableCell>{germanDateFormat(todo.createdAt)}</TableCell>
+								<TableCell>{germanDateFormat(todo.updatedAt)}</TableCell>
 
-									<TableCell>
-										<button onClick={() => deleteTodoById(todo.id)} className="text-rose-500 hover:text-rose-600">
-											<BsFillTrash3Fill className="size-4 mx-auto" />
-										</button>
-									</TableCell>
-								</TableRow>
-							</>
+								<TableCell>
+									<button onClick={() => deleteTodoById(todo.id)} className="text-rose-500 hover:text-rose-600">
+										<BsFillTrash3Fill className="size-4 mx-auto" />
+									</button>
+								</TableCell>
+							</TableRow>
 						))}
 					</TableBody>
 				</Table>
