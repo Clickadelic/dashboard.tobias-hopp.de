@@ -1,4 +1,5 @@
 "use server";
+
 import * as z from "zod";
 import { db } from "@/lib/db";
 import { ProjectSchema } from "@/schemas";
@@ -47,7 +48,6 @@ export const addProject = async (values: z.infer<typeof ProjectSchema>) => {
 
 export const getProjectById = async (id: string) => {
 	const project = await db.project.findFirst({ where: { id } });
-	console.log(project);
 	return project;
 };
 

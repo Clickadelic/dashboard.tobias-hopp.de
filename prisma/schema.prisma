@@ -20,9 +20,8 @@ model Organization {
     description String?
     createdAt   DateTime @default(now())
     updatedAt   DateTime @default(now())
-
-    userId String
-    user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+    userId      String
+    user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
     @@unique([id])
 }
@@ -44,7 +43,6 @@ model User {
     isTwoFactorEnabled    Boolean                @default(false)
     twoFactorConfirmation TwoFactorConfirmation?
     backgroundImage       String?
-    profileImage          String?
 
     apps          App[]
     links         Link[]

@@ -33,16 +33,12 @@ export const AppBar = () => {
 	const [apps, setApps] = useState<any[]>([]);
 
 	const fetchApps = async () => {
-		setIsLoading(true);
 		try {
 			const res = await fetch(`/api/apps/${userId}`);
 			const response = await res.json();
 			setApps(response);
-			console.log(response);
 		} catch (error) {
 			toast.error("Fehler beim Laden der Apps.");
-		} finally {
-			setIsLoading(false);
 		}
 	};
 
@@ -121,7 +117,7 @@ export const AppBar = () => {
 						// TODO: Mal testen, url mit params: href={`/app/${app.id}`}
 						<Link key={app.id} className="flex flex-col justify-center items-center" href={app.url} target="_blank" title={app.title}>
 							<span className="text-xs font-medium text-neutral-500 mb-1">{app.title}</span>
-							<span className="bg-white size-16 flex flex-col align-middle items-center justify-center rounded-lg shadow hover:shadow-lg p-1 border">
+							<span className="bg-white size-16 flex flex-col align-middle items-center justify-center rounded-xl shadow hover:shadow-lg p-1 border">
 								{app.title.charAt(0).toUpperCase().slice(0, 2)}
 							</span>
 						</Link>

@@ -7,14 +7,18 @@ export const OrganizationSchema = z.object({
 	description: z.string().max(300, "Beschreibung zu lang")
 });
 
-export const SettingsSchema = z.object({
+// TODO: Schemas abgleichen und korrigieren
+export const UserSchema = z.object({
 	name: z.optional(z.string()),
 	role: z.enum([UserRole.ADMIN, UserRole.USER]),
 	email: z.optional(z.string().email()),
+	image: z.optional(z.string()),
+	backgroundImage: z.optional(z.string()),
 	password: z.optional(z.string().min(6)),
 	newPassword: z.optional(z.string().min(6)),
 	isTwoFactorEnabled: z.optional(z.boolean())
 });
+
 // .refine(
 // 	data => {
 // 		if (data.password && !data.newPassword) {
