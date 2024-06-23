@@ -1,7 +1,7 @@
-import Link from "next/link"
-import { AiOutlineWindows } from "react-icons/ai"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
-import { Button } from "@/components/ui/button"
+import Link from "next/link";
+import { AiOutlineWindows } from "react-icons/ai";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { Button } from "@/components/ui/button";
 
 export const MegaMenu = () => {
 	return (
@@ -17,7 +17,7 @@ export const MegaMenu = () => {
 					<p className="text-white text-sm mb-4">Management von Web-Projekten, Entwicklung und Reports.</p>
 					<a className="text-slate-600 bg-slate-50 p-2 mt-5 rounded-md">About</a>
 				</div>
-				<div className="p-8">
+				<div className="p-6">
 					<h3 className="text-md font-bold mb-3">Empty Column</h3>
 					<ul className="list-disc ml-5">
 						<li>
@@ -42,8 +42,8 @@ export const MegaMenu = () => {
 						</li>
 					</ul>
 				</div>
-				<div className="p-8">
-					<span className="block font-medium mb-4">Empty Column</span>
+				<div className="p-6">
+					<span className="block font-bold mb-4">Empty Column</span>
 					<ul className="list-disc ml-5">
 						<li>
 							<Link href="#" className="mb-2 block hover:text-slate-500" target="_blank">
@@ -62,8 +62,8 @@ export const MegaMenu = () => {
 						</li>
 					</ul>
 				</div>
-				<div className="p-8">
-					<span className="block font-medium mb-4">Empty Column</span>
+				<div className="p-6">
+					<span className="block font-bold mb-4">Empty Column</span>
 					<ul className="list-disc ml-5">
 						<li>
 							<Link href="#" className="mb-2 block hover:text-slate-500">
@@ -89,5 +89,5 @@ export const MegaMenu = () => {
 				</div>
 			</DropdownMenuContent>
 		</DropdownMenu>
-	)
-}
+	);
+};

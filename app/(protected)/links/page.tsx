@@ -1,14 +1,12 @@
-import LinksTable from "../_components/tables/links-table"
+import LinksTable from "../_components/tables/links-table";
 
 const LinksPage = () => {
 	return (
 		<div className="page-wrapper">
 			<h2 className="text-md font-bold text-slate-700 mb-5">Links</h2>
-			<div>
-				<LinksTable />
-			</div>
+			<LinksTable />
 		</div>
-	)
-}
+	);
+};
 
-export default LinksPage
+export default LinksPage;

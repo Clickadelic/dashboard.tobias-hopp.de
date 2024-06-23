@@ -31,13 +31,13 @@ import { PiNotePencilLight } from "react-icons/pi";
 import { cn } from "@/lib/utils";
 import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
 
-import { MegaMenu } from "./mega-menu";
-import { InboxButton } from "./inbox-button";
-import { NotificationsButton } from "./notifications-button";
-import { FullscreenButton } from "./fullscreen-button";
-import { SidebarSheet } from "./sidebar-sheet";
-import { ProfileDropdown } from "./profile-drowndown";
-import { LanguagesButton } from "./languages-button";
+import { MegaMenu } from "./navbar-menu/mega-menu";
+import { InboxButton } from "./navbar-menu/inbox-button";
+import { NotificationsButton } from "./navbar-menu/notifications-button";
+import { FullscreenButton } from "./navbar-menu/fullscreen-button";
+import { SidebarSheet } from "./navbar-menu/sidebar-sheet";
+import { ProfileDropdown } from "./navbar-menu/profile-drowndown";
+import { LanguagesButton } from "./navbar-menu/languages-button";
 
 const laBelleAurore = La_Belle_Aurore({ subsets: ["latin"], weight: ["400"] });
 

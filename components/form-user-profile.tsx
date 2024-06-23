@@ -3,7 +3,7 @@
 import * as z from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { SettingsSchema } from "@/schemas";
+import { UserSchema } from "@/schemas";
 
 import { useTransition, useState } from "react";
 import { useSession } from "next-auth/react";
@@ -38,8 +38,8 @@ export const FormUserProfile = ({ classNames }: FormUserProfileProps) => {
 
 	const [isPending, startTransition] = useTransition();
 
-	const form = useForm<z.infer<typeof SettingsSchema>>({
-		resolver: zodResolver(SettingsSchema),
+	const form = useForm<z.infer<typeof UserSchema>>({
+		resolver: zodResolver(UserSchema),
 		defaultValues: {
 			name: user?.name || undefined,
 			email: user?.email || undefined,
@@ -49,7 +49,7 @@ export const FormUserProfile = ({ classNames }: FormUserProfileProps) => {
 		}
 	});
 
-	const onSubmit = (values: z.infer<typeof SettingsSchema>) => {
+	const onSubmit = (values: z.infer<typeof UserSchema>) => {
 		startTransition(() => {
 			settings(values)
 				.then(data => {
