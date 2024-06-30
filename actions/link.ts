@@ -12,13 +12,11 @@ export const addLink = async (values: z.infer<typeof LinkSchema>) => {
 	const userId = user?.id;
 	try {
 		const validatedFields = LinkSchema.safeParse(values);
-		console.log("Validated Fields:", validatedFields);
 		if (!validatedFields.success) {
 			return { error: "Ungültige Felder!" };
 		}
 
 		const { title, url, description } = validatedFields.data;
-		console.log("Title:", title, "URL:", url, "Description:", description);
 
 		const existingLink = await db.link.findFirst({
 			where: {
@@ -31,7 +29,6 @@ export const addLink = async (values: z.infer<typeof LinkSchema>) => {
 		if (existingLink) {
 			return { error: "Url bereits vorhanden." };
 		}
-		console.log("Trying to create link...");
 		await db.link.create({
 			data: {
 				title,
@@ -42,7 +39,6 @@ export const addLink = async (values: z.infer<typeof LinkSchema>) => {
 				}
 			}
 		});
-		console.log("Link created.");
 
 		return { success: "Link hinzugefügt." };
 	} catch (error) {
