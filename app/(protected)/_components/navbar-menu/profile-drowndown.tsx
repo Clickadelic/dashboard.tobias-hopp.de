@@ -1,31 +1,31 @@
-"use client"
+"use client";
 
-import { useAppContext } from "@/context/app-context"
-import { usePathname } from "next/navigation"
-import { useSession } from "next-auth/react"
-import { useCurrentRole } from "@/hooks/use-current-role"
-import { useCurrentUser } from "@/hooks/use-current-user"
+import { useAppContext } from "@/context/app-context";
+import { usePathname } from "next/navigation";
+import { useSession } from "next-auth/react";
+import { useCurrentRole } from "@/hooks/use-current-role";
+import { useCurrentUser } from "@/hooks/use-current-user";
 
-import Link from "next/link"
+import Link from "next/link";
 
-import { Skeleton } from "@/components/ui/skeleton"
-import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
+import { Skeleton } from "@/components/ui/skeleton";
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 
-import { FaUser } from "react-icons/fa"
-import { LuUser2 } from "react-icons/lu"
-import { GiOrganigram } from "react-icons/gi"
-import { GrAppsRounded } from "react-icons/gr"
+import { FaUser } from "react-icons/fa";
+import { LuUser2 } from "react-icons/lu";
+import { GiOrganigram } from "react-icons/gi";
+import { GrAppsRounded } from "react-icons/gr";
 
-import { LogoutButton } from "@/components/auth/logout-button"
+import { LogoutButton } from "@/components/auth/logout-button";
 
 export const ProfileDropdown = () => {
-	const { status } = useSession({ required: true })
-	const user = useCurrentUser()
-	const role = useCurrentRole()
-	const path = usePathname()
+	const { status } = useSession({ required: true });
+	const user = useCurrentUser();
+	const role = useCurrentRole();
+	const path = usePathname();
 
-	const { isToggled, setToggle } = useAppContext()
+	const { isToggled, setToggle } = useAppContext();
 
 	return (
 		<>
@@ -36,14 +36,14 @@ export const ProfileDropdown = () => {
 				</div>
 			) : (
 				<DropdownMenu>
-					<DropdownMenuTrigger className="flex justify-between">
+					<DropdownMenuTrigger className="flex justify-between hover:bg-slate-200 rounded">
 						<Avatar>
-							<AvatarImage className="size-6" src={user?.image || ""} alt="User Avatar" />
+							<AvatarImage className="size-4" src={user?.image || ""} alt="User Avatar" />
 							<AvatarFallback>
 								<FaUser className="text-neutral-400" />
 							</AvatarFallback>
 						</Avatar>
-						<span className="mt-2 ml-2 hover:text-slate-700">{user?.name}</span>
+						<span className="mt-1.5 ml-2 hover:text-slate-700">{user?.name}</span>
 					</DropdownMenuTrigger>
 					<DropdownMenuContent className="mr-3">
 						<DropdownMenuLabel>Mein Account</DropdownMenuLabel>
@@ -74,5 +74,5 @@ export const ProfileDropdown = () => {
 				</DropdownMenu>
 			)}
 		</>
-	)
-}
+	);
+};
