@@ -42,14 +42,15 @@ export const AppBar = () => {
 		<div className="w-full">
 			<div className="flex items-start justify-start space-x-3">
 				{apps.length > 0 ? (
+					// TODO: Improve UI/UX
 					apps.map(app => (
-						<div className="size-24 relative flex flex-col justify-center place-content-center bg-white/30 backdrop-blur hover:bg-white/40 rounded-lg">
+						<div className="size-20 relative flex flex-col justify-center place-content-center bg-white/20 backdrop-blur hover:bg-white/30 rounded-lg">
 							<Link href={app.url} className="w-full h-full flex flex-col items-center justify-center">
-								<Image src={getFavicon(app.url)} className="mb-2 rounded-sm" width={32} height={32} alt={app.title} />
+								<Image src={getFavicon(app.url)} className="mb-2 rounded-sm" width={24} height={24} alt={app.title} />
 								<span className="text-xs text-slate-900">{app.title}</span>
 							</Link>
 							<DropdownMenu>
-								<DropdownMenuTrigger className="absolute top-2 right-2">
+								<DropdownMenuTrigger className="absolute top-2 right-2 hover:bg-white/30 text-slate-700">
 									<HiOutlineDotsVertical />
 								</DropdownMenuTrigger>
 								<DropdownMenuContent>
