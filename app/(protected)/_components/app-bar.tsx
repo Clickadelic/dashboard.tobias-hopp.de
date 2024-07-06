@@ -134,7 +134,15 @@ export const AppBar = () => {
 									<HiOutlineDotsVertical />
 								</DropdownMenuTrigger>
 								<DropdownMenuContent>
-									<DropdownMenuItem>bearbeiten</DropdownMenuItem>
+									<DropdownMenuItem asChild>
+										<button
+											onClick={() => {
+												alert("Yo");
+											}}
+										>
+											bearbeiten
+										</button>
+									</DropdownMenuItem>
 									<DropdownMenuItem>löschen</DropdownMenuItem>
 								</DropdownMenuContent>
 							</DropdownMenu>

@@ -17,7 +17,7 @@ export const addApp = async (values: z.infer<typeof AppSchema>) => {
 			return { error: "Ungültige Felder!" };
 		}
 
-		const { title, url, description } = validatedFields.data;
+		const { title, url } = validatedFields.data;
 		console.log("Title:", title, "URL:", url);
 
 		const existingLink = await db.app.findFirst({
@@ -47,10 +47,12 @@ export const addApp = async (values: z.infer<typeof AppSchema>) => {
 	}
 };
 
-export const editApp = async (id: string, values: z.infer<typeof AppSchema>) => {
+export const editApp = async (values: z.infer<typeof AppSchema>) => {
+	const session = await auth();
+	const user = session?.user;
+	const userId = user?.id;
 	try {
 		const validatedFields = AppSchema.safeParse(values);
-		console.log("Validated Fields:", validatedFields);
 		if (!validatedFields.success) {
 			return { error: "Ungültige Felder!" };
 		}
@@ -58,7 +60,7 @@ export const editApp = async (id: string, values: z.infer<typeof AppSchema>) => 
 
 		const existingLink = await db.app.findFirst({
 			where: {
-				id
+				id: userId
 			}
 		});
 		if (!existingLink) {
@@ -67,7 +69,7 @@ export const editApp = async (id: string, values: z.infer<typeof AppSchema>) => 
 
 		await db.app.update({
 			where: {
-				id
+				id: userId
 			},
 			data: {
 				title,
