@@ -69,8 +69,8 @@ export const NoticeCard = () => {
 	}
 
 	return (
-		<div className="bg-white rounded-xl shadow-sm border p-4">
-			<h2 className="text-sm border-bottom text-neutral-500 flex justify-between mb-2">
+		<div className="bg-white rounded-xl shadow-sm border p-2 md:p-4">
+			<h2 className="text-xs md:text-sm border-bottom text-slate-900 flex justify-between mb-2">
 				<span>Notizen</span>
 				<Link href="/notizen" className="hover:text-slate-900">
 					zur Übersicht
