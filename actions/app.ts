@@ -14,7 +14,7 @@ export const addApp = async (values: z.infer<typeof AppSchema>) => {
 		const validatedFields = AppSchema.safeParse(values);
 		console.log("Validated Fields:", validatedFields);
 		if (!validatedFields.success) {
-			return { error: "Ungültige Felder!" };
+			return { error: "Ungültige Werte" };
 		}
 
 		const { title, url } = validatedFields.data;
@@ -29,7 +29,7 @@ export const addApp = async (values: z.infer<typeof AppSchema>) => {
 			}
 		});
 		if (existingLink) {
-			return { error: "Url bereits vorhanden." };
+			return { error: "Url bereits vorhanden" };
 		}
 		await db.app.create({
 			data: {
@@ -41,9 +41,9 @@ export const addApp = async (values: z.infer<typeof AppSchema>) => {
 			}
 		});
 
-		return { success: "App hinzugefügt." };
+		return { success: "App hinzugefügt" };
 	} catch (error) {
-		return { error: "Interner Server-Fehler." };
+		return { error: "Interner Server-Fehler" };
 	}
 };
 
