@@ -67,8 +67,7 @@ export const NewPasswordSchema = z.object({
 
 export const AppSchema = z.object({
 	title: z.string().min(1, "Titel fehlt"),
-	url: z.string().url("Ungültige Url"),
-	description: z.optional(z.string().max(300, "Beschreibung zu lang"))
+	url: z.string().url("Ungültige Url")
 });
 
 export const LinkSchema = z.object({

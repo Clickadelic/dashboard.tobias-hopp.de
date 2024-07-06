@@ -1,5 +1,6 @@
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
+import Image from "next/image";
 
 export function cn(...inputs: ClassValue[]) {
 	return twMerge(clsx(inputs));
@@ -43,6 +44,6 @@ export function germanDateFormat(date: Date | string) {
 	return germanDate;
 }
 
-export function getFavicon(url: string) {
-	return `https://www.google.com/s2/favicons?domain=${url}&sz=24`;
+export function getFavicon(url: string, size: number = 32) {
+	return `https://www.google.com/s2/favicons?domain=${url}&sz=${size}`;
 }
