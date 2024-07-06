@@ -1,107 +1,108 @@
-"use client";
+"use client"
 
-import * as z from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod"
+import { zodResolver } from "@hookform/resolvers/zod"
 
-import { useState, useEffect, useTransition } from "react";
-import { useSession } from "next-auth/react";
-import { useForm } from "react-hook-form";
+import { useState, useEffect, useTransition } from "react"
+import { useSession } from "next-auth/react"
+import { useForm } from "react-hook-form"
 
-import Image from "next/image";
-import Link from "next/link";
+import Image from "next/image"
+import Link from "next/link"
 
-import { AppSchema } from "@/schemas";
+import { AppSchema } from "@/schemas"
 
-import { Input } from "@/components/ui/input";
-import { Form, FormControl, FormLabel, FormField, FormItem, FormMessage } from "@/components/ui/form";
-import { Button } from "@/components/ui/button";
-import { Skeleton } from "@/components/ui/skeleton";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { toast } from "sonner";
+import { Input } from "@/components/ui/input"
+import { Form, FormControl, FormLabel, FormField, FormItem, FormMessage } from "@/components/ui/form"
+import { Button } from "@/components/ui/button"
+import { Skeleton } from "@/components/ui/skeleton"
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
+import { toast } from "sonner"
 
-import { HiOutlineDotsVertical } from "react-icons/hi";
-import { FiPlus } from "react-icons/fi";
+import { HiOutlineDotsVertical } from "react-icons/hi"
+import { FiPlus } from "react-icons/fi"
 
-import { addApp, editApp, deleteApp, getAppsByUserId } from "@/actions/app";
+import { addApp, editApp, deleteApp, getAppsByUserId } from "@/actions/app"
 
-import { getFavicon } from "@/lib/utils";
+import { getFavicon } from "@/lib/utils"
 
 export const AppBar = () => {
-	const { status } = useSession({ required: true });
-	const [isDialogOpen, setIsDialogOpen] = useState(false);
+	const { status } = useSession({ required: true })
+	const [isDialogOpen, setIsDialogOpen] = useState(false)
 
-	const [isPending, startTransition] = useTransition();
-	const [isLoading, setIsLoading] = useState<boolean>(false);
-	const [apps, setApps] = useState<any[]>([]);
+	const [isPending, startTransition] = useTransition()
+	const [isLoading, setIsLoading] = useState<boolean>(false)
+	const [apps, setApps] = useState<any[]>([])
 
 	const fetchApps = async () => {
 		try {
-			const res = await getAppsByUserId();
-			setApps(res);
+			const response = await getAppsByUserId()
+			setApps(response)
 		} catch (error) {
-			toast.error("Fehler beim Laden der Apps.");
+			toast.error("Fehler beim Laden der Apps.")
 		}
-	};
+	}
 
 	useEffect(() => {
-		setIsLoading(true);
-		fetchApps();
-		setIsLoading(false);
-	}, []);
+		setIsLoading(true)
+		fetchApps()
+		setIsLoading(false)
+	}, [])
 
 	const form = useForm<z.infer<typeof AppSchema>>({
 		resolver: zodResolver(AppSchema),
 		defaultValues: { title: "", url: "" }
-	});
+	})
 
 	const onAdd = async (values: z.infer<typeof AppSchema>) => {
 		startTransition(async () => {
-			const result = await addApp(values);
+			const result = await addApp(values)
 			if (result.error) {
-				toast.error(result.error);
+				toast.error(result.error)
 			} else if (result.success) {
-				toast.success(result.success);
-				form.reset();
-				fetchApps();
+				toast.success(result.success)
+				form.reset()
+				fetchApps()
 			}
-		});
-	};
+		})
+		setIsDialogOpen(false)
+	}
 
 	const setEditValues = (appId: string) => {
-		const app = apps.find(app => app.id === appId);
+		const app = apps.find(app => app.id === appId)
 		if (app) {
 			form.reset({
 				title: app.title,
 				url: app.url
-			});
+			})
 		}
-	};
+	}
 
 	const onEdit = async (appId: string, values: z.infer<typeof AppSchema>) => {
 		startTransition(async () => {
-			const result = await editApp(appId, values);
+			const result = await editApp(appId, values)
 			if (result.error) {
-				toast.error(result.error);
+				toast.error(result.error)
 			} else if (result.success) {
-				toast.success(result.success);
-				form.reset();
-				fetchApps();
+				toast.success(result.success)
+				form.reset()
+				fetchApps()
 			}
-		});
-	};
+		})
+	}
 
 	const onDelete = async (appId: string) => {
 		startTransition(async () => {
-			const result = await deleteApp(appId);
+			const result = await deleteApp(appId)
 			if (result.error) {
-				toast.error(result.error);
+				toast.error(result.error)
 			} else if (result.success) {
-				toast.success(result.success);
-				fetchApps();
+				toast.success(result.success)
+				fetchApps()
 			}
-		});
-	};
+		})
+	}
 
 	return (
 		<div className="w-full">
@@ -116,7 +117,7 @@ export const AppBar = () => {
 							<DialogDescription>Quick-Links für Deine Startseite.</DialogDescription>
 						</DialogHeader>
 						<Form {...form}>
-							<form className="space-y-2">
+							<form onSubmit={form.handleSubmit(onAdd)} className="space-y-2">
 								<FormField
 									control={form.control}
 									name="title"
@@ -143,26 +144,7 @@ export const AppBar = () => {
 										</FormItem>
 									)}
 								/>
-
-								<Button
-									disabled={isPending}
-									type="submit"
-									className="w-full"
-									onClick={() => {
-										console.log("asd");
-									}}
-								>
-									bearbeiten
-								</Button>
-								<Button
-									disabled={isPending}
-									type="submit"
-									className="w-full"
-									onClick={() => {
-										onAdd(form.getValues());
-										setIsDialogOpen(false);
-									}}
-								>
+								<Button disabled={isPending} type="submit" className="w-full">
 									hinzufügen
 								</Button>
 							</form>
@@ -186,10 +168,9 @@ export const AppBar = () => {
 										<button
 											className="block w-full"
 											onClick={() => {
-												setEditValues(app.id);
-												setIsDialogOpen(true);
-											}}
-										>
+												setEditValues(app.id)
+												setIsDialogOpen(true)
+											}}>
 											bearbeiten
 										</button>
 									</DropdownMenuItem>
@@ -197,9 +178,8 @@ export const AppBar = () => {
 										<button
 											className="block w-full"
 											onClick={() => {
-												onDelete(app.id);
-											}}
-										>
+												onDelete(app.id)
+											}}>
 											löschen
 										</button>
 									</DropdownMenuItem>
@@ -227,5 +207,5 @@ export const AppBar = () => {
 				)}
 			</div>
 		</div>
-	);
-};
+	)
+}

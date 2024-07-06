@@ -5,7 +5,6 @@ import { zodResolver } from "@hookform/resolvers/zod"
 
 import { useTransition, useState, useEffect } from "react"
 import { useForm } from "react-hook-form"
-import { useCurrentUser } from "@/hooks/use-current-user"
 import { useSession } from "next-auth/react"
 import Link from "next/link"
 
@@ -18,7 +17,6 @@ import { toast } from "sonner"
 import { Button } from "@/components/ui/button"
 
 import { FiPlus } from "react-icons/fi"
-import { BsBuildings } from "react-icons/bs"
 
 import { ProjectSchema } from "@/schemas"
 import { addProject, getProjectsByUserId } from "@/actions/project"
@@ -32,8 +30,8 @@ export const ProjectCard = () => {
 	const fetchProjects = async () => {
 		setIsLoading(true)
 		try {
-			const res = await getProjectsByUserId()
-			setProjects(res)
+			const response = await getProjectsByUserId()
+			setProjects(response)
 		} catch (error) {
 			console.error("Error fetching links:", error)
 			toast.error("Failed to fetch links.")

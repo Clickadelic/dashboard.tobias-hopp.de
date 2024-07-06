@@ -1,11 +1,8 @@
-import { auth } from "@/auth";
-
-import { MacBook } from "./mac-book";
-import { getProjectsByUserId } from "@/actions/project";
+import { MacBook } from "./mac-book"
+import { getProjectsByUserId } from "@/actions/project"
 
 const ProjectOverview = async () => {
-	const session = await auth();
-	const projects = await getProjectsByUserId(session?.user.id || "");
+	const projects = await getProjectsByUserId()
 
 	return (
 		<div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4">
@@ -13,7 +10,7 @@ const ProjectOverview = async () => {
 				<MacBook key={project.id} {...project} />
 			))}
 		</div>
-	);
-};
+	)
+}
 
-export default ProjectOverview;
+export default ProjectOverview
