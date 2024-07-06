@@ -9,7 +9,7 @@ export const SidebarSheet = () => {
 	return (
 		<Sheet>
 			<SheetTrigger asChild>
-				<Button variant="link" className="hover:bg-slate-200 size-10 p-3 rounded">
+				<Button variant="link" className="text-slate-700">
 					<GoGear className="size-5" />
 				</Button>
 			</SheetTrigger>

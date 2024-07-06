@@ -55,6 +55,19 @@ export const AppBar = () => {
 		defaultValues: { title: "", url: "" }
 	});
 
+	const onAdd = async (values: z.infer<typeof AppSchema>) => {
+		startTransition(async () => {
+			const result = await addApp(values);
+			if (result.error) {
+				toast.error(result.error);
+			} else if (result.success) {
+				toast.success(result.success);
+				form.reset();
+				fetchApps();
+			}
+		});
+	};
+
 	const setEditValues = (appId: string) => {
 		const app = apps.find(app => app.id === appId);
 		if (app) {
@@ -65,18 +78,26 @@ export const AppBar = () => {
 		}
 	};
 
-	const openEditForm = (appId: string) => {
-		setEditValues(appId);
-	};
-
-	const onSubmit = async (values: z.infer<typeof AppSchema>) => {
+	const onEdit = async (appId: string, values: z.infer<typeof AppSchema>) => {
 		startTransition(async () => {
-			const result = await addApp(values);
+			const result = await editApp(appId, values);
 			if (result.error) {
 				toast.error(result.error);
 			} else if (result.success) {
 				toast.success(result.success);
 				form.reset();
+				fetchApps();
+			}
+		});
+	};
+
+	const onDelete = async (appId: string) => {
+		startTransition(async () => {
+			const result = await deleteApp(appId);
+			if (result.error) {
+				toast.error(result.error);
+			} else if (result.success) {
+				toast.success(result.success);
 				fetchApps();
 			}
 		});
@@ -95,7 +116,7 @@ export const AppBar = () => {
 							<DialogDescription>Quick-Links für Deine Startseite.</DialogDescription>
 						</DialogHeader>
 						<Form {...form}>
-							<form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2">
+							<form className="space-y-2">
 								<FormField
 									control={form.control}
 									name="title"
@@ -123,8 +144,26 @@ export const AppBar = () => {
 									)}
 								/>
 
-								<Button disabled={isPending} type="submit" className="w-full">
-									Hinzufügen
+								<Button
+									disabled={isPending}
+									type="submit"
+									className="w-full"
+									onClick={() => {
+										console.log("asd");
+									}}
+								>
+									bearbeiten
+								</Button>
+								<Button
+									disabled={isPending}
+									type="submit"
+									className="w-full"
+									onClick={() => {
+										onAdd(form.getValues());
+										setIsDialogOpen(false);
+									}}
+								>
+									hinzufügen
 								</Button>
 							</form>
 						</Form>
@@ -147,8 +186,8 @@ export const AppBar = () => {
 										<button
 											className="block w-full"
 											onClick={() => {
-												setIsDialogOpen(true);
 												setEditValues(app.id);
+												setIsDialogOpen(true);
 											}}
 										>
 											bearbeiten
@@ -158,15 +197,7 @@ export const AppBar = () => {
 										<button
 											className="block w-full"
 											onClick={() => {
-												startTransition(async () => {
-													const result = await deleteApp(app.id);
-													if (result.error) {
-														toast.error(result.error);
-													} else if (result.success) {
-														toast.success(result.success);
-														fetchApps();
-													}
-												});
+												onDelete(app.id);
 											}}
 										>
 											löschen

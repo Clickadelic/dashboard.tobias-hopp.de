@@ -47,29 +47,29 @@ export const addApp = async (values: z.infer<typeof AppSchema>) => {
 	}
 };
 
-export const editApp = async (values: z.infer<typeof AppSchema>) => {
+export const editApp = async (appId: string, values: z.infer<typeof AppSchema>) => {
 	const session = await auth();
 	const user = session?.user;
 	const userId = user?.id;
 	try {
 		const validatedFields = AppSchema.safeParse(values);
 		if (!validatedFields.success) {
-			return { error: "Ungültige Felder!" };
+			return { error: "Ungültige Werte" };
 		}
 		const { title, url } = validatedFields.data;
 
-		const existingLink = await db.app.findFirst({
+		const existingApp = await db.app.findFirst({
 			where: {
 				id: userId
 			}
 		});
-		if (!existingLink) {
-			return { error: "App-Id nicht gefunden." };
+		if (!existingApp) {
+			return { error: "App-Id nicht gefunden" };
 		}
 
 		await db.app.update({
 			where: {
-				id: userId
+				id: appId
 			},
 			data: {
 				title,
@@ -78,32 +78,32 @@ export const editApp = async (values: z.infer<typeof AppSchema>) => {
 			}
 		});
 
-		return { success: "Link bearbeitet." };
+		return { success: "App bearbeitet" };
 	} catch (error) {
-		return { error: "Interner Server-Fehler." };
+		return { error: "Interner Server-Fehler" };
 	}
 };
 
-export const deleteApp = async (id: string) => {
+export const deleteApp = async (appId: string) => {
 	try {
 		const existingApp = await db.app.findFirst({
 			where: {
-				id
+				id: appId
 			}
 		});
 		if (!existingApp) {
-			return { error: "App-Id nicht vorhanden." };
+			return { error: "App-Id nicht vorhanden" };
 		}
 
 		await db.app.delete({
 			where: {
-				id
+				id: appId
 			}
 		});
 
-		return { success: "App gelöscht." };
+		return { success: "App gelöscht" };
 	} catch (error) {
-		return { error: "Interner Server-Fehler." };
+		return { error: "Interner Server-Fehler" };
 	}
 };
 
