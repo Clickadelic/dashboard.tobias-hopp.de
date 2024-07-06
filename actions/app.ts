@@ -86,13 +86,13 @@ export const editApp = async (values: z.infer<typeof AppSchema>) => {
 
 export const deleteApp = async (id: string) => {
 	try {
-		const existingLink = await db.app.findFirst({
+		const existingApp = await db.app.findFirst({
 			where: {
 				id
 			}
 		});
-		if (!existingLink) {
-			return { error: "App nicht vorhanden." };
+		if (!existingApp) {
+			return { error: "App-Id nicht vorhanden." };
 		}
 
 		await db.app.delete({
