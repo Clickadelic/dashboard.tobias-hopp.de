@@ -107,7 +107,7 @@ export const deleteApp = async (id: string) => {
 	}
 };
 
-export const getAppsByUser = async () => {
+export const getAppsByUserId = async () => {
 	const session = await auth();
 	const user = session?.user;
 	const userId = user?.id;

@@ -5,7 +5,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 
 import { useState, useEffect, useTransition } from "react";
 import { useSession } from "next-auth/react";
-import { useCurrentUser } from "@/hooks/use-current-user";
 import { useForm } from "react-hook-form";
 
 import Image from "next/image";
@@ -24,17 +23,12 @@ import { toast } from "sonner";
 import { HiOutlineDotsVertical } from "react-icons/hi";
 import { FiPlus } from "react-icons/fi";
 
-import { addApp } from "@/actions/app";
-import { deleteApp } from "@/actions/app";
+import { addApp, editApp, deleteApp, getAppsByUserId } from "@/actions/app";
 
 import { getFavicon } from "@/lib/utils";
 
 export const AppBar = () => {
 	const { status } = useSession({ required: true });
-	// TODO: ID serverseitig abgreifen??
-	// Zum hinzufügen wird serverseitig die ID abgegriffen
-	// Beim Fetch wird dies aber Clientseitig gemacht
-	const userId = useCurrentUser()?.id;
 	const [isDialogOpen, setIsDialogOpen] = useState(false);
 
 	const [isPending, startTransition] = useTransition();
@@ -43,9 +37,8 @@ export const AppBar = () => {
 
 	const fetchApps = async () => {
 		try {
-			const res = await fetch(`/api/apps/${userId}`);
-			const response = await res.json();
-			setApps(response);
+			const res = await getAppsByUserId();
+			setApps(res);
 		} catch (error) {
 			toast.error("Fehler beim Laden der Apps.");
 		}

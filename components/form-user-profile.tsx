@@ -29,6 +29,7 @@ interface FormUserProfileProps {
 	classNames?: string;
 }
 
+// TODO: Fix user form
 export const FormUserProfile = ({ classNames }: FormUserProfileProps) => {
 	const user = useCurrentUser();
 	const { update } = useSession();
