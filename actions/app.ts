@@ -17,7 +17,7 @@ export const addApp = async (values: z.infer<typeof AppSchema>) => {
 			return { error: "Ungültige Felder!" };
 		}
 
-		const { title, url, description } = validatedFields.data;
+		const { title, url } = validatedFields.data;
 		console.log("Title:", title, "URL:", url);
 
 		const existingLink = await db.app.findFirst({
@@ -47,10 +47,12 @@ export const addApp = async (values: z.infer<typeof AppSchema>) => {
 	}
 };
 
-export const editApp = async (id: string, values: z.infer<typeof AppSchema>) => {
+export const editApp = async (values: z.infer<typeof AppSchema>) => {
+	const session = await auth();
+	const user = session?.user;
+	const userId = user?.id;
 	try {
 		const validatedFields = AppSchema.safeParse(values);
-		console.log("Validated Fields:", validatedFields);
 		if (!validatedFields.success) {
 			return { error: "Ungültige Felder!" };
 		}
@@ -58,7 +60,7 @@ export const editApp = async (id: string, values: z.infer<typeof AppSchema>) => 
 
 		const existingLink = await db.app.findFirst({
 			where: {
-				id
+				id: userId
 			}
 		});
 		if (!existingLink) {
@@ -67,7 +69,7 @@ export const editApp = async (id: string, values: z.infer<typeof AppSchema>) => 
 
 		await db.app.update({
 			where: {
-				id
+				id: userId
 			},
 			data: {
 				title,
@@ -84,13 +86,13 @@ export const editApp = async (id: string, values: z.infer<typeof AppSchema>) => 
 
 export const deleteApp = async (id: string) => {
 	try {
-		const existingLink = await db.app.findFirst({
+		const existingApp = await db.app.findFirst({
 			where: {
 				id
 			}
 		});
-		if (!existingLink) {
-			return { error: "Link nicht vorhanden." };
+		if (!existingApp) {
+			return { error: "App-Id nicht vorhanden." };
 		}
 
 		await db.app.delete({
@@ -99,13 +101,13 @@ export const deleteApp = async (id: string) => {
 			}
 		});
 
-		return { success: "Link gelöscht." };
+		return { success: "App gelöscht." };
 	} catch (error) {
 		return { error: "Interner Server-Fehler." };
 	}
 };
 
-export const getAppsByUser = async () => {
+export const getAppsByUserId = async () => {
 	const session = await auth();
 	const user = session?.user;
 	const userId = user?.id;
