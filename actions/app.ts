@@ -92,7 +92,7 @@ export const deleteApp = async (id: string) => {
 			}
 		});
 		if (!existingLink) {
-			return { error: "Link nicht vorhanden." };
+			return { error: "App nicht vorhanden." };
 		}
 
 		await db.app.delete({
@@ -101,7 +101,7 @@ export const deleteApp = async (id: string) => {
 			}
 		});
 
-		return { success: "Link gelöscht." };
+		return { success: "App gelöscht." };
 	} catch (error) {
 		return { error: "Interner Server-Fehler." };
 	}

@@ -25,6 +25,7 @@ import { HiOutlineDotsVertical } from "react-icons/hi";
 import { FiPlus } from "react-icons/fi";
 
 import { addApp } from "@/actions/app";
+import { deleteApp } from "@/actions/app";
 
 import { getFavicon } from "@/lib/utils";
 
@@ -34,6 +35,7 @@ export const AppBar = () => {
 	// Zum hinzufügen wird serverseitig die ID abgegriffen
 	// Beim Fetch wird dies aber Clientseitig gemacht
 	const userId = useCurrentUser()?.id;
+	const [isDialogOpen, setIsDialogOpen] = useState(false);
 
 	const [isPending, startTransition] = useTransition();
 	const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -60,6 +62,20 @@ export const AppBar = () => {
 		defaultValues: { title: "", url: "" }
 	});
 
+	const setEditValues = (appId: string) => {
+		const app = apps.find(app => app.id === appId);
+		if (app) {
+			form.reset({
+				title: app.title,
+				url: app.url
+			});
+		}
+	};
+
+	const openEditForm = (appId: string) => {
+		setEditValues(appId);
+	};
+
 	const onSubmit = async (values: z.infer<typeof AppSchema>) => {
 		startTransition(async () => {
 			const result = await addApp(values);
@@ -76,7 +92,7 @@ export const AppBar = () => {
 	return (
 		<div className="w-full">
 			<div className="flex items-start justify-start space-x-3">
-				<Dialog>
+				<Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
 					<DialogTrigger className="size-20 flex flex-col justify-center place-content-center items-center bg-white/20 hover:bg-white/30 rounded-lg">
 						<FiPlus className="mx-auto text-slate-700" />
 					</DialogTrigger>
@@ -134,16 +150,35 @@ export const AppBar = () => {
 									<HiOutlineDotsVertical />
 								</DropdownMenuTrigger>
 								<DropdownMenuContent>
-									<DropdownMenuItem asChild>
+									<DropdownMenuItem>
 										<button
+											className="block w-full"
 											onClick={() => {
-												alert("Yo");
+												setIsDialogOpen(true);
+												setEditValues(app.id);
 											}}
 										>
 											bearbeiten
 										</button>
 									</DropdownMenuItem>
-									<DropdownMenuItem>löschen</DropdownMenuItem>
+									<DropdownMenuItem>
+										<button
+											className="block w-full"
+											onClick={() => {
+												startTransition(async () => {
+													const result = await deleteApp(app.id);
+													if (result.error) {
+														toast.error(result.error);
+													} else if (result.success) {
+														toast.success(result.success);
+														fetchApps();
+													}
+												});
+											}}
+										>
+											löschen
+										</button>
+									</DropdownMenuItem>
 								</DropdownMenuContent>
 							</DropdownMenu>
 						</div>
