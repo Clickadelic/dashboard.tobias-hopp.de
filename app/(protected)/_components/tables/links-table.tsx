@@ -111,7 +111,7 @@ const LinksTable = () => {
 
 	return (
 		<>
-			<div className="bg-white rounded-xl shadow-sm border p-5 mb-5">
+			<div className="bg-white rounded-xl shadow-sm border p-2 md:p-4 mb-5">
 				<h2 className="text-md font-bold text-slate-700 mb-5">Neuer Link</h2>
 				<Form {...newForm}>
 					<form onSubmit={newForm.handleSubmit(addNewLink)} className="md:grid md:grid-cols-4 gap-4">
@@ -151,7 +151,7 @@ const LinksTable = () => {
 					</form>
 				</Form>
 			</div>
-			<div className="bg-white rounded-xl shadow-sm border p-5">
+			<div className="bg-white rounded-xl shadow-sm border p-2 md:p-4">
 				<Table className="w-full">
 					<TableHeader>
 						<TableRow>

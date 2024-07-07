@@ -20,7 +20,7 @@ const DashboardPage = () => {
 			</div>
 			<h2 className="text-md font-bold text-slate-700 mb-5">Stats</h2>
 			<div className="grid grid-cols-3 gap-4">
-				<div className="col-span-2 bg-white rounded-xl shadow-sm border p-3">
+				<div className="col-span-2 bg-white rounded-xl shadow-sm border p-2 md:p-4">
 					<p>
 						Lorem, ipsum dolor sit amet consectetur adipisicing elit. Et blanditiis temporibus esse optio alias, ipsa a non obcaecati suscipit nobis eveniet vel quidem doloremque ullam
 						dolore nisi? Facilis dolor possimus fuga rem, alias magnam animi inventore numquam quas aspernatur beatae? Earum suscipit id debitis? Repudiandae optio sequi delectus quae
@@ -29,9 +29,9 @@ const DashboardPage = () => {
 						accusantium. Vitae laboriosam quasi quas quibusdam architecto.
 					</p>
 				</div>
-				<div className="bg-white rounded-xl shadow-sm border p-3">05</div>
-				<div className="bg-white rounded-xl shadow-sm border p-3">06</div>
-				<div className="col-span-2 bg-white rounded-md shadow-sm border p-3">07</div>
+				<div className="bg-white rounded-xl shadow-sm border p-2 md:p-4">05</div>
+				<div className="bg-white rounded-xl shadow-sm border p-2 md:p-4">06</div>
+				<div className="col-span-2 bg-white rounded-xl shadow-sm border p-2 md:p-4">07</div>
 			</div>
 		</div>
 	)
