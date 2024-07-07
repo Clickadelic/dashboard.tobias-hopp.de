@@ -15,7 +15,9 @@ export const MegaMenu = () => {
 				<div className="bg-mantis-primary bg-wave-pattern bg-cover p-6 flex flex-col">
 					<h2 className="text-md font-bold text-white mb-3">Toby&apos;s Dashboard</h2>
 					<p className="text-white text-sm mb-4">Management von Web-Projekten, Entwicklung und Reports.</p>
-					<a className="text-slate-700 bg-white p-1 mt-5 rounded">About</a>
+					<Link href="/about" className="text-slate-700 bg-white p-1 mt-5 rounded">
+						About
+					</Link>
 				</div>
 				<div className="p-6">
 					<h3 className="text-md font-bold mb-3">Empty Column</h3>

@@ -119,7 +119,7 @@ export const ProjectCard = () => {
 							/>
 
 							<Button disabled={isPending} variant="default" size="sm" type="submit" className="w-full">
-								Hinzufügen
+								hinzufügen
 							</Button>
 						</form>
 					</Form>
