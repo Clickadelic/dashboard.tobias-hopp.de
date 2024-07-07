@@ -107,14 +107,68 @@ export const AppBar = () => {
 	return (
 		<div className="w-full">
 			<div className="flex items-start justify-start space-x-3">
+				{apps.length > 0 ? (
+					// TODO: Improve UI/UX
+					apps.map(app => (
+						<div key={app.id} className="size-16 relative flex flex-col justify-center place-content-center bg-white/20 backdrop-blur hover:bg-white/30 rounded-lg">
+							<Link href={app.url} className="w-full h-full flex flex-col items-center justify-center space-y-2" target="_blank">
+								<Image src={getFavicon(app.url, 24)} alt={app.title} width={24} height={24} className="rounded" />
+								<span className="text-xs text-slate-900">{app.title}</span>
+							</Link>
+							<DropdownMenu>
+								<DropdownMenuTrigger className="absolute top-2 right-1 rounded-full hover:bg-white/30 text-slate-700">
+									<HiOutlineDotsVertical />
+								</DropdownMenuTrigger>
+								<DropdownMenuContent>
+									<DropdownMenuItem>
+										<button
+											className="block w-full"
+											onClick={() => {
+												setEditValues(app.id)
+												setIsDialogOpen(true)
+											}}>
+											bearbeiten
+										</button>
+									</DropdownMenuItem>
+									<DropdownMenuItem>
+										<button
+											className="block w-full"
+											onClick={() => {
+												onDelete(app.id)
+											}}>
+											löschen
+										</button>
+									</DropdownMenuItem>
+								</DropdownMenuContent>
+							</DropdownMenu>
+						</div>
+					))
+				) : (
+					<>
+						<Skeleton className="size-16 bg-white/20 animate-pulse" />
+						<Skeleton className="size-16 bg-white/20 animate-pulse" />
+						<Skeleton className="size-16 bg-white/20 animate-pulse" />
+						<Skeleton className="size-16 bg-white/20 animate-pulse" />
+						<Skeleton className="size-16 bg-white/20 animate-pulse" />
+						<Skeleton className="size-16 bg-white/20 animate-pulse" />
+						<Skeleton className="size-16 bg-white/20 animate-pulse" />
+						<Skeleton className="size-16 bg-white/20 animate-pulse" />
+						<Skeleton className="size-16 bg-white/20 animate-pulse" />
+						<Skeleton className="size-16 bg-white/20 animate-pulse" />
+						<Skeleton className="size-16 bg-white/20 animate-pulse" />
+						<Skeleton className="size-16 bg-white/20 animate-pulse" />
+						<Skeleton className="size-16 bg-white/20 animate-pulse" />
+						<Skeleton className="size-16 bg-white/20 animate-pulse" />
+					</>
+				)}
 				<Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-					<DialogTrigger className="size-20 flex flex-col justify-center place-content-center items-center bg-white/20 hover:bg-white/30 rounded-lg">
+					<DialogTrigger className="size-16 flex flex-col justify-center place-content-center items-center bg-white/20 hover:bg-white/30 rounded-lg">
 						<FiPlus className="mx-auto text-slate-700" />
 					</DialogTrigger>
 					<DialogContent>
 						<DialogHeader>
 							<DialogTitle>App-Link hinzufügen</DialogTitle>
-							<DialogDescription>Quick-Links für Deine Startseite.</DialogDescription>
+							<DialogDescription>Quick-Links für Deine Startseite</DialogDescription>
 						</DialogHeader>
 						<Form {...form}>
 							<form onSubmit={form.handleSubmit(onAdd)} className="space-y-2">
@@ -151,60 +205,6 @@ export const AppBar = () => {
 						</Form>
 					</DialogContent>
 				</Dialog>
-				{apps.length > 0 ? (
-					// TODO: Improve UI/UX
-					apps.map(app => (
-						<div key={app.id} className="size-20 relative flex flex-col justify-center place-content-center bg-white/20 backdrop-blur hover:bg-white/30 rounded-lg">
-							<Link href={app.url} className="w-full h-full flex flex-col items-center justify-center space-y-2" target="_blank">
-								<Image src={getFavicon(app.url)} alt={app.title} width={32} height={32} className="rounded-full" />
-								<span className="text-xs text-slate-900">{app.title}</span>
-							</Link>
-							<DropdownMenu>
-								<DropdownMenuTrigger className="absolute top-2 right-1 rounded-full hover:bg-white/30 text-slate-700">
-									<HiOutlineDotsVertical />
-								</DropdownMenuTrigger>
-								<DropdownMenuContent>
-									<DropdownMenuItem>
-										<button
-											className="block w-full"
-											onClick={() => {
-												setEditValues(app.id)
-												setIsDialogOpen(true)
-											}}>
-											bearbeiten
-										</button>
-									</DropdownMenuItem>
-									<DropdownMenuItem>
-										<button
-											className="block w-full"
-											onClick={() => {
-												onDelete(app.id)
-											}}>
-											löschen
-										</button>
-									</DropdownMenuItem>
-								</DropdownMenuContent>
-							</DropdownMenu>
-						</div>
-					))
-				) : (
-					<>
-						<Skeleton className="size-20 bg-white/20 animate-pulse" />
-						<Skeleton className="size-20 bg-white/20 animate-pulse" />
-						<Skeleton className="size-20 bg-white/20 animate-pulse" />
-						<Skeleton className="size-20 bg-white/20 animate-pulse" />
-						<Skeleton className="size-20 bg-white/20 animate-pulse" />
-						<Skeleton className="size-20 bg-white/20 animate-pulse" />
-						<Skeleton className="size-20 bg-white/20 animate-pulse" />
-						<Skeleton className="size-20 bg-white/20 animate-pulse" />
-						<Skeleton className="size-20 bg-white/20 animate-pulse" />
-						<Skeleton className="size-20 bg-white/20 animate-pulse" />
-						<Skeleton className="size-20 bg-white/20 animate-pulse" />
-						<Skeleton className="size-20 bg-white/20 animate-pulse" />
-						<Skeleton className="size-20 bg-white/20 animate-pulse" />
-						<Skeleton className="size-20 bg-white/20 animate-pulse" />
-					</>
-				)}
 			</div>
 		</div>
 	)
