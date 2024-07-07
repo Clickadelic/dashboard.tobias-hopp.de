@@ -23,6 +23,7 @@ import { toast } from "sonner"
 
 import { HiOutlineDotsVertical } from "react-icons/hi"
 import { FiPlus } from "react-icons/fi"
+import { BsTrash } from "react-icons/bs"
 
 import { addApp, editApp, deleteApp, getAppsByUserId } from "@/actions/app"
 
@@ -129,13 +130,13 @@ export const AppBar = () => {
 										<HiOutlineDotsVertical />
 									</button>
 								</PopoverTrigger>
-								<PopoverContent>
+								<PopoverContent className="p-2">
 									<Form {...dynamicForm}>
 										<form
 											onSubmit={dynamicForm.handleSubmit(() => {
 												onEdit(app.id, dynamicForm.getValues())
 											})}
-											className="space-y-2">
+											className="space-y-2 mb-3">
 											<FormField
 												control={dynamicForm.control}
 												name="title"
@@ -167,6 +168,14 @@ export const AppBar = () => {
 											</Button>
 										</form>
 									</Form>
+									<button
+										title="App löschen"
+										className="block ml-auto border-0 text-destructive p-2 hover:bg-transparent hover:text-rose-600"
+										onClick={() => {
+											onDelete(app.id)
+										}}>
+										<BsTrash />
+									</button>
 								</PopoverContent>
 							</Popover>
 						</div>
