@@ -21,6 +21,7 @@ import { Button } from "@/components/ui/button"
 import { FiPlus } from "react-icons/fi"
 
 import { addNotice, getNoticesByUserId } from "@/actions/notice"
+import { Notice } from "@prisma/client"
 
 export const NoticeCard = () => {
 	const userId = useCurrentUser()?.id
@@ -28,7 +29,7 @@ export const NoticeCard = () => {
 
 	const [isPending, startTransition] = useTransition()
 	const [isLoading, setIsLoading] = useState<boolean>(false)
-	const [notices, setNotices] = useState<any[]>([])
+	const [notices, setNotices] = useState<Notice[]>([])
 
 	const fetchNotices = async () => {
 		setIsLoading(true)
