@@ -10,11 +10,11 @@ export const NotificationsButton = () => {
 					<IoIosNotificationsOutline className="size-5" />
 				</Button>
 			</DropdownMenuTrigger>
-			<DropdownMenuContent className="w-[200px]">
-				<div className="grid grid-cols-2">
-					<div className="p-2">Grid</div>
-					<div className="p-2">Grid</div>
-				</div>
+			<DropdownMenuContent className="w-[200px] p-3 overflow-hidden bg-white rounded-sm shadow-sm border">
+				<span className="block font-medium mb-4">Alerts</span>
+				<ul className="space-x-3">
+					<li>List item</li>
+				</ul>
 			</DropdownMenuContent>
 		</DropdownMenu>
 	)

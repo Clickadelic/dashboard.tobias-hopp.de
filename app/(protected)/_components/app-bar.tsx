@@ -114,7 +114,6 @@ export const AppBar = () => {
 		<div className="w-full">
 			<div className="flex items-start justify-start space-x-3">
 				{apps.length > 0 ? (
-					// TODO: Improve UI/UX
 					apps.map(app => (
 						<div key={app.id} className="size-16 relative flex flex-col justify-center place-content-center bg-white/20 backdrop-blur hover:bg-white/30 rounded-lg">
 							<Link href={app.url} className="w-full h-full flex flex-col items-center justify-center space-y-2" target="_blank">
@@ -170,11 +169,12 @@ export const AppBar = () => {
 									</Form>
 									<button
 										title="App löschen"
-										className="block ml-auto border-0 text-destructive p-2 hover:bg-transparent hover:text-rose-600"
+										className="text-sm border-destructive text-destructive bg-transparent shadow-none hover:text-rose-700"
 										onClick={() => {
 											onDelete(app.id)
 										}}>
-										<BsTrash />
+										<BsTrash className="mt-[-2px] mr-2 inline-block" />
+										löschen
 									</button>
 								</PopoverContent>
 							</Popover>
