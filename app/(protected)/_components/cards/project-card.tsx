@@ -10,7 +10,7 @@ import Link from "next/link"
 
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { Input } from "@/components/ui/input"
-import { Form, FormControl, FormLabel, FormField, FormItem, FormMessage } from "@/components/ui/form"
+import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form"
 import { Textarea } from "@/components/ui/textarea"
 import { Skeleton } from "@/components/ui/skeleton"
 import { toast } from "sonner"
@@ -68,12 +68,12 @@ export const ProjectCard = () => {
 		<div className="bg-white rounded-xl shadow-sm border p-2 md:p-4">
 			<h2 className="text-xs md:text-sm border-bottom text-slate-900 flex justify-between mb-2">
 				<span className="flex justify-between">Projekte</span>
-				<Link href="/projekte/neues-projekt">neues Projekt</Link>
+				<Link href="/projekte">zur Übersicht</Link>
 			</h2>
 			<h3 className="text-md font-semibold mb-4">{status === "loading" || isLoading ? <Skeleton className="mt-3 mb-5 w-8 h-4 bg-primary/10 animate-pulse" /> : projects.length}</h3>
 			<Popover>
-				<PopoverTrigger className="flex justify-center w-full px-3 py-2 bg-slate-100 text-slate-700 hover:text-slate-800 hover:bg-slate-200 text-xs md:text-base rounded-sm">
-					<FiPlus className="mt-[.125rem] md:mt-1 mr-2" /> Projekt hinzufügen
+				<PopoverTrigger className="flex justify-center w-full p-3 py-2 bg-slate-100 text-slate-900 hover:text-slate-800 hover:bg-slate-200 text-sm rounded-sm">
+					<FiPlus className="mt-[3px] mr-2" /> Projekt hinzufügen
 				</PopoverTrigger>
 				<PopoverContent>
 					<Form {...form}>
