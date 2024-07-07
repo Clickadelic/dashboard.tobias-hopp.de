@@ -24,7 +24,7 @@ import { BsFillTrash3Fill } from "react-icons/bs"
 import { FiPlus } from "react-icons/fi"
 import { LiaEdit } from "react-icons/lia"
 import { TodoSchema } from "@/schemas"
-import { addTodo, editTodo, deleteTodo } from "@/actions/todo"
+import { addTodo, editTodo, deleteTodo, getTodosByUserId } from "@/actions/todo"
 
 import { cn } from "@/lib/utils"
 import { germanDateFormat } from "@/lib/utils"
@@ -39,11 +39,14 @@ export const TodosTable = () => {
 
 	const fetchTodos = async () => {
 		setIsLoading(true)
-		await fetch(`/api/todos/${userId}`).then(async res => {
-			const response = await res.json()
+		try {
+			const response = await getTodosByUserId()
 			setTodos(response)
-		})
-		setIsLoading(false)
+		} catch (error) {
+			toast.error("Failed to fetch Todos.")
+		} finally {
+			setIsLoading(false)
+		}
 	}
 
 	const deleteTodoById = async (id: string) => {

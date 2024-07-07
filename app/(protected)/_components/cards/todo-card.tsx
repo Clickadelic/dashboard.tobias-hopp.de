@@ -21,7 +21,7 @@ import { Button } from "@/components/ui/button"
 import { FiPlus } from "react-icons/fi"
 
 import { TodoSchema } from "@/schemas"
-import { addTodo } from "@/actions/todo"
+import { addTodo, getTodosByUserId } from "@/actions/todo"
 
 export const TodoCard = () => {
 	const userId = useCurrentUser()?.id
@@ -34,11 +34,9 @@ export const TodoCard = () => {
 	const fetchTodos = async () => {
 		setIsLoading(true)
 		try {
-			const res = await fetch(`/api/todos/${userId}`)
-			const response = await res.json()
+			const response = await getTodosByUserId()
 			setTodos(response)
 		} catch (error) {
-			console.error("Error fetching Todos:", error)
 			toast.error("Failed to fetch Todos.")
 		} finally {
 			setIsLoading(false)
