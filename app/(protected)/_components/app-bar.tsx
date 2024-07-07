@@ -13,11 +13,12 @@ import Link from "next/link"
 import { AppSchema } from "@/schemas"
 
 import { Input } from "@/components/ui/input"
-import { Form, FormControl, FormLabel, FormField, FormItem, FormMessage } from "@/components/ui/form"
+import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form"
 import { Button } from "@/components/ui/button"
 import { Skeleton } from "@/components/ui/skeleton"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
+
 import { toast } from "sonner"
 
 import { HiOutlineDotsVertical } from "react-icons/hi"
@@ -50,7 +51,12 @@ export const AppBar = () => {
 		setIsLoading(false)
 	}, [])
 
-	const form = useForm<z.infer<typeof AppSchema>>({
+	const newForm = useForm<z.infer<typeof AppSchema>>({
+		resolver: zodResolver(AppSchema),
+		defaultValues: { title: "", url: "" }
+	})
+
+	const dynamicForm = useForm<z.infer<typeof AppSchema>>({
 		resolver: zodResolver(AppSchema),
 		defaultValues: { title: "", url: "" }
 	})
@@ -62,7 +68,7 @@ export const AppBar = () => {
 				toast.error(result.error)
 			} else if (result.success) {
 				toast.success(result.success)
-				form.reset()
+				newForm.reset()
 				fetchApps()
 			}
 		})
@@ -72,7 +78,7 @@ export const AppBar = () => {
 	const setEditValues = (appId: string) => {
 		const app = apps.find(app => app.id === appId)
 		if (app) {
-			form.reset({
+			dynamicForm.reset({
 				title: app.title,
 				url: app.url
 			})
@@ -86,7 +92,6 @@ export const AppBar = () => {
 				toast.error(result.error)
 			} else if (result.success) {
 				toast.success(result.success)
-				form.reset()
 				fetchApps()
 			}
 		})
@@ -112,35 +117,58 @@ export const AppBar = () => {
 					apps.map(app => (
 						<div key={app.id} className="size-16 relative flex flex-col justify-center place-content-center bg-white/20 backdrop-blur hover:bg-white/30 rounded-lg">
 							<Link href={app.url} className="w-full h-full flex flex-col items-center justify-center space-y-2" target="_blank">
-								<Image src={getFavicon(app.url, 24)} alt={app.title} width={24} height={24} className="rounded" />
+								<Image src={getFavicon(app.url, 24)} alt={app.title} width={24} height={24} className="rounded-full" />
 								<span className="text-xs text-slate-900">{app.title}</span>
 							</Link>
-							<DropdownMenu>
-								<DropdownMenuTrigger className="absolute top-2 right-1 rounded-full hover:bg-white/30 text-slate-700">
-									<HiOutlineDotsVertical />
-								</DropdownMenuTrigger>
-								<DropdownMenuContent>
-									<DropdownMenuItem>
-										<button
-											className="block w-full"
-											onClick={() => {
-												setEditValues(app.id)
-												setIsDialogOpen(true)
-											}}>
-											bearbeiten
-										</button>
-									</DropdownMenuItem>
-									<DropdownMenuItem>
-										<button
-											className="block w-full"
-											onClick={() => {
-												onDelete(app.id)
-											}}>
-											löschen
-										</button>
-									</DropdownMenuItem>
-								</DropdownMenuContent>
-							</DropdownMenu>
+							<Popover>
+								<PopoverTrigger asChild className="absolute top-1.5 right-1 rounded-full hover:bg-white/30 text-slate-700">
+									<button
+										onClick={() => {
+											setEditValues(app.id)
+										}}>
+										<HiOutlineDotsVertical />
+									</button>
+								</PopoverTrigger>
+								<PopoverContent>
+									<Form {...dynamicForm}>
+										<form
+											onSubmit={dynamicForm.handleSubmit(() => {
+												onEdit(app.id, dynamicForm.getValues())
+											})}
+											className="space-y-2">
+											<FormField
+												control={dynamicForm.control}
+												name="title"
+												disabled={isPending}
+												render={({ field }) => (
+													<FormItem>
+														<FormControl>
+															<Input {...field} placeholder="Titel" />
+														</FormControl>
+														<FormMessage />
+													</FormItem>
+												)}
+											/>
+											<FormField
+												control={dynamicForm.control}
+												name="url"
+												disabled={isPending}
+												render={({ field }) => (
+													<FormItem>
+														<FormControl>
+															<Input {...field} className="mb-3" placeholder="Url" />
+														</FormControl>
+														<FormMessage />
+													</FormItem>
+												)}
+											/>
+											<Button disabled={isPending} type="submit" className="w-full">
+												bearbeiten
+											</Button>
+										</form>
+									</Form>
+								</PopoverContent>
+							</Popover>
 						</div>
 					))
 				) : (
@@ -170,10 +198,10 @@ export const AppBar = () => {
 							<DialogTitle>App-Link hinzufügen</DialogTitle>
 							<DialogDescription>Quick-Links für Deine Startseite</DialogDescription>
 						</DialogHeader>
-						<Form {...form}>
-							<form onSubmit={form.handleSubmit(onAdd)} className="space-y-2">
+						<Form {...newForm}>
+							<form onSubmit={newForm.handleSubmit(onAdd)} className="space-y-2">
 								<FormField
-									control={form.control}
+									control={newForm.control}
 									name="title"
 									disabled={isPending}
 									render={({ field }) => (
@@ -186,7 +214,7 @@ export const AppBar = () => {
 									)}
 								/>
 								<FormField
-									control={form.control}
+									control={newForm.control}
 									name="url"
 									disabled={isPending}
 									render={({ field }) => (
