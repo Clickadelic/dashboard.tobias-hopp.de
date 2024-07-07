@@ -20,7 +20,7 @@ import { Button } from "@/components/ui/button"
 
 import { FiPlus } from "react-icons/fi"
 
-import { addNotice } from "@/actions/notice"
+import { addNotice, getNoticesByUserId } from "@/actions/notice"
 
 export const NoticeCard = () => {
 	const userId = useCurrentUser()?.id
@@ -33,8 +33,7 @@ export const NoticeCard = () => {
 	const fetchNotices = async () => {
 		setIsLoading(true)
 		try {
-			const res = await fetch(`/api/notices/${userId}`)
-			const response = await res.json()
+			const response = await getNoticesByUserId()
 			setNotices(response)
 		} catch (error) {
 			toast.error("Fehler beim Laden der Notizen.")

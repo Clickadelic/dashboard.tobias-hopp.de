@@ -19,7 +19,7 @@ import { Button } from "@/components/ui/button"
 import { FiPlus } from "react-icons/fi"
 
 import { LinkSchema } from "@/schemas"
-import { addLink } from "@/actions/link"
+import { addLink, getLinksByUserId } from "@/actions/link"
 
 export const LinkCard = () => {
 	const { status } = useSession({ required: true })
@@ -33,8 +33,7 @@ export const LinkCard = () => {
 	const fetchLinks = async () => {
 		setIsLoading(true)
 		try {
-			const res = await fetch(`/api/links/${userId}`)
-			const response = await res.json()
+			const response = await getLinksByUserId()
 			setLinks(response)
 		} catch (error) {
 			toast.error("Fehler beim Laden der Links.")
