@@ -6,7 +6,7 @@ interface ProtectedLayoutProps {
 
 const ProtectedLayout = ({ children }: ProtectedLayoutProps) => {
 	return (
-		<div className="min-h-screen bg-test bg-cover flex">
+		<div className="min-h-screen bg-default bg-cover flex">
 			<LayoutContext>{children}</LayoutContext>
 		</div>
 	);

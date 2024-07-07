@@ -12,10 +12,10 @@ export const MegaMenu = () => {
 				</Button>
 			</DropdownMenuTrigger>
 			<DropdownMenuContent className="w-[840px] grid md:grid-cols-4 gap-4 p-0 overflow-hidden md:mr-8">
-				<div className="gradient bg-mantis-primary p-6 flex flex-col">
+				<div className="bg-mantis-primary bg-wave-pattern bg-cover p-6 flex flex-col">
 					<h2 className="text-md font-bold text-white mb-3">Toby&apos;s Dashboard</h2>
 					<p className="text-white text-sm mb-4">Management von Web-Projekten, Entwicklung und Reports.</p>
-					<a className="text-slate-600 bg-slate-50 p-2 mt-5 rounded-md">About</a>
+					<a className="text-slate-700 bg-white p-1 mt-5 rounded">About</a>
 				</div>
 				<div className="p-6">
 					<h3 className="text-md font-bold mb-3">Empty Column</h3>

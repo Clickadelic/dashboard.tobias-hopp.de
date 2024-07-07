@@ -3,11 +3,10 @@
 import * as z from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 
-import { useTransition, useState, useEffect } from "react";
-import { useForm } from "react-hook-form";
-import { useCurrentUser } from "@/hooks/use-current-user";
-import { useSession } from "next-auth/react";
-import Link from "next/link";
+import { useTransition, useState, useEffect } from "react"
+import { useForm } from "react-hook-form"
+import { useSession } from "next-auth/react"
+import Link from "next/link"
 
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { Input } from "@/components/ui/input"
@@ -20,26 +19,24 @@ import { Button } from "@/components/ui/button"
 import { FiPlus } from "react-icons/fi"
 
 import { ProjectSchema } from "@/schemas"
-import { addProject } from "@/actions/project"
+import { addProject, getProjectsByUserId } from "@/actions/project"
 
 export const ProjectCard = () => {
-	const userId = useCurrentUser()?.id;
-	const { status } = useSession({ required: true });
-	const [isPending, startTransition] = useTransition();
-	const [isLoading, setIsLoading] = useState<boolean>(false);
-	const [projects, setProjects] = useState<any[]>([]);
+	const { status } = useSession({ required: true })
+	const [isPending, startTransition] = useTransition()
+	const [isLoading, setIsLoading] = useState<boolean>(false)
+	const [projects, setProjects] = useState<any[]>([])
+
 	const fetchProjects = async () => {
 		setIsLoading(true)
 		try {
-			const res = await fetch(`/api/projects/${userId}`)
-			const response = await res.json()
+			const response = await getProjectsByUserId()
 			setProjects(response)
 		} catch (error) {
 			console.error("Error fetching links:", error)
 			toast.error("Failed to fetch links.")
-		} finally {
-			setIsLoading(false)
 		}
+		setIsLoading(false)
 	}
 
 	useEffect(() => {
@@ -68,12 +65,10 @@ export const ProjectCard = () => {
 	}
 
 	return (
-		<div className="bg-white rounded-xl shadow-sm border p-4">
-			<h2 className="text-sm border-bottom text-neutral-500 flex justify-between mb-2">
-				<span>Projekte</span>
-				<Link href="/projekte" className="hover:text-slate-900">
-					zur Übersicht
-				</Link>
+		<div className="bg-white rounded-xl shadow-sm border p-2 md:p-4">
+			<h2 className="text-xs md:text-sm border-bottom text-slate-900 flex justify-between mb-2">
+				<span className="flex justify-between">Projekte</span>
+				<Link href="/projekte/neues-projekt">neues Projekt</Link>
 			</h2>
 			<h3 className="text-md font-semibold mb-4">{status === "loading" || isLoading ? <Skeleton className="mt-3 mb-5 w-8 h-4 bg-primary/10 animate-pulse" /> : projects.length}</h3>
 			<Popover>

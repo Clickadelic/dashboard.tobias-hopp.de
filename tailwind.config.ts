@@ -60,7 +60,7 @@ const config = {
 			},
 			backgroundImage: {
 				"wave-pattern": "url('/images/Wave-bg.svg')",
-				"test": "url('/images/test.jpg')"
+				"default": "url('/images/backgrounds/default-bg.jpg')"
 			},
 			keyframes: {
 				"accordion-down": {
