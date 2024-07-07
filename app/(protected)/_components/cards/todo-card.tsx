@@ -1,74 +1,74 @@
-"use client"
+"use client";
 
-import * as z from "zod"
-import { zodResolver } from "@hookform/resolvers/zod"
-import Link from "next/link"
+import * as z from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import Link from "next/link";
 
-import { useTransition, useState, useEffect } from "react"
-import { useForm } from "react-hook-form"
-import { useSession } from "next-auth/react"
-import { useCurrentUser } from "@/hooks/use-current-user"
+import { useTransition, useState, useEffect } from "react";
+import { useForm } from "react-hook-form";
+import { useSession } from "next-auth/react";
+import { useCurrentUser } from "@/hooks/use-current-user";
 
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
-import { Input } from "@/components/ui/input"
-import { Form, FormControl, FormLabel, FormField, FormItem, FormMessage } from "@/components/ui/form"
-import { Textarea } from "@/components/ui/textarea"
-import { Checkbox } from "@/components/ui/checkbox"
-import { Skeleton } from "@/components/ui/skeleton"
-import { toast } from "sonner"
-import { Button } from "@/components/ui/button"
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Input } from "@/components/ui/input";
+import { Form, FormControl, FormLabel, FormField, FormItem, FormMessage } from "@/components/ui/form";
+import { Textarea } from "@/components/ui/textarea";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Skeleton } from "@/components/ui/skeleton";
+import { toast } from "sonner";
+import { Button } from "@/components/ui/button";
 
-import { FiPlus } from "react-icons/fi"
+import { FiPlus } from "react-icons/fi";
 
-import { TodoSchema } from "@/schemas"
-import { addTodo } from "@/actions/todo"
+import { TodoSchema } from "@/schemas";
+import { addTodo } from "@/actions/todo";
 
 export const TodoCard = () => {
-	const userId = useCurrentUser()?.id
-	const { status } = useSession({ required: true })
+	const userId = useCurrentUser()?.id;
+	const { status } = useSession({ required: true });
 
-	const [isPending, startTransition] = useTransition()
-	const [isLoading, setIsLoading] = useState<boolean>(false)
-	const [todos, setTodos] = useState<any[]>([])
+	const [isPending, startTransition] = useTransition();
+	const [isLoading, setIsLoading] = useState<boolean>(false);
+	const [todos, setTodos] = useState<any[]>([]);
 
 	const fetchTodos = async () => {
-		setIsLoading(true)
+		setIsLoading(true);
 		try {
-			const res = await fetch(`/api/todos/${userId}`)
-			const response = await res.json()
-			setTodos(response)
+			const res = await fetch(`/api/todos/${userId}`);
+			const response = await res.json();
+			setTodos(response);
 		} catch (error) {
-			console.error("Error fetching Todos:", error)
-			toast.error("Failed to fetch Todos.")
+			console.error("Error fetching Todos:", error);
+			toast.error("Failed to fetch Todos.");
 		} finally {
-			setIsLoading(false)
+			setIsLoading(false);
 		}
-	}
+	};
 
 	useEffect(() => {
-		setIsLoading(true)
-		fetchTodos()
-		setIsLoading(false)
-	}, [])
+		setIsLoading(true);
+		fetchTodos();
+		setIsLoading(false);
+	}, []);
 
 	const form = useForm<z.infer<typeof TodoSchema>>({
 		resolver: zodResolver(TodoSchema),
 		defaultValues: { title: "", description: "", isCompleted: false }
-	})
+	});
 
 	const onSubmit = async (values: z.infer<typeof TodoSchema>) => {
-		const validatedFields = TodoSchema.safeParse(values)
+		const validatedFields = TodoSchema.safeParse(values);
 		startTransition(async () => {
-			const result = await addTodo(values)
+			const result = await addTodo(values);
 			if (result.error) {
-				toast.error(result.error)
+				toast.error(result.error);
 			} else if (result.success) {
-				toast.success(result.success)
-				form.reset()
-				fetchTodos()
+				toast.success(result.success);
+				form.reset();
+				fetchTodos();
 			}
-		})
-	}
+		});
+	};
 
 	return (
 		<div className="bg-white rounded-xl shadow-sm border p-2 md:p-4">
@@ -129,7 +129,7 @@ export const TodoCard = () => {
 								)}
 							/>
 
-							<Button disabled={isPending} variant="outline" type="submit" className="w-full">
+							<Button disabled={isPending} variant="default" size="sm" type="submit" className="w-full">
 								Hinzufügen
 							</Button>
 						</form>
@@ -137,5 +137,5 @@ export const TodoCard = () => {
 				</PopoverContent>
 			</Popover>
 		</div>
-	)
-}
+	);
+};
