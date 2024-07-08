@@ -13,7 +13,7 @@ export const UserMenu = () => {
 		<DropdownMenu>
 			<DropdownMenuTrigger className="hover:bg-slate-200 rounded-md">
 				<Avatar>
-					<AvatarImage className="size-10" src={user?.image || ""} alt="User Avatar" />
+					<AvatarImage className="size-10" src={user?.profileImage || ""} alt="User Avatar" />
 					<AvatarFallback className="bg-slate-200 border">
 						<FaUser className="text-slate-400" />
 					</AvatarFallback>
