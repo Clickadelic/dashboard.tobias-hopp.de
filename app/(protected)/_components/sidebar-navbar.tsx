@@ -285,8 +285,12 @@ export const SidebarNavbar = () => {
 			<header className={cn("App-header flex fixed top-0 md:ml-64 w-screen p-2 border-b bg-white", isToggled ? "md:ml-16" : "md:ml-64")}>
 				<nav className="header-navflex justify-between w-max">
 					<div className="inline-block">
-						{/* TODO: Mobile Button toggle */}
-						<button className="px-2 md:hidden">
+						<button
+							className="px-2 md:hidden"
+							onClick={() => {
+								alert("Mobile Sidebar");
+							}}
+						>
 							<Image src={logoSrc} width={32} height={32} className="logo size-8 inline mt-[-5px]" alt="Tailwind Dashboard" />
 						</button>
 						<button onClick={() => setToggle(prev => !prev)} className="hidden md:inline hover:bg-slate-100 mt-1 ml-3 white rounded p-2">
@@ -295,7 +299,7 @@ export const SidebarNavbar = () => {
 						<input
 							type="search"
 							name="search"
-							className="relative top-[-.25rem] md:inline mt-2 p-1 text-sm w-56 md:w-64 focus:border-mantis-primary focus:outline-none focus-within:border-mantis-primary border-2 rounded-sm ml-3"
+							className="relative top-[-.25rem] md:inline mt-2 p-1 md:p-1.5 text-sm w-56 md:w-64 focus:border-mantis-primary focus:outline-none focus-within:border-mantis-primary border-2 rounded-sm ml-3"
 							placeholder="Suche / STRG + K"
 						/>
 					</div>

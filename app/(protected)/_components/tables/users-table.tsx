@@ -1,38 +1,39 @@
-"use client"
+"use client";
 
-import * as z from "zod"
-import { useForm } from "react-hook-form"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { UserSchema } from "@/schemas"
+import * as z from "zod";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { UserSchema } from "@/schemas";
 
-import { useState, useEffect, useTransition } from "react"
-import { useSession } from "next-auth/react"
+import { useState, useEffect, useTransition } from "react";
+import { useSession } from "next-auth/react";
 
-import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
-import { useCurrentUser } from "@/hooks/use-current-user"
-import { capitalizeFirstLetter } from "@/lib/utils"
+import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { useCurrentUser } from "@/hooks/use-current-user";
+import { capitalizeFirstLetter } from "@/lib/utils";
 
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
-import { toast } from "sonner"
-import { AiOutlineExclamationCircle } from "react-icons/ai"
-import { CheckCircledIcon } from "@radix-ui/react-icons"
-import { BsInfoCircle } from "react-icons/bs"
-import { BsFillTrash3Fill } from "react-icons/bs"
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { toast } from "sonner";
+import { AiOutlineExclamationCircle } from "react-icons/ai";
+import { CheckCircledIcon } from "@radix-ui/react-icons";
+import { BsInfoCircle } from "react-icons/bs";
+import { BsFillTrash3Fill } from "react-icons/bs";
 
-import { settings } from "@/actions/settings"
-import { deleteUser, getUsers } from "@/actions/user"
+import { settings } from "@/actions/settings";
+import { deleteUser, getUsers } from "@/actions/user";
+import { User } from "@prisma/client";
 
 const UsersTable = () => {
-	const user = useCurrentUser()
-	const { update } = useSession()
+	const user = useCurrentUser();
+	const { update } = useSession();
 
-	const [isLoading, setIsLoading] = useState<boolean>(false)
-	const [users, setUsers] = useState<any[]>([])
+	const [isLoading, setIsLoading] = useState<boolean>(false);
+	const [users, setUsers] = useState<User[]>([]);
 
-	const [error, setError] = useState<string | undefined>("")
-	const [success, setSuccess] = useState<string | undefined>("")
+	const [error, setError] = useState<string | undefined>("");
+	const [success, setSuccess] = useState<string | undefined>("");
 
-	const [isPending, startTransition] = useTransition()
+	const [isPending, startTransition] = useTransition();
 
 	const form = useForm<z.infer<typeof UserSchema>>({
 		resolver: zodResolver(UserSchema),
@@ -43,49 +44,50 @@ const UsersTable = () => {
 			newPassword: undefined,
 			isTwoFactorEnabled: user?.isTwoFactorEnabled || undefined
 		}
-	})
+	});
 
 	const onSubmit = (email: string, values: z.infer<typeof UserSchema>) => {
 		startTransition(() => {
 			settings(values)
 				.then(data => {
 					if (data.error) {
-						setError(data.error)
+						setError(data.error);
 					}
 					if (data.success) {
-						update()
-						setSuccess(data.success)
+						update();
+						setSuccess(data.success);
 					}
 				})
 				.catch(() => {
-					setError("Irgendwas ging serverseitig schief.")
-				})
-		})
-	}
+					setError("Irgendwas ging serverseitig schief.");
+				});
+		});
+	};
 
 	const fetchUsers = async () => {
-		setIsLoading(true)
-		const users = await getUsers()
-		console.log(users)
-		// setUsers(users)
-		setIsLoading(false)
-	}
+		setIsLoading(true);
+		const users = await getUsers();
+		console.log(users);
+		// TODO: Fix users wrong type
+		// setUsers(users);
+		setIsLoading(false);
+	};
 
 	const deleteUserByEmail = async (email: string) => {
-		const result = await deleteUser(email)
+		const result = await deleteUser(email);
 		if (result.error) {
-			toast.error(result.error)
+			toast.error(result.error);
 		} else if (result.success) {
-			toast.success(result.success)
-			fetchUsers()
+			toast.success(result.success);
+			fetchUsers();
 		}
-	}
+	};
 
 	useEffect(() => {
-		setIsLoading(true)
-		fetchUsers()
-		setIsLoading(false)
-	}, [])
+		setIsLoading(true);
+		fetchUsers();
+		setIsLoading(false);
+	}, []);
 
 	return (
 		<Table>
@@ -126,7 +128,7 @@ const UsersTable = () => {
 				))}
 			</TableBody>
 		</Table>
-	)
-}
+	);
+};
 
-export default UsersTable
+export default UsersTable;
