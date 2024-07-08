@@ -1,6 +1,5 @@
 "use client";
 
-import { useAppContext } from "@/context/app-context";
 import { usePathname } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { useCurrentRole } from "@/hooks/use-current-role";
@@ -24,8 +23,6 @@ export const ProfileDropdown = () => {
 	const user = useCurrentUser();
 	const role = useCurrentRole();
 	const path = usePathname();
-
-	const { isToggled, setToggle } = useAppContext();
 
 	return (
 		<>

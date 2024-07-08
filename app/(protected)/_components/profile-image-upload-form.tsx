@@ -11,9 +11,6 @@ import Image from "next/image";
 import { useState } from "react";
 import { useCurrentUser } from "@/hooks/use-current-user";
 
-import { UserSchema } from "@/schemas";
-import { addBackgroundImage } from "@/actions/upload";
-
 interface ProfileImageUploadFormProps {
 	classNames?: string;
 }
@@ -50,7 +47,7 @@ export const ProfileImageUploadForm = ({ classNames }: ProfileImageUploadFormPro
 			<form onSubmit={handleSubmit} className={classNames}>
 				<input id="dropzone-file" onChange={event => setFile(event.target.files?.[0] || null)} type="file" />
 				<button type="submit" className="mt-3 text-slate-500 text-center">
-					{inProgress ? "...in Bearbeitung" : "Hintergrundbild hochladen"}
+					{inProgress ? "...in Bearbeitung" : "Profilbild hochladen"}
 				</button>
 			</form>
 			{preview && <Image width={200} height={160} src={preview} alt="Preview" />}
