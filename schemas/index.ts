@@ -12,11 +12,11 @@ export const UserSchema = z
 	.object({
 		name: z.optional(z.string()),
 		email: z.optional(z.string().email()),
-		image: z.optional(z.string()),
+		profileImage: z.optional(z.string()),
+		backgroundImage: z.optional(z.string()),
 		role: z.enum([UserRole.ADMIN, UserRole.USER]),
 		password: z.optional(z.string().min(6)),
 		newPassword: z.optional(z.string().min(6)),
-		backgroundImage: z.optional(z.string()),
 		isTwoFactorEnabled: z.optional(z.boolean())
 	})
 	.refine(

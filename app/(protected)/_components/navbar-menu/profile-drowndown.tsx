@@ -38,7 +38,7 @@ export const ProfileDropdown = () => {
 				<DropdownMenu>
 					<DropdownMenuTrigger className="flex justify-between hover:bg-slate-200 rounded">
 						<Avatar>
-							<AvatarImage className="size-4" src={user?.image || ""} alt="User Avatar" />
+							<AvatarImage className="size-4" src={user?.profileImage || ""} alt="User Avatar" />
 							<AvatarFallback>
 								<FaUser className="text-neutral-400" />
 							</AvatarFallback>
