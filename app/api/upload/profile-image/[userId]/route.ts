@@ -30,7 +30,7 @@ export async function POST(req: NextRequest) {
 			id: userId
 		},
 		data: {
-			image: blob.url
+			profileImage: blob.url
 		}
 	});
 
