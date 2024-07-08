@@ -1,68 +1,69 @@
-"use client"
+"use client";
 
-import * as z from "zod"
-import { zodResolver } from "@hookform/resolvers/zod"
+import * as z from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 
-import { useTransition, useState, useEffect } from "react"
-import { useForm } from "react-hook-form"
-import { useSession } from "next-auth/react"
-import Link from "next/link"
+import { useTransition, useState, useEffect } from "react";
+import { useForm } from "react-hook-form";
+import { useSession } from "next-auth/react";
 
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
-import { Input } from "@/components/ui/input"
-import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form"
-import { Textarea } from "@/components/ui/textarea"
-import { Skeleton } from "@/components/ui/skeleton"
-import { toast } from "sonner"
-import { Button } from "@/components/ui/button"
+import Link from "next/link";
 
-import { FiPlus } from "react-icons/fi"
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Input } from "@/components/ui/input";
+import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";
+import { Textarea } from "@/components/ui/textarea";
+import { Skeleton } from "@/components/ui/skeleton";
+import { toast } from "sonner";
+import { Button } from "@/components/ui/button";
 
-import { ProjectSchema } from "@/schemas"
-import { addProject, getProjectsByUserId } from "@/actions/project"
+import { FiPlus } from "react-icons/fi";
+
+import { ProjectSchema } from "@/schemas";
+import { addProject, getProjectsByUserId } from "@/actions/project";
 
 export const ProjectCard = () => {
-	const { status } = useSession({ required: true })
-	const [isPending, startTransition] = useTransition()
-	const [isLoading, setIsLoading] = useState<boolean>(false)
-	const [projects, setProjects] = useState<any[]>([])
+	const { status } = useSession({ required: true });
+	const [isPending, startTransition] = useTransition();
+	const [isLoading, setIsLoading] = useState<boolean>(false);
+	const [projects, setProjects] = useState<any[]>([]);
 
 	const fetchProjects = async () => {
-		setIsLoading(true)
+		setIsLoading(true);
 		try {
-			const response = await getProjectsByUserId()
-			setProjects(response)
+			const response = await getProjectsByUserId();
+			setProjects(response);
 		} catch (error) {
-			console.error("Error fetching links:", error)
-			toast.error("Failed to fetch links.")
+			console.error("Error fetching links:", error);
+			toast.error("Failed to fetch links.");
 		}
-		setIsLoading(false)
-	}
+		setIsLoading(false);
+	};
 
 	useEffect(() => {
-		setIsLoading(true)
-		fetchProjects()
-		setIsLoading(false)
-	}, [])
+		setIsLoading(true);
+		fetchProjects();
+		setIsLoading(false);
+	}, []);
 
 	const form = useForm<z.infer<typeof ProjectSchema>>({
 		resolver: zodResolver(ProjectSchema),
 		defaultValues: { title: "", url: "", description: "" }
-	})
+	});
 
 	const onSubmit = async (values: z.infer<typeof ProjectSchema>) => {
-		const validatedFields = ProjectSchema.safeParse(values)
+		const validatedFields = ProjectSchema.safeParse(values);
 		startTransition(async () => {
-			const result = await addProject(values)
+			const result = await addProject(values);
 			if (result.error) {
-				toast.error(result.error)
+				toast.error(result.error);
 			} else if (result.success) {
-				toast.success(result.success)
-				form.reset()
-				fetchProjects()
+				toast.success(result.success);
+				form.reset();
+				fetchProjects();
 			}
-		})
-	}
+		});
+	};
 
 	return (
 		<div className="bg-white rounded-xl shadow-sm border p-2 md:p-4">
@@ -126,5 +127,5 @@ export const ProjectCard = () => {
 				</PopoverContent>
 			</Popover>
 		</div>
-	)
-}
+	);
+};

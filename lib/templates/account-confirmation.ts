@@ -95,7 +95,7 @@ export const accountConfirmationTemplate = `<!DOCTYPE html>
 	</style>
 </head>
 
-<body class="body" style="margin: 0; background-color: #1e293b; padding: 0; -webkit-text-size-adjust: none; text-size-adjust: none;">
+<body class="body" style="margin: 0; background-color: #1e293b; padding: 0; -webkit-text-size-adjust: none; text-size-adjust: none;"><div class="preheader" style="display:none;font-size:1px;color:#333333;line-height:1px;max-height:0px;max-width:0px;opacity:0;overflow:hidden;">Bitte bestätige Deinen Dashboard-Account mit einem Klick auf den Link.</div>
 	<table class="nl-container" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; background-color: #1e293b;">
 		<tbody>
 			<tr>
@@ -278,4 +278,4 @@ export const accountConfirmationTemplate = `<!DOCTYPE html>
 	</table><!-- End -->
 </body>
 
-</html>`
+</html>`;
