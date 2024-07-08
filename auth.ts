@@ -63,6 +63,8 @@ export const {
 
 			if (session.user) {
 				session.user.name = token.name;
+				session.user.profileImage = token.profileImage as string | null;
+				session.user.backgroundImage = token.backgroundImage as string | null;
 				session.user.email = token.email!;
 				session.user.isOAuth = token.isOAuth as boolean;
 			}
@@ -80,6 +82,8 @@ export const {
 
 			token.isOAuth = !!existingAccount;
 			token.name = existingUser.name;
+			token.profileImage = existingUser.profileImage;
+			token.backroundImage = existingUser.backgroundImage;
 			token.email = existingUser.email;
 			token.role = existingUser.role;
 			token.isTwoFactorEnabled = existingUser.isTwoFactorEnabled;

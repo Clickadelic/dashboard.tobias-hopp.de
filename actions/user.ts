@@ -1,6 +1,6 @@
-"use server"
+"use server";
 
-import { db } from "@/lib/db"
+import { db } from "@/lib/db";
 
 export const deleteUser = async (email: string) => {
 	try {
@@ -8,32 +8,33 @@ export const deleteUser = async (email: string) => {
 			where: {
 				email
 			}
-		})
+		});
 		if (!existingUser) {
-			return { error: "Benutzer nicht vorhanden." }
+			return { error: "Benutzer nicht vorhanden." };
 		}
 
 		await db.user.delete({
 			where: {
 				email
 			}
-		})
+		});
 
-		return { success: "Benutzer gelöscht." }
+		return { success: "Benutzer gelöscht." };
 	} catch (error) {
-		return { error: "Interner Server-Fehler." }
+		return { error: "Interner Server-Fehler." };
 	}
-}
+};
 
 export const getUsers = async () => {
 	try {
-		const data = await db.user.findMany()
+		const data = await db.user.findMany();
+		// TODO: Filter Password Key
 		// const allUsersWithoutPassword = data.map(user => {
 		// 	const { password, ...userWithoutPassword } = user
 		// 	return userWithoutPassword
 		// })
-		return data
+		return data;
 	} catch (error) {
-		return { error: "Interner Server-Fehler" }
+		return { error: "Interner Server-Fehler" };
 	}
-}
+};
