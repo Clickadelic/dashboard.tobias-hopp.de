@@ -99,7 +99,7 @@ export const twoFactorTokenTemplate = `<!DOCTYPE html>
 	</style>
 </head>
 
-<body class="body" style="margin: 0; background-color: #1e293b; padding: 0; -webkit-text-size-adjust: none; text-size-adjust: none;"><div class="preheader" style="display:none;font-size:1px;color:#333333;line-height:1px;max-height:0px;max-width:0px;opacity:0;overflow:hidden;">Klicke den unten stehenden Link für 2FA-Token zu erstellen.</div>
+<body class="body" style="margin: 0; background-color: #1e293b; padding: 0; -webkit-text-size-adjust: none; text-size-adjust: none;"><div class="preheader" style="display:none;font-size:1px;color:#333333;line-height:1px;max-height:0px;max-width:0px;opacity:0;overflow:hidden;">Der folgende 2FA-Code ist 5 Minuten gültig.</div>
 	<table class="nl-container" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; background-color: #1e293b;">
 		<tbody>
 			<tr>
@@ -172,7 +172,7 @@ export const twoFactorTokenTemplate = `<!DOCTYPE html>
 														<tr>
 															<td class="pad" style="padding-left:30px;padding-right:30px;">
 																<div style="color:#101112;direction:ltr;font-family:Poppins, Arial, Helvetica, sans-serif;font-size:16px;font-weight:400;letter-spacing:0px;line-height:150%;text-align:left;mso-line-height-alt:24px;">
-																	<p style="margin: 0;">Der folgende 2FA-Code, ist 5 Minuten lang gültig.</p>
+																	<p style="margin: 0;">Der folgende 2FA-Code ist 5 Minuten gültig.</p>
 																</div>
 															</td>
 														</tr>
