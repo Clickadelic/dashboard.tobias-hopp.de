@@ -172,7 +172,7 @@ export const twoFactorTokenTemplate = `<!DOCTYPE html>
 														<tr>
 															<td class="pad" style="padding-left:30px;padding-right:30px;">
 																<div style="color:#101112;direction:ltr;font-family:Poppins, Arial, Helvetica, sans-serif;font-size:16px;font-weight:400;letter-spacing:0px;line-height:150%;text-align:left;mso-line-height-alt:24px;">
-																	<p style="margin: 0;">Klicke auf den unten stehenden Link für Deinen 2FA-Authentifizierungs-Token.</p>
+																	<p style="margin: 0;">Der folgende 2FA-Code, ist 5 Minuten lang gültig.</p>
 																</div>
 															</td>
 														</tr>
