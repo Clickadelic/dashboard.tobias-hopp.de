@@ -238,7 +238,7 @@ export const passwordResetTemplate = `<!DOCTYPE html>
 																		<tr>
 																			<td style="padding:0 2px 0 2px;"><a href="https://www.linkedin.com/in/tobias-hopp-9464262ab/" target="_blank"><img src="https://app-rsrc.getbee.io/public/resources/social-networks-icon-sets/colored/linkedin@2x.png" width="32" height="auto" alt="Linkedin" title="LinkedIn" style="display: block; height: auto; border: 0;"></a></td>
 																			<td style="padding:0 2px 0 2px;"><a href="https://t.me/clickadelic" target="_blank"><img src="https://app-rsrc.getbee.io/public/resources/social-networks-icon-sets/colored/telegram@2x.png" width="32" height="auto" alt="Telegram" title="Telegram" style="display: block; height: auto; border: 0;"></a></td>
-																			<td style="padding:0 2px 0 2px;"><a href="tel.:+4915788080947" target="_blank"><img src="https://app-rsrc.getbee.io/public/resources/social-networks-icon-sets/colored/whatsapp@2x.png" width="32" height="auto" alt="WhatsApp" title="WhatsApp" style="display: block; height: auto; border: 0;"></a></td>
+																			<td style="padding:0 2px 0 2px;"><a href="https://wa.me/15788080947" target="_blank"><img src="https://app-rsrc.getbee.io/public/resources/social-networks-icon-sets/colored/whatsapp@2x.png" width="32" height="auto" alt="WhatsApp" title="WhatsApp" style="display: block; height: auto; border: 0;"></a></td>
 																			<td style="padding:0 2px 0 2px;"><a href="mailto:mailto:mail@tobias-hopp.de" target="_blank"><img src="https://app-rsrc.getbee.io/public/resources/social-networks-icon-sets/colored/mail@2x.png" width="32" height="auto" alt="E-Mail" title="E-Mail" style="display: block; height: auto; border: 0;"></a></td>
 																		</tr>
 																	</table>
