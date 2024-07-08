@@ -1,52 +1,53 @@
-"use client";
+"use client"
 
-import { La_Belle_Aurore } from "next/font/google";
+import { La_Belle_Aurore } from "next/font/google"
 
-import { useAppContext } from "@/context/app-context";
-import { usePathname } from "next/navigation";
-import { useSession } from "next-auth/react";
-import { useCurrentRole } from "@/hooks/use-current-role";
-import { useCurrentUser } from "@/hooks/use-current-user";
-import { UserRole } from "@prisma/client";
+import { useAppContext } from "@/context/app-context"
+import { usePathname } from "next/navigation"
+import { useSession } from "next-auth/react"
+import { useCurrentRole } from "@/hooks/use-current-role"
+import { useCurrentUser } from "@/hooks/use-current-user"
+import { UserRole } from "@prisma/client"
 
-import Image from "next/image";
-import Link from "next/link";
-import logoSrc from "@/public/favicon.svg";
+import Image from "next/image"
+import Link from "next/link"
+import logoSrc from "@/public/favicon.svg"
 
-import { Skeleton } from "@/components/ui/skeleton";
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
+import { Skeleton } from "@/components/ui/skeleton"
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar"
 
-import { MdOutlineChecklistRtl } from "react-icons/md";
-import { FaUser } from "react-icons/fa";
-import { GoLink } from "react-icons/go";
-import { HiChevronRight } from "react-icons/hi2";
-import { IoSpeedometerOutline } from "react-icons/io5";
-import { PiEye } from "react-icons/pi";
-import { BsBuildings } from "react-icons/bs";
-import { BsTextIndentRight } from "react-icons/bs";
-import { BsTextIndentLeft } from "react-icons/bs";
-import { PiNotePencilLight } from "react-icons/pi";
+import { FaUser } from "react-icons/fa"
+import { GoLink } from "react-icons/go"
+import { HiChevronRight } from "react-icons/hi2"
+import { IoSpeedometerOutline } from "react-icons/io5"
+import { PiEye } from "react-icons/pi"
+import { BsBuildings } from "react-icons/bs"
+import { BsTextIndentRight } from "react-icons/bs"
+import { BsTextIndentLeft } from "react-icons/bs"
+import { RiToolsFill } from "react-icons/ri"
+import { MdOutlineChecklistRtl } from "react-icons/md"
+import { PiNotePencilLight } from "react-icons/pi"
 
-import { cn } from "@/lib/utils";
-import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
+import { cn } from "@/lib/utils"
+import { DEFAULT_LOGIN_REDIRECT } from "@/routes"
 
-import { MegaMenu } from "./navbar-menu/mega-menu";
-import { InboxButton } from "./navbar-menu/inbox-button";
-import { NotificationsButton } from "./navbar-menu/notifications-button";
-import { FullscreenButton } from "./navbar-menu/fullscreen-button";
-import { SidebarSheet } from "./navbar-menu/sidebar-sheet";
-import { ProfileDropdown } from "./navbar-menu/profile-drowndown";
-import { LanguagesButton } from "./navbar-menu/languages-button";
+import { MegaMenu } from "./navbar-menu/mega-menu"
+import { InboxButton } from "./navbar-menu/inbox-button"
+import { NotificationsButton } from "./navbar-menu/notifications-button"
+import { FullscreenButton } from "./navbar-menu/fullscreen-button"
+import { SidebarSheet } from "./navbar-menu/sidebar-sheet"
+import { ProfileDropdown } from "./navbar-menu/profile-drowndown"
+import { LanguagesButton } from "./navbar-menu/languages-button"
 
-const laBelleAurore = La_Belle_Aurore({ subsets: ["latin"], weight: ["400"] });
+const laBelleAurore = La_Belle_Aurore({ subsets: ["latin"], weight: ["400"] })
 
 export const SidebarNavbar = () => {
-	const { status } = useSession({ required: true });
-	const user = useCurrentUser();
-	const role = useCurrentRole();
-	const path = usePathname();
-	const { isToggled, setToggle } = useAppContext();
+	const { status } = useSession({ required: true })
+	const user = useCurrentUser()
+	const role = useCurrentRole()
+	const path = usePathname()
+	const { isToggled, setToggle } = useAppContext()
 
 	return (
 		<>
@@ -83,8 +84,7 @@ export const SidebarNavbar = () => {
 												"block p-3 hover:bg-mantis-hover hover:text-mantis-primary",
 												path === "/dashboard" && "text-mantis-primary border-r-2 border-r-mantis-primary bg-mantis-hover"
 											)}
-											title="Zur Übersicht"
-										>
+											title="Zur Übersicht">
 											<HiChevronRight className="inline-block mr-2 mt-[-3px]" />
 											{!isToggled && "Dashboard"}
 										</Link>
@@ -96,8 +96,7 @@ export const SidebarNavbar = () => {
 												"block p-3 hover:bg-mantis-hover hover:text-mantis-primary",
 												path === "/reports" && "text-mantis-primary border-r-2 border-r-mantis-primary bg-mantis-hover"
 											)}
-											title="Zu den Reports"
-										>
+											title="Zu den Reports">
 											<HiChevronRight className="inline-block mr-2 mt-[-3px]" />
 											{!isToggled && "Reports"}
 										</Link>
@@ -106,6 +105,7 @@ export const SidebarNavbar = () => {
 							</AccordionContent>
 						</AccordionItem>
 						<AccordionItem value="item-2">
+							<span className={cn("text-xs text-neutral-400 ml-4 inline-block mt-4", isToggled && "hidden")}>Management</span>
 							<AccordionTrigger>
 								<span className="flex justify-between">
 									<BsBuildings className="mt-1 mr-2" />
@@ -116,13 +116,24 @@ export const SidebarNavbar = () => {
 								<ul>
 									<li>
 										<Link
+											href="/projekte/neues-projekt"
+											className={cn(
+												"block p-3 hover:bg-mantis-hover hover:text-mantis-primary",
+												path === "/projekte/neues-projekt" && "text-mantis-primary border-r-2 border-r-mantis-primary bg-mantis-hover"
+											)}
+											title="Projekt anlegen">
+											<HiChevronRight className="inline-block mr-2 mt-[-3px]" />
+											{!isToggled && "neues Projekt"}
+										</Link>
+									</li>
+									<li>
+										<Link
 											href="/projekte"
 											className={cn(
 												"block p-3 hover:bg-mantis-hover hover:text-mantis-primary",
 												path === "/projekte" && "text-mantis-primary border-r-2 border-r-mantis-primary bg-mantis-hover"
 											)}
-											title="Zur Projektübersicht"
-										>
+											title="Zur Projektübersicht">
 											<HiChevronRight className="inline-block mr-2 mt-[-3px]" />
 											{!isToggled && "Projektübersicht"}
 										</Link>
@@ -131,10 +142,11 @@ export const SidebarNavbar = () => {
 							</AccordionContent>
 						</AccordionItem>
 						<AccordionItem value="item-3">
+							<span className={cn("text-xs text-neutral-400 ml-4 inline-block mt-4", isToggled && "hidden")}>Tools</span>
 							<AccordionTrigger>
 								<span className="flex justify-between">
-									<MdOutlineChecklistRtl className="mt-1 mr-2" />
-									{!isToggled && "Todo's"}
+									<RiToolsFill className="mt-1 mr-2" />
+									{!isToggled && "Tools"}
 								</span>
 							</AccordionTrigger>
 							<AccordionContent>
@@ -146,49 +158,11 @@ export const SidebarNavbar = () => {
 												"block p-3 hover:bg-mantis-hover hover:text-mantis-primary",
 												path === "/todos" && "text-mantis-primary border-r-2 border-r-mantis-primary bg-mantis-hover"
 											)}
-											title="Zu den Todo's"
-										>
-											<HiChevronRight className="inline-block mr-2 mt-[-3px]" />
-											{!isToggled && "ToDo-Übersicht"}
+											title="Zur Todo-Übersicht">
+											<HiChevronRight className="inline-block mr-2" />
+											{!isToggled && "Todo's"}
 										</Link>
 									</li>
-								</ul>
-							</AccordionContent>
-						</AccordionItem>
-						<AccordionItem value="item-4">
-							<AccordionTrigger>
-								<span className="flex justify-between">
-									<GoLink className="mt-1 mr-2" />
-									{!isToggled && "Links"}
-								</span>
-							</AccordionTrigger>
-							<AccordionContent>
-								<ul>
-									<li>
-										<Link
-											href="/links"
-											className={cn(
-												"block p-3 hover:bg-mantis-hover hover:text-mantis-primary",
-												path === "/links" && "text-mantis-primary border-r-2 border-r-mantis-primary bg-mantis-hover"
-											)}
-											title="Zur Projektübersicht"
-										>
-											<HiChevronRight className="inline-block mr-2 mt-[-3px]" />
-											{!isToggled && "Link-Übersicht"}
-										</Link>
-									</li>
-								</ul>
-							</AccordionContent>
-						</AccordionItem>
-						<AccordionItem value="item-5">
-							<AccordionTrigger>
-								<span className="flex justify-between">
-									<PiNotePencilLight className="mt-1 mr-2" />
-									{!isToggled && "Notizen"}
-								</span>
-							</AccordionTrigger>
-							<AccordionContent>
-								<ul>
 									<li>
 										<Link
 											href="/notizen"
@@ -196,17 +170,28 @@ export const SidebarNavbar = () => {
 												"block p-3 hover:bg-mantis-hover hover:text-mantis-primary",
 												path === "/notizen" && "text-mantis-primary border-r-2 border-r-mantis-primary bg-mantis-hover"
 											)}
-											title="Zur Notizübersicht"
-										>
-											<HiChevronRight className="inline-block mr-2 mt-[-3px]" />
-											{!isToggled && "Notiz-Übersicht"}
+											title="Zur Notiz-Übersicht">
+											<HiChevronRight className="inline-block mr-2" />
+											{!isToggled && "Notizen"}
+										</Link>
+									</li>
+									<li>
+										<Link
+											href="/links"
+											className={cn(
+												"block p-3 hover:bg-mantis-hover hover:text-mantis-primary",
+												path === "/links" && "text-mantis-primary border-r-2 border-r-mantis-primary bg-mantis-hover"
+											)}
+											title="Zur Link-Übersicht">
+											<HiChevronRight className="inline-block mr-2" />
+											{!isToggled && "Links"}
 										</Link>
 									</li>
 								</ul>
 							</AccordionContent>
 						</AccordionItem>
 						{role === UserRole.ADMIN && (
-							<AccordionItem value="item-6">
+							<AccordionItem value="item-4">
 								<span className={cn("text-xs text-neutral-400 ml-4 inline-block mt-4", isToggled && "hidden")}>Admin</span>
 								<AccordionTrigger>
 									<span className="flex justify-between">
@@ -223,8 +208,7 @@ export const SidebarNavbar = () => {
 													"block p-3 hover:bg-mantis-hover hover:text-mantis-primary",
 													path === "/admin" && "text-mantis-primary border-r-2 border-r-mantis-primary bg-mantis-hover"
 												)}
-												title="Zur Übersicht"
-											>
+												title="Zur Übersicht">
 												<HiChevronRight className="inline-block mr-2 mt-[-3px]" />
 												{!isToggled && "Übersicht"}
 											</Link>
@@ -236,8 +220,7 @@ export const SidebarNavbar = () => {
 													"block p-3 hover:bg-mantis-hover hover:text-mantis-primary",
 													path === "/admin/benutzer" && "text-mantis-primary border-r-2 border-r-mantis-primary bg-mantis-hover"
 												)}
-												title="Zur Benutzerübersicht"
-											>
+												title="Zur Benutzerübersicht">
 												<HiChevronRight className="inline-block mr-2 mt-[-3px]" />
 												{!isToggled && "Benutzer"}
 											</Link>
@@ -249,8 +232,7 @@ export const SidebarNavbar = () => {
 													"block p-3 hover:bg-mantis-hover hover:text-mantis-primary",
 													path === "/admin/system" && "text-mantis-primary border-r-2 border-r-mantis-primary bg-mantis-hover"
 												)}
-												title="Zu den Systemeinstellungen"
-											>
+												title="Zu den Systemeinstellungen">
 												<HiChevronRight className="inline-block mr-2 mt-[-3px]" />
 												{!isToggled && "Systemeinstellungen"}
 											</Link>
@@ -338,5 +320,5 @@ export const SidebarNavbar = () => {
 				</nav>
 			</header>
 		</>
-	);
-};
+	)
+}

@@ -1,4 +1,4 @@
-import type { Config } from "tailwindcss";
+import type { Config } from "tailwindcss"
 
 const config = {
 	darkMode: ["class"],
@@ -59,7 +59,7 @@ const config = {
 				sm: "calc(var(--radius) - 4px)"
 			},
 			backgroundImage: {
-				"wave-pattern": "url('/images/Wave-bg.svg')",
+				"wave-pattern": "url('/images/backgrounds/Wave-bg.svg')",
 				"default": "url('/images/backgrounds/default-bg.jpg')"
 			},
 			keyframes: {
@@ -79,6 +79,6 @@ const config = {
 		}
 	},
 	plugins: [require("tailwindcss-animate")]
-} satisfies Config;
+} satisfies Config
 
-export default config;
+export default config

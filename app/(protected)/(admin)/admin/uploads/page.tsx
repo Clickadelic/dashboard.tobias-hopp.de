@@ -1,14 +1,14 @@
-import { list } from "@vercel/blob";
-import Image from "next/image";
-import { DeleteBackgroundImageButton } from "@/app/(protected)/_components/backround-image-upload/delete-background-image-button";
+import { list } from "@vercel/blob"
+import Image from "next/image"
+import { DeleteBackgroundImageButton } from "@/app/(protected)/_components/backround-image-upload/delete-background-image-button"
 
 const UploadsPage = async () => {
-	const blobs = await list();
+	const blobs = await list()
 
 	return (
 		<div className="page-wrapper">
 			<h2 className="text-md font-bold text-slate-700 mb-5">Uploads</h2>
-			<div className="bg-white rounded shadow-sm border p-3 space-y-3">
+			<div className="bg-white rounded-xl shadow-sm border p-2 md:p-4 space-y-3">
 				<ul className="flex gap-3">
 					{blobs.blobs.map(blob => (
 						<li key={blob.pathname + "-" + new Date()} className="relative flex items-start space-x-3">
@@ -19,7 +19,7 @@ const UploadsPage = async () => {
 				</ul>
 			</div>
 		</div>
-	);
-};
+	)
+}
 
-export default UploadsPage;
+export default UploadsPage
