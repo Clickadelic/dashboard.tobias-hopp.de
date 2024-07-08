@@ -95,7 +95,7 @@ export const accountConfirmationTemplate = `<!DOCTYPE html>
 	</style>
 </head>
 
-<body class="body" style="margin: 0; background-color: #1e293b; padding: 0; -webkit-text-size-adjust: none; text-size-adjust: none;">
+<body class="body" style="margin: 0; background-color: #1e293b; padding: 0; -webkit-text-size-adjust: none; text-size-adjust: none;"><div class="preheader" style="display:none;font-size:1px;color:#333333;line-height:1px;max-height:0px;max-width:0px;opacity:0;overflow:hidden;">Bitte bestätige Deinen Dashboard-Account mit einem Klick auf den Link.</div>
 	<table class="nl-container" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; background-color: #1e293b;">
 		<tbody>
 			<tr>
@@ -238,9 +238,9 @@ export const accountConfirmationTemplate = `<!DOCTYPE html>
 																<div class="alignment" align="center">
 																	<table class="social-table" width="144px" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; display: inline-block;">
 																		<tr>
-																			<td style="padding:0 2px 0 2px;"><a href="https://www.linkedin.comhttps://www.linkedin.com/in/tobias-hopp-9464262ab//" target="_blank"><img src="https://app-rsrc.getbee.io/public/resources/social-networks-icon-sets/colored/linkedin@2x.png" width="32" height="auto" alt="Linkedin" title="LinkedIn" style="display: block; height: auto; border: 0;"></a></td>
+																			<td style="padding:0 2px 0 2px;"><a href="https://www.linkedin.com/in/tobias-hopp-9464262ab/" target="_blank"><img src="https://app-rsrc.getbee.io/public/resources/social-networks-icon-sets/colored/linkedin@2x.png" width="32" height="auto" alt="Linkedin" title="LinkedIn" style="display: block; height: auto; border: 0;"></a></td>
 																			<td style="padding:0 2px 0 2px;"><a href="https://t.me/clickadelic" target="_blank"><img src="https://app-rsrc.getbee.io/public/resources/social-networks-icon-sets/colored/telegram@2x.png" width="32" height="auto" alt="Telegram" title="Telegram" style="display: block; height: auto; border: 0;"></a></td>
-																			<td style="padding:0 2px 0 2px;"><a href="tel:#4915788080947" target="_blank"><img src="https://app-rsrc.getbee.io/public/resources/social-networks-icon-sets/colored/whatsapp@2x.png" width="32" height="auto" alt="WhatsApp" title="WhatsApp" style="display: block; height: auto; border: 0;"></a></td>
+																			<td style="padding:0 2px 0 2px;"><a href="tel.:+4915788080947" target="_blank"><img src="https://app-rsrc.getbee.io/public/resources/social-networks-icon-sets/colored/whatsapp@2x.png" width="32" height="auto" alt="WhatsApp" title="WhatsApp" style="display: block; height: auto; border: 0;"></a></td>
 																			<td style="padding:0 2px 0 2px;"><a href="mailto:mailto:mail@tobias-hopp.de" target="_blank"><img src="https://app-rsrc.getbee.io/public/resources/social-networks-icon-sets/colored/mail@2x.png" width="32" height="auto" alt="E-Mail" title="E-Mail" style="display: block; height: auto; border: 0;"></a></td>
 																		</tr>
 																	</table>
@@ -278,4 +278,4 @@ export const accountConfirmationTemplate = `<!DOCTYPE html>
 	</table><!-- End -->
 </body>
 
-</html>`
+</html>`;
