@@ -5,14 +5,14 @@ import { TodoCard } from "@/components/cards/todo-card"
 import { LinkCard } from "@/components/cards/link-card"
 import { NoticeCard } from "@/components/cards/notice-card"
 
-import { TodoWidget } from "../_components/widgets/todo-widget"
+import { TodoWidget } from "@/components/widgets/todo-widget"
 
 import { ContextComponent } from "../_components/child-context"
 
 const DashboardPage = () => {
 	return (
 		<div className="page-wrapper">
-			<h2 className="text-md font-bold text-slate-700 mb-5">Dashboard</h2>
+			<h2 className="text-md font-bold text-slate-900 mb-5">Dashboard</h2>
 			<div className="mb-3">
 				<AppBar />
 			</div>
@@ -24,13 +24,13 @@ const DashboardPage = () => {
 			</div>
 			<div className="grid grid-cols-3 gap-4">
 				<div className="col-span-2">
-					<h2 className="text-md font-bold text-slate-700 mb-5">Stats</h2>
+					<h2 className="text-md font-bold text-slate-900 mb-5">Stats</h2>
 					<div className="bg-white rounded-xl shadow-sm border p-2 md:p-4">
 						<ContextComponent />
 					</div>
 				</div>
 				<div>
-					<h2 className="text-md font-bold text-slate-700 mb-5">Todos</h2>
+					<h2 className="text-md font-bold text-slate-900 mb-5">Todos</h2>
 					<div className="bg-white rounded-xl shadow-sm border p-2 md:p-4">
 						<TodoWidget />
 					</div>
