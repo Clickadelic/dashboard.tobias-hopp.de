@@ -1,9 +1,9 @@
 import { AppBar } from "../_components/app-bar"
 
-import { ProjectCard } from "../_components/cards/project-card"
-import { TodoCard } from "../_components/cards/todo-card"
-import { LinkCard } from "../_components/cards/link-card"
-import { NoticeCard } from "../_components/cards/notice-card"
+import { ProjectCard } from "@/components/cards/project-card"
+import { TodoCard } from "@/components/cards/todo-card"
+import { LinkCard } from "@/components/cards/link-card"
+import { NoticeCard } from "@/components/cards/notice-card"
 
 import { TodoWidget } from "../_components/widgets/todo-widget"
 
