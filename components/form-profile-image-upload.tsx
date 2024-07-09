@@ -10,12 +10,13 @@ import { useTransition, useEffect } from "react";
 import Image from "next/image";
 import { useState } from "react";
 import { useCurrentUser } from "@/hooks/use-current-user";
+import { Button } from "@/components/ui/button";
 
-interface ProfileImageUploadFormProps {
+interface FormProfileImageUploadProps {
 	classNames?: string;
 }
 
-export const ProfileImageUploadForm = ({ classNames }: ProfileImageUploadFormProps) => {
+export const FormProfileImageUpload = ({ classNames }: FormProfileImageUploadProps) => {
 	const user = useCurrentUser();
 	const [file, setFile] = useState<File | null>(null);
 	const [preview, setPreview] = useState<string | null>(null);
@@ -45,10 +46,10 @@ export const ProfileImageUploadForm = ({ classNames }: ProfileImageUploadFormPro
 	return (
 		<>
 			<form onSubmit={handleSubmit} className={classNames}>
-				<input id="dropzone-file" onChange={event => setFile(event.target.files?.[0] || null)} type="file" />
-				<button type="submit" className="mt-3 text-slate-500 text-center">
+				<input id="dropzone-file" className="flex" onChange={event => setFile(event.target.files?.[0] || null)} type="file" />
+				<Button type="submit" variant="default">
 					{inProgress ? "...in Bearbeitung" : "Profilbild hochladen"}
-				</button>
+				</Button>
 			</form>
 			{preview && <Image width={200} height={160} src={preview} alt="Preview" />}
 		</>

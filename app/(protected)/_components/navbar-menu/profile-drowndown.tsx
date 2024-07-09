@@ -33,14 +33,14 @@ export const ProfileDropdown = () => {
 				</div>
 			) : (
 				<DropdownMenu>
-					<DropdownMenuTrigger className="flex justify-between hover:bg-slate-200 rounded">
-						<Avatar>
-							<AvatarImage className="size-4" src={user?.profileImage || ""} alt="User Avatar" />
+					<DropdownMenuTrigger className="flex justify-between p-1 hover:bg-slate-200 rounded-sm">
+						<Avatar className="size-8">
+							<AvatarImage src={user?.profileImage || ""} alt={`${user?.name} Profilbild`} />
 							<AvatarFallback>
 								<FaUser className="text-neutral-400" />
 							</AvatarFallback>
 						</Avatar>
-						<span className="mt-1.5 ml-2 hover:text-slate-700">{user?.name}</span>
+						<span className="mt-1 ml-2 text-slate-900 hover:text-slate-900">{user?.name}</span>
 					</DropdownMenuTrigger>
 					<DropdownMenuContent className="mr-3">
 						<DropdownMenuLabel>Mein Account</DropdownMenuLabel>
