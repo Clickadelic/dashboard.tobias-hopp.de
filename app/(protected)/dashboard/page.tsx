@@ -26,7 +26,7 @@ const DashboardPage = () => {
 				<div className="col-span-2">
 					<h2 className="text-md font-bold text-slate-900 mb-5">Stats</h2>
 					<div className="bg-white rounded-xl shadow-sm border p-2 md:p-4">
-						<ContextComponent />
+						<div className="placeholder h-[569px]">01</div>
 					</div>
 				</div>
 				<div>

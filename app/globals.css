@@ -8,6 +8,11 @@ body,
 	height: 100%;
 }
 
+#__next {
+	@apply h-full;
+	overflow-y: scroll;
+}
+
 @layer base {
 	* {
 		@apply border-border;
