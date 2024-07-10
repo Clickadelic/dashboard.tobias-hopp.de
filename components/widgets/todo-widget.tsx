@@ -3,6 +3,8 @@
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
+// import Link from "next/link";
+
 import { useTransition, useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useSession } from "next-auth/react";
@@ -10,7 +12,7 @@ import { useSession } from "next-auth/react";
 import { Input } from "@/components/ui/input";
 import { Form, FormControl, FormLabel, FormField, FormItem, FormMessage } from "@/components/ui/form";
 import { Textarea } from "@/components/ui/textarea";
-import { Checkbox } from "@/components/ui/checkbox";
+// import { Checkbox } from "@/components/ui/checkbox";
 import { Skeleton } from "@/components/ui/skeleton";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
@@ -24,11 +26,11 @@ import { addTodo, editTodo, deleteTodo, getTodosByUserId, toggleIsCompleted } fr
 import { cn } from "@/lib/utils";
 
 interface TodoWidgetProps {
-	classNames: string;
-	// todos: Todo[]
+	classNames?: string;
 }
 
-export const TodoWidget = () => {
+// 10 Items = 569 Pixel Höhe
+export const TodoWidget = ({ classNames }: TodoWidgetProps = { classNames: "" }) => {
 	const { status } = useSession({ required: true });
 
 	const [isPending, startTransition] = useTransition();
@@ -112,8 +114,12 @@ export const TodoWidget = () => {
 		}
 	};
 
+	const showEditForm = () => {
+		alert("Edit");
+	};
+
 	return (
-		<div className="todo-widget">
+		<div className={cn("min-h-[569px]", classNames)}>
 			<Form {...newForm}>
 				<form onSubmit={newForm.handleSubmit(onSubmit)}>
 					<FormField
@@ -136,13 +142,13 @@ export const TodoWidget = () => {
 						render={({ field }) => (
 							<FormItem className="w-full shadow-none block p-0 mb-3">
 								<FormControl>
-									<Textarea {...field} className="w-full shadow-none h-8 block" placeholder="Beschreibung" />
+									<Textarea {...field} className="w-full shadow-none h-8 text-sm block" placeholder="Beschreibung" />
 								</FormControl>
 								<FormMessage />
 							</FormItem>
 						)}
 					/>
-					<Button disabled={isPending} className="text-white bg-black rounded-sm w-full shadow-none" type="submit">
+					<Button disabled={isPending} className="text-white bg-black rounded-sm  text-sm w-full shadow-none" type="submit">
 						<FiPlus className="size-4" /> Todo hinufügen
 					</Button>
 				</form>
@@ -153,11 +159,11 @@ export const TodoWidget = () => {
 				{todos.map(todo => (
 					<li key={todo.id} className="flex justify-between mt-3 text-sm">
 						<span>
-							<input type="checkbox" disabled={isPending} checked={todo.isCompleted} onChange={() => onIsCompleted(todo.id)} className="mr-2" />
-							<span className={cn("text-slate-900", todo.isCompleted ? "line-through" : "")}>{todo.title}</span>
+							<input type="checkbox" disabled={isPending} checked={todo.isCompleted} onChange={() => onIsCompleted(todo.id)} className="mt-1 mr-2" />
+							<span className={cn("text-slate-900", todo.isCompleted ? "line-through text-slate-500" : "")}>{todo.title}</span>
 						</span>
 						<span>
-							<button onClick={() => deleteTodoById(todo.id)} className="text-desctructive hover:text-slate-800 hover:bg-slate-200 rounded-full p-1" disabled={isPending}>
+							<button onClick={() => deleteTodoById(todo.id)} className="text-rose-400 hover:text-rose-600 hover:bg-slate-200 rounded-full p-1" disabled={isPending}>
 								<GoTrash />
 							</button>
 						</span>

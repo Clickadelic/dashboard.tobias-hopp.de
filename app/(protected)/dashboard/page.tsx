@@ -1,13 +1,13 @@
-import { AppBar } from "../_components/app-bar"
+import { AppBar } from "../_components/app-bar";
 
-import { ProjectCard } from "@/components/cards/project-card"
-import { TodoCard } from "@/components/cards/todo-card"
-import { LinkCard } from "@/components/cards/link-card"
-import { NoticeCard } from "@/components/cards/notice-card"
+import { ProjectCard } from "@/components/cards/project-card";
+import { TodoCard } from "@/components/cards/todo-card";
+import { LinkCard } from "@/components/cards/link-card";
+import { NoticeCard } from "@/components/cards/notice-card";
 
-import { TodoWidget } from "@/components/widgets/todo-widget"
+import { TodoWidget } from "@/components/widgets/todo-widget";
 
-import { ContextComponent } from "../_components/child-context"
+import { ContextComponent } from "../_components/child-context";
 
 const DashboardPage = () => {
 	return (
@@ -39,7 +39,7 @@ const DashboardPage = () => {
 				<div className="col-span-2 bg-white rounded-xl shadow-sm border p-2 md:p-4">07</div>
 			</div>
 		</div>
-	)
-}
+	);
+};
 
-export default DashboardPage
+export default DashboardPage;
