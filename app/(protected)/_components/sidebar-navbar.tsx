@@ -15,6 +15,8 @@ import logoSrc from "@/public/favicon.svg";
 
 import { Skeleton } from "@/components/ui/skeleton";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
+
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 
 import { FaUser } from "react-icons/fa";
@@ -282,14 +284,21 @@ export const SidebarNavbar = () => {
 			<header className={cn("App-header flex fixed top-0 md:ml-64 w-screen p-2 border-b bg-white", isToggled ? "md:ml-16" : "md:ml-64")}>
 				<nav className="header-navflex justify-between w-max">
 					<div className="inline-block">
-						<button
-							className="px-2 md:hidden"
-							onClick={() => {
-								alert("Mobile Sidebar");
-							}}
-						>
-							<Image src={logoSrc} width={32} height={32} className="logo size-8 inline mt-[-5px]" alt="Tailwind Dashboard" />
-						</button>
+						<Sheet>
+							<SheetTrigger className="ml-2 md:hidden">
+								<Image src={logoSrc} width={32} height={32} className="logo size-8 inline-block mt-[-8px]" alt="Tailwind Dashboard" />
+							</SheetTrigger>
+							<SheetContent side="left">
+								<SheetHeader>
+									<SheetTitle>
+										<Image src={logoSrc} width={32} height={32} className="logo size-8 inline-block mt-[-8px]" alt="Tailwind Dashboard" />
+										<span>Toby&apos;s Dashboard</span>
+									</SheetTitle>
+									<SheetDescription>This action cannot be undone. This will permanently delete your account and remove your data from our servers.</SheetDescription>
+								</SheetHeader>
+							</SheetContent>
+						</Sheet>
+
 						<button onClick={() => setToggle(prev => !prev)} className="hidden md:inline hover:bg-slate-100 mt-1 ml-3 white rounded p-2">
 							{isToggled ? <BsTextIndentLeft className="size-5" /> : <BsTextIndentRight className="size-5" />}
 						</button>
