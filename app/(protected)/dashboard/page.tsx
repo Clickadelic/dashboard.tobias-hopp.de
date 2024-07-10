@@ -6,16 +6,15 @@ import { LinkCard } from "@/components/cards/link-card";
 import { NoticeCard } from "@/components/cards/notice-card";
 
 import { TodoWidget } from "@/components/widgets/todo-widget";
+import { NoticeWidget } from "@/components/widgets/notice-widget";
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-
-import { ContextComponent } from "../_components/child-context";
 
 const DashboardPage = () => {
 	return (
 		<div className="page-wrapper">
 			<h2 className="text-md font-bold text-slate-900 mb-5">Dashboard</h2>
-			<div className="mb-3">
+			<div className="mb-3 md:mb-6">
 				<AppBar />
 			</div>
 			<div className="grid grid-cols-2 gap-3 md:grid-cols-4 mb-5">
@@ -26,14 +25,13 @@ const DashboardPage = () => {
 			</div>
 			<div className="grid grid-cols-3 gap-4">
 				<div className="col-span-2">
-					<h2 className="text-md font-bold text-slate-900 mb-5">Widgets</h2>
-					<div className="bg-white rounded-xl shadow-sm border p-2 md:p-4">
-						<div className="placeholder h-[569px]">01</div>
-					</div>
+					<h2 className="text-md font-bold text-slate-900 mb-5">Stats</h2>
+					<div className="bg-white rounded-xl shadow-sm border p-2 md:p-4">asd</div>
 				</div>
 				<div>
-					<h2 className="text-md font-bold text-slate-900 mb-5">Todos</h2>
+					<h2 className="text-md font-bold text-slate-900 mb-5">Widgets</h2>
 					<div className="bg-white rounded-xl shadow-sm border p-2 md:p-4">
+						{/* TODO: Build widget master component (with Tabs) */}
 						<Tabs defaultValue="todos" className="w-full">
 							<TabsList className="w-full flex justify-start mb-3">
 								<TabsTrigger value="todos">Todo&apos;s</TabsTrigger>
@@ -43,7 +41,9 @@ const DashboardPage = () => {
 							<TabsContent value="todos">
 								<TodoWidget />
 							</TabsContent>
-							<TabsContent value="notices">NoticesWidget</TabsContent>
+							<TabsContent value="notices">
+								<NoticeWidget />
+							</TabsContent>
 							<TabsContent value="links">LinksWidget</TabsContent>
 						</Tabs>
 					</div>
