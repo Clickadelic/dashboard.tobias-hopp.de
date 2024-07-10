@@ -13,9 +13,9 @@ import Image from "next/image";
 import Link from "next/link";
 import logoSrc from "@/public/favicon.svg";
 
-import { Skeleton } from "@/components/ui/skeleton";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
+import { Skeleton } from "@/components/ui/skeleton";
 
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 

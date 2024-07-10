@@ -7,6 +7,8 @@ import { NoticeCard } from "@/components/cards/notice-card";
 
 import { TodoWidget } from "@/components/widgets/todo-widget";
 
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+
 import { ContextComponent } from "../_components/child-context";
 
 const DashboardPage = () => {
@@ -24,7 +26,7 @@ const DashboardPage = () => {
 			</div>
 			<div className="grid grid-cols-3 gap-4">
 				<div className="col-span-2">
-					<h2 className="text-md font-bold text-slate-900 mb-5">Stats</h2>
+					<h2 className="text-md font-bold text-slate-900 mb-5">Widgets</h2>
 					<div className="bg-white rounded-xl shadow-sm border p-2 md:p-4">
 						<div className="placeholder h-[569px]">01</div>
 					</div>
@@ -32,7 +34,18 @@ const DashboardPage = () => {
 				<div>
 					<h2 className="text-md font-bold text-slate-900 mb-5">Todos</h2>
 					<div className="bg-white rounded-xl shadow-sm border p-2 md:p-4">
-						<TodoWidget />
+						<Tabs defaultValue="todos" className="w-full">
+							<TabsList className="w-full flex justify-start mb-3">
+								<TabsTrigger value="todos">Todo&apos;s</TabsTrigger>
+								<TabsTrigger value="notices">Notizen</TabsTrigger>
+								<TabsTrigger value="links">Links</TabsTrigger>
+							</TabsList>
+							<TabsContent value="todos">
+								<TodoWidget />
+							</TabsContent>
+							<TabsContent value="notices">NoticesWidget</TabsContent>
+							<TabsContent value="links">LinksWidget</TabsContent>
+						</Tabs>
 					</div>
 				</div>
 				<div className="bg-white rounded-xl shadow-sm border p-2 md:p-4">06</div>
