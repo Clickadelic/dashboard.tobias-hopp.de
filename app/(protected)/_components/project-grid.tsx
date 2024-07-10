@@ -1,9 +1,8 @@
 import { MacBook } from "./mac-book"
 import { getProjectsByUserId } from "@/actions/project"
 
-const ProjectOverview = async () => {
+const ProjectGrid = async () => {
 	const projects = await getProjectsByUserId()
-
 	return (
 		<div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4">
 			{projects.map(project => (
@@ -13,4 +12,4 @@ const ProjectOverview = async () => {
 	)
 }
 
-export default ProjectOverview
+export default ProjectGrid

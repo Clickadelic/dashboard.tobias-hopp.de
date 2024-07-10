@@ -18,7 +18,6 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 
 import { FaUser } from "react-icons/fa";
-import { GoLink } from "react-icons/go";
 import { HiChevronRight } from "react-icons/hi2";
 import { IoSpeedometerOutline } from "react-icons/io5";
 import { PiEye } from "react-icons/pi";
@@ -26,8 +25,6 @@ import { BsBuildings } from "react-icons/bs";
 import { BsTextIndentRight } from "react-icons/bs";
 import { BsTextIndentLeft } from "react-icons/bs";
 import { RiToolsFill } from "react-icons/ri";
-import { MdOutlineChecklistRtl } from "react-icons/md";
-import { PiNotePencilLight } from "react-icons/pi";
 
 import { cn } from "@/lib/utils";
 import { DEFAULT_LOGIN_REDIRECT } from "@/routes";

@@ -13,7 +13,7 @@ datasource db {
     url      = env("DATABASE_URL")
 }
 
-model Organization {
+model Organisation {
     id          String   @id @default(cuid())
     name        String
     url         String?
@@ -49,7 +49,7 @@ model User {
     projects      Project[]
     todos         Todo[]
     notices       Notice[]
-    organizations Organization[]
+    organisations Organisation[]
 
     @@unique([id])
 }

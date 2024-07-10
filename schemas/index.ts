@@ -1,7 +1,7 @@
 import * as z from "zod";
 import { UserRole } from "@prisma/client";
 
-export const OrganizationSchema = z.object({
+export const OrganisationSchema = z.object({
 	name: z.string().min(1, "Organisationsname fehlt"),
 	url: z.string().url("Ungültige Url"),
 	description: z.string().max(300, "Beschreibung zu lang")
