@@ -32,7 +32,7 @@ export const ProfileDropdown = () => {
 					<Skeleton className="w-[100px] h-6 mt-1" />
 				</div>
 			) : (
-				<DropdownMenu>
+				<DropdownMenu modal={false}>
 					<DropdownMenuTrigger className="flex justify-between p-1 hover:bg-slate-200 rounded-sm">
 						<Avatar className="size-8">
 							<AvatarImage src={user?.profileImage || ""} alt={`${user?.name} Profilbild`} />

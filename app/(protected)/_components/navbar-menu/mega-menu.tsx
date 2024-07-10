@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 
 export const MegaMenu = () => {
 	return (
-		<DropdownMenu>
+		<DropdownMenu modal={false}>
 			<DropdownMenuTrigger asChild>
 				<Button variant="link" className="hover:bg-slate-200 size-10 p-3 rounded">
 					<AiOutlineWindows className="size-5" />
