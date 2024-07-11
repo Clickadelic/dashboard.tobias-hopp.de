@@ -2,7 +2,7 @@ import Link from "next/link";
 import { AiOutlineWindows } from "react-icons/ai";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
-
+import Image from "next/image";
 export const MegaMenu = () => {
 	return (
 		<DropdownMenu modal={false}>
@@ -11,15 +11,16 @@ export const MegaMenu = () => {
 					<AiOutlineWindows className="size-5" />
 				</Button>
 			</DropdownMenuTrigger>
-			<DropdownMenuContent className="w-[840px] grid md:grid-cols-4 gap-4 p-0 overflow-hidden md:mr-8">
-				<div className="bg-mantis-primary bg-wave-pattern bg-cover p-6 flex flex-col">
+			<DropdownMenuContent className="md:w-[940px] min-h-[300px] grid md:grid-cols-4 gap-4 p-0 overflow-hidden md:mr-8">
+				<div className="bg-mantis-primary bg-wave-pattern bg-cover p-8 flex flex-col">
 					<h2 className="text-md font-bold text-white mb-3">Toby&apos;s Dashboard</h2>
 					<p className="text-white text-sm mb-4">Management von Web-Projekten, Entwicklung und Reports.</p>
-					<Link href="/about" className="text-slate-700 bg-white p-1 mt-5 rounded">
+					{/* <Image src="/images/svg/data-svgrepo-com.svg" width={64} height={64} className="mx-auto bg-white rounded-lg" alt="Data Chart" /> */}
+					<Link href="/about" className="text-white">
 						About
 					</Link>
 				</div>
-				<div className="p-6">
+				<div className="p-8">
 					<h3 className="text-md font-bold mb-3">Empty Column</h3>
 					<ul className="list-disc ml-5">
 						<li>
@@ -44,7 +45,7 @@ export const MegaMenu = () => {
 						</li>
 					</ul>
 				</div>
-				<div className="p-6">
+				<div className="p-8">
 					<span className="block font-bold mb-4">Empty Column</span>
 					<ul className="list-disc ml-5">
 						<li>
@@ -64,7 +65,7 @@ export const MegaMenu = () => {
 						</li>
 					</ul>
 				</div>
-				<div className="p-6">
+				<div className="p-8">
 					<span className="block font-bold mb-4">Empty Column</span>
 					<ul className="list-disc ml-5">
 						<li>

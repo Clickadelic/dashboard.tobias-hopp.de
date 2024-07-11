@@ -55,23 +55,23 @@ export const UserProfileCard = ({ classNames }: UserProfileCardProps) => {
 		setIsLoading(false);
 	}, []);
 
-	const form = useForm<z.infer<typeof UserSchema>>({
-		resolver: zodResolver(UserSchema),
-		defaultValues: { title: "", url: "", description: "" }
-	});
+	// const form = useForm<z.infer<typeof UserSchema>>({
+	// 	resolver: zodResolver(UserSchema),
+	// 	defaultValues: { title: "", url: "", description: "" }
+	// });
 
-	const onSubmit = async (values: z.infer<typeof UserSchema>) => {
-		startTransition(async () => {
-			const result = await addLink(values);
-			if (result.error) {
-				toast.error(result.error);
-			} else if (result.success) {
-				toast.success(result.success);
-				form.reset();
-				fetchLinks();
-			}
-		});
-	};
+	// const onSubmit = async (values: z.infer<typeof UserSchema>) => {
+	// 	startTransition(async () => {
+	// 		const result = await addLink(values);
+	// 		if (result.error) {
+	// 			toast.error(result.error);
+	// 		} else if (result.success) {
+	// 			toast.success(result.success);
+	// 			form.reset();
+	// 			fetchLinks();
+	// 		}
+	// 	});
+	// };
 
 	const handleSubmit = async (event: React.FormEvent) => {
 		setInProgress(true);

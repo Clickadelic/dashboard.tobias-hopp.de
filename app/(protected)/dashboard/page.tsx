@@ -7,7 +7,7 @@ import { NoticeCard } from "@/components/cards/notice-card";
 
 import { TodoWidget } from "@/components/widgets/todo-widget";
 import { NoticeWidget } from "@/components/widgets/notice-widget";
-
+import { LinkWidget } from "@/components/widgets/link-widget";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 const DashboardPage = () => {
@@ -44,7 +44,9 @@ const DashboardPage = () => {
 							<TabsContent value="notices">
 								<NoticeWidget />
 							</TabsContent>
-							<TabsContent value="links">LinksWidget</TabsContent>
+							<TabsContent value="links">
+								<LinkWidget />
+							</TabsContent>
 						</Tabs>
 					</div>
 				</div>
