@@ -6,14 +6,15 @@ import { LinkCard } from "@/components/cards/link-card";
 import { NoticeCard } from "@/components/cards/notice-card";
 
 import { TodoWidget } from "@/components/widgets/todo-widget";
-
-import { ContextComponent } from "../_components/child-context";
+import { NoticeWidget } from "@/components/widgets/notice-widget";
+import { LinkWidget } from "@/components/widgets/link-widget";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 const DashboardPage = () => {
 	return (
 		<div className="page-wrapper">
 			<h2 className="text-md font-bold text-slate-900 mb-5">Dashboard</h2>
-			<div className="mb-3">
+			<div className="mb-3 md:mb-6">
 				<AppBar />
 			</div>
 			<div className="grid grid-cols-2 gap-3 md:grid-cols-4 mb-5">
@@ -25,14 +26,28 @@ const DashboardPage = () => {
 			<div className="grid grid-cols-3 gap-4">
 				<div className="col-span-2">
 					<h2 className="text-md font-bold text-slate-900 mb-5">Stats</h2>
-					<div className="bg-white rounded-xl shadow-sm border p-2 md:p-4">
-						<ContextComponent />
-					</div>
+					<div className="bg-white rounded-xl shadow-sm border p-2 md:p-4">asd</div>
 				</div>
 				<div>
-					<h2 className="text-md font-bold text-slate-900 mb-5">Todos</h2>
-					<div className="bg-white rounded-xl shadow-sm border p-2 md:p-4">
-						<TodoWidget />
+					<h2 className="text-md font-bold text-slate-900 mb-5">Widgets</h2>
+					<div className="bg-white rounded-xl shadow-sm border p-2 md:p-4 md:min-h-96">
+						{/* TODO: Build widget master component (with Tabs) */}
+						<Tabs defaultValue="todos" className="w-full">
+							<TabsList className="w-full flex justify-start mb-3">
+								<TabsTrigger value="todos">Todo&apos;s</TabsTrigger>
+								<TabsTrigger value="notices">Notizen</TabsTrigger>
+								<TabsTrigger value="links">Links</TabsTrigger>
+							</TabsList>
+							<TabsContent value="todos">
+								<TodoWidget />
+							</TabsContent>
+							<TabsContent value="notices">
+								<NoticeWidget />
+							</TabsContent>
+							<TabsContent value="links">
+								<LinkWidget />
+							</TabsContent>
+						</Tabs>
 					</div>
 				</div>
 				<div className="bg-white rounded-xl shadow-sm border p-2 md:p-4">06</div>

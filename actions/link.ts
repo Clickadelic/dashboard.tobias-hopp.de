@@ -1,22 +1,22 @@
-"use server"
+"use server";
 
-import * as z from "zod"
+import * as z from "zod";
 
-import { db } from "@/lib/db"
-import { LinkSchema } from "@/schemas"
-import { auth } from "@/auth"
+import { db } from "@/lib/db";
+import { LinkSchema } from "@/schemas";
+import { auth } from "@/auth";
 
 export const addLink = async (values: z.infer<typeof LinkSchema>) => {
-	const session = await auth()
-	const user = session?.user
-	const userId = user?.id
+	const session = await auth();
+	const user = session?.user;
+	const userId = user?.id;
 	try {
-		const validatedFields = LinkSchema.safeParse(values)
+		const validatedFields = LinkSchema.safeParse(values);
 		if (!validatedFields.success) {
-			return { error: "Ungültige Felder!" }
+			return { error: "Ungültige Felder!" };
 		}
 
-		const { title, url, description } = validatedFields.data
+		const { title, url, description } = validatedFields.data;
 
 		const existingLink = await db.link.findFirst({
 			where: {
@@ -25,9 +25,9 @@ export const addLink = async (values: z.infer<typeof LinkSchema>) => {
 					id: userId
 				}
 			}
-		})
+		});
 		if (existingLink) {
-			return { error: "Url bereits vorhanden." }
+			return { error: "Url bereits vorhanden." };
 		}
 		await db.link.create({
 			data: {
@@ -38,30 +38,31 @@ export const addLink = async (values: z.infer<typeof LinkSchema>) => {
 					connect: { id: userId }
 				}
 			}
-		})
+		});
 
-		return { success: "Link hinzugefügt." }
+		return { success: "Link hinzugefügt." };
 	} catch (error) {
-		return { error: "Interner Server-Fehler." }
+		return { error: "Interner Server-Fehler." };
 	}
-}
+};
 
+// TODO: Rename auf ById
 export const editLink = async (id: string, values: z.infer<typeof LinkSchema>) => {
 	try {
-		const validatedFields = LinkSchema.safeParse(values)
-		console.log("Validated Fields:", validatedFields)
+		const validatedFields = LinkSchema.safeParse(values);
+		console.log("Validated Fields:", validatedFields);
 		if (!validatedFields.success) {
-			return { error: "Ungültige Felder!" }
+			return { error: "Ungültige Felder!" };
 		}
-		const { title, url, description } = validatedFields.data
+		const { title, url, description } = validatedFields.data;
 
 		const existingLink = await db.link.findFirst({
 			where: {
 				id
 			}
-		})
+		});
 		if (!existingLink) {
-			return { error: "Link-Id nicht gefunden." }
+			return { error: "Link-Id nicht gefunden." };
 		}
 
 		await db.link.update({
@@ -74,47 +75,48 @@ export const editLink = async (id: string, values: z.infer<typeof LinkSchema>) =
 				description,
 				updatedAt: new Date()
 			}
-		})
+		});
 
-		return { success: "Link bearbeitet." }
+		return { success: "Link bearbeitet." };
 	} catch (error) {
-		return { error: "Interner Server-Fehler." }
+		return { error: "Interner Server-Fehler." };
 	}
-}
+};
 
+// TODO: Rename auf ById
 export const deleteLink = async (id: string) => {
 	try {
 		const existingLink = await db.link.findFirst({
 			where: {
 				id
 			}
-		})
+		});
 		if (!existingLink) {
-			return { error: "Link nicht vorhanden." }
+			return { error: "Link nicht vorhanden." };
 		}
 
 		await db.link.delete({
 			where: {
 				id
 			}
-		})
+		});
 
-		return { success: "Link gelöscht." }
+		return { success: "Link gelöscht." };
 	} catch (error) {
-		return { error: "Interner Server-Fehler." }
+		return { error: "Interner Server-Fehler." };
 	}
-}
+};
 
 export const getLinksByUserId = async () => {
-	const session = await auth()
-	const user = session?.user
-	const userId = user?.id
+	const session = await auth();
+	const user = session?.user;
+	const userId = user?.id;
 	const data = await db.link.findMany({
 		where: {
 			user: {
 				id: userId
 			}
 		}
-	})
-	return data
-}
+	});
+	return data;
+};

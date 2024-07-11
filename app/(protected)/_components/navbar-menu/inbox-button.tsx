@@ -4,7 +4,7 @@ import { CiMail } from "react-icons/ci";
 
 export const InboxButton = () => {
 	return (
-		<DropdownMenu>
+		<DropdownMenu modal={false}>
 			<DropdownMenuTrigger asChild>
 				<Button variant="link" className="hover:bg-slate-200 size-10 p-3 rounded">
 					<CiMail className="size-5" />

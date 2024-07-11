@@ -115,9 +115,9 @@ export const AppBar = () => {
 			<div className="flex items-start justify-start space-x-3">
 				{apps.length > 0 ? (
 					apps.map(app => (
-						<div key={app.id} className="size-16 relative flex flex-col justify-center place-content-center bg-white/20 backdrop-blur hover:bg-white/30 rounded-lg">
-							<Link href={app.url} className="w-full h-full flex flex-col items-center justify-center space-y-2" target="_blank">
-								<Image src={getFavicon(app.url, 24) || ""} alt={app.title} width={24} height={24} className="rounded-full" />
+						<div key={app.id} className="size-[72px] relative flex flex-col justify-center place-content-center bg-white/20 backdrop-blur hover:bg-white/30 rounded-xl">
+							<Link href={app.url} className="w-full h-full flex flex-col items-center justify-center pt-1.5" target="_blank">
+								<Image src={getFavicon(app.url, 24) || ""} alt={app.title} width={24} height={24} className="rounded-full mb-2" />
 								<span className="text-xs text-slate-900">{app.title}</span>
 							</Link>
 							<Popover>
@@ -130,7 +130,7 @@ export const AppBar = () => {
 										<HiOutlineDotsVertical />
 									</button>
 								</PopoverTrigger>
-								<PopoverContent className="p-2">
+								<PopoverContent className="p-4">
 									<Form {...dynamicForm}>
 										<form
 											onSubmit={dynamicForm.handleSubmit(() => {
@@ -185,24 +185,24 @@ export const AppBar = () => {
 					))
 				) : (
 					<>
-						<Skeleton className="size-16 bg-white/20 animate-pulse" />
-						<Skeleton className="size-16 bg-white/20 animate-pulse" />
-						<Skeleton className="size-16 bg-white/20 animate-pulse" />
-						<Skeleton className="size-16 bg-white/20 animate-pulse" />
-						<Skeleton className="size-16 bg-white/20 animate-pulse" />
-						<Skeleton className="size-16 bg-white/20 animate-pulse" />
-						<Skeleton className="size-16 bg-white/20 animate-pulse" />
-						<Skeleton className="size-16 bg-white/20 animate-pulse" />
-						<Skeleton className="size-16 bg-white/20 animate-pulse" />
-						<Skeleton className="size-16 bg-white/20 animate-pulse" />
-						<Skeleton className="size-16 bg-white/20 animate-pulse" />
-						<Skeleton className="size-16 bg-white/20 animate-pulse" />
-						<Skeleton className="size-16 bg-white/20 animate-pulse" />
-						<Skeleton className="size-16 bg-white/20 animate-pulse" />
+						<Skeleton className="size-[72px] bg-white/20 animate-pulse" />
+						<Skeleton className="size-[72px] bg-white/20 animate-pulse" />
+						<Skeleton className="size-[72px] bg-white/20 animate-pulse" />
+						<Skeleton className="size-[72px] bg-white/20 animate-pulse" />
+						<Skeleton className="size-[72px] bg-white/20 animate-pulse" />
+						<Skeleton className="size-[72px] bg-white/20 animate-pulse" />
+						<Skeleton className="size-[72px] bg-white/20 animate-pulse" />
+						<Skeleton className="size-[72px] bg-white/20 animate-pulse" />
+						<Skeleton className="size-[72px] bg-white/20 animate-pulse" />
+						<Skeleton className="size-[72px] bg-white/20 animate-pulse" />
+						<Skeleton className="size-[72px] bg-white/20 animate-pulse" />
+						<Skeleton className="size-[72px] bg-white/20 animate-pulse" />
+						<Skeleton className="size-[72px] bg-white/20 animate-pulse" />
+						<Skeleton className="size-[72px] bg-white/20 animate-pulse" />
 					</>
 				)}
 				<Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-					<DialogTrigger className="size-16 flex flex-col justify-center place-content-center items-center bg-white/20 hover:bg-white/30 rounded-lg">
+					<DialogTrigger className="size-[72px] flex flex-col justify-center place-content-center items-center bg-white/20 hover:bg-white/30 rounded-lg">
 						<FiPlus className="mx-auto text-slate-700" />
 					</DialogTrigger>
 					<DialogContent>
