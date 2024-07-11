@@ -19,20 +19,20 @@ import { Button } from "@/components/ui/button";
 
 import { FiPlus } from "react-icons/fi";
 
-import { OrganisationSchema } from "@/schemas";
-import { addOrganisation, getOrganisationsByUserId } from "@/actions/organisation";
+import { OrganizationSchema } from "@/schemas";
+import { addOrganization, getOrganizationsByUserId } from "@/actions/organization";
 
-export const OrganisationManager = () => {
+export const OrganizationManager = () => {
 	const { status } = useSession({ required: true });
 	const [isPending, startTransition] = useTransition();
 	const [isLoading, setIsLoading] = useState<boolean>(false);
-	const [organisations, setOrganisations] = useState<any[]>([]);
+	const [organizations, setOrganizations] = useState<any[]>([]);
 
-	const fetchOrganisations = async () => {
+	const fetchOrganizations = async () => {
 		setIsLoading(true);
 		try {
-			const response = await getOrganisationsByUserId();
-			setOrganisations(response);
+			const response = await getOrganizationsByUserId();
+			setOrganizations(response);
 		} catch (error) {
 			toast.error("Fehler beim Laden der Links.");
 		} finally {
@@ -42,24 +42,24 @@ export const OrganisationManager = () => {
 
 	useEffect(() => {
 		setIsLoading(true);
-		fetchOrganisations();
+		fetchOrganizations();
 		setIsLoading(false);
 	}, []);
 
-	const form = useForm<z.infer<typeof OrganisationSchema>>({
-		resolver: zodResolver(OrganisationSchema),
+	const form = useForm<z.infer<typeof OrganizationSchema>>({
+		resolver: zodResolver(OrganizationSchema),
 		defaultValues: { name: "", url: "", description: "" }
 	});
 
-	const onSubmit = async (values: z.infer<typeof OrganisationSchema>) => {
+	const onSubmit = async (values: z.infer<typeof OrganizationSchema>) => {
 		startTransition(async () => {
-			const result = await addOrganisation(values);
+			const result = await addOrganization(values);
 			if (result.error) {
 				toast.error(result.error);
 			} else if (result.success) {
 				toast.success(result.success);
 				form.reset();
-				fetchOrganisations();
+				fetchOrganizations();
 			}
 		});
 	};
@@ -72,7 +72,7 @@ export const OrganisationManager = () => {
 					zur Übersicht
 				</Link>
 			</h2>
-			<h3 className="text-md font-semibold mb-4">{status === "loading" || isLoading ? <Skeleton className="mt-3 mb-5 w-8 h-4 bg-primary/10 animate-pulse" /> : organisations.length}</h3>
+			<h3 className="text-md font-semibold mb-4">{status === "loading" || isLoading ? <Skeleton className="mt-3 mb-5 w-8 h-4 bg-primary/10 animate-pulse" /> : organizations.length}</h3>
 			<Popover>
 				<PopoverTrigger className="flex justify-center w-full p-3 py-2 bg-slate-100 text-slate-900 hover:text-slate-800 hover:bg-slate-200 text-sm rounded-sm">
 					<FiPlus className="mt-[3px] mr-2" />

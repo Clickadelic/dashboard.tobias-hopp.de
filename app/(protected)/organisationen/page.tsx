@@ -1,4 +1,4 @@
-import { OrganisationManager } from "./organisation-manager";
+import { OrganizationManager } from "./organization-manager";
 
 const OrganisationsPage = () => {
 	return (
@@ -6,7 +6,7 @@ const OrganisationsPage = () => {
 			<h2 className="text-md font-bold text-slate-700 mb-5">Meine Organisationen</h2>
 			<div className="bg-white rounded-xl shadow-sm border p-2 md:p-4">
 				<p>Organisationen hier</p>
-				<OrganisationManager />
+				<OrganizationManager />
 			</div>
 		</div>
 	);
