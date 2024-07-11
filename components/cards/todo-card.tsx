@@ -1,70 +1,71 @@
-"use client";
+"use client"
 
-import * as z from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import Link from "next/link";
+import * as z from "zod"
+import { zodResolver } from "@hookform/resolvers/zod"
+import Link from "next/link"
 
-import { useTransition, useState, useEffect } from "react";
-import { useForm } from "react-hook-form";
-import { useSession } from "next-auth/react";
+import { useTransition, useState, useEffect } from "react"
+import { useForm } from "react-hook-form"
+import { useSession } from "next-auth/react"
 
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { Input } from "@/components/ui/input";
-import { Form, FormControl, FormLabel, FormField, FormItem, FormMessage } from "@/components/ui/form";
-import { Textarea } from "@/components/ui/textarea";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Skeleton } from "@/components/ui/skeleton";
-import { toast } from "sonner";
-import { Button } from "@/components/ui/button";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
+import { Input } from "@/components/ui/input"
+import { Form, FormControl, FormLabel, FormField, FormItem, FormMessage } from "@/components/ui/form"
+import { Textarea } from "@/components/ui/textarea"
+import { Checkbox } from "@/components/ui/checkbox"
+import { Skeleton } from "@/components/ui/skeleton"
+import { toast } from "sonner"
+import { Button } from "@/components/ui/button"
 
-import { FiPlus } from "react-icons/fi";
+import { FiPlus } from "react-icons/fi"
+import { BsListCheck } from "react-icons/bs"
 
-import { TodoSchema } from "@/schemas";
-import { addTodo, getTodosByUserId } from "@/actions/todo";
+import { TodoSchema } from "@/schemas"
+import { addTodo, getTodosByUserId } from "@/actions/todo"
 
 export const TodoCard = () => {
-	const { status } = useSession({ required: true });
+	const { status } = useSession({ required: true })
 
-	const [isPending, startTransition] = useTransition();
-	const [isLoading, setIsLoading] = useState<boolean>(false);
-	const [todos, setTodos] = useState<any[]>([]);
+	const [isPending, startTransition] = useTransition()
+	const [isLoading, setIsLoading] = useState<boolean>(false)
+	const [todos, setTodos] = useState<any[]>([])
 
 	const fetchTodos = async () => {
-		setIsLoading(true);
+		setIsLoading(true)
 		try {
-			const response = await getTodosByUserId();
-			setTodos(response);
+			const response = await getTodosByUserId()
+			setTodos(response)
 		} catch (error) {
-			toast.error("Failed to fetch Todos.");
+			toast.error("Failed to fetch Todos.")
 		} finally {
-			setIsLoading(false);
+			setIsLoading(false)
 		}
-	};
+	}
 
 	useEffect(() => {
-		setIsLoading(true);
-		fetchTodos();
-		setIsLoading(false);
-	}, []);
+		setIsLoading(true)
+		fetchTodos()
+		setIsLoading(false)
+	}, [])
 
 	const form = useForm<z.infer<typeof TodoSchema>>({
 		resolver: zodResolver(TodoSchema),
 		defaultValues: { title: "", description: "", isCompleted: false }
-	});
+	})
 
 	const onSubmit = async (values: z.infer<typeof TodoSchema>) => {
-		const validatedFields = TodoSchema.safeParse(values);
+		const validatedFields = TodoSchema.safeParse(values)
 		startTransition(async () => {
-			const result = await addTodo(values);
+			const result = await addTodo(values)
 			if (result.error) {
-				toast.error(result.error);
+				toast.error(result.error)
 			} else if (result.success) {
-				toast.success(result.success);
-				form.reset();
-				fetchTodos();
+				toast.success(result.success)
+				form.reset()
+				fetchTodos()
 			}
-		});
-	};
+		})
+	}
 
 	return (
 		<div className="bg-white rounded-xl shadow-sm border p-2 md:p-4">
@@ -74,7 +75,10 @@ export const TodoCard = () => {
 					zur Übersicht
 				</Link>
 			</h2>
-			<h3 className="text-md font-semibold mb-4">{status === "loading" || isLoading ? <Skeleton className="mt-3 mb-5 w-8 h-4 bg-primary/10 animate-pulse" /> : todos.length}</h3>
+			<h3 className="text-md font-semibold mb-4">
+				<BsListCheck className="inline-block mr-2 mt-[-3px]" />
+				{status === "loading" || isLoading ? <Skeleton className="mt-3 mb-5 w-8 h-4 bg-primary/10 animate-pulse" /> : todos.length}
+			</h3>
 			<Popover>
 				<PopoverTrigger className="flex justify-center w-full p-3 py-2 bg-slate-100 text-slate-900 hover:text-slate-800 hover:bg-slate-200 text-sm rounded-sm">
 					<FiPlus className="mt-[3px] mr-2" /> Todo hinzufügen
@@ -133,5 +137,5 @@ export const TodoCard = () => {
 				</PopoverContent>
 			</Popover>
 		</div>
-	);
-};
+	)
+}
