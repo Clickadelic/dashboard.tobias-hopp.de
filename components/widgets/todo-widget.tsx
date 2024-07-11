@@ -19,6 +19,7 @@ import { Button } from "@/components/ui/button";
 
 import { FiPlus } from "react-icons/fi";
 import { GoTrash } from "react-icons/go";
+import { LiaEdit } from "react-icons/lia";
 
 import { Todo } from "@prisma/client";
 import { TodoSchema } from "@/schemas";
@@ -119,7 +120,7 @@ export const TodoWidget = ({ classNames }: TodoWidgetProps = { classNames: "" })
 	};
 
 	return (
-		<div className={cn("min-h-28", classNames)}>
+		<div className={cn("min-h-28 pb-1", classNames)}>
 			<Form {...newForm}>
 				<form onSubmit={newForm.handleSubmit(onSubmit)}>
 					<FormField
@@ -153,8 +154,8 @@ export const TodoWidget = ({ classNames }: TodoWidgetProps = { classNames: "" })
 					</Button>
 				</form>
 			</Form>
-			<hr className="my-3" />
-			<ul className="ml-2">
+			<hr className="mt-3 mb-5" />
+			<ul>
 				{status === "loading" ? (
 					<>
 						<Skeleton className="mt-3 mb-5 w-full h-4 bg-black/10 animate-pulse" />
@@ -164,13 +165,22 @@ export const TodoWidget = ({ classNames }: TodoWidgetProps = { classNames: "" })
 					</>
 				) : (
 					todos.map(todo => (
-						<li key={todo.id} className="flex justify-between mt-3 text-sm">
+						<li key={todo.id} className="flex justify-between text-sm">
 							<span>
-								<input type="checkbox" disabled={isPending} checked={todo.isCompleted} onChange={() => onIsCompleted(todo.id)} className="mt-1 mr-2" />
-								<span className={cn("text-slate-900", todo.isCompleted ? "line-through text-slate-500" : "")}>{todo.title}</span>
+								<span className="p-1 rounded-sm hover:bg-slate-200 relative top-[3px]">
+									<input type="checkbox" disabled={isPending} checked={todo.isCompleted} onChange={() => onIsCompleted(todo.id)} className="asd" />
+								</span>
+								<span className={cn("ml-2 text-slate-900 relative top-[2px]", todo.isCompleted ? "line-through text-slate-500" : "")}>{todo.title}</span>
 							</span>
 							<span>
-								<button onClick={() => deleteTodoById(todo.id)} className="text-rose-400 hover:text-rose-600 hover:bg-slate-200 rounded-full p-1" disabled={isPending}>
+								<button
+									// onClick={() => editTodoById(todo.id, dynamicForm.defaultValues({ title: todo.title, description: todo.description }))}
+									className="text-slate-500 hover:text-slate-500 hover:bg-slate-200 rounded-sm p-2"
+									disabled={isPending}
+								>
+									<LiaEdit />
+								</button>
+								<button onClick={() => deleteTodoById(todo.id)} className="text-rose-400 hover:text-rose-600 hover:bg-slate-200 rounded-sm p-2" disabled={isPending}>
 									<GoTrash />
 								</button>
 							</span>
