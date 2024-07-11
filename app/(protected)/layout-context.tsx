@@ -2,6 +2,8 @@
 
 import { SidebarNavbar } from "./_components/sidebar-navbar";
 import { useAppContext } from "@/context/app-context";
+import { CockpitDrawer } from "./_components/cockpit-drawer";
+
 import { cn } from "@/lib/utils";
 
 interface LayoutContextProps {
@@ -15,6 +17,7 @@ const LayoutContext = ({ children }: LayoutContextProps) => {
 			<main className={cn("flex-1 transition-all duration-300 ease-in-out", isToggled ? "md:ml-16" : "md:ml-64")}>
 				<div className="container pt-20">{children}</div>
 			</main>
+			<CockpitDrawer />
 		</>
 	);
 };
