@@ -3,15 +3,15 @@
 import * as z from "zod";
 
 import { db } from "@/lib/db";
-import { OrganisationSchema } from "@/schemas";
+import { OrganizationSchema } from "@/schemas";
 import { auth } from "@/auth";
 
-export const addOrganisation = async (values: z.infer<typeof OrganisationSchema>) => {
+export const addOrganization = async (values: z.infer<typeof OrganizationSchema>) => {
 	const session = await auth();
 	const user = session?.user;
 	const userId = user?.id;
 	try {
-		const validatedFields = OrganisationSchema.safeParse(values);
+		const validatedFields = OrganizationSchema.safeParse(values);
 		console.log("Validated Fields:", validatedFields);
 		if (!validatedFields.success) {
 			return { error: "Ungültige Werte" };
@@ -20,7 +20,7 @@ export const addOrganisation = async (values: z.infer<typeof OrganisationSchema>
 		const { name, url } = validatedFields.data;
 		console.log("Name:", name, "URL:", url);
 
-		const existingOrganisation = await db.organization.findFirst({
+		const existingOrganization = await db.organization.findFirst({
 			where: {
 				user: {
 					id: userId
@@ -40,35 +40,35 @@ export const addOrganisation = async (values: z.infer<typeof OrganisationSchema>
 			}
 		});
 
-		return { success: "Organization hinzugefügt" };
+		return { success: "Organisation hinzugefügt" };
 	} catch (error) {
 		return { error: "Interner Server-Fehler" };
 	}
 };
 
-export const editOrganisation = async (organizationId: string, values: z.infer<typeof OrganisationSchema>) => {
+export const editOrganization = async (organizationId: string, values: z.infer<typeof OrganizationSchema>) => {
 	const session = await auth();
 	const user = session?.user;
 	const userId = user?.id;
 	try {
-		const validatedFields = OrganisationSchema.safeParse(values);
+		const validatedFields = OrganizationSchema.safeParse(values);
 		if (!validatedFields.success) {
 			return { error: "Ungültige Werte" };
 		}
 		const { name, url } = validatedFields.data;
 
-		const existingOrganisation = await db.organisation.findFirst({
+		const existingOrganization = await db.organization.findFirst({
 			where: {
 				id: organizationId
 			}
 		});
-		if (!existingOrganisation) {
+		if (!existingOrganization) {
 			return { error: "Organization-Id nicht gefunden" };
 		}
 
 		await db.organization.update({
 			where: {
-				id: orgId
+				id: organizationId
 			},
 			data: {
 				name,
@@ -85,7 +85,7 @@ export const editOrganisation = async (organizationId: string, values: z.infer<t
 
 export const deleteOrganization = async (organizationId: string) => {
 	try {
-		const existingOrganisation = await db.organization.findFirst({
+		const existingOrganization = await db.organization.findFirst({
 			where: {
 				id: organizationId
 			}
