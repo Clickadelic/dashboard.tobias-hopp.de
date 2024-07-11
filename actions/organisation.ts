@@ -20,17 +20,17 @@ export const addOrganisation = async (values: z.infer<typeof OrganisationSchema>
 		const { name, url } = validatedFields.data;
 		console.log("Name:", name, "URL:", url);
 
-		const existingOrganisation = await db.organization.findFirst({
+		const existingOrganisation = await db.organisation.findFirst({
 			where: {
 				user: {
 					id: userId
 				}
 			}
 		});
-		if (existingOrganization) {
+		if (existingOrganisation) {
 			return { error: "Org-Url bereits vorhanden" };
 		}
-		await db.organization.create({
+		await db.organisation.create({
 			data: {
 				name,
 				url,
@@ -83,18 +83,18 @@ export const editOrganisation = async (organizationId: string, values: z.infer<t
 	}
 };
 
-export const deleteOrganization = async (organizationId: string) => {
+export const deleteOrganisation = async (organizationId: string) => {
 	try {
-		const existingOrganisation = await db.organization.findFirst({
+		const existingOrganisation = await db.organisation.findFirst({
 			where: {
 				id: organizationId
 			}
 		});
-		if (!existingOrganization) {
+		if (!existingOrganisation) {
 			return { error: "Organization-Id nicht vorhanden" };
 		}
 
-		await db.organization.delete({
+		await db.organisation.delete({
 			where: {
 				id: organizationId
 			}
@@ -106,16 +106,16 @@ export const deleteOrganization = async (organizationId: string) => {
 	}
 };
 
-export const getOrganizationsByUserId = async () => {
+export const getOrganisationsByUserId = async () => {
 	const session = await auth();
 	const user = session?.user;
 	const userId = user?.id;
-	const organizations = await db.organization.findMany({
+	const organisations = await db.organisation.findMany({
 		where: {
 			user: {
 				id: userId
 			}
 		}
 	});
-	return organizations;
+	return organisations;
 };
