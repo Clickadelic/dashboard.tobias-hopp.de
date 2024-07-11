@@ -8,42 +8,41 @@ export const OrganisationSchema = z.object({
 });
 
 // TODO: Schemas abgleichen und korrigieren
-export const UserSchema = z
-	.object({
-		name: z.optional(z.string()),
-		email: z.optional(z.string().email()),
-		profileImage: z.optional(z.string()),
-		backgroundImage: z.optional(z.string()),
-		role: z.enum([UserRole.ADMIN, UserRole.USER]),
-		password: z.optional(z.string().min(6)),
-		newPassword: z.optional(z.string().min(6)),
-		isTwoFactorEnabled: z.optional(z.boolean())
-	})
-	.refine(
-		data => {
-			if (data.password && !data.newPassword) {
-				return false;
-			}
+export const UserSchema = z.object({
+	name: z.optional(z.string()),
+	email: z.optional(z.string().email()),
+	profileImage: z.optional(z.string()),
+	backgroundImage: z.optional(z.string()),
+	role: z.enum([UserRole.ADMIN, UserRole.USER]),
+	password: z.optional(z.string().min(6)),
+	newPassword: z.optional(z.string().min(6)),
+	isTwoFactorEnabled: z.optional(z.boolean())
+});
+// .refine(
+// 	data => {
+// 		if (data.password && !data.newPassword) {
+// 			return false;
+// 		}
 
-			return true;
-		},
-		{
-			message: "Neues Passwort ist notwendig.",
-			path: ["newPassword"]
-		}
-	)
-	.refine(
-		data => {
-			if (data.newPassword && !data.password) {
-				return false;
-			}
-			return true;
-		},
-		{
-			message: "Altes Passwort ist notwendig.",
-			path: ["password"]
-		}
-	);
+// 		return true;
+// 	},
+// 	{
+// 		message: "Neues Passwort ist notwendig.",
+// 		path: ["newPassword"]
+// 	}
+// )
+// .refine(
+// 	data => {
+// 		if (data.newPassword && !data.password) {
+// 			return false;
+// 		}
+// 		return true;
+// 	},
+// 	{
+// 		message: "Altes Passwort ist notwendig.",
+// 		path: ["password"]
+// 	}
+// );
 
 export const LoginSchema = z.object({
 	email: z.string().email({ message: "E-Mail ist notwendig." }),
