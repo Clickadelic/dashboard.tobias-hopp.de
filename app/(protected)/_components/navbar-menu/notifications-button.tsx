@@ -1,6 +1,6 @@
-import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from "@radix-ui/react-dropdown-menu";
-import { Button } from "@/components/ui/button";
-import { IoIosNotificationsOutline } from "react-icons/io";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from "@radix-ui/react-dropdown-menu"
+import { Button } from "@/components/ui/button"
+import { IoIosNotificationsOutline } from "react-icons/io"
 
 export const NotificationsButton = () => {
 	return (
@@ -10,12 +10,17 @@ export const NotificationsButton = () => {
 					<IoIosNotificationsOutline className="size-5" />
 				</Button>
 			</DropdownMenuTrigger>
-			<DropdownMenuContent className="w-[200px] p-3 overflow-hidden bg-white rounded-sm shadow-sm border">
-				<span className="block font-medium mb-4">Alerts</span>
-				<ul className="space-x-3">
-					<li>List item</li>
+			<DropdownMenuContent align="end" className="w-[400px] p-3 overflow-hidden bg-white rounded-sm shadow-sm border">
+				<h4 className="flex justify-between font-medium text-md mb-4 p-2">
+					<span>Nachrichten</span>
+					<span>3</span>
+				</h4>
+				<ul className="space-y-1">
+					<li className="p-2 text-slate-700">Dein Gewinn im Lotto</li>
+					<li className="p-2 text-slate-700">Deine Steuererklärung</li>
+					<li className="p-2 text-slate-700">Dein Bürgergeldantrag</li>
 				</ul>
 			</DropdownMenuContent>
 		</DropdownMenu>
-	);
-};
+	)
+}
