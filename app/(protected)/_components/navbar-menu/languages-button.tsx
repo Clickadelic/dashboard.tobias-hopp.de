@@ -1,7 +1,7 @@
-import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from "@radix-ui/react-dropdown-menu";
-import { Button } from "@/components/ui/button";
-import { PiTranslate } from "react-icons/pi";
-import Link from "next/link";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from "@radix-ui/react-dropdown-menu"
+import { Button } from "@/components/ui/button"
+import { PiTranslate } from "react-icons/pi"
+import Link from "next/link"
 
 export const LanguagesButton = () => {
 	return (
@@ -11,7 +11,7 @@ export const LanguagesButton = () => {
 					<PiTranslate className="size-5" />
 				</Button>
 			</DropdownMenuTrigger>
-			<DropdownMenuContent className="w-[200px] p-3 overflow-hidden bg-white rounded-sm shadow-sm border">
+			<DropdownMenuContent align="end" className="w-[200px] p-3 overflow-hidden bg-white rounded-sm shadow-sm border">
 				<ul className="space-y-3">
 					<li>
 						<Link href="/dashboard" className="mb-2 block hover:text-slate-500" target="_blank">
@@ -26,5 +26,5 @@ export const LanguagesButton = () => {
 				</ul>
 			</DropdownMenuContent>
 		</DropdownMenu>
-	);
-};
+	)
+}

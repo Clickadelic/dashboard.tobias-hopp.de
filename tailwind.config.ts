@@ -59,7 +59,8 @@ const config = {
 				sm: "calc(var(--radius) - 4px)"
 			},
 			backgroundImage: {
-				"wave-pattern": "url('/images/backgrounds/Wave-bg.svg')",
+				"wave-pattern": "url('/images/svg/Wave-bg.svg')",
+				"fractal": "url('/images/backgrounds/User-Fractal.jpg')",
 				"default": "url('/images/backgrounds/default-bg.jpg')"
 			},
 			keyframes: {

@@ -39,7 +39,7 @@ export const FullStackSearch = ({ classNames }: FullStackSearchProps) => {
 					className="peer block w-full border border-r-0 rounded-tl-lg rounded-bl-lg border-slate-200 px-3 text-sm"
 					placeholder="Suche / STRG + K"
 				/>
-				<button className="border border-l-0 rounded-tr-lg rounded-br-lg px-4 py-1 hover:bg-mantis-hover hover:text-mantis-primary">
+				<button className="border border-l-0 rounded-tr-lg rounded-br-lg px-3 py-1 hover:bg-mantis-hover hover:text-mantis-primary">
 					<AiOutlineSearch className="inline -mt-1" />
 				</button>
 			</div>
