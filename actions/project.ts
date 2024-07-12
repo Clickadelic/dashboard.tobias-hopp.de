@@ -55,6 +55,14 @@ export const getProjectsByUserId = async () => {
 	const session = await auth()
 	const user = session?.user
 	const userId = user?.id
-	const data = await db.project.findMany({ where: { userId } })
+	const data = await db.project.findMany({ where: { userId }, orderBy: { createdAt: "desc" } })
+	return data
+}
+
+export const getLatestProject = async () => {
+	const session = await auth()
+	const user = session?.user
+	const userId = user?.id
+	const data = await db.project.findMany({ where: { userId }, take: 1, orderBy: { createdAt: "desc" } })
 	return data
 }

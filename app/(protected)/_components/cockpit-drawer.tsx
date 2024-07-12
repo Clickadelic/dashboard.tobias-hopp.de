@@ -10,10 +10,8 @@ export const CockpitDrawer = () => {
 
 	return (
 		<Drawer>
-			<DrawerTrigger asChild>
-				<div className="fixed container bottom-0">
-					<button className="w-24 mx-auto">Cockpit</button>
-				</div>
+			<DrawerTrigger className="fixed bottom-0 w-full">
+				<div className="w-48 bg-black text-white px-4 py-2 rounded-tl-lg rounded-tr-lg mx-auto hover:bg-black/90">Cockpit</div>
 			</DrawerTrigger>
 			<DrawerContent>
 				<div className="container mx-auto">

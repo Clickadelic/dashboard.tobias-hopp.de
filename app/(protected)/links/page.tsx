@@ -1,4 +1,6 @@
-import LinksTable from "../_components/tables/links-table";
+import { TableSearch } from "../_components/tables/table-search"
+
+import LinksTable from "../_components/tables/links-table"
 
 const LinksPage = () => {
 	return (
@@ -6,7 +8,7 @@ const LinksPage = () => {
 			<h2 className="text-md font-bold text-slate-700 mb-5">Links</h2>
 			<LinksTable />
 		</div>
-	);
-};
+	)
+}
 
-export default LinksPage;
+export default LinksPage

@@ -1,77 +1,95 @@
-"use client";
+"use client"
 
-import * as z from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod"
+import { zodResolver } from "@hookform/resolvers/zod"
 
-import { useTransition, useState, useEffect } from "react";
-import { useForm } from "react-hook-form";
-import { useSession } from "next-auth/react";
+import { useTransition, useState, useEffect } from "react"
+import { useForm } from "react-hook-form"
+import { useSession } from "next-auth/react"
 
-import Link from "next/link";
+import Link from "next/link"
 
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { Input } from "@/components/ui/input";
-import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";
-import { Textarea } from "@/components/ui/textarea";
-import { Skeleton } from "@/components/ui/skeleton";
-import { toast } from "sonner";
-import { Button } from "@/components/ui/button";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
+import { Input } from "@/components/ui/input"
+import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form"
+import { Textarea } from "@/components/ui/textarea"
+import { Skeleton } from "@/components/ui/skeleton"
+import { toast } from "sonner"
+import { Button } from "@/components/ui/button"
 
-import { FiPlus } from "react-icons/fi";
+import { FiPlus } from "react-icons/fi"
 
-import { ProjectSchema } from "@/schemas";
-import { addProject, getProjectsByUserId } from "@/actions/project";
+import { ProjectSchema } from "@/schemas"
+import { Project } from "@prisma/client"
+
+import { addProject, getProjectsByUserId, getLatestProject } from "@/actions/project"
+import { BsBuildings } from "react-icons/bs"
 
 export const ProjectCard = () => {
-	const { status } = useSession({ required: true });
-	const [isPending, startTransition] = useTransition();
-	const [isLoading, setIsLoading] = useState<boolean>(false);
-	const [projects, setProjects] = useState<any[]>([]);
-
+	const { status } = useSession({ required: true })
+	const [isPending, startTransition] = useTransition()
+	const [isLoading, setIsLoading] = useState<boolean>(false)
+	const [projects, setProjects] = useState<any[]>([])
+	const [latestProject, setLatestProject] = useState<Project | null>(null)
 	const fetchProjects = async () => {
-		setIsLoading(true);
+		setIsLoading(true)
 		try {
-			const response = await getProjectsByUserId();
-			setProjects(response);
+			const response = await getProjectsByUserId()
+			const latest = await getLatestProject()
+			setProjects(response)
+			setLatestProject(latest[0])
 		} catch (error) {
-			console.error("Error fetching links:", error);
-			toast.error("Failed to fetch links.");
+			console.error("Error fetching links:", error)
+			toast.error("Failed to fetch links.")
 		}
-		setIsLoading(false);
-	};
+		setIsLoading(false)
+	}
 
 	useEffect(() => {
-		setIsLoading(true);
-		fetchProjects();
-		setIsLoading(false);
-	}, []);
+		setIsLoading(true)
+		fetchProjects()
+		setIsLoading(false)
+	}, [])
 
 	const form = useForm<z.infer<typeof ProjectSchema>>({
 		resolver: zodResolver(ProjectSchema),
 		defaultValues: { title: "", url: "", description: "" }
-	});
+	})
 
 	const onSubmit = async (values: z.infer<typeof ProjectSchema>) => {
-		const validatedFields = ProjectSchema.safeParse(values);
+		const validatedFields = ProjectSchema.safeParse(values)
 		startTransition(async () => {
-			const result = await addProject(values);
+			const result = await addProject(values)
 			if (result.error) {
-				toast.error(result.error);
+				toast.error(result.error)
 			} else if (result.success) {
-				toast.success(result.success);
-				form.reset();
-				fetchProjects();
+				toast.success(result.success)
+				form.reset()
+				fetchProjects()
 			}
-		});
-	};
+		})
+	}
 
 	return (
 		<div className="bg-white rounded-xl shadow-sm border p-2 md:p-4">
 			<h2 className="text-xs md:text-sm border-bottom text-slate-900 flex justify-between mb-2">
 				<span className="flex justify-between">Projekte</span>
-				<Link href="/projekte">zur Übersicht</Link>
+				{/* <Link href="/projekte">zur Übersicht</Link> */}
+				<span>neuestes Projekt</span>
 			</h2>
-			<h3 className="text-md font-semibold mb-4">{status === "loading" || isLoading ? <Skeleton className="mt-3 mb-5 w-8 h-4 bg-primary/10 animate-pulse" /> : projects.length}</h3>
+			<h3 className="mb-4 text-md font-medium flex justify-between">
+				<span>
+					{status === "loading" || isLoading ? (
+						<Skeleton className="mt-3 mb-5 w-8 h-4 bg-primary/10 animate-pulse" />
+					) : (
+						<>
+							<BsBuildings className="inline-block mr-2 mt-[-3px]" />
+							{projects.length}
+						</>
+					)}
+				</span>
+				<span>{status === "loading" || isLoading ? <Skeleton className="mt-3 mb-5 w-12 h-4 bg-primary/10 animate-pulse" /> : latestProject?.title}</span>
+			</h3>
 			<Popover>
 				<PopoverTrigger className="flex justify-center w-full p-3 py-2 bg-slate-100 text-slate-900 hover:text-slate-800 hover:bg-slate-200 text-sm rounded-sm">
 					<FiPlus className="mt-[3px] mr-2" /> Projekt hinzufügen
@@ -127,5 +145,5 @@ export const ProjectCard = () => {
 				</PopoverContent>
 			</Popover>
 		</div>
-	);
-};
+	)
+}
