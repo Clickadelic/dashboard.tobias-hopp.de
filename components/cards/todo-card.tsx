@@ -18,23 +18,26 @@ import { toast } from "sonner"
 import { Button } from "@/components/ui/button"
 
 import { FiPlus } from "react-icons/fi"
-import { BsListCheck } from "react-icons/bs"
+import { BsList, BsListCheck } from "react-icons/bs"
 
+import { addTodo, getTodosByUserId, getLatestTodo } from "@/actions/todo"
 import { TodoSchema } from "@/schemas"
-import { addTodo, getTodosByUserId } from "@/actions/todo"
+import { Todo } from "@prisma/client"
 
 export const TodoCard = () => {
 	const { status } = useSession({ required: true })
 
 	const [isPending, startTransition] = useTransition()
 	const [isLoading, setIsLoading] = useState<boolean>(false)
-	const [todos, setTodos] = useState<any[]>([])
-
+	const [todos, setTodos] = useState<Todo[]>([])
+	const [latestTodo, setLatestTodo] = useState<Todo | null>(null)
 	const fetchTodos = async () => {
 		setIsLoading(true)
 		try {
 			const response = await getTodosByUserId()
+			const latest = await getLatestTodo()
 			setTodos(response)
+			setLatestTodo(latest[0])
 		} catch (error) {
 			toast.error("Failed to fetch Todos.")
 		} finally {
@@ -71,13 +74,23 @@ export const TodoCard = () => {
 		<div className="bg-white rounded-xl shadow-sm border p-2 md:p-4">
 			<h2 className="text-xs md:text-sm border-bottom text-slate-900 flex justify-between mb-2">
 				<span>Todo&apos;s</span>
-				<Link href="/todos" className="hover:text-slate-900">
+				<span>neuestes Todo</span>
+				{/* <Link href="/todos" className="hover:text-slate-900">
 					zur Übersicht
-				</Link>
+				</Link> */}
 			</h2>
-			<h3 className="text-md font-semibold mb-4">
-				<BsListCheck className="inline-block mr-2 mt-[-3px]" />
-				{status === "loading" || isLoading ? <Skeleton className="mt-3 mb-5 w-8 h-4 bg-primary/10 animate-pulse" /> : todos.length}
+			<h3 className="mb-4 flex justify-between">
+				<span className="text-md font-semibold">
+					{status === "loading" || isLoading ? (
+						<Skeleton className="mt-3 mb-5 w-8 h-4 bg-primary/10 animate-pulse" />
+					) : (
+						<>
+							<BsListCheck className="inline-block mr-2 mt-[-3px]" />
+							{todos.length}
+						</>
+					)}
+				</span>
+				<span className="text-md font-semibold">{status === "loading" || isLoading ? <Skeleton className="mt-3 mb-5 w-12 h-4 bg-primary/10 animate-pulse" /> : latestTodo?.title}</span>
 			</h3>
 			<Popover>
 				<PopoverTrigger className="flex justify-center w-full p-3 py-2 bg-slate-100 text-slate-900 hover:text-slate-800 hover:bg-slate-200 text-sm rounded-sm">
