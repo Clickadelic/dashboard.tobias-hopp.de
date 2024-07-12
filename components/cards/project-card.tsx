@@ -77,8 +77,8 @@ export const ProjectCard = () => {
 				{/* <Link href="/projekte">zur Übersicht</Link> */}
 				<span>neuestes Projekt</span>
 			</h2>
-			<h3 className="mb-4 flex justify-between">
-				<span className="text-md font-semibold">
+			<h3 className="mb-4 text-md font-medium flex justify-between">
+				<span>
 					{status === "loading" || isLoading ? (
 						<Skeleton className="mt-3 mb-5 w-8 h-4 bg-primary/10 animate-pulse" />
 					) : (
@@ -88,7 +88,7 @@ export const ProjectCard = () => {
 						</>
 					)}
 				</span>
-				<span className="text-md font-semibold">{status === "loading" || isLoading ? <Skeleton className="mt-3 mb-5 w-12 h-4 bg-primary/10 animate-pulse" /> : latestProject?.title}</span>
+				<span>{status === "loading" || isLoading ? <Skeleton className="mt-3 mb-5 w-12 h-4 bg-primary/10 animate-pulse" /> : latestProject?.title}</span>
 			</h3>
 			<Popover>
 				<PopoverTrigger className="flex justify-center w-full p-3 py-2 bg-slate-100 text-slate-900 hover:text-slate-800 hover:bg-slate-200 text-sm rounded-sm">

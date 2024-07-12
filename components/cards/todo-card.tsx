@@ -79,8 +79,8 @@ export const TodoCard = () => {
 					zur Übersicht
 				</Link> */}
 			</h2>
-			<h3 className="mb-4 flex justify-between">
-				<span className="text-md font-semibold">
+			<h3 className="text-md font-medium flex justify-between mb-4">
+				<span>
 					{status === "loading" || isLoading ? (
 						<Skeleton className="mt-3 mb-5 w-8 h-4 bg-primary/10 animate-pulse" />
 					) : (
@@ -90,7 +90,7 @@ export const TodoCard = () => {
 						</>
 					)}
 				</span>
-				<span className="text-md font-semibold">{status === "loading" || isLoading ? <Skeleton className="mt-3 mb-5 w-12 h-4 bg-primary/10 animate-pulse" /> : latestTodo?.title}</span>
+				<span>{status === "loading" || isLoading ? <Skeleton className="mt-3 mb-5 w-12 h-4 bg-primary/10 animate-pulse" /> : latestTodo?.title}</span>
 			</h3>
 			<Popover>
 				<PopoverTrigger className="flex justify-center w-full p-3 py-2 bg-slate-100 text-slate-900 hover:text-slate-800 hover:bg-slate-200 text-sm rounded-sm">

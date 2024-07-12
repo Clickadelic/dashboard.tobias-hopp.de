@@ -18,20 +18,23 @@ import { Button } from "@/components/ui/button"
 import { FiPlus } from "react-icons/fi"
 import { GoLink } from "react-icons/go"
 
+import { Link as Hyperlink } from "@prisma/client"
 import { LinkSchema } from "@/schemas"
-import { addLink, getLinksByUserId } from "@/actions/link"
+import { addLink, getLinksByUserId, getLatestLink } from "@/actions/link"
 
 export const LinkCard = () => {
 	const { status } = useSession({ required: true })
 	const [isPending, startTransition] = useTransition()
 	const [isLoading, setIsLoading] = useState<boolean>(false)
-	const [links, setLinks] = useState<any[]>([])
-
+	const [links, setLinks] = useState<Hyperlink[]>([])
+	const [latestLink, setLatestLink] = useState<Hyperlink | null>(null)
 	const fetchLinks = async () => {
 		setIsLoading(true)
 		try {
 			const response = await getLinksByUserId()
+			const latest = await getLatestLink()
 			setLinks(response)
+			setLatestLink(latest[0])
 		} catch (error) {
 			toast.error("Fehler beim Laden der Links.")
 		} finally {
@@ -67,13 +70,23 @@ export const LinkCard = () => {
 		<div className="bg-white rounded-xl shadow border p-2 md:p-4">
 			<h2 className="text-xs md:text-sm border-bottom text-slate-900 flex justify-between mb-2">
 				<span>Links</span>
-				<Link href="/links" className="hover:text-slate-900">
+				<span>neuester Link</span>
+				{/* <Link href="/links" className="hover:text-slate-900">
 					zur Übersicht
-				</Link>
+				</Link> */}
 			</h2>
-			<h3 className="text-md font-semibold mb-4">
-				<GoLink className="inline-block mr-2 mt-[-3px]" />
-				{status === "loading" || isLoading ? <Skeleton className="mt-3 mb-5 w-8 h-4 bg-primary/10 animate-pulse" /> : links.length}
+			<h3 className="text-md font-medium flex justify-between mb-4">
+				<span>
+					{status === "loading" || isLoading ? (
+						<Skeleton className="mt-3 mb-5 w-8 h-4 bg-primary/10 animate-pulse" />
+					) : (
+						<>
+							<GoLink className="inline-block mr-2 mt-[-3px]" />
+							{links.length}
+						</>
+					)}
+				</span>
+				<span>{status === "loading" || isLoading ? <Skeleton className="mt-3 mb-5 w-12 h-4 bg-primary/10 animate-pulse" /> : latestLink?.title}</span>
 			</h3>
 			<Popover>
 				<PopoverTrigger className="flex justify-center w-full p-3 py-2 bg-slate-100 text-slate-900 hover:text-slate-800 hover:bg-slate-200 text-sm rounded-sm">
