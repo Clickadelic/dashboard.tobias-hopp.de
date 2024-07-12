@@ -4,18 +4,16 @@ import { useSearchParams, useRouter, usePathname } from "next/navigation"
 
 import { AiOutlineSearch } from "react-icons/ai"
 
-import { getFullStackSearchResults } from "@/actions/search"
-
-interface FullStackSearchProps {
+interface TableSearchProps {
 	classNames?: string
 }
-// TODO: Finish functionality LOL
-export const FullStackSearch = ({ classNames }: FullStackSearchProps) => {
+
+export const TableSearch = ({ classNames }: TableSearchProps) => {
 	const searchParams = useSearchParams()
 	const pathname = usePathname()
 	const { replace } = useRouter()
 
-	const handleSearch = (term: string) => {
+	function handleSearch(term: string) {
 		const params = new URLSearchParams(searchParams)
 		if (term) {
 			params.set("q", term)
@@ -23,8 +21,6 @@ export const FullStackSearch = ({ classNames }: FullStackSearchProps) => {
 			params.delete("q")
 		}
 		replace(`${pathname}?${params.toString()}`)
-		const results = getFullStackSearchResults(term)
-		console.log(results)
 	}
 
 	return (
@@ -39,7 +35,11 @@ export const FullStackSearch = ({ classNames }: FullStackSearchProps) => {
 					className="peer block w-full border border-r-0 rounded-tl-lg rounded-bl-lg border-slate-200 px-3 text-sm"
 					placeholder="Suche / STRG + K"
 				/>
-				<button className="border border-l-0 rounded-tr-lg rounded-br-lg px-4 py-1 hover:bg-mantis-hover hover:text-mantis-primary">
+				<button
+					className="border border-l-0 rounded-tr-lg rounded-br-lg px-4 py-1 hover:bg-mantis-hover hover:text-mantis-primary"
+					onClick={e => {
+						console.log("clicked search button")
+					}}>
 					<AiOutlineSearch className="inline -mt-1" />
 				</button>
 			</div>

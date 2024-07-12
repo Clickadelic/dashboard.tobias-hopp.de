@@ -3,9 +3,7 @@
 import { La_Belle_Aurore } from "next/font/google"
 
 import { useAppContext } from "@/context/app-context"
-import { usePathname } from "next/navigation"
 import { useSession } from "next-auth/react"
-import { useCurrentRole } from "@/hooks/use-current-role"
 import { useCurrentUser } from "@/hooks/use-current-user"
 
 import Image from "next/image"
@@ -42,6 +40,8 @@ export const SidebarNavbar = () => {
 	const { status } = useSession({ required: true })
 	const user = useCurrentUser()
 	const { isToggled, setToggle } = useAppContext()
+	// const searchParams = useSearchParams()
+	// const router = useRouter()
 
 	return (
 		<>
@@ -93,7 +93,7 @@ export const SidebarNavbar = () => {
 			</aside>
 			<header className={cn("App-header flex fixed top-0 md:ml-64 w-screen p-2 border-b bg-white", isToggled ? "md:ml-16" : "md:ml-64")}>
 				<nav className="header-navflex justify-between w-max">
-					<div className="inline-block">
+					<div className="inline-block md:mb-.5">
 						{/* TODO: useMediaQuery() */}
 						<Sheet>
 							<SheetTrigger className="ml-2 md:hidden">
@@ -102,17 +102,26 @@ export const SidebarNavbar = () => {
 							<SheetContent side="left">
 								<SheetHeader>
 									<SheetTitle>
-										<Image src={logoSrc} width={32} height={32} className="logo size-8 inline-block mt-[-8px]" alt="Tailwind Dashboard" />
-										<span>Toby&apos;s Dashboard</span>
+										<h1>
+											<Link href={DEFAULT_LOGIN_REDIRECT} className="flex justify-between mt-2 text-slate-900 hover:opacity-75">
+												<Image src={logoSrc} width={16} height={16} className="logo inline -mt-1 size-8" alt="Tailwind Dashboard" />
+												{!isToggled && (
+													<span className="ml-2">
+														<span className={cn("md:inline-block font-medium mr-1 text-2xl", laBelleAurore.className)}>Toby&apos;s</span>
+														<span className="md:inline-block font-bold">Dashboard</span>
+													</span>
+												)}
+											</Link>
+										</h1>
 									</SheetTitle>
-									<SheetDescription>This action cannot be undone. This will permanently delete your account and remove your data from our servers.</SheetDescription>
+									<SheetDescription>Mobile Sidebar links</SheetDescription>
 								</SheetHeader>
 							</SheetContent>
 						</Sheet>
-						<button onClick={() => setToggle(prev => !prev)} className="hidden md:inline hover:bg-slate-100 mt-1 ml-3 white rounded p-2">
+						<button onClick={() => setToggle(prev => !prev)} className="hidden md:inline hover:bg-slate-100 mt-1 ml-2 white rounded p-2">
 							{isToggled ? <BsTextIndentLeft className="size-5" /> : <BsTextIndentRight className="size-5" />}
 						</button>
-						<FullStackSearch />
+						<FullStackSearch classNames="inline-block relative mx-3 md:-top-1" />
 					</div>
 					{/* rechter Mobile Button */}
 					<button className="fixed right-5 md:hidden bg-slate-100 rounded p-2 mt-1">
