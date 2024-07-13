@@ -51,39 +51,29 @@ export const deleteProjectById = async (id: string) => {
 	const user = session?.user
 	const userId = user?.id
 	try {
-		const validatedFields = ProjectSchema.safeParse(values)
-
-		if (!validatedFields.success) {
-			return { error: "Ungültige Felder!" }
-		}
-
-		const { title, url, description } = validatedFields.data
-
 		const existingLink = await db.project.findFirst({
 			where: {
-				url,
+				id,
 				user: {
 					id: userId
 				}
 			}
 		})
 
-		if (existingLink) {
-			return { error: "Projekt-Url existiert bereits." }
+		if (!existingLink) {
+			return { error: "Projekt existiert nicht" }
 		}
-		await db.project.create({
-			data: {
-				title,
-				url,
-				description,
+		await db.project.delete({
+			where: {
+				id,
 				user: {
-					connect: { id: userId }
+					id: userId
 				}
 			}
 		})
-		return { success: "Projekt hinzugefügt." }
+		return { success: "Projekt gelöscht" }
 	} catch (error) {
-		return { error: "Interner Server-Fehler." }
+		return { error: "Interner Server-Fehler" }
 	}
 }
 
