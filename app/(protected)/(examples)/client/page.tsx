@@ -1,7 +1,7 @@
 "use client";
 
 import { useCurrentUser } from "@/hooks/use-current-user";
-import { UserInfo } from "@/components/user-info";
+import { UserInfo } from "@/app/(protected)/(examples)/user-info";
 
 const ClientPage = () => {
 	const user = useCurrentUser();

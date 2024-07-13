@@ -15,8 +15,8 @@ import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
 import { settings } from "@/actions/settings";
 import { Input } from "@/components/ui/input";
-import { FormError } from "@/components/form-error";
-import { FormSuccess } from "@/components/form-success";
+import { FormError } from "@/components/forms/form-error";
+import { FormSuccess } from "@/components/forms/form-success";
 
 /** BUG: Chrome Form Submission
  *

@@ -1,36 +1,36 @@
-"use client"
+"use client";
 
-import * as z from "zod"
-import { useForm } from "react-hook-form"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { UserSchema } from "@/schemas"
-import { Form, FormField, FormControl, FormItem, FormLabel, FormDescription, FormMessage } from "@/components/ui/form"
+import * as z from "zod";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { UserSchema } from "@/schemas";
+import { Form, FormField, FormControl, FormItem, FormLabel, FormDescription, FormMessage } from "@/components/ui/form";
 
-import { useState, useEffect, useTransition } from "react"
-import { useSession } from "next-auth/react"
-import { useCurrentUser } from "@/hooks/use-current-user"
+import { useState, useEffect, useTransition } from "react";
+import { useSession } from "next-auth/react";
+import { useCurrentUser } from "@/hooks/use-current-user";
 
-import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar"
-import { Button } from "@/components/ui/button"
-import { Switch } from "@/components/ui/switch"
-import { settings } from "@/actions/settings"
-import { Input } from "@/components/ui/input"
-import { FormError } from "@/components/form-error"
-import { FormSuccess } from "@/components/form-success"
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
+import { Switch } from "@/components/ui/switch";
+import { settings } from "@/actions/settings";
+import { Input } from "@/components/ui/input";
+import { FormError } from "@/components/forms/form-error";
+import { FormSuccess } from "@/components/forms/form-success";
 
-import Image from "next/image"
+import Image from "next/image";
 
-import { FaUser } from "react-icons/fa"
-import { cn } from "@/lib/utils"
+import { FaUser } from "react-icons/fa";
+import { cn } from "@/lib/utils";
 
 interface UserProfileCardProps {
-	classNames?: string
+	classNames?: string;
 }
 
 export const UserProfileCard = ({ classNames }: UserProfileCardProps) => {
-	const user = useCurrentUser()
+	const user = useCurrentUser();
 	// const { status } = useSession({ required: true });
-	const [isPending, startTransition] = useTransition()
+	const [isPending, startTransition] = useTransition();
 	// const [isLoading, setIsLoading] = useState<boolean>(false);
 	// const [links, setLinks] = useState<any[]>([]);
 
@@ -98,9 +98,9 @@ export const UserProfileCard = ({ classNames }: UserProfileCardProps) => {
 			settings({
 				name: "New Username",
 				role: "ADMIN"
-			})
-		})
-	}
+			});
+		});
+	};
 
 	return (
 		<div className={classNames}>
@@ -121,5 +121,5 @@ export const UserProfileCard = ({ classNames }: UserProfileCardProps) => {
 				New Username
 			</button>
 		</div>
-	)
-}
+	);
+};

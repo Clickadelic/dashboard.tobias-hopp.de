@@ -11,8 +11,8 @@ import { Form, FormControl, FormLabel, FormField, FormItem, FormMessage } from "
 import { useSearchParams } from "next/navigation";
 import { CardWrapper } from "./card-wrapper";
 import { Button } from "@/components/ui/button";
-import { FormError } from "@/components/form-error";
-import { FormSuccess } from "@/components/form-success";
+import { FormError } from "@/components/forms/form-error";
+import { FormSuccess } from "@/components/forms/form-success";
 
 import { newPassword } from "@/actions/new-password";
 
