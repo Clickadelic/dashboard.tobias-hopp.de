@@ -90,7 +90,7 @@ export const UserProfileCard = ({ classNames }: UserProfileCardProps) => {
 								<FormError message={error} />
 								<FormSuccess message={success} />
 							</div>
-							<Tabs defaultValue="profile">
+							{/* <Tabs defaultValue="profile">
 								<TabsList className="w-full flex justify-around">
 									<TabsTrigger value="profile" className="w-full block">
 										Profil
@@ -99,86 +99,86 @@ export const UserProfileCard = ({ classNames }: UserProfileCardProps) => {
 										Einstellungen
 									</TabsTrigger>
 								</TabsList>
-								<TabsContent value="profile" className="py-4 min-h-[375px] space-y-3">
-									<FormField
-										control={form.control}
-										name="name"
-										disabled={isPending}
-										render={({ field }) => (
-											<FormItem>
-												<FormLabel>Benutzername</FormLabel>
-												<FormControl>
-													<Input {...field} placeholder="Benutzername" />
-												</FormControl>
-												<FormMessage />
-											</FormItem>
-										)}
-									/>
-									<FormField
-										control={form.control}
-										name="email"
-										disabled={isPending}
-										render={({ field }) => (
-											<FormItem>
-												<FormLabel>E-Mail</FormLabel>
-												<FormControl>
-													<Input {...field} placeholder="E-Mail" />
-												</FormControl>
-												<FormMessage />
-											</FormItem>
-										)}
-									/>
-									<FormField
-										control={form.control}
-										name="password"
-										disabled={isPending}
-										render={({ field }) => (
-											<FormItem>
-												<FormLabel>Passwort</FormLabel>
-												<FormControl>
-													<Input {...field} type="password" autoComplete="off" placeholder="Passwort" />
-												</FormControl>
-												<FormMessage />
-											</FormItem>
-										)}
-									/>
-									<FormField
-										control={form.control}
-										name="newPassword"
-										disabled={isPending}
-										render={({ field }) => (
-											<FormItem>
-												<FormLabel>Neues Passwort</FormLabel>
-												<FormControl>
-													<Input {...field} type="password" placeholder="Neues Passwort" />
-												</FormControl>
-												<FormMessage />
-											</FormItem>
-										)}
-									/>
-									<FormField
-										control={form.control}
-										name="isTwoFactorEnabled"
-										disabled={isPending}
-										render={({ field }) => (
-											<FormItem className="flex flex-row items-center justify-between rounded-lg border p-3">
-												<div className="space-y-0.5">
-													<FormLabel>Zwei-Faktor-Authentifizierung</FormLabel>
-													<FormDescription>Sicheren Login aktivieren</FormDescription>
-												</div>
+								<TabsContent value="profile" className="py-4 min-h-[375px] space-y-3"> */}
+							<FormField
+								control={form.control}
+								name="name"
+								disabled={isPending}
+								render={({ field }) => (
+									<FormItem>
+										<FormLabel>Benutzername</FormLabel>
+										<FormControl>
+											<Input {...field} placeholder="Benutzername" />
+										</FormControl>
+										<FormMessage />
+									</FormItem>
+								)}
+							/>
+							<FormField
+								control={form.control}
+								name="email"
+								disabled={isPending}
+								render={({ field }) => (
+									<FormItem>
+										<FormLabel>E-Mail</FormLabel>
+										<FormControl>
+											<Input {...field} placeholder="E-Mail" />
+										</FormControl>
+										<FormMessage />
+									</FormItem>
+								)}
+							/>
+							<FormField
+								control={form.control}
+								name="password"
+								disabled={isPending}
+								render={({ field }) => (
+									<FormItem>
+										<FormLabel>Passwort</FormLabel>
+										<FormControl>
+											<Input {...field} type="password" autoComplete="off" placeholder="Passwort" />
+										</FormControl>
+										<FormMessage />
+									</FormItem>
+								)}
+							/>
+							<FormField
+								control={form.control}
+								name="newPassword"
+								disabled={isPending}
+								render={({ field }) => (
+									<FormItem>
+										<FormLabel>Neues Passwort</FormLabel>
+										<FormControl>
+											<Input {...field} type="password" placeholder="Neues Passwort" />
+										</FormControl>
+										<FormMessage />
+									</FormItem>
+								)}
+							/>
+							<FormField
+								control={form.control}
+								name="isTwoFactorEnabled"
+								disabled={isPending}
+								render={({ field }) => (
+									<FormItem className="flex flex-row items-center justify-between rounded-lg border p-3">
+										<div className="space-y-0.5">
+											<FormLabel>Zwei-Faktor-Authentifizierung</FormLabel>
+											<FormDescription>Sicheren Login aktivieren</FormDescription>
+										</div>
 
-												<FormControl>
-													<Switch disabled={isPending} checked={field.value} onCheckedChange={field.onChange} />
-												</FormControl>
-												<FormMessage />
-											</FormItem>
-										)}
-									/>
-								</TabsContent>
+										<FormControl>
+											<Switch disabled={isPending} checked={field.value} onCheckedChange={field.onChange} />
+										</FormControl>
+										<FormMessage />
+									</FormItem>
+								)}
+							/>
+							{/* </TabsContent>
 								<TabsContent value="settings" className="py-4 min-h-[375px] space-y-3">
 									Profileinstellungen
 								</TabsContent>
-							</Tabs>
+							</Tabs> */}
 							<Button disabled={isPending} variant="default" type="submit" className="w-full">
 								Speichern
 							</Button>
