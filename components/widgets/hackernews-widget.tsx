@@ -43,7 +43,7 @@ export const HackerNewsWidget = () => {
 		<ul className="list-disc ml-4">
 			{topArticles.map((article: any) => (
 				<li key={article.id}>
-					<Link href={article.url} className="text-sm hover:text-mantis-primary" target="_blank">
+					<Link href={article.url} className="hover:text-mantis-primary" target="_blank">
 						{article.title}
 					</Link>
 				</li>

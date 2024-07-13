@@ -15,7 +15,7 @@ import { Charts } from "../_components/charts"
 
 const DashboardPage = () => {
 	return (
-		<div className="page-wrapper">
+		<div className="page-wrapper pb-4">
 			<h2 className="text-md font-bold text-slate-900 mb-5">Dashboard</h2>
 			<div className="mb-3 md:mb-6">
 				<AppBar />
@@ -63,10 +63,8 @@ const DashboardPage = () => {
 				</div>
 				<div className="col-span-2">
 					<div>
-						<h2 className="text-md font-bold text-slate-900 mb-5">Hackernews</h2>
-						<div className="bg-white rounded-xl shadow-sm border p-2 md:p-4">
-							<HackerNewsWidget />
-						</div>
+						<h2 className="text-md font-bold text-slate-900 mb-5">asd</h2>
+						<div className="bg-white rounded-xl shadow-sm border p-2 md:p-4">asd</div>
 					</div>
 				</div>
 			</div>

@@ -16,17 +16,17 @@ const chartData = [
 const chartConfig = {
 	desktop: {
 		label: "Desktop",
-		color: "#2563eb"
+		color: "#ccc"
 	},
 	mobile: {
 		label: "Mobile",
-		color: "#60a5fa"
+		color: "#999"
 	}
 } satisfies ChartConfig
 
 export const Charts = () => {
 	return (
-		<ChartContainer config={chartConfig} className="min-h-[100px] w-full">
+		<ChartContainer config={chartConfig} className="min-h-[100px] max-h-[352px] w-full">
 			<BarChart accessibilityLayer data={chartData}>
 				<Bar dataKey="desktop" fill="var(--color-desktop)" radius={2} />
 				<Bar dataKey="mobile" fill="var(--color-mobile)" radius={2} />

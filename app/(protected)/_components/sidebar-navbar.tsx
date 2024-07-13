@@ -123,12 +123,29 @@ export const SidebarNavbar = () => {
 						</button>
 						<FullStackSearch classNames="inline-block relative mx-3 md:-top-1" />
 					</div>
-					{/* rechter Mobile Button */}
-					<button className="fixed right-5 md:hidden bg-slate-100 rounded p-2 mt-1">
-						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-text-indent-right" viewBox="0 0 16 16">
-							<path d="M2 3.5a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5m10.646 2.146a.5.5 0 0 1 .708.708L11.707 8l1.647 1.646a.5.5 0 0 1-.708.708l-2-2a.5.5 0 0 1 0-.708l2-2zM2 6.5a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5m0 3a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5m0 3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5" />
-						</svg>
-					</button>
+					{/* TODO: rechter Mobile Button, umbauen auf Media Query */}
+					<button className="fixed right-5 md:hidden bg-slate-100 rounded p-2 mt-1">asd</button>
+					<Sheet>
+						<SheetTrigger className="ml-2 md:hidden">asdasdasd</SheetTrigger>
+						<SheetContent side="right">
+							<SheetHeader>
+								<SheetTitle>
+									<h1>
+										<Link href={DEFAULT_LOGIN_REDIRECT} className="flex justify-between mt-2 text-slate-900 hover:opacity-75">
+											<Image src={logoSrc} width={16} height={16} className="logo inline -mt-1 size-8" alt="Tailwind Dashboard" />
+											{!isToggled && (
+												<span className="ml-2">
+													<span className={cn("md:inline-block font-medium mr-1 text-2xl", laBelleAurore.className)}>Toby&apos;s</span>
+													<span className="md:inline-block font-bold">Dashboard</span>
+												</span>
+											)}
+										</Link>
+									</h1>
+								</SheetTitle>
+								<SheetDescription>Mobile Sidebar rechts</SheetDescription>
+							</SheetHeader>
+						</SheetContent>
+					</Sheet>
 					<ul className="hidden space-x-1 fixed right-5 md:inline-flex md:mt-1 p-3 md:p-0 md:mr-1">
 						<li>
 							<MegaMenu />
