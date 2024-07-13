@@ -52,12 +52,6 @@ export const ProfileDropdown = () => {
 							</Link>
 						</DropdownMenuItem>
 						<DropdownMenuItem>
-							<Link href="/apps" title="Zum Profil">
-								<GrAppsRounded className="size-4 inline-block mr-2 mt-[-2px]" />
-								Meine Apps
-							</Link>
-						</DropdownMenuItem>
-						<DropdownMenuItem>
 							<Link href="/organisationen" title="Zum Profil">
 								<GiOrganigram className="size-4 inline-block mr-2 mt-[-2px]" />
 								Organisationen
