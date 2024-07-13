@@ -1,4 +1,4 @@
-import { UserProfileCard } from "../../../components/cards/user-profile-card"
+import { UserProfileCard } from "@/components/cards/user-profile-card"
 
 const ProfilePage = () => {
 	return (
