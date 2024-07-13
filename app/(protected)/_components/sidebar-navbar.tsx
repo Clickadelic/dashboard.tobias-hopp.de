@@ -1,45 +1,45 @@
-"use client"
+"use client";
 
-import { La_Belle_Aurore } from "next/font/google"
+import { La_Belle_Aurore } from "next/font/google";
 
-import { useAppContext } from "@/context/app-context"
-import { useSession } from "next-auth/react"
-import { useCurrentUser } from "@/hooks/use-current-user"
+import { useAppContext } from "@/context/app-context";
+import { useSession } from "next-auth/react";
+import { useCurrentUser } from "@/hooks/use-current-user";
 
-import Image from "next/image"
-import Link from "next/link"
-import logoSrc from "@/public/favicon.svg"
+import Image from "next/image";
+import Link from "next/link";
+import logoSrc from "@/public/favicon.svg";
 
-import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet"
-import { Skeleton } from "@/components/ui/skeleton"
+import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
+import { Skeleton } from "@/components/ui/skeleton";
 
-import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar"
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 
-import { NavSidebarSimple } from "./nav-sidebar-simple"
+import { NavSidebarSimple } from "./nav-sidebar-simple";
 
-import { FaUser } from "react-icons/fa"
-import { BsTextIndentRight } from "react-icons/bs"
-import { BsTextIndentLeft } from "react-icons/bs"
+import { FaUser } from "react-icons/fa";
+import { BsTextIndentRight } from "react-icons/bs";
+import { BsTextIndentLeft } from "react-icons/bs";
 
-import { cn } from "@/lib/utils"
-import { DEFAULT_LOGIN_REDIRECT } from "@/routes"
+import { cn } from "@/lib/utils";
+import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
 
-import { MegaMenu } from "./navbar-menu/mega-menu"
-import { InboxButton } from "./navbar-menu/inbox-button"
-import { NotificationsButton } from "./navbar-menu/notifications-button"
-import { FullscreenButton } from "./navbar-menu/fullscreen-button"
-import { SidebarSheet } from "./navbar-menu/sidebar-sheet"
-import { ProfileDropdown } from "./navbar-menu/profile-drowndown"
-import { LanguagesButton } from "./navbar-menu/languages-button"
+import { MegaMenu } from "./navbar-menu/mega-menu";
+import { InboxButton } from "./navbar-menu/inbox-button";
+import { NotificationsButton } from "./navbar-menu/notifications-button";
+import { FullscreenButton } from "./navbar-menu/fullscreen-button";
+import { SidebarSheet } from "./navbar-menu/sidebar-sheet";
+import { ProfileDropdown } from "./navbar-menu/profile-drowndown";
+import { LanguagesButton } from "./navbar-menu/languages-button";
 
-import { FullStackSearch } from "./full-stack-search"
+import { FullStackSearch } from "./full-stack-search";
 
-const laBelleAurore = La_Belle_Aurore({ subsets: ["latin"], weight: ["400"] })
+const laBelleAurore = La_Belle_Aurore({ subsets: ["latin"], weight: ["400"] });
 
 export const SidebarNavbar = () => {
-	const { status } = useSession({ required: true })
-	const user = useCurrentUser()
-	const { isToggled, setToggle } = useAppContext()
+	const { status } = useSession({ required: true });
+	const user = useCurrentUser();
+	const { isToggled, setToggle } = useAppContext();
 	// const searchParams = useSearchParams()
 	// const router = useRouter()
 
@@ -91,7 +91,7 @@ export const SidebarNavbar = () => {
 					</>
 				)}
 			</aside>
-			<header className={cn("App-header flex fixed top-0 md:ml-64 w-screen p-2 border-b bg-white", isToggled ? "md:ml-16" : "md:ml-64")}>
+			<header className={cn("App-header flex fixed top-0 md:ml-64 w-screen p-2 border-b bg-white z-50", isToggled ? "md:ml-16" : "md:ml-64")}>
 				<nav className="header-navflex justify-between w-max">
 					<div className="inline-block md:mb-.5">
 						{/* TODO: useMediaQuery() */}
@@ -172,5 +172,5 @@ export const SidebarNavbar = () => {
 				</nav>
 			</header>
 		</>
-	)
-}
+	);
+};

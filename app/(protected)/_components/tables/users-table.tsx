@@ -19,16 +19,19 @@ import { CheckCircledIcon } from "@radix-ui/react-icons";
 import { BsInfoCircle } from "react-icons/bs";
 import { BsFillTrash3Fill } from "react-icons/bs";
 
-import { settings } from "@/actions/settings";
-import { deleteUser, getUsers } from "@/actions/user";
+import { settings } from "@/actions/user-settings";
+import { deleteUser } from "@/actions/user";
+import { getUsersWithoutPassword } from "@/data/user";
 import { User } from "@prisma/client";
+
+type UserWithoutPassword = Omit<User, "password">;
 
 const UsersTable = () => {
 	const user = useCurrentUser();
 	const { update } = useSession();
 
 	const [isLoading, setIsLoading] = useState<boolean>(false);
-	const [users, setUsers] = useState<User[]>([]);
+	const [users, setUsers] = useState<UserWithoutPassword[]>([]);
 
 	const [error, setError] = useState<string | undefined>("");
 	const [success, setSuccess] = useState<string | undefined>("");
@@ -66,10 +69,9 @@ const UsersTable = () => {
 
 	const fetchUsers = async () => {
 		setIsLoading(true);
-		const users = await getUsers();
+		const users = await getUsersWithoutPassword();
 		console.log(users);
-		// TODO: Fix users wrong type
-		// setUsers(users);
+		setUsers(users);
 		setIsLoading(false);
 	};
 
