@@ -12,9 +12,11 @@ import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
 import { Form, FormField, FormControl, FormItem, FormLabel, FormDescription, FormMessage } from "@/components/ui/form";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Input } from "@/components/ui/input";
 import { FormError } from "@/components/forms/form-error";
 import { FormSuccess } from "@/components/forms/form-success";
+
 import { toast } from "sonner";
 
 import { settings } from "@/actions/user-settings";
@@ -83,88 +85,102 @@ export const UserProfileCard = ({ classNames }: UserProfileCardProps) => {
 
 						<h1 className="text-2xl font-medium text-center">{user?.name}</h1>
 						<h2 className="text-xl font-light text-center">{user?.email}</h2>
-						<div className="w-96 mx-auto space-y-3">
+						<div className="w-96 mx-auto">
 							<div className="my-5 h-[44px]">
 								<FormError message={error} />
 								<FormSuccess message={success} />
 							</div>
-							<FormField
-								control={form.control}
-								name="name"
-								disabled={isPending}
-								render={({ field }) => (
-									<FormItem>
-										<FormLabel>Benutzername</FormLabel>
-										<FormControl>
-											<Input {...field} placeholder="Benutzername" />
-										</FormControl>
-										<FormMessage />
-									</FormItem>
-								)}
-							/>
-							<FormField
-								control={form.control}
-								name="email"
-								disabled={isPending}
-								render={({ field }) => (
-									<FormItem>
-										<FormLabel>E-Mail</FormLabel>
-										<FormControl>
-											<Input {...field} placeholder="E-Mail" />
-										</FormControl>
-										<FormMessage />
-									</FormItem>
-								)}
-							/>
-							<FormField
-								control={form.control}
-								name="password"
-								disabled={isPending}
-								render={({ field }) => (
-									<FormItem>
-										<FormLabel>Passwort</FormLabel>
-										<FormControl>
-											<Input {...field} type="password" placeholder="Passwort" />
-										</FormControl>
-										<FormMessage />
-									</FormItem>
-								)}
-							/>
-							<FormField
-								control={form.control}
-								name="newPassword"
-								disabled={isPending}
-								render={({ field }) => (
-									<FormItem>
-										<FormLabel>Neues Passwort</FormLabel>
-										<FormControl>
-											<Input {...field} type="password" placeholder="Neues Passwort" />
-										</FormControl>
-										<FormMessage />
-									</FormItem>
-								)}
-							/>
-							<FormField
-								control={form.control}
-								name="isTwoFactorEnabled"
-								disabled={isPending}
-								render={({ field }) => (
-									<FormItem className="flex flex-row items-center justify-between rounded-lg border p-3">
-										<div className="space-y-0.5">
-											<FormLabel>Zwei-Faktor-Authentifizierung</FormLabel>
-											<FormDescription>Sicheren Login aktivieren</FormDescription>
-										</div>
+							<Tabs defaultValue="profile">
+								<TabsList className="w-full flex justify-around">
+									<TabsTrigger value="profile" className="w-full block">
+										Profil
+									</TabsTrigger>
+									<TabsTrigger value="settings" className="w-full block">
+										Einstellungen
+									</TabsTrigger>
+								</TabsList>
+								<TabsContent value="profile" className="py-4 min-h-[375px] space-y-3">
+									<FormField
+										control={form.control}
+										name="name"
+										disabled={isPending}
+										render={({ field }) => (
+											<FormItem>
+												<FormLabel>Benutzername</FormLabel>
+												<FormControl>
+													<Input {...field} placeholder="Benutzername" />
+												</FormControl>
+												<FormMessage />
+											</FormItem>
+										)}
+									/>
+									<FormField
+										control={form.control}
+										name="email"
+										disabled={isPending}
+										render={({ field }) => (
+											<FormItem>
+												<FormLabel>E-Mail</FormLabel>
+												<FormControl>
+													<Input {...field} placeholder="E-Mail" />
+												</FormControl>
+												<FormMessage />
+											</FormItem>
+										)}
+									/>
+									<FormField
+										control={form.control}
+										name="password"
+										disabled={isPending}
+										render={({ field }) => (
+											<FormItem>
+												<FormLabel>Passwort</FormLabel>
+												<FormControl>
+													<Input {...field} type="password" placeholder="Passwort" />
+												</FormControl>
+												<FormMessage />
+											</FormItem>
+										)}
+									/>
+									<FormField
+										control={form.control}
+										name="newPassword"
+										disabled={isPending}
+										render={({ field }) => (
+											<FormItem>
+												<FormLabel>Neues Passwort</FormLabel>
+												<FormControl>
+													<Input {...field} type="password" placeholder="Neues Passwort" />
+												</FormControl>
+												<FormMessage />
+											</FormItem>
+										)}
+									/>
+									<FormField
+										control={form.control}
+										name="isTwoFactorEnabled"
+										disabled={isPending}
+										render={({ field }) => (
+											<FormItem className="flex flex-row items-center justify-between rounded-lg border p-3">
+												<div className="space-y-0.5">
+													<FormLabel>Zwei-Faktor-Authentifizierung</FormLabel>
+													<FormDescription>Sicheren Login aktivieren</FormDescription>
+												</div>
 
-										<FormControl>
-											<Switch disabled={isPending} checked={field.value} onCheckedChange={field.onChange} />
-										</FormControl>
-										<FormMessage />
-									</FormItem>
-								)}
-							/>
-
+												<FormControl>
+													<Switch disabled={isPending} checked={field.value} onCheckedChange={field.onChange} />
+												</FormControl>
+												<FormMessage />
+											</FormItem>
+										)}
+									/>
+								</TabsContent>
+								<TabsContent value="settings" className="py-4 min-h-[375px] space-y-3">
+									Profileinstellungen
+								</TabsContent>
+							</Tabs>
 							<Button disabled={isPending} variant="default" type="submit" className="w-full">
-								speichern
+								Speichern
 							</Button>
 						</div>
 					</form>
