@@ -1,16 +1,17 @@
-import NextAuth, { type DefaultSession } from "next-auth";
-import { UserRole } from "@prisma/client";
+import NextAuth, { type DefaultSession } from "next-auth"
+import { UserRole } from "@prisma/client"
 
 export type ExtendedUser = DefaultSession["user"] & {
-	profileImage: string | null;
-	backgroundImage: string | null;
-	role: UserRole;
-	isTwoFactorEnabled: boolean;
-	isOAuth: boolean;
-};
+	bio: string | null
+	profileImage: string | null
+	backgroundImage: string | null
+	role: UserRole
+	isTwoFactorEnabled: boolean
+	isOAuth: boolean
+}
 
 declare module "next-auth" {
 	interface Session {
-		user: ExtendedUser;
+		user: ExtendedUser
 	}
 }
