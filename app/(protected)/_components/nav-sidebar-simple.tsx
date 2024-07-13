@@ -18,6 +18,7 @@ import { GoLink } from "react-icons/go";
 import { PiEye } from "react-icons/pi";
 import { FiUsers } from "react-icons/fi";
 import { BsHouseGear } from "react-icons/bs";
+
 import { cn } from "@/lib/utils";
 
 export const NavSidebarSimple = () => {

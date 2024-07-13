@@ -39,13 +39,13 @@ const SystemPage = () => {
 				</RoleGate>
 				<div className="flex justify-between rounded-lg border p-3">
 					<p className="text-sm font-medium mt-1">Admin only API-Route.</p>
-					<button onClick={onApiRouteClick} className="bg-slate-500 text-white rounded-sm p-1 px-2 text-sm">
+					<button onClick={onApiRouteClick} className="bg-slate-500 text-white rounded-sm p-1 px-2 text-sm" aria-label="Click to test API-Route">
 						Click to test
 					</button>
 				</div>
 				<div className="flex justify-between rounded-lg border p-3">
 					<p className="text-sm font-medium mt-1">Admin only Server-Action.</p>
-					<button onClick={onServerActionclick} className="bg-slate-500 text-white rounded-sm p-1 px-2 text-sm">
+					<button onClick={onServerActionclick} className="bg-slate-500 text-white rounded-sm p-1 px-2 text-sm" aria-label="Click to test Server-Action">
 						Click to test
 					</button>
 				</div>
