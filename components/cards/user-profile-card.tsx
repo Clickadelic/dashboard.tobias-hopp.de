@@ -136,7 +136,7 @@ export const UserProfileCard = ({ classNames }: UserProfileCardProps) => {
 											<FormItem>
 												<FormLabel>Passwort</FormLabel>
 												<FormControl>
-													<Input {...field} type="password" autoComplete="off" placeholder="Passwort" />
+													<Input {...field} type="password" required={false} autoComplete="off" placeholder="Passwort" />
 												</FormControl>
 												<FormMessage />
 											</FormItem>
