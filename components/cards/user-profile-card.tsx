@@ -98,8 +98,8 @@ export const UserProfileCard = ({ classNames }: UserProfileCardProps) => {
 									<TabsTrigger value="settings" className="w-full block">
 										Einstellungen
 									</TabsTrigger>
-									<TabsTrigger value="security" className="w-full block">
-										Sicherheit
+									<TabsTrigger value="account" className="w-full block">
+										Account
 									</TabsTrigger>
 								</TabsList>
 								<TabsContent value="profile" className="py-4 min-h-[375px] space-y-3">
@@ -117,6 +117,11 @@ export const UserProfileCard = ({ classNames }: UserProfileCardProps) => {
 											</FormItem>
 										)}
 									/>
+								</TabsContent>
+								<TabsContent value="settings" className="py-4 min-h-[375px] space-y-3">
+									Profileinstellungen
+								</TabsContent>
+								<TabsContent value="account" className="py-4 min-h-[375px] space-y-3">
 									<FormField
 										control={form.control}
 										name="email"
@@ -131,11 +136,6 @@ export const UserProfileCard = ({ classNames }: UserProfileCardProps) => {
 											</FormItem>
 										)}
 									/>
-								</TabsContent>
-								<TabsContent value="settings" className="py-4 min-h-[375px] space-y-3">
-									Profileinstellungen
-								</TabsContent>
-								<TabsContent value="security" className="py-4 min-h-[375px] space-y-3">
 									<FormField
 										control={form.control}
 										name="password"
