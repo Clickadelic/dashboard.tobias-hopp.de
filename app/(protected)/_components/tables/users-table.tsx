@@ -19,7 +19,7 @@ import { CheckCircledIcon } from "@radix-ui/react-icons";
 import { BsInfoCircle } from "react-icons/bs";
 import { BsFillTrash3Fill } from "react-icons/bs";
 
-import { settings } from "@/actions/settings";
+import { settings } from "@/actions/user-settings";
 import { deleteUser } from "@/actions/user";
 import { getUsersWithoutPassword } from "@/data/user";
 import { User } from "@prisma/client";
