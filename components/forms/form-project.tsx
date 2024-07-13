@@ -25,9 +25,9 @@ import { Project } from "@prisma/client"
 export const FormProject = ({ project }: FormProjectProps) => {
 	return (
 		<div>
-			<h1>{project.title}</h1>
-			<h2>{project.description}</h2>
-			<h3>{project.url}</h3>
+			<h1>{project?.title}</h1>
+			<h2>{project?.description}</h2>
+			<h3>{project?.url}</h3>
 		</div>
 	)
 }
