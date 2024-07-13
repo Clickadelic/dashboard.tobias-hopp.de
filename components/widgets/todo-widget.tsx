@@ -1,123 +1,123 @@
-"use client"
+"use client";
 
-import * as z from "zod"
-import { zodResolver } from "@hookform/resolvers/zod"
+import * as z from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 // import Link from "next/link";
 
-import { useTransition, useState, useEffect } from "react"
-import { useForm } from "react-hook-form"
-import { useSession } from "next-auth/react"
+import { useTransition, useState, useEffect } from "react";
+import { useForm } from "react-hook-form";
+import { useSession } from "next-auth/react";
 
-import { Input } from "@/components/ui/input"
-import { Form, FormControl, FormLabel, FormField, FormItem, FormMessage } from "@/components/ui/form"
-import { Textarea } from "@/components/ui/textarea"
+import { Input } from "@/components/ui/input";
+import { Form, FormControl, FormLabel, FormField, FormItem, FormMessage } from "@/components/ui/form";
+import { Textarea } from "@/components/ui/textarea";
 // import { Checkbox } from "@/components/ui/checkbox";
-import { Skeleton } from "@/components/ui/skeleton"
-import { toast } from "sonner"
-import { Button } from "@/components/ui/button"
+import { Skeleton } from "@/components/ui/skeleton";
+import { toast } from "sonner";
+import { Button } from "@/components/ui/button";
 
-import { FiPlus } from "react-icons/fi"
-import { GoTrash } from "react-icons/go"
-import { LiaEdit } from "react-icons/lia"
+import { FiPlus } from "react-icons/fi";
+import { GoTrash } from "react-icons/go";
+import { LiaEdit } from "react-icons/lia";
 
-import { Todo } from "@prisma/client"
-import { TodoSchema } from "@/schemas"
-import { addTodo, editTodo, deleteTodo, getTodosByUserId, toggleIsCompleted } from "@/actions/todo"
-import { cn } from "@/lib/utils"
+import { Todo } from "@prisma/client";
+import { TodoSchema } from "@/schemas";
+import { addTodo, editTodo, deleteTodo, getTodosByUserId, toggleIsCompleted } from "@/actions/todo";
+import { cn } from "@/lib/utils";
 
 interface TodoWidgetProps {
-	classNames?: string
+	classNames?: string;
 }
 
 // 10 Items = 569 Pixel Höhe
 export const TodoWidget = ({ classNames }: TodoWidgetProps = { classNames: "" }) => {
-	const { status } = useSession({ required: true })
+	const { status } = useSession({ required: true });
 
-	const [isPending, startTransition] = useTransition()
-	const [isLoading, setIsLoading] = useState<boolean>(false)
-	const [todos, setTodos] = useState<Todo[]>([])
+	const [isPending, startTransition] = useTransition();
+	const [isLoading, setIsLoading] = useState<boolean>(false);
+	const [todos, setTodos] = useState<Todo[]>([]);
 
 	const fetchTodos = async () => {
-		setIsLoading(true)
+		setIsLoading(true);
 		try {
-			const response = await getTodosByUserId()
-			setTodos(response)
+			const response = await getTodosByUserId();
+			setTodos(response);
 		} catch (error) {
-			toast.error("Failed to fetch Todos.")
+			toast.error("Failed to fetch Todos.");
 		} finally {
-			setIsLoading(false)
+			setIsLoading(false);
 		}
-	}
+	};
 
 	useEffect(() => {
-		setIsLoading(true)
-		fetchTodos()
-		setIsLoading(false)
-	}, [])
+		setIsLoading(true);
+		fetchTodos();
+		setIsLoading(false);
+	}, []);
 
 	const newForm = useForm<z.infer<typeof TodoSchema>>({
 		resolver: zodResolver(TodoSchema),
 		defaultValues: { title: "", description: "", isCompleted: false }
-	})
+	});
 
 	const dynamicForm = useForm<z.infer<typeof TodoSchema>>({
 		resolver: zodResolver(TodoSchema),
 		defaultValues: { title: "", description: "", isCompleted: false }
-	})
+	});
 
 	const onSubmit = async (values: z.infer<typeof TodoSchema>) => {
-		const validatedFields = TodoSchema.safeParse(values)
+		const validatedFields = TodoSchema.safeParse(values);
 		startTransition(async () => {
-			const result = await addTodo(values)
+			const result = await addTodo(values);
 			if (result.error) {
-				toast.error(result.error)
+				toast.error(result.error);
 			} else if (result.success) {
-				toast.success(result.success)
-				newForm.reset()
-				fetchTodos()
+				toast.success(result.success);
+				newForm.reset();
+				fetchTodos();
 			}
-		})
-	}
+		});
+	};
 
 	const onEdit = async (id: string, values: z.infer<typeof TodoSchema>) => {
 		startTransition(async () => {
-			const result = await editTodo(id, values)
+			const result = await editTodo(id, values);
 			if (result.error) {
-				toast.error(result.error)
+				toast.error(result.error);
 			} else if (result.success) {
-				toast.success(result.success)
-				fetchTodos()
+				toast.success(result.success);
+				fetchTodos();
 			}
-		})
-	}
+		});
+	};
 
 	const onIsCompleted = async (id: string) => {
 		startTransition(async () => {
-			const result = await toggleIsCompleted(id)
+			const result = await toggleIsCompleted(id);
 			if (result.error) {
-				toast.error(result.error)
+				toast.error(result.error);
 			} else if (result.success) {
-				toast.success(result.success)
-				fetchTodos()
+				toast.success(result.success);
+				fetchTodos();
 			}
-		})
-	}
+		});
+	};
 
 	// TODO: Funktionen und Server Actions überprüfen und Naming glatt ziehen
 	const deleteTodoById = async (id: string) => {
-		const result = await deleteTodo(id)
+		const result = await deleteTodo(id);
 		if (result.error) {
-			toast.error(result.error)
+			toast.error(result.error);
 		} else if (result.success) {
-			toast.success(result.success)
-			fetchTodos()
+			toast.success(result.success);
+			fetchTodos();
 		}
-	}
+	};
 
 	const showEditForm = () => {
-		alert("Edit")
-	}
+		alert("Edit");
+	};
 
 	return (
 		<div className={cn("min-h-28 pb-1", classNames)}>
@@ -149,10 +149,7 @@ export const TodoWidget = ({ classNames }: TodoWidgetProps = { classNames: "" })
 							</FormItem>
 						)}
 					/>
-					<button
-						disabled={isPending}
-						className="text-white flex items-center p-2 justify-center bg-mantis-primary border hover:border-mantis-primary hover:bg-mantis-hover hover:text-mantis-primary rounded-sm text-sm w-full shadow-none"
-						type="submit">
+					<button disabled={isPending} className="text-white flex items-center p-2 justify-center bg-black border hover:bg-black/90 rounded-sm text-sm w-full shadow-none" type="submit">
 						<FiPlus className="size-4" /> Todo hinufügen
 					</button>
 				</form>
@@ -179,7 +176,8 @@ export const TodoWidget = ({ classNames }: TodoWidgetProps = { classNames: "" })
 								<button
 									// onClick={() => editTodoById(todo.id, dynamicForm.defaultValues({ title: todo.title, description: todo.description }))}
 									className="text-slate-500 hover:text-slate-500 hover:bg-slate-200 rounded-sm p-2"
-									disabled={isPending}>
+									disabled={isPending}
+								>
 									<LiaEdit />
 								</button>
 								<button onClick={() => deleteTodoById(todo.id)} className="text-rose-400 hover:text-rose-600 hover:bg-slate-200 rounded-sm p-2" disabled={isPending}>
@@ -191,5 +189,5 @@ export const TodoWidget = ({ classNames }: TodoWidgetProps = { classNames: "" })
 				)}
 			</ul>
 		</div>
-	)
-}
+	);
+};

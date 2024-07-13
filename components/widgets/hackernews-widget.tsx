@@ -45,7 +45,10 @@ export const HackerNewsWidget = () => {
 				<li key={article.id}>
 					<Link href={article.url} className="hover:text-mantis-primary" target="_blank">
 						<span className="block mb-0 pb-0">{article.title}</span>
-						<span className="text-xs text-slate-500 mb-2">von {article.by}</span>
+						<span className="text-xs text-slate-500 mb-2 flex justify-start gap-2">
+							<span>Score: {article.score}</span>
+							<span>von {article.by}</span>
+						</span>
 					</Link>
 				</li>
 			))}
