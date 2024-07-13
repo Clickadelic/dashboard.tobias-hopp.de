@@ -72,7 +72,7 @@ export const UserProfileCard = ({ classNames }: UserProfileCardProps) => {
 		<div className={classNames}>
 			<div className="bg-white rounded-lg pb-12">
 				<Form {...form}>
-					<form onSubmit={form.handleSubmit(userFormSubmit)} autoComplete="off">
+					<form onSubmit={form.handleSubmit(userFormSubmit)}>
 						<div className="rounded-tl rounded-tr bg-slate-200 h-36">{/* Ghost Div */}</div>
 						<div className="bg-white rounded-full border border-slate-200 size-28 mx-auto -translate-y-1/2">
 							<Avatar>
@@ -136,7 +136,7 @@ export const UserProfileCard = ({ classNames }: UserProfileCardProps) => {
 											<FormItem>
 												<FormLabel>Passwort</FormLabel>
 												<FormControl>
-													<Input {...field} type="password" placeholder="Passwort" />
+													<Input {...field} type="password" autoComplete="off" placeholder="Passwort" />
 												</FormControl>
 												<FormMessage />
 											</FormItem>
