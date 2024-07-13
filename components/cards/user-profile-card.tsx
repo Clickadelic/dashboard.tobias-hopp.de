@@ -107,20 +107,6 @@ export const UserProfileCard = ({ classNames }: UserProfileCardProps) => {
 								<TabsContent value="profile" className="py-4 min-h-[375px] space-y-3">
 									<FormField
 										control={form.control}
-										name="bio"
-										disabled={isPending}
-										render={({ field }) => (
-											<FormItem>
-												<FormLabel>Bio (optional)</FormLabel>
-												<FormControl>
-													<Textarea {...field} placeholder="Über Dich..." />
-												</FormControl>
-												<FormMessage />
-											</FormItem>
-										)}
-									/>
-									<FormField
-										control={form.control}
 										name="name"
 										disabled={isPending}
 										render={({ field }) => (
@@ -128,6 +114,20 @@ export const UserProfileCard = ({ classNames }: UserProfileCardProps) => {
 												<FormLabel>Benutzername</FormLabel>
 												<FormControl>
 													<Input {...field} placeholder="Benutzername" />
+												</FormControl>
+												<FormMessage />
+											</FormItem>
+										)}
+									/>
+									<FormField
+										control={form.control}
+										name="bio"
+										disabled={isPending}
+										render={({ field }) => (
+											<FormItem>
+												<FormLabel>Bio (optional)</FormLabel>
+												<FormControl>
+													<Textarea rows={4} {...field} placeholder="Über Dich..." />
 												</FormControl>
 												<FormMessage />
 											</FormItem>
