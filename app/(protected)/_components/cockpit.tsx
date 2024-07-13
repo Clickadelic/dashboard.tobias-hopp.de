@@ -13,19 +13,19 @@ export const Cockpit = () => {
 				</div>
 			</DrawerTrigger>
 			<DrawerContent>
-				<DrawerHeader>
-					<DrawerClose asChild>
-						<Button variant="subtle" className="absolute top-3 right-3">
-							<IoMdClose />
-						</Button>
-					</DrawerClose>
+				<DrawerClose asChild>
+					<Button variant="subtle" className="absolute top-3 right-3">
+						<IoMdClose />
+					</Button>
+				</DrawerClose>
+				<DrawerHeader className="container mx-auto">
 					<DrawerTitle>Chat GPT</DrawerTitle>
 					<DrawerDescription>Deine Schaltzentrale</DrawerDescription>
 				</DrawerHeader>
-				<div className="min-h-[500px]">
+				<div className="min-h-[500px] container mx-auto">
 					<div className="flex items-center justify-between space-x-2">Cockpit content</div>
 				</div>
-				<DrawerFooter>
+				<DrawerFooter className="container mx-auto mb-12">
 					<Button>Submit</Button>
 				</DrawerFooter>
 			</DrawerContent>

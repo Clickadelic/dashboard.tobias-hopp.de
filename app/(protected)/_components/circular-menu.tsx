@@ -28,11 +28,14 @@ import { FiPlus } from "react-icons/fi"
 import { cn } from "@/lib/utils"
 export const CircularMenu = () => {
 	const { status } = useSession({ required: true })
-	const [show, setShow] = useState<boolean>(false)
-	const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false)
+	const [showMenu, setShowMenu] = useState<boolean>(false)
+
+	const [isProjectDialogOpen, setIsProjectDialogOpen] = useState<boolean>(false)
+	const [isTodoDialogOpen, setIsTodoDialogOpen] = useState<boolean>(false)
+	const [isNoticeDialogOpen, setIsNoticeDialogOpen] = useState<boolean>(false)
+	const [isLinkDialogOpen, setIsLinkDialogOpen] = useState<boolean>(false)
 
 	const [isPending, startTransition] = useTransition()
-	const [isLoading, setIsLoading] = useState<boolean>(false)
 
 	const form = useForm<z.infer<typeof AppSchema>>({
 		resolver: zodResolver(AppSchema),
@@ -50,19 +53,62 @@ export const CircularMenu = () => {
 			// 	fetchApps()
 			// }
 		})
-		setIsDialogOpen(false)
 	}
 
 	return (
 		<div className="fixed bottom-8 right-8 max-w-12">
-			<div className={cn("absolute -top-48 left-1 flex justify-center space-y-2", show ? "block" : "hidden")}>
-				<Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+			<div className={cn("absolute -top-48 left-1 flex justify-center space-y-2", showMenu ? "block" : "hidden")}>
+				<Dialog open={isProjectDialogOpen} onOpenChange={setIsProjectDialogOpen}>
 					<DialogTrigger className="relative bg-mantis-primary hover:bg-mantis-primary/90 p-3 text-white rounded-full">
 						<BsBuildings />
 					</DialogTrigger>
 					<DialogContent>
 						<DialogHeader>
-							<DialogTitle>App-Link hinzufügen</DialogTitle>
+							<DialogTitle>Projekt hinzufügen</DialogTitle>
+							<DialogDescription>Lege ein neues Projekt an.</DialogDescription>
+						</DialogHeader>
+						<Form {...form}>
+							<form onSubmit={form.handleSubmit(onAdd)} className="space-y-2">
+								<FormField
+									control={form.control}
+									name="title"
+									disabled={isPending}
+									render={({ field }) => (
+										<FormItem>
+											<FormControl>
+												<Input {...field} placeholder="Titel" />
+											</FormControl>
+											<FormMessage />
+										</FormItem>
+									)}
+								/>
+								<FormField
+									control={form.control}
+									name="url"
+									disabled={isPending}
+									render={({ field }) => (
+										<FormItem>
+											<FormControl>
+												<Input {...field} className="mb-3" placeholder="Url" />
+											</FormControl>
+											<FormMessage />
+										</FormItem>
+									)}
+								/>
+								<Button disabled={isPending} type="submit" className="w-full">
+									hinzufügen
+								</Button>
+							</form>
+						</Form>
+					</DialogContent>
+				</Dialog>
+				<Dialog open={isTodoDialogOpen} onOpenChange={setIsTodoDialogOpen}>
+					<DialogTrigger className="relative bg-mantis-primary hover:bg-mantis-primary/90 p-3 text-white rounded-full">
+						<BsListCheck />
+					</DialogTrigger>
+					<DialogContent>
+						<DialogHeader>
+							<DialogTitle>Todo hinzufügen</DialogTitle>
 							<DialogDescription>Quick-Links für Deine Startseite</DialogDescription>
 						</DialogHeader>
 						<Form {...form}>
@@ -100,18 +146,97 @@ export const CircularMenu = () => {
 						</Form>
 					</DialogContent>
 				</Dialog>
-				<button className="relative bg-mantis-primary hover:bg-mantis-primary/90 p-3 text-white rounded-full">
-					<BsListCheck />
-				</button>
-				<button className="relative bg-mantis-primary hover:bg-mantis-primary/90 p-3 text-white rounded-full">
-					<CiEdit />
-				</button>
-				<button className="relative bg-mantis-primary hover:bg-mantis-primary/90 p-3 text-white rounded-full">
-					<GoLink />
-				</button>
+				<Dialog open={isNoticeDialogOpen} onOpenChange={setIsNoticeDialogOpen}>
+					<DialogTrigger className="relative bg-mantis-primary hover:bg-mantis-primary/90 p-3 text-white rounded-full">
+						<CiEdit />
+					</DialogTrigger>
+					<DialogContent>
+						<DialogHeader>
+							<DialogTitle>Notiz hinzufügen</DialogTitle>
+							<DialogDescription>Lege eine neue Notiz an.</DialogDescription>
+						</DialogHeader>
+						<Form {...form}>
+							<form onSubmit={form.handleSubmit(onAdd)} className="space-y-2">
+								<FormField
+									control={form.control}
+									name="title"
+									disabled={isPending}
+									render={({ field }) => (
+										<FormItem>
+											<FormControl>
+												<Input {...field} placeholder="Titel" />
+											</FormControl>
+											<FormMessage />
+										</FormItem>
+									)}
+								/>
+								<FormField
+									control={form.control}
+									name="url"
+									disabled={isPending}
+									render={({ field }) => (
+										<FormItem>
+											<FormControl>
+												<Input {...field} className="mb-3" placeholder="Url" />
+											</FormControl>
+											<FormMessage />
+										</FormItem>
+									)}
+								/>
+								<Button disabled={isPending} type="submit" className="w-full">
+									hinzufügen
+								</Button>
+							</form>
+						</Form>
+					</DialogContent>
+				</Dialog>
+				<Dialog open={isLinkDialogOpen} onOpenChange={setIsLinkDialogOpen}>
+					<DialogTrigger className="relative bg-mantis-primary hover:bg-mantis-primary/90 p-3 text-white rounded-full">
+						<GoLink />
+					</DialogTrigger>
+					<DialogContent>
+						<DialogHeader>
+							<DialogTitle>Link hinzufügen</DialogTitle>
+							<DialogDescription>Lege einen neuen Link an.</DialogDescription>
+						</DialogHeader>
+						<Form {...form}>
+							<form onSubmit={form.handleSubmit(onAdd)} className="space-y-2">
+								<FormField
+									control={form.control}
+									name="title"
+									disabled={isPending}
+									render={({ field }) => (
+										<FormItem>
+											<FormControl>
+												<Input {...field} placeholder="Titel" />
+											</FormControl>
+											<FormMessage />
+										</FormItem>
+									)}
+								/>
+								<FormField
+									control={form.control}
+									name="url"
+									disabled={isPending}
+									render={({ field }) => (
+										<FormItem>
+											<FormControl>
+												<Input {...field} className="mb-3" placeholder="Url" />
+											</FormControl>
+											<FormMessage />
+										</FormItem>
+									)}
+								/>
+								<Button disabled={isPending} type="submit" className="w-full">
+									hinzufügen
+								</Button>
+							</form>
+						</Form>
+					</DialogContent>
+				</Dialog>
 			</div>
-			<button className="bg-mantis-primary hover:bg-mantis-primary/90 text-white p-4 text-lg rounded-full" onClick={() => setShow(!show)}>
-				{show ? <FiPlus className="rotate-45 transition-all" /> : <FiPlus className="transition-all" />}
+			<button className="bg-mantis-primary hover:bg-mantis-primary/90 text-white p-4 text-lg rounded-full" onClick={() => setShowMenu(!showMenu)}>
+				{showMenu ? <FiPlus className="rotate-45 transition-all" /> : <FiPlus className="transition-all" />}
 			</button>
 		</div>
 	)
