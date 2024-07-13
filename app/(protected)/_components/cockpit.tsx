@@ -25,7 +25,7 @@ export const Cockpit = () => {
 					<DrawerTitle>
 						<BsChatRightText className="inline-block mr-2 mt-[-3px]" /> Chat GPT
 					</DrawerTitle>
-					<DrawerDescription>Deine Schaltzentrale</DrawerDescription>
+					<DrawerDescription>Frag&apos; die K.-I.</DrawerDescription>
 				</DrawerHeader>
 				<div className="min-h-[500px] container mx-auto">
 					<div className="flex items-center justify-between space-x-2">ChatGPTs antwort</div>
