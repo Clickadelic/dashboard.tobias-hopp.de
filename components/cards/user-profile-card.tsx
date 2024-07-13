@@ -22,6 +22,7 @@ import { toast } from "sonner"
 import { settings } from "@/actions/user-settings"
 import { UserSchema } from "@/schemas"
 import { FaUser } from "react-icons/fa"
+import { Textarea } from "../ui/textarea"
 
 interface UserProfileCardProps {
 	classNames?: string
@@ -40,6 +41,7 @@ export const UserProfileCard = ({ classNames }: UserProfileCardProps) => {
 		defaultValues: {
 			name: user?.name || undefined,
 			email: user?.email || undefined,
+			bio: user?.bio || undefined,
 			profileImage: user?.profileImage || undefined,
 			backgroundImage: user?.backgroundImage || undefined,
 			isTwoFactorEnabled: user?.isTwoFactorEnabled || false,
@@ -103,6 +105,20 @@ export const UserProfileCard = ({ classNames }: UserProfileCardProps) => {
 									</TabsTrigger>
 								</TabsList>
 								<TabsContent value="profile" className="py-4 min-h-[375px] space-y-3">
+									<FormField
+										control={form.control}
+										name="bio"
+										disabled={isPending}
+										render={({ field }) => (
+											<FormItem>
+												<FormLabel>Bio (optional)</FormLabel>
+												<FormControl>
+													<Textarea {...field} placeholder="Über Dich..." />
+												</FormControl>
+												<FormMessage />
+											</FormItem>
+										)}
+									/>
 									<FormField
 										control={form.control}
 										name="name"
