@@ -15,7 +15,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 
-import { NavSidebarSimple } from "./nav-sidebar-simple";
+import { NavSidebarSimple } from "./sidebar-simple";
 
 import { FaUser } from "react-icons/fa";
 import { BsTextIndentRight } from "react-icons/bs";
