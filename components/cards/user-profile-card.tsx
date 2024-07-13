@@ -1,27 +1,25 @@
 "use client";
 
 import * as z from "zod";
-import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { UserSchema } from "@/schemas";
-import { Form, FormField, FormControl, FormItem, FormLabel, FormDescription, FormMessage } from "@/components/ui/form";
+import { useForm } from "react-hook-form";
 
-import { useState, useEffect, useTransition } from "react";
+import { useState, useTransition } from "react";
 import { useSession } from "next-auth/react";
 import { useCurrentUser } from "@/hooks/use-current-user";
 
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
-import { settings } from "@/actions/settings";
+import { Form, FormField, FormControl, FormItem, FormLabel, FormDescription, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { FormError } from "@/components/forms/form-error";
 import { FormSuccess } from "@/components/forms/form-success";
+import { toast } from "sonner";
 
-import Image from "next/image";
-
+import { settings } from "@/actions/user-settings";
+import { UserSchema } from "@/schemas";
 import { FaUser } from "react-icons/fa";
-import { cn } from "@/lib/utils";
 
 interface UserProfileCardProps {
 	classNames?: string;
@@ -29,97 +27,149 @@ interface UserProfileCardProps {
 
 export const UserProfileCard = ({ classNames }: UserProfileCardProps) => {
 	const user = useCurrentUser();
-	// const { status } = useSession({ required: true });
+	const { update } = useSession();
+
+	const [error, setError] = useState<string | undefined>();
+	const [success, setSuccess] = useState<string | undefined>();
 	const [isPending, startTransition] = useTransition();
-	// const [isLoading, setIsLoading] = useState<boolean>(false);
-	// const [links, setLinks] = useState<any[]>([]);
 
-	// const [inProgress, setInProgress] = useState<boolean>(false);
-	// const [file, setFile] = useState<File | null>(null);
-	// const [preview, setPreview] = useState<string | null>(null);
+	const form = useForm<z.infer<typeof UserSchema>>({
+		resolver: zodResolver(UserSchema),
+		defaultValues: {
+			name: user?.name || undefined,
+			email: user?.email || undefined,
+			profileImage: user?.profileImage || undefined,
+			backgroundImage: user?.backgroundImage || undefined,
+			isTwoFactorEnabled: user?.isTwoFactorEnabled || false,
+			role: user?.role || undefined,
+			password: undefined,
+			newPassword: undefined
+		}
+	});
 
-	// const fetchLinks = async () => {
-	// 	setIsLoading(true);
-	// 	// try {
-	// 	// 	const response = await getUserById();
-	// 	// 	setLinks(response);
-	// 	// } catch (error) {
-	// 	// 	toast.error("Fehler beim Laden der Links.");
-	// 	// } finally {
-	// 	// 	setIsLoading(false);
-	// 	// }
-	// };
-
-	// useEffect(() => {
-	// 	setIsLoading(true);
-	// 	fetchLinks();
-	// 	setIsLoading(false);
-	// }, []);
-
-	// const form = useForm<z.infer<typeof UserSchema>>({
-	// 	resolver: zodResolver(UserSchema),
-	// 	defaultValues: { title: "", url: "", description: "" }
-	// });
-
-	// const onSubmit = async (values: z.infer<typeof UserSchema>) => {
-	// 	startTransition(async () => {
-	// 		const result = await addLink(values);
-	// 		if (result.error) {
-	// 			toast.error(result.error);
-	// 		} else if (result.success) {
-	// 			toast.success(result.success);
-	// 			form.reset();
-	// 			fetchLinks();
-	// 		}
-	// 	});
-	// };
-
-	// const handleSubmit = async (event: React.FormEvent) => {
-	// 	setInProgress(true)
-	// 	event.preventDefault()
-
-	// 	if (!file) return
-
-	// 	const formData = new FormData()
-	// 	formData.append("file", file as Blob)
-
-	// 	const response = await fetch(`/api/upload/profile-image/${user?.id}`, {
-	// 		method: "POST",
-	// 		body: formData
-	// 	})
-
-	// 	const data = await response.json()
-	// 	setPreview(data.blob.url)
-	// 	setInProgress(false)
-	// }
-
-	const onClick = () => {
+	const userFormSubmit = (values: z.infer<typeof UserSchema>) => {
 		startTransition(() => {
-			settings({
-				name: "New Username",
-				role: "ADMIN"
-			});
+			const result = settings(values)
+				.then(data => {
+					update({ name: values.name, email: values.email });
+					if (data.error) {
+						setError(data.error);
+					}
+
+					if (data.success) {
+						setSuccess(data.success);
+					}
+				})
+				.catch(error => {
+					setError("Irgendwas ging schief - Ursache unbekannt");
+				});
 		});
 	};
 
 	return (
 		<div className={classNames}>
 			<div className="bg-white rounded-lg pb-12">
-				<div className="rounded-tl rounded-tr bg-slate-200 h-24">{/* Ghost Div */}</div>
-				<div className="bg-white rounded-full border border-slate-200 size-28 mx-auto -translate-y-1/2">{/* Avatar Div */}</div>
-				<h1 className="text-2xl font-medium text-center">{user?.name}</h1>
-				<h1 className="text-xl font-light text-center">{user?.email}</h1>
+				<Form {...form}>
+					<form onSubmit={form.handleSubmit(userFormSubmit)}>
+						<div className="rounded-tl rounded-tr bg-slate-200 h-36">{/* Ghost Div */}</div>
+						<div className="bg-white rounded-full border border-slate-200 size-28 mx-auto -translate-y-1/2">
+							<Avatar>
+								<AvatarImage src={user?.profileImage || ""} className="size-24" />
+								<AvatarFallback>
+									<FaUser />
+								</AvatarFallback>
+							</Avatar>
+						</div>
+
+						<h1 className="text-2xl font-medium text-center">{user?.name}</h1>
+						<h2 className="text-xl font-light text-center">{user?.email}</h2>
+						<div className="w-96 mx-auto space-y-3">
+							<div className="my-5 h-[44px]">
+								<FormError message={error} />
+								<FormSuccess message={success} />
+							</div>
+							<FormField
+								control={form.control}
+								name="name"
+								disabled={isPending}
+								render={({ field }) => (
+									<FormItem>
+										<FormLabel>Benutzername</FormLabel>
+										<FormControl>
+											<Input {...field} placeholder="Benutzername" />
+										</FormControl>
+										<FormMessage />
+									</FormItem>
+								)}
+							/>
+							<FormField
+								control={form.control}
+								name="email"
+								disabled={isPending}
+								render={({ field }) => (
+									<FormItem>
+										<FormLabel>E-Mail</FormLabel>
+										<FormControl>
+											<Input {...field} placeholder="E-Mail" />
+										</FormControl>
+										<FormMessage />
+									</FormItem>
+								)}
+							/>
+							<FormField
+								control={form.control}
+								name="password"
+								disabled={isPending}
+								render={({ field }) => (
+									<FormItem>
+										<FormLabel>Passwort</FormLabel>
+										<FormControl>
+											<Input {...field} type="password" placeholder="Passwort" />
+										</FormControl>
+										<FormMessage />
+									</FormItem>
+								)}
+							/>
+							<FormField
+								control={form.control}
+								name="newPassword"
+								disabled={isPending}
+								render={({ field }) => (
+									<FormItem>
+										<FormLabel>Neues Passwort</FormLabel>
+										<FormControl>
+											<Input {...field} type="password" placeholder="Neues Passwort" />
+										</FormControl>
+										<FormMessage />
+									</FormItem>
+								)}
+							/>
+							<FormField
+								control={form.control}
+								name="isTwoFactorEnabled"
+								disabled={isPending}
+								render={({ field }) => (
+									<FormItem className="flex flex-row items-center justify-between rounded-lg border p-3">
+										<div className="space-y-0.5">
+											<FormLabel>Zwei-Faktor-Authentifizierung</FormLabel>
+											<FormDescription>Sicheren Login aktivieren</FormDescription>
+										</div>
+
+										<FormControl>
+											<Switch disabled={isPending} checked={field.value} onCheckedChange={field.onChange} />
+										</FormControl>
+										<FormMessage />
+									</FormItem>
+								)}
+							/>
+
+							<Button disabled={isPending} variant="default" type="submit" className="w-full">
+								speichern
+							</Button>
+						</div>
+					</form>
+				</Form>
 			</div>
-			{/* <form onSubmit={handleSubmit} className={classNames}>
-				<input id="dropzone-file" className="flex" onChange={event => setFile(event.target.files?.[0] || null)} type="file" />
-				<Button type="submit" variant="default">
-					{inProgress ? "...in Bearbeitung" : "Profilbild hochladen"}
-				</Button>
-			</form>
-			{preview && <Image width={200} height={160} src={preview} alt="Preview" />} */}
-			<button disabled={isPending} onClick={onClick}>
-				New Username
-			</button>
 		</div>
 	);
 };
