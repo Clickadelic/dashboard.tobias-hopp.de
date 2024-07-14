@@ -107,7 +107,7 @@ export const LinkWidget = () => {
 							</FormItem>
 						)}
 					/>
-					<Button disabled={isPending} variant="primary" size="sm" type="submit" className="w-full">
+					<Button disabled={isPending} variant="primary" type="submit" className="w-full">
 						<FiPlus className="mr-2" /> Link hinzufügen
 					</Button>
 				</form>
@@ -120,7 +120,7 @@ export const LinkWidget = () => {
 							<a href={link.url} className="text-sm text-slate-900 hover:text-mantis-primary" target="_blank" title={link.title} rel="noreferrer">
 								{link.title}
 							</a>
-							<p className="text-xs text-slate-400 cursor-pointer">{link.description}</p>
+							<p className="text-xs text-slate-400 cursor-default">{link.description}</p>
 						</span>
 						<span className="space-x-3 flex">
 							<button>

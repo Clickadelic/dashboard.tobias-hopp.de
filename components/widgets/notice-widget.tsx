@@ -88,7 +88,7 @@ export const NoticeWidget = () => {
 					</Button>
 				</form>
 			</Form>
-			<hr />
+			<hr className="my-3" />
 			<ul className="ml-2">
 				{status === "loading" ? (
 					<>
