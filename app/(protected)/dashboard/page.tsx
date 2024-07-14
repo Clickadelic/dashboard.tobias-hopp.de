@@ -9,7 +9,7 @@ import { TodoWidget } from "@/components/widgets/todo-widget";
 import { NoticeWidget } from "@/components/widgets/notice-widget";
 import { LinkWidget } from "@/components/widgets/link-widget";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { HackerNewsWidget } from "@/components/widgets/hackernews-widget";
+// import { HackerNewsWidget } from "@/components/widgets/hackernews-widget";
 
 import { Charts } from "../_components/charts";
 
@@ -57,9 +57,7 @@ const DashboardPage = () => {
 				</div>
 				<div>
 					<h2 className="text-md font-bold text-slate-900 mt-3 mb-5">Hackernews</h2>
-					<div className="bg-white rounded-xl shadow-sm border p-2 md:p-4">
-						<HackerNewsWidget />
-					</div>
+					<div className="bg-white rounded-xl shadow-sm border p-2 md:p-4">{/* <HackerNewsWidget /> */}</div>
 				</div>
 				<div className="col-span-2">
 					<div>

@@ -170,7 +170,7 @@ const LinksTable = () => {
 						</TableRow>
 					</TableHeader>
 					<TableBody>
-						{links.map((link: any) => (
+						{links.map((link: Hyperlink) => (
 							<TableRow data-row-id={link.id} key={link.id}>
 								<TableCell className="truncate ellipsis">{link.title}</TableCell>
 								<TableCell className="truncate ellipsis">

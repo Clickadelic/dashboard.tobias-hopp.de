@@ -149,9 +149,9 @@ export const TodoWidget = ({ classNames }: TodoWidgetProps = { classNames: "" })
 							</FormItem>
 						)}
 					/>
-					<button disabled={isPending} className="text-white flex items-center p-2 justify-center bg-black border hover:bg-black/90 rounded-sm text-sm w-full shadow-none" type="submit">
+					<Button disabled={isPending} variant="primary" className="w-full rounded-md" type="submit">
 						<FiPlus className="size-4" /> Todo hinufügen
-					</button>
+					</Button>
 				</form>
 			</Form>
 			<hr className="mt-3 mb-5" />
@@ -167,7 +167,7 @@ export const TodoWidget = ({ classNames }: TodoWidgetProps = { classNames: "" })
 					todos.map(todo => (
 						<li key={todo.id} className="flex justify-between text-sm">
 							<span>
-								<span className="p-2 rounded-sm hover:bg-slate-200 relative top-[3px]">
+								<span className="p-2 rounded-sm hover:bg-mantis-hover relative top-[3px]">
 									<input type="checkbox" disabled={isPending} checked={todo.isCompleted} onChange={() => onIsCompleted(todo.id)} className="asd" />
 								</span>
 								<span className={cn("ml-2 text-slate-900 relative top-[3px]", todo.isCompleted ? "line-through text-slate-500" : "")}>{todo.title}</span>
@@ -175,7 +175,7 @@ export const TodoWidget = ({ classNames }: TodoWidgetProps = { classNames: "" })
 							<span>
 								<button
 									// onClick={() => editTodoById(todo.id, dynamicForm.defaultValues({ title: todo.title, description: todo.description }))}
-									className="text-slate-500 hover:text-slate-500 hover:bg-slate-200 rounded-sm p-2"
+									className="text-slate-500 hover:text-slate-500 hover:bg-mantis-hover rounded-sm p-2"
 									disabled={isPending}
 								>
 									<LiaEdit />
