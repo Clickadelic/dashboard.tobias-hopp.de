@@ -161,7 +161,7 @@ const LinksTable = () => {
 					</TableHeader>
 					<TableBody>
 						{links.map((link: any) => (
-							<TableRow key={link.id}>
+							<TableRow data-row-id={link.id} key={link.id}>
 								<TableCell className="truncate ellipsis">{link.title}</TableCell>
 								<TableCell className="truncate ellipsis">
 									<Link href={link.url} title={link.title + " in neuen Fenster öffnen"} className="flex justify-between hover:text-sky-500 max-w-72" target="_blank">
@@ -173,7 +173,6 @@ const LinksTable = () => {
 								</TableCell>
 								<TableCell className="truncate">{link?.description}</TableCell>
 								<TableCell className="space-x-5">
-									<button>InlineEdit</button>
 									<Popover>
 										<PopoverTrigger asChild>
 											<button onClick={() => setEditValues(link.id)} className="hover:text-mantis-primary rounded-md inline" title="Link bearbeiten">
@@ -241,6 +240,7 @@ const LinksTable = () => {
 											</button>
 										</PopoverTrigger>
 										<PopoverContent align="end" className="md:w-[600px]">
+											<h3 className="text-md font-bold mb-3">{link.title}</h3>
 											<table className="w-full text-sm font-light text-left">
 												<thead>
 													<tr>
