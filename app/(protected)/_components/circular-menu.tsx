@@ -26,6 +26,9 @@ import { GoLink } from "react-icons/go";
 import { FiPlus } from "react-icons/fi";
 
 import { FormProject } from "@/components/forms/form-project";
+import { FormNotice } from "@/components/forms/form-notice";
+import { FormTodo } from "@/components/forms/form-todo";
+import { FormLink } from "@/components/forms/form-link";
 
 import { cn } from "@/lib/utils";
 export const CircularMenu = () => {
@@ -49,7 +52,7 @@ export const CircularMenu = () => {
 							<DialogTitle>Todo hinzufügen</DialogTitle>
 							<DialogDescription>Quick-Links für Deine Startseite</DialogDescription>
 						</DialogHeader>
-						FORM
+						<FormTodo />
 					</DialogContent>
 				</Dialog>
 				<Dialog open={isLinkDialogOpen} onOpenChange={setIsLinkDialogOpen}>
@@ -61,7 +64,7 @@ export const CircularMenu = () => {
 							<DialogTitle>Link hinzufügen</DialogTitle>
 							<DialogDescription>Lege einen neuen Link an.</DialogDescription>
 						</DialogHeader>
-						FORM
+						<FormLink />
 					</DialogContent>
 				</Dialog>
 				<Dialog open={isNoticeDialogOpen} onOpenChange={setIsNoticeDialogOpen}>
@@ -73,7 +76,7 @@ export const CircularMenu = () => {
 							<DialogTitle>Notiz hinzufügen</DialogTitle>
 							<DialogDescription>Lege eine neue Notiz an.</DialogDescription>
 						</DialogHeader>
-						FORM
+						<FormNotice />
 					</DialogContent>
 				</Dialog>
 				<Dialog open={isProjectDialogOpen} onOpenChange={setIsProjectDialogOpen}>

@@ -65,6 +65,19 @@ export const NoticeWidget = () => {
 		});
 	};
 
+	const onDelete = async (id: string) => {
+		startTransition(async () => {
+			const result = await deleteNoticeById(id);
+			if (result.error) {
+				toast.error(result.error);
+			} else if (result.success) {
+				toast.success(result.success);
+				form.reset();
+				fetchNotices();
+			}
+		});
+	};
+
 	return (
 		<>
 			<Form {...form}>
@@ -89,7 +102,7 @@ export const NoticeWidget = () => {
 				</form>
 			</Form>
 			<hr className="my-3" />
-			<ul className="ml-2">
+			<ul>
 				{status === "loading" ? (
 					<>
 						<Skeleton className="mt-3 mb-5 w-full h-4 bg-black/10 animate-pulse" />
@@ -100,15 +113,14 @@ export const NoticeWidget = () => {
 				) : (
 					notices.map(notice => (
 						<li key={notice.id} className="flex justify-between mb-2 px-3 py-1 hover:bg-mantis-hover rounded-sm">
-							<span>
-								<p className="text-sm">{notice.noticetext}</p>
-							</span>
+							<p>{notice.noticetext}</p>
+
 							<span className="space-x-3 flex">
 								<button>
 									<LiaEdit />
 								</button>
-								<button>
-									<GoTrash />
+								<button onClick={() => deleteNoticeById(notice.id)} className="text-rose-500 hover:text-rose-600">
+									<GoTrash className="size-4 mx-auto" />
 								</button>
 							</span>
 						</li>
