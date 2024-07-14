@@ -1,44 +1,44 @@
-import * as z from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod"
+import { zodResolver } from "@hookform/resolvers/zod"
 
-import { useState, useEffect, useTransition } from "react";
-import { useSession } from "next-auth/react";
-import { useForm } from "react-hook-form";
+import { useState, useEffect, useTransition } from "react"
+import { useSession } from "next-auth/react"
+import { useForm } from "react-hook-form"
 
-import Image from "next/image";
-import Link from "next/link";
+import Image from "next/image"
+import Link from "next/link"
 
-import { AppSchema } from "@/schemas";
+import { AppSchema } from "@/schemas"
 
-import { Input } from "@/components/ui/input";
-import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";
-import { Button } from "@/components/ui/button";
-import { Skeleton } from "@/components/ui/skeleton";
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Input } from "@/components/ui/input"
+import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form"
+import { Button } from "@/components/ui/button"
+import { Skeleton } from "@/components/ui/skeleton"
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 
-import { toast } from "sonner";
+import { toast } from "sonner"
 
-import { BsBuildings } from "react-icons/bs";
-import { BsListCheck } from "react-icons/bs";
-import { CiEdit } from "react-icons/ci";
-import { GoLink } from "react-icons/go";
-import { FiPlus } from "react-icons/fi";
+import { BsBuildings } from "react-icons/bs"
+import { BsListCheck } from "react-icons/bs"
+import { CiEdit } from "react-icons/ci"
+import { GoLink } from "react-icons/go"
+import { FiPlus } from "react-icons/fi"
 
-import { FormProject } from "@/components/forms/form-project";
-import { FormNotice } from "@/components/forms/form-notice";
-import { FormTodo } from "@/components/forms/form-todo";
-import { FormLink } from "@/components/forms/form-link";
+import { FormProject } from "@/components/forms/form-project"
+import { FormNotice } from "@/components/forms/form-notice"
+import { FormTodo } from "@/components/forms/form-todo"
+import { FormLink } from "@/components/forms/form-link"
 
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/utils"
 export const CircularMenu = () => {
-	const { status } = useSession({ required: true });
-	const [showMenu, setShowMenu] = useState<boolean>(false);
+	const { status } = useSession({ required: true })
+	const [showMenu, setShowMenu] = useState<boolean>(false)
 
-	const [isProjectDialogOpen, setIsProjectDialogOpen] = useState<boolean>(false);
-	const [isTodoDialogOpen, setIsTodoDialogOpen] = useState<boolean>(false);
-	const [isNoticeDialogOpen, setIsNoticeDialogOpen] = useState<boolean>(false);
-	const [isLinkDialogOpen, setIsLinkDialogOpen] = useState<boolean>(false);
+	const [isProjectDialogOpen, setIsProjectDialogOpen] = useState<boolean>(false)
+	const [isTodoDialogOpen, setIsTodoDialogOpen] = useState<boolean>(false)
+	const [isNoticeDialogOpen, setIsNoticeDialogOpen] = useState<boolean>(false)
+	const [isLinkDialogOpen, setIsLinkDialogOpen] = useState<boolean>(false)
 
 	return (
 		<div className="fixed bottom-8 right-8 max-w-12">
@@ -49,7 +49,9 @@ export const CircularMenu = () => {
 					</DialogTrigger>
 					<DialogContent>
 						<DialogHeader>
-							<DialogTitle>Todo hinzufügen</DialogTitle>
+							<DialogTitle>
+								<BsListCheck className="mr-2" /> Todo hinzufügen
+							</DialogTitle>
 							<DialogDescription>Quick-Links für Deine Startseite</DialogDescription>
 						</DialogHeader>
 						<FormTodo />
@@ -61,7 +63,9 @@ export const CircularMenu = () => {
 					</DialogTrigger>
 					<DialogContent>
 						<DialogHeader>
-							<DialogTitle>Link hinzufügen</DialogTitle>
+							<DialogTitle>
+								<GoLink className="mr-2" /> Link hinzufügen
+							</DialogTitle>
 							<DialogDescription>Lege einen neuen Link an.</DialogDescription>
 						</DialogHeader>
 						<FormLink />
@@ -73,7 +77,9 @@ export const CircularMenu = () => {
 					</DialogTrigger>
 					<DialogContent>
 						<DialogHeader>
-							<DialogTitle>Notiz hinzufügen</DialogTitle>
+							<DialogTitle>
+								<CiEdit className="mr-2" /> Notiz hinzufügen
+							</DialogTitle>
 							<DialogDescription>Lege eine neue Notiz an.</DialogDescription>
 						</DialogHeader>
 						<FormNotice />
@@ -85,7 +91,10 @@ export const CircularMenu = () => {
 					</DialogTrigger>
 					<DialogContent>
 						<DialogHeader>
-							<DialogTitle>Projekt hinzufügen</DialogTitle>
+							<DialogTitle>
+								<BsBuildings className="mr-2" />
+								Projekt hinzufügen
+							</DialogTitle>
 							<DialogDescription>Lege ein neues Projekt an.</DialogDescription>
 						</DialogHeader>
 						<FormProject />
@@ -96,5 +105,5 @@ export const CircularMenu = () => {
 				{showMenu ? <FiPlus className="rotate-45 transition-all" /> : <FiPlus className="transition-all" />}
 			</button>
 		</div>
-	);
-};
+	)
+}
