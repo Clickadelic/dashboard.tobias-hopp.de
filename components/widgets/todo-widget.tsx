@@ -143,7 +143,7 @@ export const TodoWidget = ({ classNames }: TodoWidgetProps = { classNames: "" })
 						render={({ field }) => (
 							<FormItem className="w-full shadow-none block p-0 mb-3">
 								<FormControl>
-									<Textarea {...field} className="w-full shadow-none h-8 text-sm block" placeholder="Beschreibung" />
+									<Textarea {...field} rows={3} className="w-full shadow-none h-8 text-sm block" placeholder="Beschreibung" />
 								</FormControl>
 								<FormMessage />
 							</FormItem>
