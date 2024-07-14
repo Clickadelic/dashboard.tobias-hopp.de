@@ -35,7 +35,7 @@ export const AppBar = () => {
 
 	const [isPending, startTransition] = useTransition()
 	const [isLoading, setIsLoading] = useState<boolean>(false)
-	const [apps, setApps] = useState<any[]>([])
+	const [apps, setApps] = useState<App[]>([])
 
 	const fetchApps = async () => {
 		try {
