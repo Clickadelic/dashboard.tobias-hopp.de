@@ -23,9 +23,11 @@ import { cn } from "@/lib/utils";
 
 interface FormProjectProps {
 	formClasses?: string;
+	project?: Project;
 }
 
-export const FormProject = ({ formClasses }: FormProjectProps = {}) => {
+export const FormProject = ({ formClasses, project }: FormProjectProps = {}) => {
+	console.log("Child project: ", project);
 	const { status } = useSession({ required: true });
 	const [isDialogOpen, setIsDialogOpen] = useState(false);
 
