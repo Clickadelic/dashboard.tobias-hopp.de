@@ -26,16 +26,16 @@ import Link from "next/link";
 import { LinkSchema } from "@/schemas";
 import { addLink, editLink, deleteLink, getLinksByUserId } from "@/actions/link";
 
-import { ClipboardButton } from "../clipboard-button";
+import { ClipboardButton } from "../../app/(protected)/_components/clipboard-button";
 import { germanDateFormat } from "@/lib/utils";
-
+import { Link as Hyperlink } from "@prisma/client";
 const LinksTable = () => {
 	const { status } = useSession({ required: true });
 	const userId = useCurrentUser()?.id;
 
 	const [isPending, startTransition] = useTransition();
 	const [isLoading, setIsLoading] = useState<boolean>(false);
-	const [links, setLinks] = useState<any[]>([]);
+	const [links, setLinks] = useState<Hyperlink[]>([]);
 
 	const fetchLinks = async () => {
 		setIsLoading(true);
@@ -173,9 +173,10 @@ const LinksTable = () => {
 								</TableCell>
 								<TableCell className="truncate">{link?.description}</TableCell>
 								<TableCell className="space-x-5">
+									<button>InlineEdit</button>
 									<Popover>
 										<PopoverTrigger asChild>
-											<button onClick={() => setEditValues(link.id)} className="hover:text-mantis-primary rounded-md inline">
+											<button onClick={() => setEditValues(link.id)} className="hover:text-mantis-primary rounded-md inline" title="Link bearbeiten">
 												<LiaEdit className="size-4" />
 											</button>
 										</PopoverTrigger>
@@ -225,7 +226,7 @@ const LinksTable = () => {
 														)}
 													/>
 
-													<Button disabled={isPending} variant="outline" type="submit" className="w-full">
+													<Button disabled={isPending} variant="default" type="submit" className="w-full">
 														Bearbeiten
 													</Button>
 												</form>
@@ -239,8 +240,8 @@ const LinksTable = () => {
 												<LuInfo className="size-4" />
 											</button>
 										</PopoverTrigger>
-										<PopoverContent align="end" className="w-[600px]">
-											<table className="w-full text-sm font-light">
+										<PopoverContent align="end" className="md:w-[600px]">
+											<table className="w-full text-sm font-light text-left">
 												<thead>
 													<tr>
 														<th className="text-truncate overflow-hidden text-ellipsis p-1">Link-Id</th>

@@ -87,7 +87,26 @@ export const NoticesGrid = () => {
 			{notices.map(notice => {
 				return (
 					<div key={notice.id} className="bg-white border text-sm p-2 note relative">
-						{notice.noticetext}
+						<Form {...form}>
+							<form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2">
+								<FormField
+									control={form.control}
+									name="noticetext"
+									disabled={isPending}
+									render={({ field }) => (
+										<FormItem>
+											<FormControl>
+												<Textarea {...field} placeholder="Notiztext..." />
+											</FormControl>
+											<FormMessage />
+										</FormItem>
+									)}
+								/>
+								<Button disabled={isPending} variant="default" size="sm" type="submit" className="w-full">
+									hinzufügen
+								</Button>
+							</form>
+						</Form>
 					</div>
 				);
 			})}

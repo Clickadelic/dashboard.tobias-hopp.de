@@ -1,4 +1,4 @@
-import { TodosTable } from "../_components/tables/todos-table";
+import { TodosTable } from "@/components/tables/todos-table";
 
 const TodosPage = () => {
 	return (
