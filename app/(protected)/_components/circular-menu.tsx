@@ -26,6 +26,9 @@ import { GoLink } from "react-icons/go";
 import { FiPlus } from "react-icons/fi";
 
 import { FormProject } from "@/components/forms/form-project";
+import { FormNotice } from "@/components/forms/form-notice";
+import { FormTodo } from "@/components/forms/form-todo";
+import { FormLink } from "@/components/forms/form-link";
 
 import { cn } from "@/lib/utils";
 export const CircularMenu = () => {
@@ -40,8 +43,44 @@ export const CircularMenu = () => {
 	return (
 		<div className="fixed bottom-8 right-8 max-w-12">
 			<div className={cn("absolute -top-48 left-1 flex justify-center space-y-2", showMenu ? "block" : "hidden")}>
+				<Dialog open={isTodoDialogOpen} onOpenChange={setIsTodoDialogOpen}>
+					<DialogTrigger className="relative bg-mantis-primary hover:bg-mantis-primary/90 p-3 text-white rounded-full">
+						<BsListCheck />
+					</DialogTrigger>
+					<DialogContent>
+						<DialogHeader>
+							<DialogTitle>Todo hinzufügen</DialogTitle>
+							<DialogDescription>Quick-Links für Deine Startseite</DialogDescription>
+						</DialogHeader>
+						<FormTodo />
+					</DialogContent>
+				</Dialog>
+				<Dialog open={isLinkDialogOpen} onOpenChange={setIsLinkDialogOpen}>
+					<DialogTrigger className="relative bg-mantis-primary hover:bg-mantis-primary/90 p-3 text-white rounded-full">
+						<GoLink />
+					</DialogTrigger>
+					<DialogContent>
+						<DialogHeader>
+							<DialogTitle>Link hinzufügen</DialogTitle>
+							<DialogDescription>Lege einen neuen Link an.</DialogDescription>
+						</DialogHeader>
+						<FormLink />
+					</DialogContent>
+				</Dialog>
+				<Dialog open={isNoticeDialogOpen} onOpenChange={setIsNoticeDialogOpen}>
+					<DialogTrigger className="relative bg-mantis-primary hover:bg-mantis-primary/90 p-3 text-white rounded-full">
+						<CiEdit />
+					</DialogTrigger>
+					<DialogContent>
+						<DialogHeader>
+							<DialogTitle>Notiz hinzufügen</DialogTitle>
+							<DialogDescription>Lege eine neue Notiz an.</DialogDescription>
+						</DialogHeader>
+						<FormNotice />
+					</DialogContent>
+				</Dialog>
 				<Dialog open={isProjectDialogOpen} onOpenChange={setIsProjectDialogOpen}>
-					<DialogTrigger className="relative bg-black hover:bg-black/90 p-3 text-white rounded-full">
+					<DialogTrigger className="relative bg-mantis-primary hover:bg-mantis-primary/90 p-3 text-white rounded-full">
 						<BsBuildings />
 					</DialogTrigger>
 					<DialogContent>
@@ -52,44 +91,8 @@ export const CircularMenu = () => {
 						<FormProject />
 					</DialogContent>
 				</Dialog>
-				<Dialog open={isTodoDialogOpen} onOpenChange={setIsTodoDialogOpen}>
-					<DialogTrigger className="relative bg-black hover:bg-black/90 p-3 text-white rounded-full">
-						<BsListCheck />
-					</DialogTrigger>
-					<DialogContent>
-						<DialogHeader>
-							<DialogTitle>Todo hinzufügen</DialogTitle>
-							<DialogDescription>Quick-Links für Deine Startseite</DialogDescription>
-						</DialogHeader>
-						FORM
-					</DialogContent>
-				</Dialog>
-				<Dialog open={isNoticeDialogOpen} onOpenChange={setIsNoticeDialogOpen}>
-					<DialogTrigger className="relative bg-black hover:bg-black/90 p-3 text-white rounded-full">
-						<CiEdit />
-					</DialogTrigger>
-					<DialogContent>
-						<DialogHeader>
-							<DialogTitle>Notiz hinzufügen</DialogTitle>
-							<DialogDescription>Lege eine neue Notiz an.</DialogDescription>
-						</DialogHeader>
-						FORM
-					</DialogContent>
-				</Dialog>
-				<Dialog open={isLinkDialogOpen} onOpenChange={setIsLinkDialogOpen}>
-					<DialogTrigger className="relative bg-black hover:bg-black/90 p-3 text-white rounded-full">
-						<GoLink />
-					</DialogTrigger>
-					<DialogContent>
-						<DialogHeader>
-							<DialogTitle>Link hinzufügen</DialogTitle>
-							<DialogDescription>Lege einen neuen Link an.</DialogDescription>
-						</DialogHeader>
-						FORM
-					</DialogContent>
-				</Dialog>
 			</div>
-			<button className="bg-black hover:bg-black/90 text-white p-4 text-lg rounded-full" onClick={() => setShowMenu(!showMenu)}>
+			<button className="bg-mantis-primary hover:bg-mantis-primary/90 text-white p-4 text-lg rounded-full" onClick={() => setShowMenu(!showMenu)}>
 				{showMenu ? <FiPlus className="rotate-45 transition-all" /> : <FiPlus className="transition-all" />}
 			</button>
 		</div>

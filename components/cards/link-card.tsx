@@ -28,7 +28,7 @@ export const LinkCard = () => {
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 	const [links, setLinks] = useState<Hyperlink[]>([]);
 	const [latestLink, setLatestLink] = useState<Hyperlink | null>(null);
-	
+
 	const fetchLinks = async () => {
 		setIsLoading(true);
 		try {
@@ -143,7 +143,7 @@ export const LinkCard = () => {
 									</FormItem>
 								)}
 							/>
-							<Button disabled={isPending} variant="default" size="sm" type="submit" className="w-full">
+							<Button disabled={isPending} variant="primary" size="sm" type="submit" className="w-full">
 								hinzufügen
 							</Button>
 						</form>
