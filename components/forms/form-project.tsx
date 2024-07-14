@@ -1,3 +1,4 @@
+"use client";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
@@ -16,13 +17,17 @@ import { FiPlus } from "react-icons/fi";
 
 import { ProjectSchema } from "@/schemas";
 import { Project } from "@prisma/client";
-import { addProject, getProjectsByUserId, getProjectById, deleteProjectById } from "@/actions/project";
+import { addProject } from "@/actions/project";
+
+import { cn } from "@/lib/utils";
 
 interface FormProjectProps {
-	project: Project | null;
+	formClasses?: string;
+	project?: Project;
 }
 
-export const FormProject = ({ project }: FormProjectProps) => {
+export const FormProject = ({ formClasses, project }: FormProjectProps = {}) => {
+	console.log("Child project: ", project);
 	const { status } = useSession({ required: true });
 	const [isDialogOpen, setIsDialogOpen] = useState(false);
 
@@ -34,14 +39,22 @@ export const FormProject = ({ project }: FormProjectProps) => {
 		defaultValues: { title: "", url: "", description: "" }
 	});
 
+	const onSubmit = async (values: z.infer<typeof ProjectSchema>) => {
+		startTransition(async () => {
+			const result = await addProject(values);
+			if (result.error) {
+				toast.error(result.error);
+			} else if (result.success) {
+				toast.success(result.success);
+				form.reset();
+				setIsDialogOpen(false);
+			}
+		});
+	};
+
 	return (
 		<Form {...form}>
-			<form
-				onSubmit={form.handleSubmit(() => {
-					onAdd(app.id, form.getValues());
-				})}
-				className="space-y-2 mb-3"
-			>
+			<form onSubmit={form.handleSubmit(onSubmit)} className={cn("space-y-2 mb-3", formClasses)}>
 				<FormField
 					control={form.control}
 					name="title"
@@ -68,8 +81,22 @@ export const FormProject = ({ project }: FormProjectProps) => {
 						</FormItem>
 					)}
 				/>
+				<FormField
+					control={form.control}
+					name="description"
+					disabled={isPending}
+					render={({ field }) => (
+						<FormItem>
+							<FormControl>
+								<Textarea rows={4} {...field} className="mb-3" placeholder="Projektbeschreibung" />
+							</FormControl>
+							<FormMessage />
+						</FormItem>
+					)}
+				/>
 				<Button disabled={isPending} type="submit" className="w-full">
-					bearbeiten
+					<FiPlus className="inline text-white mr-2" />
+					Projekt hinzufügen
 				</Button>
 			</form>
 		</Form>

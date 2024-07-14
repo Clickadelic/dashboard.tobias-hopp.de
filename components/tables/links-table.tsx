@@ -29,6 +29,10 @@ import { addLink, editLink, deleteLink, getLinksByUserId } from "@/actions/link"
 import { ClipboardButton } from "../../app/(protected)/_components/clipboard-button";
 import { germanDateFormat } from "@/lib/utils";
 import { Link as Hyperlink } from "@prisma/client";
+
+import { DownloadCSVButton } from "./download-csv-button";
+import { DownloadJSONButton } from "./download-json-button";
+
 const LinksTable = () => {
 	const { status } = useSession({ required: true });
 	const userId = useCurrentUser()?.id;
@@ -150,6 +154,12 @@ const LinksTable = () => {
 				</Form>
 			</div>
 			<div className="bg-white rounded-xl shadow-sm border p-2 md:p-4">
+				<div className="space-x-3 mb-3 flex justify-between">
+					<div className="flex justify-between">
+						<DownloadCSVButton data={links.toString()} fileName="links" btnClasses="p-1 text-sm rounded-lg hover:underline" />
+						<DownloadJSONButton data={links} fileName="links" btnClasses="p-1 text-sm rounded-lg hover:underline" />
+					</div>
+				</div>
 				<Table className="w-full">
 					<TableHeader>
 						<TableRow>
