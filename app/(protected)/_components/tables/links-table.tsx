@@ -1,113 +1,113 @@
-"use client"
+"use client";
 
-import * as z from "zod"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useTransition, useState, useEffect } from "react"
-import { useForm } from "react-hook-form"
-import { useSession } from "next-auth/react"
-import { useCurrentUser } from "@/hooks/use-current-user"
+import * as z from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useTransition, useState, useEffect } from "react";
+import { useForm } from "react-hook-form";
+import { useSession } from "next-auth/react";
+import { useCurrentUser } from "@/hooks/use-current-user";
 
-import { Input } from "@/components/ui/input"
-import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form"
-import { Textarea } from "@/components/ui/textarea"
-import { Skeleton } from "@/components/ui/skeleton"
-import { Button } from "@/components/ui/button"
-import { Table, TableBody, TableCaption, TableCell, TableFooter, TableHead, TableHeader, TableRow } from "@/components/ui/table"
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
-import { toast } from "sonner"
+import { Input } from "@/components/ui/input";
+import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";
+import { Textarea } from "@/components/ui/textarea";
+import { Skeleton } from "@/components/ui/skeleton";
+import { Button } from "@/components/ui/button";
+import { Table, TableBody, TableCaption, TableCell, TableFooter, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { toast } from "sonner";
 
-import { BsFillTrash3Fill } from "react-icons/bs"
-import { BsInfoCircle } from "react-icons/bs"
-import { FiExternalLink } from "react-icons/fi"
-import { FiPlus } from "react-icons/fi"
-import { LiaClipboard } from "react-icons/lia"
-import { LiaEdit } from "react-icons/lia"
-import { CgInternal } from "react-icons/cg"
+import { BsFillTrash3Fill } from "react-icons/bs";
+import { BsInfoCircle } from "react-icons/bs";
+import { FiExternalLink } from "react-icons/fi";
+import { FiPlus } from "react-icons/fi";
+import { LiaClipboard } from "react-icons/lia";
+import { LiaEdit } from "react-icons/lia";
+import { CgInternal } from "react-icons/cg";
 
-import Link from "next/link"
-import { LinkSchema } from "@/schemas"
-import { addLink, editLink, deleteLink, getLinksByUserId } from "@/actions/link"
+import Link from "next/link";
+import { LinkSchema } from "@/schemas";
+import { addLink, editLink, deleteLink, getLinksByUserId } from "@/actions/link";
 
-import { ClipboardButton } from "../clipboard-button"
-import { germanDateFormat } from "@/lib/utils"
+import { ClipboardButton } from "../clipboard-button";
+import { germanDateFormat } from "@/lib/utils";
 
 const LinksTable = () => {
-	const { status } = useSession({ required: true })
-	const userId = useCurrentUser()?.id
+	const { status } = useSession({ required: true });
+	const userId = useCurrentUser()?.id;
 
-	const [isPending, startTransition] = useTransition()
-	const [isLoading, setIsLoading] = useState<boolean>(false)
-	const [links, setLinks] = useState<any[]>([])
+	const [isPending, startTransition] = useTransition();
+	const [isLoading, setIsLoading] = useState<boolean>(false);
+	const [links, setLinks] = useState<any[]>([]);
 
 	const fetchLinks = async () => {
-		setIsLoading(true)
-		const response = await getLinksByUserId()
-		setLinks(response)
-		setIsLoading(false)
-	}
+		setIsLoading(true);
+		const response = await getLinksByUserId();
+		setLinks(response);
+		setIsLoading(false);
+	};
 
 	const deleteLinkById = async (id: string) => {
-		const result = await deleteLink(id)
+		const result = await deleteLink(id);
 		if (result.error) {
-			toast.error(result.error)
+			toast.error(result.error);
 		} else if (result.success) {
-			toast.success(result.success)
-			fetchLinks()
+			toast.success(result.success);
+			fetchLinks();
 		}
-	}
+	};
 
 	useEffect(() => {
-		setIsLoading(true)
-		fetchLinks()
-		setIsLoading(false)
-	}, [])
+		setIsLoading(true);
+		fetchLinks();
+		setIsLoading(false);
+	}, []);
 
 	const setEditValues = (linkId: string) => {
-		const link = links.find(link => link.id === linkId)
+		const link = links.find(link => link.id === linkId);
 		if (link) {
 			dynamicForm.reset({
 				title: link.title,
 				url: link.url,
 				description: link.description
-			})
+			});
 		}
-	}
+	};
 
 	const newForm = useForm<z.infer<typeof LinkSchema>>({
 		resolver: zodResolver(LinkSchema),
 		defaultValues: { title: "", url: "", description: "" }
-	})
+	});
 
 	const dynamicForm = useForm<z.infer<typeof LinkSchema>>({
 		resolver: zodResolver(LinkSchema),
 		defaultValues: { title: "", url: "", description: "" }
-	})
+	});
 
 	const addNewLink = async (values: z.infer<typeof LinkSchema>) => {
 		startTransition(async () => {
-			const result = await addLink(values)
+			const result = await addLink(values);
 			if (result.error) {
-				toast.error(result.error)
+				toast.error(result.error);
 			} else if (result.success) {
-				toast.success(result.success)
-				newForm.reset()
-				fetchLinks()
+				toast.success(result.success);
+				newForm.reset();
+				fetchLinks();
 			}
-		})
-	}
+		});
+	};
 
 	const editCurrentLink = async (id: string, values: z.infer<typeof LinkSchema>) => {
 		startTransition(async () => {
-			const result = await editLink(id, values)
+			const result = await editLink(id, values);
 			if (result.error) {
-				toast.error(result.error)
+				toast.error(result.error);
 			} else if (result.success) {
-				toast.success(result.success)
-				dynamicForm.reset()
-				fetchLinks()
+				toast.success(result.success);
+				dynamicForm.reset();
+				fetchLinks();
 			}
-		})
-	}
+		});
+	};
 
 	return (
 		<>
@@ -155,18 +155,10 @@ const LinksTable = () => {
 				<Table className="w-full">
 					<TableHeader>
 						<TableRow>
-							<TableHead className="w-[20px]">Id</TableHead>
-							<TableHead>Titel</TableHead>
-							<TableHead>
-								<LiaClipboard />
-							</TableHead>
+							<TableHead className="text-truncate overflow-hidden text-ellipsis max-w-[120px]">Titel</TableHead>
 							<TableHead className="text-truncate overflow-hidden text-ellipsis max-w-[120px]">Url</TableHead>
-							<TableHead className="">Target</TableHead>
-							<TableHead className="w-[160px]">Beschreibung</TableHead>
-							<TableHead>bearbeiten</TableHead>
-							<TableHead className="w-[180px]">Hinzugefügt am</TableHead>
-							<TableHead className="w-[180px]">Letzte Änderung</TableHead>
-							<TableHead>löschen</TableHead>
+							<TableHead className="max-w-[160px]">Beschreibung</TableHead>
+							<TableHead className="max-w-[120px]">Aktionen</TableHead>
 						</TableRow>
 					</TableHeader>
 					<TableBody>
@@ -180,26 +172,18 @@ const LinksTable = () => {
 
 						{links.map((link: any) => (
 							<TableRow key={link.id}>
-								<TableCell>
-									<Popover>
-										<PopoverTrigger>
-											<BsInfoCircle />
-										</PopoverTrigger>
-										<PopoverContent>{link.id}</PopoverContent>
-									</Popover>
-								</TableCell>
 								<TableCell className="truncate ellipsis">{link.title}</TableCell>
-								<TableCell>
-									<ClipboardButton classNames="mt-1.5 p-0 hover:text-emerald-500" title="In die Zwischenablage kopieren" textToCopy={link.url} />
-								</TableCell>
 								<TableCell className="truncate ellipsis">
-									<Link href={link.url} title={link.title + " in neuen Fenster öffnen"} className="inline hover:text-sky-500" target="_blank">
-										{link.url}
+									<Link href={link.url} title={link.title + " in neuen Fenster öffnen"} className="flex justify-between hover:text-sky-500 max-w-80" target="_blank">
+										<span className="max-w-72 truncate ellipsis">{link.url}</span>
+										<span className="max-w-7">
+											<FiExternalLink className="ml-2 mt-1 inline" />
+										</span>
 									</Link>
 								</TableCell>
-								<TableCell>{link.target === "_blank" ? <CgInternal className="ml-2 mt-1 inline" /> : <FiExternalLink className="ml-2 mt-1 inline" />}</TableCell>
 								<TableCell className="truncate">{link?.description}</TableCell>
-								<TableCell>
+								<TableCell className="space-x-3">
+									<ClipboardButton classNames="mt-1.5 p-0 hover:text-emerald-500 hover:bg-black hover:text-white" title="In die Zwischenablage kopieren" textToCopy={link.url} />
 									<Popover>
 										<PopoverTrigger asChild>
 											<button onClick={() => setEditValues(link.id)} className="hover:text-mantis-primary rounded-md inline">
@@ -259,26 +243,6 @@ const LinksTable = () => {
 											</Form>
 										</PopoverContent>
 									</Popover>
-								</TableCell>
-
-								<TableCell>
-									<Popover>
-										<PopoverTrigger>
-											<BsInfoCircle />
-										</PopoverTrigger>
-										<PopoverContent>{germanDateFormat(link.createdAt)}</PopoverContent>
-									</Popover>
-								</TableCell>
-								<TableCell>
-									<Popover>
-										<PopoverTrigger>
-											<BsInfoCircle />
-										</PopoverTrigger>
-										<PopoverContent>{germanDateFormat(link.updatedAt)}</PopoverContent>
-									</Popover>
-								</TableCell>
-
-								<TableCell>
 									<button onClick={() => deleteLinkById(link.id)} className="text-rose-500 hover:text-rose-600">
 										<BsFillTrash3Fill className="size-4 mx-auto" />
 									</button>
@@ -289,7 +253,7 @@ const LinksTable = () => {
 				</Table>
 			</div>
 		</>
-	)
-}
+	);
+};
 
-export default LinksTable
+export default LinksTable;
