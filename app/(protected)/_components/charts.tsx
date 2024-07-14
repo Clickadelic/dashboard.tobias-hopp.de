@@ -4,6 +4,7 @@ import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/
 import { BarChart, Bar } from "recharts";
 
 import { type ChartConfig } from "@/components/ui/chart";
+
 const chartData = [
 	{ month: "January", desktop: 186, mobile: 80 },
 	{ month: "February", desktop: 305, mobile: 200 },
@@ -16,11 +17,11 @@ const chartData = [
 const chartConfig = {
 	desktop: {
 		label: "Desktop",
-		color: "#1677ff"
+		color: "#2563eb"
 	},
 	mobile: {
 		label: "Mobile",
-		color: "#e6f4ff"
+		color: "#60a5fa"
 	}
 } satisfies ChartConfig;
 
@@ -28,8 +29,7 @@ export const Charts = () => {
 	return (
 		<ChartContainer config={chartConfig} className="min-h-[100px] max-h-[352px] w-full">
 			<BarChart accessibilityLayer data={chartData}>
-				<Bar dataKey="desktop" fill="var(--color-desktop)" radius={4} />
-				<Bar dataKey="mobile" fill="var(--color-mobile)" radius={4} />
+				<Bar dataKey="links" fill="var(--color-desktop)" radius={4} />
 			</BarChart>
 		</ChartContainer>
 	);

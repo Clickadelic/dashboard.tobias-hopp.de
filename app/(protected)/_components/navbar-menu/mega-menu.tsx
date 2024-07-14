@@ -1,8 +1,8 @@
-import Link from "next/link"
-import { AiOutlineWindows } from "react-icons/ai"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
-import { Button } from "@/components/ui/button"
-import Image from "next/image"
+import Link from "next/link";
+import { AiOutlineWindows } from "react-icons/ai";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { Button } from "@/components/ui/button";
+import Image from "next/image";
 export const MegaMenu = () => {
 	return (
 		<DropdownMenu modal={false}>
@@ -74,23 +74,23 @@ export const MegaMenu = () => {
 							</Link>
 						</li>
 						<li>
-							<Link href="/community/benutzer" className="mb-2 block hover:text-slate-500" target="_blank">
-								Empty Slot
+							<Link href="#" className="mb-2 block hover:text-slate-500" target="_blank">
+								Benutzer
 							</Link>
 						</li>
 						<li>
 							<Link href="#" className="mb-2 block hover:text-slate-500" target="_blank">
-								Empty Slot
+								Einladungen
 							</Link>
 						</li>
 						<li>
 							<Link href="#" className="mb-2 block hover:text-slate-500" target="_blank">
-								Empty Slot
+								Newsletter
 							</Link>
 						</li>
 					</ul>
 				</div>
 			</DropdownMenuContent>
 		</DropdownMenu>
-	)
-}
+	);
+};

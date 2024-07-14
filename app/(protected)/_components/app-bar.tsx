@@ -111,7 +111,7 @@ export const AppBar = () => {
 	};
 
 	return (
-		<div className="w-full">
+		<div className="w-full mb-8">
 			<div className="flex items-start justify-start space-x-3">
 				{apps.length > 0 ? (
 					apps.map(app => (

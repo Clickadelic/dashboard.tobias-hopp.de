@@ -24,7 +24,7 @@ import { LuInfo } from "react-icons/lu";
 
 import Link from "next/link";
 import { LinkSchema } from "@/schemas";
-import { addLink, editLink, deleteLink, getLinksByUserId } from "@/actions/link";
+import { addLink, editLink, deleteLinkById, getLinksByUserId } from "@/actions/link";
 
 import { ClipboardButton } from "../../app/(protected)/_components/clipboard-button";
 import { germanDateFormat } from "@/lib/utils";
@@ -48,8 +48,8 @@ const LinksTable = () => {
 		setIsLoading(false);
 	};
 
-	const deleteLinkById = async (id: string) => {
-		const result = await deleteLink(id);
+	const deleteCurrentLinkById = async (id: string) => {
+		const result = await deleteLinkById(id);
 		if (result.error) {
 			toast.error(result.error);
 		} else if (result.success) {
@@ -170,7 +170,7 @@ const LinksTable = () => {
 						</TableRow>
 					</TableHeader>
 					<TableBody>
-						{links.map((link: any) => (
+						{links.map((link: Hyperlink) => (
 							<TableRow data-row-id={link.id} key={link.id}>
 								<TableCell className="truncate ellipsis">{link.title}</TableCell>
 								<TableCell className="truncate ellipsis">
@@ -235,7 +235,7 @@ const LinksTable = () => {
 														)}
 													/>
 
-													<Button disabled={isPending} variant="default" type="submit" className="w-full">
+													<Button disabled={isPending} variant="primary" type="submit" className="w-full">
 														Bearbeiten
 													</Button>
 												</form>
@@ -269,7 +269,7 @@ const LinksTable = () => {
 											</table>
 										</PopoverContent>
 									</Popover>
-									<button onClick={() => deleteLinkById(link.id)} className="text-rose-500 hover:text-rose-600">
+									<button onClick={() => deleteCurrentLinkById(link.id)} className="text-rose-500 hover:text-rose-600">
 										<BsFillTrash3Fill className="size-4 mx-auto" />
 									</button>
 								</TableCell>

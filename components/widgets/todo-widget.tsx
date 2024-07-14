@@ -143,39 +143,40 @@ export const TodoWidget = ({ classNames }: TodoWidgetProps = { classNames: "" })
 						render={({ field }) => (
 							<FormItem className="w-full shadow-none block p-0 mb-3">
 								<FormControl>
-									<Textarea {...field} className="w-full shadow-none h-8 text-sm block" placeholder="Beschreibung" />
+									<Textarea {...field} rows={3} className="w-full shadow-none h-8 text-sm block" placeholder="Beschreibung" />
 								</FormControl>
 								<FormMessage />
 							</FormItem>
 						)}
 					/>
-					<button disabled={isPending} className="text-white flex items-center p-2 justify-center bg-black border hover:bg-black/90 rounded-sm text-sm w-full shadow-none" type="submit">
-						<FiPlus className="size-4" /> Todo hinufügen
-					</button>
+					<Button disabled={isPending} variant="primary" className="w-full rounded-md" type="submit">
+						<FiPlus className="size-4 mr-2" /> Todo hinufügen
+					</Button>
 				</form>
 			</Form>
-			<hr className="mt-3 mb-5" />
+			<hr className="my-3" />
 			<ul>
 				{status === "loading" ? (
 					<>
-						<Skeleton className="mt-3 mb-5 w-full h-4 bg-black/10 animate-pulse" />
-						<Skeleton className="mt-3 mb-5 w-full h-4 bg-black/10 animate-pulse" />
-						<Skeleton className="mt-3 mb-5 w-75 h-4 bg-black/10 animate-pulse" />
-						<Skeleton className="mt-3 mb-5 w-50 h-4 bg-black/10 animate-pulse" />
+						<Skeleton className="w-full h-6 bg-black/10 animate-pulse" />
+						<Skeleton className="w-full h-6 bg-black/10 animate-pulse" />
+						<Skeleton className="w-full h-6 bg-black/10 animate-pulse" />
+						<Skeleton className="w-75 h-6 bg-black/10 animate-pulse" />
+						<Skeleton className="w-50 h-6 bg-black/10 animate-pulse" />
 					</>
 				) : (
 					todos.map(todo => (
 						<li key={todo.id} className="flex justify-between text-sm">
-							<span>
-								<span className="p-2 rounded-sm hover:bg-slate-200 relative top-[3px]">
-									<input type="checkbox" disabled={isPending} checked={todo.isCompleted} onChange={() => onIsCompleted(todo.id)} className="asd" />
+							<span className="flex justify-start">
+								<span className="hover:bg-mantis-hover rounded-sm">
+									<input type="checkbox" disabled={isPending} checked={todo.isCompleted} onChange={() => onIsCompleted(todo.id)} />
 								</span>
-								<span className={cn("ml-2 text-slate-900 relative top-[3px]", todo.isCompleted ? "line-through text-slate-500" : "")}>{todo.title}</span>
+								<span className={cn("ml-2 text-slate-900", todo.isCompleted ? "line-through text-slate-400" : "")}>{todo.title}</span>
 							</span>
 							<span>
 								<button
 									// onClick={() => editTodoById(todo.id, dynamicForm.defaultValues({ title: todo.title, description: todo.description }))}
-									className="text-slate-500 hover:text-slate-500 hover:bg-slate-200 rounded-sm p-2"
+									className="text-slate-500 hover:text-slate-500 hover:bg-mantis-hover rounded-sm p-2"
 									disabled={isPending}
 								>
 									<LiaEdit />

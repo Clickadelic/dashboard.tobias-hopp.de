@@ -15,9 +15,11 @@ import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 
 import { FiPlus } from "react-icons/fi";
+import { GoTrash } from "react-icons/go";
+import { LiaEdit } from "react-icons/lia";
 
 import { LinkSchema } from "@/schemas";
-import { addLink, getLinksByUserId } from "@/actions/link";
+import { addLink, getLinksByUserId, deleteLinkById } from "@/actions/link";
 import { Link } from "@prisma/client";
 
 export const LinkWidget = () => {
@@ -105,17 +107,29 @@ export const LinkWidget = () => {
 							</FormItem>
 						)}
 					/>
-					<Button disabled={isPending} variant="default" size="sm" type="submit" className="w-full">
-						hinzufügen
+					<Button disabled={isPending} variant="primary" type="submit" className="w-full">
+						<FiPlus className="mr-2" /> Link hinzufügen
 					</Button>
 				</form>
 			</Form>
+			<hr className="my-3" />
 			<ul>
 				{links.map((link: Link) => (
-					<li key={link.id}>
-						<a href={link.url} className="text-sm text-slate-900" target="_blank" title={link.title} rel="noreferrer">
-							{link.title}
-						</a>
+					<li key={link.id} className="flex justify-between mb-2 px-3 py-1 hover:bg-mantis-hover rounded-sm">
+						<span>
+							<a href={link.url} className="text-sm text-slate-900 hover:text-mantis-primary" target="_blank" title={link.title} rel="noreferrer">
+								{link.title}
+							</a>
+							<p className="text-xs text-slate-400 cursor-default">{link.description}</p>
+						</span>
+						<span className="space-x-3 flex">
+							<button>
+								<LiaEdit />
+							</button>
+							<button onClick={() => deleteLinkById(link.id)} className="text-rose-500 hover:text-rose-600">
+								<GoTrash className="size-4 mx-auto" />
+							</button>
+						</span>
 					</li>
 				))}
 			</ul>

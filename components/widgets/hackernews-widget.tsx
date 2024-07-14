@@ -24,6 +24,10 @@ export const HackerNewsWidget = () => {
 		try {
 			// Hole die IDs der Top-Artikel
 			let response = await fetch("https://hacker-news.firebaseio.com/v0/topstories.json");
+			if (response === null || response === undefined) {
+				toast.error("Hackernews API Fehler (Limit erreicht)");
+				return;
+			}
 			let topArticleIds = await response.json();
 
 			// Hole Details für die ersten 10 Artikel
@@ -33,6 +37,10 @@ export const HackerNewsWidget = () => {
 					return await articleResponse.json();
 				})
 			);
+			if (topArticles === null || topArticles === undefined) {
+				toast.error("Hackernews API Fehler (Limit erreicht)");
+				return;
+			}
 			setTopArticles(topArticles);
 		} catch (error) {
 			console.error("Error fetching top articles:", error);
@@ -42,17 +50,21 @@ export const HackerNewsWidget = () => {
 
 	return (
 		<ul className="list-decimal ml-7 my-2">
-			{topArticles.map((article: any) => (
-				<li key={article.id}>
-					<Link href={article.url} className="hover:text-mantis-primary" target="_blank" title="In neuem Fenster öffnen">
-						<span className="block mb-0 pb-0">{article.title}</span>
-						<span className="text-xs text-slate-500 mb-2 flex justify-start gap-1">
-							<span>Score: {article.score},</span>
-							<span>von: {article.by}</span>
-						</span>
-					</Link>
-				</li>
-			))}
+			{topArticles.length > 0 && (
+				<>
+					{topArticles.map((article: any) => (
+						<li key={article.id}>
+							<Link
+								href={`https://news.ycombinator.com/item?id=${article.id}`}
+								target="_blank"
+								rel="noopener noreferrer"
+							>
+								{article.title} - {germanDateFormat(article.time)}
+							</Link>
+						</li>
+					))}
+				</>
+			)}
 			{status === "loading" ||
 				(isLoading && (
 					<>
