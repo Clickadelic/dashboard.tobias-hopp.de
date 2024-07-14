@@ -92,7 +92,7 @@ export const CircularMenu = () => {
 					</DialogContent>
 				</Dialog>
 			</div>
-			<button className="bg-mantis-primary hover:bg-mantis-primary/90 text-white p-4 text-lg rounded-full" onClick={() => setShowMenu(!showMenu)}>
+			<button aria-label="Neuen Inhalt anlegen" className="bg-mantis-primary hover:bg-mantis-primary/90 text-white p-4 text-lg rounded-full" onClick={() => setShowMenu(!showMenu)}>
 				{showMenu ? <FiPlus className="rotate-45 transition-all" /> : <FiPlus className="transition-all" />}
 			</button>
 		</div>

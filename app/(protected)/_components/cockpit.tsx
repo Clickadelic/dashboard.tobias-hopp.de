@@ -35,7 +35,7 @@ export const Cockpit = () => {
 							<BsChatRightText className="mt-2 ml-3 inline-block text-slate-500" />
 						</span>
 						<input type="text" placeholder="Deine Frage an ChatGPT..." className="border-l-0 border-r-0 w-full border p-3" />
-						<button type="submit" className="rounded-tr-full rounded-br-full border border-l-0 p-2">
+						<button type="submit" aria-label="ChatGPT öffnen" className="rounded-tr-full rounded-br-full border border-l-0 p-2">
 							<BsSend className="inline-block mx-3" />
 						</button>
 					</form>

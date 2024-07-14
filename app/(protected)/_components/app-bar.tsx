@@ -123,6 +123,8 @@ export const AppBar = () => {
 							<Popover>
 								<PopoverTrigger asChild className="absolute top-1.5 right-1 rounded-full hover:bg-white/30 text-slate-700">
 									<button
+										title="App bearbeiten"
+										aria-label="App bearbeiten"
 										onClick={() => {
 											setEditValues(app.id);
 										}}
@@ -171,6 +173,7 @@ export const AppBar = () => {
 									</Form>
 									<button
 										title="App löschen"
+										aria-label="App löschen"
 										className="text-sm border-destructive text-destructive bg-transparent shadow-none hover:text-rose-700"
 										onClick={() => {
 											onDelete(app.id);
@@ -238,7 +241,7 @@ export const AppBar = () => {
 										</FormItem>
 									)}
 								/>
-								<Button disabled={isPending} type="submit" className="w-full">
+								<Button disabled={isPending} aria-label="App hinzufügen" type="submit" className="w-full">
 									hinzufügen
 								</Button>
 							</form>
