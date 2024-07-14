@@ -20,7 +20,7 @@ export const copyToClipboard = async (textToCopy: string) => {
 
 export const ClipboardButton = ({ classNames, textToCopy }: ClipboardButtonProps) => {
 	return (
-		<button className={classNames} onClick={() => copyToClipboard(textToCopy)}>
+		<button aria-label="In Zwischenablage kopieren" className={classNames} onClick={() => copyToClipboard(textToCopy)}>
 			<LiaClipboard className="size-4" />
 		</button>
 	);
