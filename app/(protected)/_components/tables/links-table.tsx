@@ -17,19 +17,15 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { toast } from "sonner";
 
 import { BsFillTrash3Fill } from "react-icons/bs";
-import { BsInfoCircle } from "react-icons/bs";
 import { FiExternalLink } from "react-icons/fi";
 import { FiPlus } from "react-icons/fi";
-import { LiaClipboard } from "react-icons/lia";
 import { LiaEdit } from "react-icons/lia";
-import { CgInternal } from "react-icons/cg";
 
 import Link from "next/link";
 import { LinkSchema } from "@/schemas";
 import { addLink, editLink, deleteLink, getLinksByUserId } from "@/actions/link";
 
 import { ClipboardButton } from "../clipboard-button";
-import { germanDateFormat } from "@/lib/utils";
 
 const LinksTable = () => {
 	const { status } = useSession({ required: true });
@@ -155,35 +151,35 @@ const LinksTable = () => {
 				<Table className="w-full">
 					<TableHeader>
 						<TableRow>
-							<TableHead className="text-truncate overflow-hidden text-ellipsis max-w-[120px]">Titel</TableHead>
-							<TableHead className="text-truncate overflow-hidden text-ellipsis max-w-[120px]">Url</TableHead>
-							<TableHead className="max-w-[160px]">Beschreibung</TableHead>
-							<TableHead className="max-w-[120px]">Aktionen</TableHead>
+							<TableHead className="text-truncate overflow-hidden text-ellipsis">Titel</TableHead>
+							<TableHead className="text-truncate overflow-hidden text-ellipsis">Url</TableHead>
+							<TableHead className="text-truncate overflow-hidden text-ellipsis">Beschreibung</TableHead>
+							<TableHead className="text-truncate overflow-hidden text-ellipsis">Aktionen</TableHead>
 						</TableRow>
 					</TableHeader>
 					<TableBody>
-						{status === "loading" && (
-							<TableRow>
-								<TableCell colSpan={10}>
-									<Skeleton className="h-5 w-full" />
-								</TableCell>
-							</TableRow>
-						)}
+						{status === "loading" ||
+							(isLoading && (
+								<TableRow>
+									<TableCell colSpan={10}>
+										<Skeleton className="h-5 w-full" />
+									</TableCell>
+								</TableRow>
+							))}
 
 						{links.map((link: any) => (
 							<TableRow key={link.id}>
 								<TableCell className="truncate ellipsis">{link.title}</TableCell>
 								<TableCell className="truncate ellipsis">
-									<Link href={link.url} title={link.title + " in neuen Fenster öffnen"} className="flex justify-between hover:text-sky-500 max-w-80" target="_blank">
+									<Link href={link.url} title={link.title + " in neuen Fenster öffnen"} className="flex justify-between hover:text-sky-500 max-w-72" target="_blank">
 										<span className="max-w-72 truncate ellipsis">{link.url}</span>
 										<span className="max-w-7">
-											<FiExternalLink className="ml-2 mt-1 inline" />
+											<FiExternalLink className="ml-2 inline" />
 										</span>
 									</Link>
 								</TableCell>
 								<TableCell className="truncate">{link?.description}</TableCell>
-								<TableCell className="space-x-3">
-									<ClipboardButton classNames="mt-1.5 p-0 hover:text-emerald-500 hover:bg-black hover:text-white" title="In die Zwischenablage kopieren" textToCopy={link.url} />
+								<TableCell className="space-x-5">
 									<Popover>
 										<PopoverTrigger asChild>
 											<button onClick={() => setEditValues(link.id)} className="hover:text-mantis-primary rounded-md inline">
@@ -243,6 +239,7 @@ const LinksTable = () => {
 											</Form>
 										</PopoverContent>
 									</Popover>
+									<ClipboardButton classNames="mt-1.5 p-0 hover:text-emerald-500" title="In die Zwischenablage kopieren" textToCopy={link.url} />
 									<button onClick={() => deleteLinkById(link.id)} className="text-rose-500 hover:text-rose-600">
 										<BsFillTrash3Fill className="size-4 mx-auto" />
 									</button>
