@@ -1,4 +1,5 @@
 import Link from "next/link"
+import { slugify } from "@/lib/utils"
 import { FaArrowRightLong } from "react-icons/fa6"
 
 interface ProjectProps {
@@ -9,6 +10,7 @@ interface ProjectProps {
 }
 
 export const MacBook = ({ id, title, url, description }: ProjectProps) => {
+	const slug = slugify(title)
 	return (
 		<div key={id}>
 			<div className="w-full h-auto hover:opacity-90">

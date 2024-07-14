@@ -24,7 +24,6 @@ export const FullStackSearch = ({ classNames }: FullStackSearchProps) => {
 		}
 		replace(`${pathname}?${params.toString()}`)
 		const results = getFullStackSearchResults(term)
-		console.log(results)
 	}
 
 	return (

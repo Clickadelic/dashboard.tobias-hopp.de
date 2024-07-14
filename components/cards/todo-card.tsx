@@ -73,11 +73,11 @@ export const TodoCard = () => {
 	return (
 		<div className="bg-white rounded-xl shadow-sm border p-2 md:p-4">
 			<h2 className="text-xs md:text-sm border-bottom text-slate-900 flex justify-between mb-2">
-				<span>Todo&apos;s</span>
+				<Link href="/todos" className="hover:text-slate-700 hover:underline" title="Zur Todo-Übersicht">
+					Todo&apos;s
+				</Link>
+
 				<span>neuestes Todo</span>
-				{/* <Link href="/todos" className="hover:text-slate-900">
-					zur Übersicht
-				</Link> */}
 			</h2>
 			<h3 className="flex justify-between mb-4">
 				<span className="font-bold">
