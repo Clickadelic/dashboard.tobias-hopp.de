@@ -28,7 +28,7 @@ type UserWithoutPassword = Omit<User, "password">;
 
 const UsersTable = () => {
 	const user = useCurrentUser();
-	const { update } = useSession();
+	const { status, update } = useSession();
 
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 	const [users, setUsers] = useState<UserWithoutPassword[]>([]);
@@ -70,7 +70,6 @@ const UsersTable = () => {
 	const fetchUsers = async () => {
 		setIsLoading(true);
 		const users = await getUsersWithoutPassword();
-		console.log(users);
 		setUsers(users);
 		setIsLoading(false);
 	};
@@ -93,7 +92,7 @@ const UsersTable = () => {
 
 	return (
 		<Table>
-			<TableCaption>{isLoading ? "Lade Benutzer..." : `${users.length} Benutzer.`}</TableCaption>
+			<TableCaption>{status === "loading" || isLoading ? "Lade Benutzer..." : `${users.length} Benutzer.`}</TableCaption>
 			<TableHeader>
 				<TableRow>
 					<TableHead>Id</TableHead>
