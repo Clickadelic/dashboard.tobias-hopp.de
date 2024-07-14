@@ -40,20 +40,8 @@ export const CircularMenu = () => {
 	return (
 		<div className="fixed bottom-8 right-8 max-w-12">
 			<div className={cn("absolute -top-48 left-1 flex justify-center space-y-2", showMenu ? "block" : "hidden")}>
-				<Dialog open={isProjectDialogOpen} onOpenChange={setIsProjectDialogOpen}>
-					<DialogTrigger className="relative bg-black hover:bg-black/90 p-3 text-white rounded-full">
-						<BsBuildings />
-					</DialogTrigger>
-					<DialogContent>
-						<DialogHeader>
-							<DialogTitle>Projekt hinzufügen</DialogTitle>
-							<DialogDescription>Lege ein neues Projekt an.</DialogDescription>
-						</DialogHeader>
-						<FormProject />
-					</DialogContent>
-				</Dialog>
 				<Dialog open={isTodoDialogOpen} onOpenChange={setIsTodoDialogOpen}>
-					<DialogTrigger className="relative bg-black hover:bg-black/90 p-3 text-white rounded-full">
+					<DialogTrigger className="relative bg-mantis-primary hover:bg-mantis-primary/90 p-3 text-white rounded-full">
 						<BsListCheck />
 					</DialogTrigger>
 					<DialogContent>
@@ -64,20 +52,8 @@ export const CircularMenu = () => {
 						FORM
 					</DialogContent>
 				</Dialog>
-				<Dialog open={isNoticeDialogOpen} onOpenChange={setIsNoticeDialogOpen}>
-					<DialogTrigger className="relative bg-black hover:bg-black/90 p-3 text-white rounded-full">
-						<CiEdit />
-					</DialogTrigger>
-					<DialogContent>
-						<DialogHeader>
-							<DialogTitle>Notiz hinzufügen</DialogTitle>
-							<DialogDescription>Lege eine neue Notiz an.</DialogDescription>
-						</DialogHeader>
-						FORM
-					</DialogContent>
-				</Dialog>
 				<Dialog open={isLinkDialogOpen} onOpenChange={setIsLinkDialogOpen}>
-					<DialogTrigger className="relative bg-black hover:bg-black/90 p-3 text-white rounded-full">
+					<DialogTrigger className="relative bg-mantis-primary hover:bg-mantis-primary/90 p-3 text-white rounded-full">
 						<GoLink />
 					</DialogTrigger>
 					<DialogContent>
@@ -88,8 +64,32 @@ export const CircularMenu = () => {
 						FORM
 					</DialogContent>
 				</Dialog>
+				<Dialog open={isNoticeDialogOpen} onOpenChange={setIsNoticeDialogOpen}>
+					<DialogTrigger className="relative bg-mantis-primary hover:bg-mantis-primary/90 p-3 text-white rounded-full">
+						<CiEdit />
+					</DialogTrigger>
+					<DialogContent>
+						<DialogHeader>
+							<DialogTitle>Notiz hinzufügen</DialogTitle>
+							<DialogDescription>Lege eine neue Notiz an.</DialogDescription>
+						</DialogHeader>
+						FORM
+					</DialogContent>
+				</Dialog>
+				<Dialog open={isProjectDialogOpen} onOpenChange={setIsProjectDialogOpen}>
+					<DialogTrigger className="relative bg-mantis-primary hover:bg-mantis-primary/90 p-3 text-white rounded-full">
+						<BsBuildings />
+					</DialogTrigger>
+					<DialogContent>
+						<DialogHeader>
+							<DialogTitle>Projekt hinzufügen</DialogTitle>
+							<DialogDescription>Lege ein neues Projekt an.</DialogDescription>
+						</DialogHeader>
+						<FormProject />
+					</DialogContent>
+				</Dialog>
 			</div>
-			<button className="bg-black hover:bg-black/90 text-white p-4 text-lg rounded-full" onClick={() => setShowMenu(!showMenu)}>
+			<button className="bg-mantis-primary hover:bg-mantis-primary/90 text-white p-4 text-lg rounded-full" onClick={() => setShowMenu(!showMenu)}>
 				{showMenu ? <FiPlus className="rotate-45 transition-all" /> : <FiPlus className="transition-all" />}
 			</button>
 		</div>
