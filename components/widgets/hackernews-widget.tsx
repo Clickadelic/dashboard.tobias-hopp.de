@@ -44,7 +44,7 @@ export const HackerNewsWidget = () => {
 		<ul className="list-decimal ml-7 my-2">
 			{topArticles.map((article: any) => (
 				<li key={article.id}>
-					<Link href={article.url} className="hover:text-mantis-primary" target="_blank">
+					<Link href={article.url} className="hover:text-mantis-primary" target="_blank" title="In neuem Fenster öffnen">
 						<span className="block mb-0 pb-0">{article.title}</span>
 						<span className="text-xs text-slate-500 mb-2 flex justify-start gap-1">
 							<span>Score: {article.score},</span>

@@ -28,6 +28,7 @@ export const LinkCard = () => {
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 	const [links, setLinks] = useState<Hyperlink[]>([]);
 	const [latestLink, setLatestLink] = useState<Hyperlink | null>(null);
+	
 	const fetchLinks = async () => {
 		setIsLoading(true);
 		try {
@@ -89,7 +90,7 @@ export const LinkCard = () => {
 					{status === "loading" || isLoading ? (
 						<Skeleton className="mt-3 mb-5 w-12 h-4 bg-primary/10 animate-pulse" />
 					) : (
-						<Link href={latestLink?.url || "#"} className="hover:text-mantis-primary max-w-16 md:max-w-52 inline-flex overflow-hidden truncate ellipsis" target="_blank">
+						<Link href={latestLink?.url || "#"} className="hover:text-mantis-primary max-w-[260px] md:max-w-52 inline-flex overflow-hidden truncate ellipsis" target="_blank">
 							{latestLink?.url || "erstelle Deinen ersten Link"}
 						</Link>
 					)}
