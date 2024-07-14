@@ -50,9 +50,9 @@ export const CircularMenu = () => {
 					<DialogContent>
 						<DialogHeader>
 							<DialogTitle>
-								<BsListCheck className="mr-2" /> Todo hinzufügen
+								<BsListCheck className="inline -mt-.5 mr-2" /> Todo hinzufügen
 							</DialogTitle>
-							<DialogDescription>Quick-Links für Deine Startseite</DialogDescription>
+							<DialogDescription>Was gibt es zu erledigen?</DialogDescription>
 						</DialogHeader>
 						<FormTodo />
 					</DialogContent>
@@ -64,7 +64,7 @@ export const CircularMenu = () => {
 					<DialogContent>
 						<DialogHeader>
 							<DialogTitle>
-								<GoLink className="mr-2" /> Link hinzufügen
+								<GoLink className="inline -mt-.5 mr-2" /> Link hinzufügen
 							</DialogTitle>
 							<DialogDescription>Lege einen neuen Link an.</DialogDescription>
 						</DialogHeader>
@@ -78,7 +78,7 @@ export const CircularMenu = () => {
 					<DialogContent>
 						<DialogHeader>
 							<DialogTitle>
-								<CiEdit className="mr-2" /> Notiz hinzufügen
+								<CiEdit className="inline -mt-.5 mr-2" /> Notiz hinzufügen
 							</DialogTitle>
 							<DialogDescription>Lege eine neue Notiz an.</DialogDescription>
 						</DialogHeader>
@@ -92,7 +92,7 @@ export const CircularMenu = () => {
 					<DialogContent>
 						<DialogHeader>
 							<DialogTitle>
-								<BsBuildings className="mr-2" />
+								<BsBuildings className="inline -mt-.5 mr-2" />
 								Projekt hinzufügen
 							</DialogTitle>
 							<DialogDescription>Lege ein neues Projekt an.</DialogDescription>
