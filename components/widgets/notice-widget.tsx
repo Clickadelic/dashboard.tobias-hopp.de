@@ -14,7 +14,9 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 
+import { FiPlus } from "react-icons/fi";
 import { GoTrash } from "react-icons/go";
+import { LiaEdit } from "react-icons/lia";
 
 import { addNotice, deleteNoticeById, getNoticesByUserId } from "@/actions/notice";
 import { Notice } from "@prisma/client";
@@ -80,8 +82,9 @@ export const NoticeWidget = () => {
 							</FormItem>
 						)}
 					/>
-					<Button disabled={isPending} variant="default" type="submit" className="w-full">
-						hinzufügen
+					<Button disabled={isPending} variant="primary" type="submit" className="w-full">
+						<FiPlus className="mr-2" />
+						Notiz hinzufügen
 					</Button>
 				</form>
 			</Form>
@@ -96,11 +99,18 @@ export const NoticeWidget = () => {
 					</>
 				) : (
 					notices.map(notice => (
-						<li key={notice.id} className="flex justify-between mt-3 text-sm">
-							{notice.noticetext}
-							<button onClick={() => deleteNoticeById(notice.id)} className="text-rose-400 hover:text-rose-600 hover:bg-slate-200 rounded-full p-1" disabled={isPending}>
-								<GoTrash />
-							</button>
+						<li key={notice.id} className="flex justify-between mb-2 px-3 py-1 hover:bg-mantis-hover rounded-sm">
+							<span>
+								<p className="text-sm">{notice.noticetext}</p>
+							</span>
+							<span className="space-x-3 flex">
+								<button>
+									<LiaEdit />
+								</button>
+								<button>
+									<GoTrash />
+								</button>
+							</span>
 						</li>
 					))
 				)}

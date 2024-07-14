@@ -36,7 +36,7 @@ export const DownloadCSVButton = ({ data, fileName, btnClasses }: DownloadCSVBut
 
 	return (
 		<button onClick={downloadCSV} className={btnClasses}>
-			<BsDownload className="inline -mt-1.5 mx-2" /> Download CSV
+			<BsDownload className="inline -mt-1.5 mx-2" /> Download .csv
 		</button>
 	);
 };

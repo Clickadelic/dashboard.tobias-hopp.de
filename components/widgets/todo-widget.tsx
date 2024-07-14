@@ -150,7 +150,7 @@ export const TodoWidget = ({ classNames }: TodoWidgetProps = { classNames: "" })
 						)}
 					/>
 					<Button disabled={isPending} variant="primary" className="w-full rounded-md" type="submit">
-						<FiPlus className="size-4" /> Todo hinufügen
+						<FiPlus className="size-4 mr-2" /> Todo hinufügen
 					</Button>
 				</form>
 			</Form>

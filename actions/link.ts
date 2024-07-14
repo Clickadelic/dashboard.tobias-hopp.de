@@ -84,7 +84,7 @@ export const editLink = async (id: string, values: z.infer<typeof LinkSchema>) =
 };
 
 // TODO: Rename auf ById
-export const deleteLink = async (id: string) => {
+export const deleteLinkById = async (id: string) => {
 	try {
 		const existingLink = await db.link.findFirst({
 			where: {

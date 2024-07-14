@@ -8,11 +8,6 @@ body,
 	height: 100%;
 }
 
-.large-avatar {
-	width: 100px;
-	height: 100px;
-}
-
 @layer base {
 	* {
 		@apply border-border;
