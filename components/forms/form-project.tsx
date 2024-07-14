@@ -1,3 +1,4 @@
+"use client";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
@@ -15,6 +16,7 @@ import { Button } from "@/components/ui/button";
 import { FiPlus } from "react-icons/fi";
 
 import { ProjectSchema } from "@/schemas";
+
 import { Project } from "@prisma/client";
 import { addProject, getProjectsByUserId, getProjectById, deleteProjectById } from "@/actions/project";
 
