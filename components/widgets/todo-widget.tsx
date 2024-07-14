@@ -154,23 +154,24 @@ export const TodoWidget = ({ classNames }: TodoWidgetProps = { classNames: "" })
 					</Button>
 				</form>
 			</Form>
-			<hr className="mt-3 mb-5" />
+			<hr className="my-3" />
 			<ul>
 				{status === "loading" ? (
 					<>
-						<Skeleton className="mt-3 mb-5 w-full h-4 bg-black/10 animate-pulse" />
-						<Skeleton className="mt-3 mb-5 w-full h-4 bg-black/10 animate-pulse" />
-						<Skeleton className="mt-3 mb-5 w-75 h-4 bg-black/10 animate-pulse" />
-						<Skeleton className="mt-3 mb-5 w-50 h-4 bg-black/10 animate-pulse" />
+						<Skeleton className="w-full h-6 bg-black/10 animate-pulse" />
+						<Skeleton className="w-full h-6 bg-black/10 animate-pulse" />
+						<Skeleton className="w-full h-6 bg-black/10 animate-pulse" />
+						<Skeleton className="w-75 h-6 bg-black/10 animate-pulse" />
+						<Skeleton className="w-50 h-6 bg-black/10 animate-pulse" />
 					</>
 				) : (
 					todos.map(todo => (
 						<li key={todo.id} className="flex justify-between text-sm">
-							<span>
-								<span className="p-2 rounded-sm hover:bg-mantis-hover relative top-[3px]">
-									<input type="checkbox" disabled={isPending} checked={todo.isCompleted} onChange={() => onIsCompleted(todo.id)} className="asd" />
+							<span className="flex justify-start">
+								<span className="hover:bg-mantis-hover rounded-sm">
+									<input type="checkbox" disabled={isPending} checked={todo.isCompleted} onChange={() => onIsCompleted(todo.id)} />
 								</span>
-								<span className={cn("ml-2 text-slate-900 relative top-[3px]", todo.isCompleted ? "line-through text-slate-500" : "")}>{todo.title}</span>
+								<span className={cn("ml-2 text-slate-900", todo.isCompleted ? "line-through text-slate-400" : "")}>{todo.title}</span>
 							</span>
 							<span>
 								<button
