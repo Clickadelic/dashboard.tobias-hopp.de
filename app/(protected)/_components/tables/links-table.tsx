@@ -20,12 +20,14 @@ import { BsFillTrash3Fill } from "react-icons/bs";
 import { FiExternalLink } from "react-icons/fi";
 import { FiPlus } from "react-icons/fi";
 import { LiaEdit } from "react-icons/lia";
+import { LuInfo } from "react-icons/lu";
 
 import Link from "next/link";
 import { LinkSchema } from "@/schemas";
 import { addLink, editLink, deleteLink, getLinksByUserId } from "@/actions/link";
 
 import { ClipboardButton } from "../clipboard-button";
+import { germanDateFormat } from "@/lib/utils";
 
 const LinksTable = () => {
 	const { status } = useSession({ required: true });
@@ -158,15 +160,6 @@ const LinksTable = () => {
 						</TableRow>
 					</TableHeader>
 					<TableBody>
-						{status === "loading" ||
-							(isLoading && (
-								<TableRow>
-									<TableCell colSpan={10}>
-										<Skeleton className="h-5 w-full" />
-									</TableCell>
-								</TableRow>
-							))}
-
 						{links.map((link: any) => (
 							<TableRow key={link.id}>
 								<TableCell className="truncate ellipsis">{link.title}</TableCell>
@@ -240,6 +233,31 @@ const LinksTable = () => {
 										</PopoverContent>
 									</Popover>
 									<ClipboardButton classNames="mt-1.5 p-0 hover:text-emerald-500" title="In die Zwischenablage kopieren" textToCopy={link.url} />
+									<Popover>
+										<PopoverTrigger asChild>
+											<button onClick={() => setEditValues(link.id)} className="hover:text-mantis-primary rounded-md inline">
+												<LuInfo className="size-4" />
+											</button>
+										</PopoverTrigger>
+										<PopoverContent align="end" className="w-[600px]">
+											<table className="w-full text-sm font-light">
+												<thead>
+													<tr>
+														<th className="text-truncate overflow-hidden text-ellipsis p-1">Link-Id</th>
+														<th className="text-truncate overflow-hidden text-ellipsis p-1">Hinzugefügt am</th>
+														<th className="text-truncate overflow-hidden text-ellipsis p-1">zuletzt bearbeitet</th>
+													</tr>
+												</thead>
+												<tbody>
+													<tr>
+														<td className="text-truncate overflow-hidden text-ellipsis p-1">{link.id}</td>
+														<td className="text-truncate overflow-hidden text-ellipsis p-1">{germanDateFormat(link.createdAt)}</td>
+														<td className="text-truncate overflow-hidden text-ellipsis p-1">{germanDateFormat(link.updatedAt)}</td>
+													</tr>
+												</tbody>
+											</table>
+										</PopoverContent>
+									</Popover>
 									<button onClick={() => deleteLinkById(link.id)} className="text-rose-500 hover:text-rose-600">
 										<BsFillTrash3Fill className="size-4 mx-auto" />
 									</button>
