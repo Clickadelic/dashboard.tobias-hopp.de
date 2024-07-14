@@ -66,7 +66,7 @@ const LinksTable = () => {
 			dynamicForm.reset({
 				title: link.title,
 				url: link.url,
-				description: link.description
+				description: link.description || ""
 			});
 		}
 	};
