@@ -73,7 +73,9 @@ export const ProjectCard = () => {
 	return (
 		<div className="bg-white rounded-xl shadow-sm border p-2 md:p-4">
 			<h2 className="text-xs md:text-sm border-bottom text-slate-900 flex justify-between mb-2">
-				<span className="flex justify-between">Projekte</span>
+				<Link href="/projekte" className="hover:text-slate-700 hover:underline" title="Zur Projektübersicht">
+					Projekte
+				</Link>
 				{/* <Link href="/projekte">zur Übersicht</Link> */}
 				<span>neuestes Projekt</span>
 			</h2>

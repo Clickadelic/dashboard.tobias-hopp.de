@@ -69,11 +69,10 @@ export const LinkCard = () => {
 	return (
 		<div className="bg-white rounded-xl shadow border p-2 md:p-4">
 			<h2 className="text-xs md:text-sm border-bottom text-slate-900 flex justify-between mb-2">
-				<span>Links</span>
+				<Link href="/links" className="hover:text-slate-700 hover:underline" title="Zur Link-Übersicht">
+					Links
+				</Link>
 				<span>neuester Link</span>
-				{/* <Link href="/links" className="hover:text-slate-900">
-					zur Übersicht
-				</Link> */}
 			</h2>
 			<h3 className="mb-4 flex justify-between">
 				<span className="font-bold">
