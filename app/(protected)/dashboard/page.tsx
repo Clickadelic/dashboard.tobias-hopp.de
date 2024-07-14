@@ -1,17 +1,17 @@
-import { AppBar } from "../_components/app-bar";
+import { AppBar } from "../_components/app-bar"
 
-import { ProjectCard } from "@/components/cards/project-card";
-import { TodoCard } from "@/components/cards/todo-card";
-import { LinkCard } from "@/components/cards/link-card";
-import { NoticeCard } from "@/components/cards/notice-card";
+import { ProjectCard } from "@/components/cards/project-card"
+import { TodoCard } from "@/components/cards/todo-card"
+import { LinkCard } from "@/components/cards/link-card"
+import { NoticeCard } from "@/components/cards/notice-card"
 
-import { TodoWidget } from "@/components/widgets/todo-widget";
-import { NoticeWidget } from "@/components/widgets/notice-widget";
-import { LinkWidget } from "@/components/widgets/link-widget";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { TodoWidget } from "@/components/widgets/todo-widget"
+import { NoticeWidget } from "@/components/widgets/notice-widget"
+import { LinkWidget } from "@/components/widgets/link-widget"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 // import { HackerNewsWidget } from "@/components/widgets/hackernews-widget";
 
-import { Charts } from "../_components/charts";
+import { Charts } from "../_components/charts"
 
 const DashboardPage = () => {
 	return (
@@ -39,9 +39,21 @@ const DashboardPage = () => {
 						{/* TODO: Build widget master component (with Tabs) */}
 						<Tabs defaultValue="todos" className="w-full">
 							<TabsList className="w-full flex justify-start mb-3">
-								<TabsTrigger value="todos">Todo&apos;s</TabsTrigger>
-								<TabsTrigger value="notices">Notizen</TabsTrigger>
-								<TabsTrigger value="links">Links</TabsTrigger>
+								<TabsTrigger
+									value="todos"
+									className="flex-grow border border-transparent data-[state=active]:bg-white data-[state=active]:text-mantis-primary data-[state=active]:border-mantis-primary">
+									Todo&apos;s
+								</TabsTrigger>
+								<TabsTrigger
+									value="notices"
+									className="flex-grow border border-transparent data-[state=active]:bg-white data-[state=active]:text-mantis-primary data-[state=active]:border-mantis-primary">
+									Notizen
+								</TabsTrigger>
+								<TabsTrigger
+									value="links"
+									className="flex-grow border border-transparent data-[state=active]:bg-white data-[state=active]:text-mantis-primary data-[state=active]:border-mantis-primary">
+									Links
+								</TabsTrigger>
 							</TabsList>
 							<TabsContent value="todos">
 								<TodoWidget />
@@ -67,7 +79,7 @@ const DashboardPage = () => {
 				</div>
 			</div>
 		</div>
-	);
-};
+	)
+}
 
-export default DashboardPage;
+export default DashboardPage

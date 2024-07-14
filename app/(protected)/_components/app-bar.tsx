@@ -164,7 +164,7 @@ export const AppBar = () => {
 													</FormItem>
 												)}
 											/>
-											<Button disabled={isPending} type="submit" className="w-full">
+											<Button disabled={isPending} variant="primary" size="sm" type="submit" className="w-full">
 												bearbeiten
 											</Button>
 										</form>
