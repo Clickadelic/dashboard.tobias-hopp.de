@@ -156,13 +156,17 @@ export const TodoWidget = ({ classNames }: TodoWidgetProps = { classNames: "" })
 			</Form>
 			<hr className="my-3" />
 			<ul>
-				{status === "loading" ? (
+				{status === "loading" || isLoading || status !== "authenticated" || isPending || todos.length === 0 ? (
 					<>
-						<Skeleton className="w-full h-6 bg-black/10 animate-pulse" />
-						<Skeleton className="w-full h-6 bg-black/10 animate-pulse" />
-						<Skeleton className="w-full h-6 bg-black/10 animate-pulse" />
-						<Skeleton className="w-75 h-6 bg-black/10 animate-pulse" />
-						<Skeleton className="w-50 h-6 bg-black/10 animate-pulse" />
+						<li className="my-1">
+							<Skeleton className="w-full h-5 bg-black/10 mb-3 animate-pulse" />
+						</li>
+						<li className="my-1">
+							<Skeleton className="w-full h-5 bg-black/10 mb-3 animate-pulse" />
+						</li>
+						<li className="my-1">
+							<Skeleton className="w-full h-5 bg-black/10 mb-3 animate-pulse" />
+						</li>
 					</>
 				) : (
 					todos.map(todo => (
