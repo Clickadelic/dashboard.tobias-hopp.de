@@ -24,7 +24,7 @@ import { BsFillTrash3Fill } from "react-icons/bs";
 import { FiPlus } from "react-icons/fi";
 import { LiaEdit } from "react-icons/lia";
 import { TodoSchema } from "@/schemas";
-import { addTodo, editTodo, deleteTodo, getTodosByUserId } from "@/actions/todo";
+import { addTodo, editTodoById, deleteTodoById, getTodosByUserId } from "@/actions/todo";
 
 import { cn } from "@/lib/utils";
 import { germanDateFormat } from "@/lib/utils";
@@ -49,32 +49,11 @@ export const TodosTable = () => {
 		}
 	};
 
-	const deleteTodoById = async (id: string) => {
-		const result = await deleteTodo(id);
-		if (result.error) {
-			toast.error(result.error);
-		} else if (result.success) {
-			toast.success(result.success);
-			fetchTodos();
-		}
-	};
-
 	useEffect(() => {
 		setIsLoading(true);
 		fetchTodos();
 		setIsLoading(false);
 	}, []);
-
-	const setEditValues = (todoId: string) => {
-		const todo = todos.find(todo => todo.id === todoId);
-		if (todo) {
-			dynamicForm.reset({
-				title: todo.title,
-				description: todo.description,
-				isCompleted: todo.isCompleted
-			});
-		}
-	};
 
 	const newForm = useForm<z.infer<typeof TodoSchema>>({
 		resolver: zodResolver(TodoSchema),
@@ -99,9 +78,20 @@ export const TodosTable = () => {
 		});
 	};
 
-	const editCurrentTodo = async (id: string, values: z.infer<typeof TodoSchema>) => {
+	const setEditValues = (todoId: string) => {
+		const todo = todos.find(todo => todo.id === todoId);
+		if (todo) {
+			dynamicForm.reset({
+				title: todo.title,
+				description: todo.description,
+				isCompleted: todo.isCompleted
+			});
+		}
+	};
+
+	const onEdit = async (id: string, values: z.infer<typeof TodoSchema>) => {
 		startTransition(async () => {
-			const result = await editTodo(id, values);
+			const result = await editTodoById(id, values);
 			if (result.error) {
 				toast.error(result.error);
 			} else if (result.success) {
@@ -110,6 +100,16 @@ export const TodosTable = () => {
 				fetchTodos();
 			}
 		});
+	};
+
+	const onDelete = async (id: string) => {
+		const result = await deleteTodoById(id);
+		if (result.error) {
+			toast.error(result.error);
+		} else if (result.success) {
+			toast.success(result.success);
+			fetchTodos();
+		}
 	};
 
 	// TODO: IDEE isEditable, setIsEditable für Rows, dann Buttons für Edit, Delete, etc.
@@ -211,7 +211,7 @@ export const TodosTable = () => {
 										</PopoverTrigger>
 										<PopoverContent align="end">
 											<Form {...dynamicForm}>
-												<form onSubmit={dynamicForm.handleSubmit(() => editCurrentTodo(todo.id, dynamicForm.getValues()))} className="space-y-2">
+												<form onSubmit={dynamicForm.handleSubmit(() => onEdit(todo.id, dynamicForm.getValues()))} className="space-y-2">
 													<FormField
 														control={dynamicForm.control}
 														name="title"
@@ -269,7 +269,7 @@ export const TodosTable = () => {
 								<TableCell>{germanDateFormat(todo.updatedAt)}</TableCell>
 
 								<TableCell>
-									<button onClick={() => deleteTodoById(todo.id)} className="text-rose-500 hover:text-rose-600">
+									<button onClick={() => onDelete(todo.id)} className="text-rose-500 hover:text-rose-600">
 										<BsFillTrash3Fill className="size-4 mx-auto" />
 									</button>
 								</TableCell>

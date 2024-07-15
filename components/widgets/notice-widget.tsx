@@ -119,7 +119,7 @@ export const NoticeWidget = () => {
 								<button>
 									<LiaEdit />
 								</button>
-								<button onClick={() => deleteNoticeById(notice.id)} className="text-rose-500 hover:text-rose-600">
+								<button onClick={() => onDelete(notice.id)} className="text-rose-500 hover:text-rose-600">
 									<GoTrash className="size-4 mx-auto" />
 								</button>
 							</span>

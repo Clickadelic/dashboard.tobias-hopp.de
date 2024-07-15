@@ -35,7 +35,7 @@ export const addTodo = async (values: z.infer<typeof TodoSchema>) => {
 	}
 };
 
-export const editTodo = async (id: string, values: z.infer<typeof TodoSchema>) => {
+export const editTodoById = async (id: string, values: z.infer<typeof TodoSchema>) => {
 	try {
 		const validatedFields = TodoSchema.safeParse(values);
 		console.log("Validated Fields:", validatedFields);
@@ -71,7 +71,7 @@ export const editTodo = async (id: string, values: z.infer<typeof TodoSchema>) =
 	}
 };
 
-export const deleteTodo = async (id: string) => {
+export const deleteTodoById = async (id: string) => {
 	try {
 		const existingTodo = await db.todo.findFirst({
 			where: {
@@ -79,7 +79,7 @@ export const deleteTodo = async (id: string) => {
 			}
 		});
 		if (!existingTodo) {
-			return { error: "Todo nicht vorhanden." };
+			return { error: "Todo nicht vorhanden" };
 		}
 
 		await db.todo.delete({
@@ -88,9 +88,9 @@ export const deleteTodo = async (id: string) => {
 			}
 		});
 
-		return { success: "Todo gelöscht." };
+		return { success: "Todo gelöscht" };
 	} catch (error) {
-		return { error: "Interner Server-Fehler." };
+		return { error: "Interner Server-Fehler" };
 	}
 };
 
