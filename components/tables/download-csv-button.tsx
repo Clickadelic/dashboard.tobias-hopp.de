@@ -1,30 +1,57 @@
 import { BsDownload } from "react-icons/bs";
+import React from "react";
 
 interface DownloadCSVButtonProps {
-	data: string;
+	data: Array<Record<string, any>> | string;
 	fileName: string;
 	btnClasses?: string;
 }
 
-export const DownloadCSVButton = ({ data, fileName, btnClasses }: DownloadCSVButtonProps) => {
+export const DownloadCSVButton: React.FC<DownloadCSVButtonProps> = ({ data, fileName, btnClasses }) => {
 	const convertToCSV = (objArray: Array<Record<string, any>> | string): string => {
-		const array = typeof objArray !== "object" ? JSON.parse(objArray) : objArray;
-		let str = "";
+		let array: Array<Record<string, any>>;
 
-		for (let i = 0; i < array.length; i++) {
-			let line = "";
-			for (let index in array[i]) {
-				if (line !== "") line += ",";
-
-				line += array[i][index];
+		if (typeof objArray === "string") {
+			try {
+				array = JSON.parse(objArray);
+			} catch (error) {
+				console.error("Invalid JSON string provided:", error);
+				return "";
 			}
-			str += line + "\r\n";
+		} else {
+			array = objArray;
 		}
-		return str;
+
+		if (!Array.isArray(array)) {
+			console.error("Provided data is not an array of objects");
+			return "";
+		}
+
+		if (array.length === 0) {
+			return "";
+		}
+
+		const keys = Object.keys(array[0]);
+		const csvRows = array.map(obj =>
+			keys
+				.map(key => {
+					const value = obj[key] === null || obj[key] === undefined ? "" : String(obj[key]);
+					return `"${value.replace(/"/g, '""')}"`; // Escape double quotes
+				})
+				.join(",")
+		);
+
+		return [keys.join(","), ...csvRows].join("\r\n");
 	};
 
 	const downloadCSV = () => {
-		const csvData = new Blob([convertToCSV(data)], { type: "text/csv" });
+		const csvString = convertToCSV(data);
+		if (csvString === "") {
+			console.error("CSV data is empty or invalid");
+			return;
+		}
+
+		const csvData = new Blob([csvString], { type: "text/csv" });
 		const csvURL = URL.createObjectURL(csvData);
 		const link = document.createElement("a");
 		link.href = csvURL;

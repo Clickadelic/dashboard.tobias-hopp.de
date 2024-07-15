@@ -156,7 +156,7 @@ const LinksTable = () => {
 			<div className="bg-white rounded-xl shadow-sm border p-2 md:p-4">
 				<div className="space-x-3 mb-3 flex justify-between">
 					<div className="flex justify-between">
-						<DownloadCSVButton data={links.toString()} fileName="links" btnClasses="p-1 text-sm rounded-lg hover:underline" />
+						<DownloadCSVButton data={links} fileName="links" btnClasses="p-1 text-sm rounded-lg hover:underline" />
 						<DownloadJSONButton data={links} fileName="links" btnClasses="p-1 text-sm rounded-lg hover:underline" />
 					</div>
 				</div>
