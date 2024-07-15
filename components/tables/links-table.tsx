@@ -147,7 +147,7 @@ const LinksTable = () => {
 								</FormItem>
 							)}
 						/>
-						<Button variant="default" className="w-full" type="submit" disabled={isPending}>
+						<Button variant="primary" className="w-full" type="submit" disabled={isPending}>
 							<FiPlus className=" mr-2" /> Link hinzufügen
 						</Button>
 					</form>
