@@ -3,8 +3,8 @@ import { UserRole } from "@prisma/client"
 
 export const OrganizationSchema = z.object({
 	name: z.string().min(1, "Organisationsname fehlt"),
-	url: z.string().url("Ungültige Url"),
-	description: z.string().max(300, "Beschreibung zu lang")
+	url: z.optional(z.string().url("Ungültige Url")),
+	description: z.optional(z.string().max(300, "Beschreibung zu lang"))
 })
 
 // TODO: Schemas abgleichen und korrigieren
