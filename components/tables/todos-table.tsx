@@ -1,116 +1,116 @@
-"use client"
+"use client";
 
-import * as z from "zod"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useTransition, useState, useEffect } from "react"
-import { useForm } from "react-hook-form"
-import { useSession } from "next-auth/react"
-import { useCurrentUser } from "@/hooks/use-current-user"
+import * as z from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useTransition, useState, useEffect } from "react";
+import { useForm } from "react-hook-form";
+import { useSession } from "next-auth/react";
+import { useCurrentUser } from "@/hooks/use-current-user";
 
-import { Input } from "@/components/ui/input"
-import { Form, FormControl, FormLabel, FormField, FormItem, FormMessage, FormDescription } from "@/components/ui/form"
-import { Textarea } from "@/components/ui/textarea"
-import { Skeleton } from "@/components/ui/skeleton"
-import { Switch } from "@/components/ui/switch"
-import { Button } from "@/components/ui/button"
-import { Table, TableBody, TableCaption, TableCell, TableFooter, TableHead, TableHeader, TableRow } from "@/components/ui/table"
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
-import { toast } from "sonner"
+import { Input } from "@/components/ui/input";
+import { Form, FormControl, FormLabel, FormField, FormItem, FormMessage, FormDescription } from "@/components/ui/form";
+import { Textarea } from "@/components/ui/textarea";
+import { Skeleton } from "@/components/ui/skeleton";
+import { Switch } from "@/components/ui/switch";
+import { Button } from "@/components/ui/button";
+import { Table, TableBody, TableCaption, TableCell, TableFooter, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { toast } from "sonner";
 
-import { AiOutlineExclamationCircle } from "react-icons/ai"
-import { CheckCircledIcon } from "@radix-ui/react-icons"
-import { BsInfoCircle } from "react-icons/bs"
-import { BsFillTrash3Fill } from "react-icons/bs"
-import { FiPlus } from "react-icons/fi"
-import { LiaEdit } from "react-icons/lia"
-import { TodoSchema } from "@/schemas"
-import { addTodo, editTodo, deleteTodo, getTodosByUserId } from "@/actions/todo"
+import { AiOutlineExclamationCircle } from "react-icons/ai";
+import { CheckCircledIcon } from "@radix-ui/react-icons";
+import { BsInfoCircle } from "react-icons/bs";
+import { BsFillTrash3Fill } from "react-icons/bs";
+import { FiPlus } from "react-icons/fi";
+import { LiaEdit } from "react-icons/lia";
+import { TodoSchema } from "@/schemas";
+import { addTodo, editTodo, deleteTodo, getTodosByUserId } from "@/actions/todo";
 
-import { cn } from "@/lib/utils"
-import { germanDateFormat } from "@/lib/utils"
+import { cn } from "@/lib/utils";
+import { germanDateFormat } from "@/lib/utils";
 
 export const TodosTable = () => {
-	const { status } = useSession({ required: true })
-	const userId = useCurrentUser()?.id
+	const { status } = useSession({ required: true });
+	const userId = useCurrentUser()?.id;
 
-	const [isPending, startTransition] = useTransition()
-	const [isLoading, setIsLoading] = useState<boolean>(false)
-	const [todos, setTodos] = useState<any[]>([])
+	const [isPending, startTransition] = useTransition();
+	const [isLoading, setIsLoading] = useState<boolean>(false);
+	const [todos, setTodos] = useState<any[]>([]);
 
 	const fetchTodos = async () => {
-		setIsLoading(true)
+		setIsLoading(true);
 		try {
-			const response = await getTodosByUserId()
-			setTodos(response)
+			const response = await getTodosByUserId();
+			setTodos(response);
 		} catch (error) {
-			toast.error("Failed to fetch Todos.")
+			toast.error("Failed to fetch Todos.");
 		} finally {
-			setIsLoading(false)
+			setIsLoading(false);
 		}
-	}
+	};
 
 	const deleteTodoById = async (id: string) => {
-		const result = await deleteTodo(id)
+		const result = await deleteTodo(id);
 		if (result.error) {
-			toast.error(result.error)
+			toast.error(result.error);
 		} else if (result.success) {
-			toast.success(result.success)
-			fetchTodos()
+			toast.success(result.success);
+			fetchTodos();
 		}
-	}
+	};
 
 	useEffect(() => {
-		setIsLoading(true)
-		fetchTodos()
-		setIsLoading(false)
-	}, [])
+		setIsLoading(true);
+		fetchTodos();
+		setIsLoading(false);
+	}, []);
 
 	const setEditValues = (todoId: string) => {
-		const todo = todos.find(todo => todo.id === todoId)
+		const todo = todos.find(todo => todo.id === todoId);
 		if (todo) {
 			dynamicForm.reset({
 				title: todo.title,
 				description: todo.description,
 				isCompleted: todo.isCompleted
-			})
+			});
 		}
-	}
+	};
 
 	const newForm = useForm<z.infer<typeof TodoSchema>>({
 		resolver: zodResolver(TodoSchema),
 		defaultValues: { title: "", description: "", isCompleted: false }
-	})
+	});
 
 	const dynamicForm = useForm<z.infer<typeof TodoSchema>>({
 		resolver: zodResolver(TodoSchema),
 		defaultValues: { title: "", description: "", isCompleted: false }
-	})
+	});
 
 	const addNewTodo = async (values: z.infer<typeof TodoSchema>) => {
 		startTransition(async () => {
-			const result = await addTodo(values)
+			const result = await addTodo(values);
 			if (result.error) {
-				toast.error(result.error)
+				toast.error(result.error);
 			} else if (result.success) {
-				toast.success(result.success)
-				dynamicForm.reset()
-				fetchTodos()
+				toast.success(result.success);
+				dynamicForm.reset();
+				fetchTodos();
 			}
-		})
-	}
+		});
+	};
 
 	const editCurrentTodo = async (id: string, values: z.infer<typeof TodoSchema>) => {
 		startTransition(async () => {
-			const result = await editTodo(id, values)
+			const result = await editTodo(id, values);
 			if (result.error) {
-				toast.error(result.error)
+				toast.error(result.error);
 			} else if (result.success) {
-				toast.success(result.success)
-				dynamicForm.reset()
-				fetchTodos()
+				toast.success(result.success);
+				dynamicForm.reset();
+				fetchTodos();
 			}
-		})
-	}
+		});
+	};
 
 	// TODO: IDEE isEditable, setIsEditable für Rows, dann Buttons für Edit, Delete, etc.
 	return (
@@ -151,7 +151,7 @@ export const TodosTable = () => {
 								</FormItem>
 							)}
 						/>
-						<Button disabled={isPending} variant="default" className="w-full">
+						<Button disabled={isPending} variant="primary" className="w-full">
 							<FiPlus className="mr-2" />
 							Todo hinzufügen
 						</Button>
@@ -279,5 +279,5 @@ export const TodosTable = () => {
 				</Table>
 			</div>
 		</>
-	)
-}
+	);
+};

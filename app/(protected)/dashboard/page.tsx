@@ -1,17 +1,17 @@
-import { AppBar } from "../_components/app-bar"
+import { AppBar } from "../_components/app-bar";
 
-import { ProjectCard } from "@/components/cards/project-card"
-import { TodoCard } from "@/components/cards/todo-card"
-import { LinkCard } from "@/components/cards/link-card"
-import { NoticeCard } from "@/components/cards/notice-card"
+import { ProjectCard } from "@/components/cards/project-card";
+import { TodoCard } from "@/components/cards/todo-card";
+import { LinkCard } from "@/components/cards/link-card";
+import { NoticeCard } from "@/components/cards/notice-card";
 
-import { TodoWidget } from "@/components/widgets/todo-widget"
-import { NoticeWidget } from "@/components/widgets/notice-widget"
-import { LinkWidget } from "@/components/widgets/link-widget"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { TodoWidget } from "@/components/widgets/todo-widget";
+import { NoticeWidget } from "@/components/widgets/notice-widget";
+import { LinkWidget } from "@/components/widgets/link-widget";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 // import { HackerNewsWidget } from "@/components/widgets/hackernews-widget";
 
-import { Charts } from "../_components/charts"
+import { Charts } from "../_components/charts";
 
 const DashboardPage = () => {
 	return (
@@ -41,17 +41,20 @@ const DashboardPage = () => {
 							<TabsList className="w-full flex justify-start mb-3">
 								<TabsTrigger
 									value="todos"
-									className="flex-grow border border-transparent data-[state=active]:bg-white data-[state=active]:text-mantis-primary data-[state=active]:border-mantis-primary">
+									className="flex-grow border border-transparent data-[state=active]:bg-white data-[state=active]:text-mantis-primary data-[state=active]:border-mantis-primary"
+								>
 									Todo&apos;s
 								</TabsTrigger>
 								<TabsTrigger
 									value="notices"
-									className="flex-grow border border-transparent data-[state=active]:bg-white data-[state=active]:text-mantis-primary data-[state=active]:border-mantis-primary">
+									className="flex-grow border border-transparent data-[state=active]:bg-white data-[state=active]:text-mantis-primary data-[state=active]:border-mantis-primary"
+								>
 									Notizen
 								</TabsTrigger>
 								<TabsTrigger
 									value="links"
-									className="flex-grow border border-transparent data-[state=active]:bg-white data-[state=active]:text-mantis-primary data-[state=active]:border-mantis-primary">
+									className="flex-grow border border-transparent data-[state=active]:bg-white data-[state=active]:text-mantis-primary data-[state=active]:border-mantis-primary"
+								>
 									Links
 								</TabsTrigger>
 							</TabsList>
@@ -69,17 +72,17 @@ const DashboardPage = () => {
 				</div>
 				<div>
 					<h2 className="text-md font-bold text-slate-900 mt-3 mb-5">Hackernews</h2>
-					<div className="bg-white rounded-xl shadow-sm border p-2 md:p-4">{/* <HackerNewsWidget /> */}</div>
+					<div className="bg-white rounded-xl shadow-sm border p-2 md:p-4">News API</div>
 				</div>
 				<div className="col-span-2">
 					<div>
-						<h2 className="text-md font-bold text-slate-900 mt-3 mb-5">asd</h2>
-						<div className="bg-white rounded-xl shadow-sm border p-2 md:p-4">asd</div>
+						<h2 className="text-md font-bold text-slate-900 mt-3 mb-5">E.Mails</h2>
+						<div className="bg-white rounded-xl shadow-sm border p-2 md:p-4">E-Mail Liste</div>
 					</div>
 				</div>
 			</div>
 		</div>
-	)
-}
+	);
+};
 
-export default DashboardPage
+export default DashboardPage;

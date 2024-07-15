@@ -79,8 +79,8 @@ export const NoticesGrid = () => {
 							</FormItem>
 						)}
 					/>
-					<Button disabled={isPending} variant="default" size="sm" type="submit" className="w-full">
-						hinzufügen
+					<Button disabled={isPending} variant="primary" type="submit" className="w-full">
+						<FiPlus className="inline mr-2" /> Notiz hinzufügen
 					</Button>
 				</form>
 			</Form>

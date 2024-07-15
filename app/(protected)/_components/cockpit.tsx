@@ -1,18 +1,18 @@
-"use client"
-import { Drawer, DrawerClose, DrawerContent, DrawerDescription, DrawerFooter, DrawerHeader, DrawerTitle, DrawerTrigger } from "@/components/ui/drawer"
+"use client";
+import { Drawer, DrawerClose, DrawerContent, DrawerDescription, DrawerFooter, DrawerHeader, DrawerTitle, DrawerTrigger } from "@/components/ui/drawer";
 
-import { Button } from "@/components/ui/button"
-import { IoMdClose } from "react-icons/io"
-import { BsChatRightText } from "react-icons/bs"
-import { BsSend } from "react-icons/bs"
+import { Button } from "@/components/ui/button";
+import { IoMdClose } from "react-icons/io";
+import { BsChatRightText } from "react-icons/bs";
+import { BsSend } from "react-icons/bs";
 
 export const Cockpit = () => {
 	return (
 		<Drawer>
-			<DrawerTrigger className="fixed bottom-[-26px] hover:bottom-0 transition-all w-full">
-				<div className="w-32 bg-mantis-primary hover:bg-mantis-primary/90 text-white text-sm p-1 py-2 rounded-tl-lg rounded-tr-lg mx-auto">
+			<DrawerTrigger asChild className="fixed bottom-[-26px] mx-auto left-0 right-0 hover:bottom-0 transition-all w-32">
+				<button className="w-32 bg-mantis-primary hover:bg-mantis-primary/90 text-white text-sm p-1 py-2 rounded-tl-lg rounded-tr-lg mx-auto">
 					<BsChatRightText className="inline-block mr-2 mt-[-1px]" /> Ai-Cockpit
-				</div>
+				</button>
 			</DrawerTrigger>
 			<DrawerContent>
 				<DrawerClose asChild>
@@ -42,5 +42,5 @@ export const Cockpit = () => {
 				</DrawerFooter>
 			</DrawerContent>
 		</Drawer>
-	)
-}
+	);
+};
