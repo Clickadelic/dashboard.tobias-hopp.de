@@ -1,30 +1,27 @@
-"use client"
+"use client";
 
-import { useSearchParams, useRouter, usePathname } from "next/navigation"
+import { useSearchParams, useRouter, usePathname } from "next/navigation";
 
-import { AiOutlineSearch } from "react-icons/ai"
-
-import { getFullStackSearchResults } from "@/actions/search"
+import { AiOutlineSearch } from "react-icons/ai";
 
 interface FullStackSearchProps {
-	classNames?: string
+	classNames?: string;
 }
 // TODO: Finish functionality LOL
 export const FullStackSearch = ({ classNames }: FullStackSearchProps) => {
-	const searchParams = useSearchParams()
-	const pathname = usePathname()
-	const { replace } = useRouter()
+	const searchParams = useSearchParams();
+	const pathname = usePathname();
+	const { replace } = useRouter();
 
 	const handleSearch = (term: string) => {
-		const params = new URLSearchParams(searchParams)
+		const params = new URLSearchParams(searchParams);
 		if (term) {
-			params.set("q", term)
+			params.set("q", term);
 		} else {
-			params.delete("q")
+			params.delete("q");
 		}
-		replace(`${pathname}?${params.toString()}`)
-		const results = getFullStackSearchResults(term)
-	}
+		replace(`${pathname}?${params.toString()}`);
+	};
 
 	return (
 		// TODO: Warum ist das Suchfeld nach unten versetzt? Pesticide
@@ -43,5 +40,5 @@ export const FullStackSearch = ({ classNames }: FullStackSearchProps) => {
 				</button>
 			</div>
 		</div>
-	)
-}
+	);
+};

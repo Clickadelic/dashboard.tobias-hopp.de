@@ -1,10 +1,14 @@
-"use server"
-import { db } from "@/lib/db"
+"use server";
+import { db } from "@/lib/db";
+import { auth } from "@/auth";
 
-export const getFullStackSearchResults = (query: string) => {
-	const results = []
+export const getFullStackSearchResults = async (query: string) => {
+	const results = [];
+	const session = await auth();
+	const user = session?.user;
+	const userId = user?.id;
 
-	const linkresults = db.link.findMany({
+	const linkresults = await db.link.findMany({
 		where: {
 			title: {
 				contains: query
@@ -22,18 +26,39 @@ export const getFullStackSearchResults = (query: string) => {
 				}
 			]
 		}
-	})
+	});
+	if (linkresults.length > 0) results.push(linkresults);
 
-	results.push(linkresults)
-
-	const noticeResults = db.notice.findMany({
+	const noticeResults = await db.notice.findMany({
 		where: {
 			noticetext: {
 				contains: query
 			}
 		}
-	})
-	results.push(noticeResults)
+	});
+	if (noticeResults.length > 0) results.push(noticeResults);
 
-	return results
-}
+	const todoResults = await db.todo.findMany({
+		where: {
+			title: {
+				contains: query
+			},
+			OR: [
+				{
+					title: {
+						contains: query
+					}
+				},
+				{
+					description: {
+						contains: query
+					}
+				}
+			]
+		}
+	});
+	if (todoResults.length > 0) results.push(todoResults);
+
+	console.log("Full results are:", results);
+	return results;
+};
