@@ -1,46 +1,46 @@
-"use client";
+"use client"
 
-import { La_Belle_Aurore } from "next/font/google";
+import { La_Belle_Aurore } from "next/font/google"
 
-import { useAppContext } from "@/context/app-context";
-import { useSession } from "next-auth/react";
-import { useCurrentUser } from "@/hooks/use-current-user";
+import { useAppContext } from "@/context/app-context"
+import { useSession } from "next-auth/react"
+import { useCurrentUser } from "@/hooks/use-current-user"
 
-import Image from "next/image";
-import Link from "next/link";
-import logoSrc from "@/public/favicon.svg";
+import Image from "next/image"
+import Link from "next/link"
+import logoSrc from "@/public/favicon.svg"
 
-import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger, SheetClose } from "@/components/ui/sheet";
-import { Skeleton } from "@/components/ui/skeleton";
+import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger, SheetClose } from "@/components/ui/sheet"
+import { Skeleton } from "@/components/ui/skeleton"
 
-import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar"
 
-import { NavSidebarSimple } from "./sidebar-simple";
+import { NavSidebarSimple } from "./sidebar-simple"
 
-import { FaUser } from "react-icons/fa";
-import { BsTextIndentRight } from "react-icons/bs";
-import { BsTextIndentLeft } from "react-icons/bs";
-import { HiMenuAlt3 } from "react-icons/hi";
+import { FaUser } from "react-icons/fa"
+import { BsTextIndentRight } from "react-icons/bs"
+import { BsTextIndentLeft } from "react-icons/bs"
+import { HiMenuAlt3 } from "react-icons/hi"
 
-import { cn } from "@/lib/utils";
-import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
+import { cn } from "@/lib/utils"
+import { DEFAULT_LOGIN_REDIRECT } from "@/routes"
 
-import { MegaMenu } from "./navbar-menu/mega-menu";
-import { InboxButton } from "./navbar-menu/inbox-button";
-import { NotificationsButton } from "./navbar-menu/notifications-button";
-import { FullscreenButton } from "./navbar-menu/fullscreen-button";
-import { SidebarSheet } from "./navbar-menu/sidebar-sheet";
-import { ProfileDropdown } from "./navbar-menu/profile-drowndown";
-import { LanguagesButton } from "./navbar-menu/languages-button";
+import { MegaMenu } from "./navbar-menu/mega-menu"
+import { InboxButton } from "./navbar-menu/inbox-button"
+import { NotificationsButton } from "./navbar-menu/notifications-button"
+import { FullscreenButton } from "./navbar-menu/fullscreen-button"
+import { SidebarSheet } from "./navbar-menu/sidebar-sheet"
+import { ProfileDropdown } from "./navbar-menu/profile-drowndown"
+import { LanguagesButton } from "./navbar-menu/languages-button"
 
-import { FullStackSearch } from "./full-stack-search";
+import { FullStackSearch } from "./full-stack-search"
 
-const laBelleAurore = La_Belle_Aurore({ subsets: ["latin"], weight: ["400"] });
+const laBelleAurore = La_Belle_Aurore({ subsets: ["latin"], weight: ["400"] })
 
 export const SidebarNavbar = () => {
-	const { status } = useSession({ required: true });
-	const user = useCurrentUser();
-	const { isToggled, setToggle } = useAppContext();
+	const { status } = useSession({ required: true })
+	const user = useCurrentUser()
+	const { isToggled, setToggle } = useAppContext()
 	// const searchParams = useSearchParams()
 	// const router = useRouter()
 
@@ -92,7 +92,7 @@ export const SidebarNavbar = () => {
 					</>
 				)}
 			</aside>
-			<header className={cn("App-header flex fixed top-0 md:ml-64 w-screen p-2 border-b bg-white z-50", isToggled ? "md:ml-16" : "md:ml-64")}>
+			<header className={cn("App-header flex fixed top-0 md:ml-64 w-screen p-3 border-b bg-white z-50", isToggled ? "md:ml-16" : "md:ml-64")}>
 				<nav className="header-nav flex justify-between w-max">
 					<div className="inline-flex md:mb-.5">
 						{/* TODO: useMediaQuery() */}
@@ -119,10 +119,10 @@ export const SidebarNavbar = () => {
 								</SheetHeader>
 							</SheetContent>
 						</Sheet>
-						<button onClick={() => setToggle(prev => !prev)} className="hidden md:inline hover:bg-slate-100 mt-1 ml-2 white rounded p-2">
+						<button onClick={() => setToggle(prev => !prev)} className="hidden md:inline hover:bg-slate-100 ml-2 white rounded p-2">
 							{isToggled ? <BsTextIndentLeft className="size-5" /> : <BsTextIndentRight className="size-5" />}
 						</button>
-						<FullStackSearch classNames="inline-flex relative mx-3 md:-top-1" />
+						<FullStackSearch classNames="inline-flex relative mx-3" />
 					</div>
 					{/* TODO: rechter Mobile Button, umbauen auf Media Query */}
 					<Sheet>
@@ -146,7 +146,7 @@ export const SidebarNavbar = () => {
 							</SheetHeader>
 						</SheetContent>
 					</Sheet>
-					<ul className="hidden space-x-1 fixed right-5 md:inline-flex md:mt-1 p-3 md:p-0 md:mr-1">
+					<ul className="hidden space-x-1 fixed right-5 md:inline-flex md:mr-1">
 						<li>
 							<MegaMenu />
 						</li>
@@ -172,5 +172,5 @@ export const SidebarNavbar = () => {
 				</nav>
 			</header>
 		</>
-	);
-};
+	)
+}
