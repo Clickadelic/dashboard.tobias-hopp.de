@@ -178,11 +178,11 @@ export const passwordResetTemplate = `<!DOCTYPE html>
 														<tr>
 															<td class="pad">
 																<div class="alignment" align="center"><!--[if mso]>
-<v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="{{resetLink}}" style="height:42px;width:237px;v-text-anchor:middle;" arcsize="10%" stroke="false" fillcolor="#000000">
+<v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="{{resetLink}}" style="height:42px;width:237px;v-text-anchor:middle;" arcsize="10%" stroke="false" fillcolor="#1677ff">
 <w:anchorlock/>
 <v:textbox inset="0px,0px,0px,0px">
 <center dir="false" style="color:#ffffff;font-family:Arial, sans-serif;font-size:16px">
-<![endif]--><a href="{{resetLink}}" target="_blank" style="background-color:#000000;border-bottom:0px solid transparent;border-left:0px solid transparent;border-radius:4px;border-right:0px solid transparent;border-top:0px solid transparent;color:#ffffff;display:inline-block;font-family:Poppins, Arial, Helvetica, sans-serif;font-size:16px;font-weight:undefined;mso-border-alt:none;padding-bottom:5px;padding-top:5px;text-align:center;text-decoration:none;width:auto;word-break:keep-all;"><span style="word-break: break-word; padding-left: 20px; padding-right: 20px; font-size: 16px; display: inline-block; letter-spacing: normal;"><span style="margin: 0; word-break: break-word; line-height: 32px;">neues Passwort erstellen</span></span></a><!--[if mso]></center></v:textbox></v:roundrect><![endif]--></div>
+<![endif]--><a href="{{resetLink}}" target="_blank" style="background-color:#1677ff;border-bottom:0px solid transparent;border-left:0px solid transparent;border-radius:4px;border-right:0px solid transparent;border-top:0px solid transparent;color:#ffffff;display:inline-block;font-family:Poppins, Arial, Helvetica, sans-serif;font-size:16px;font-weight:undefined;mso-border-alt:none;padding-bottom:5px;padding-top:5px;text-align:center;text-decoration:none;width:auto;word-break:keep-all;"><span style="word-break: break-word; padding-left: 20px; padding-right: 20px; font-size: 16px; display: inline-block; letter-spacing: normal;"><span style="margin: 0; word-break: break-word; line-height: 32px;">neues Passwort erstellen</span></span></a><!--[if mso]></center></v:textbox></v:roundrect><![endif]--></div>
 															</td>
 														</tr>
 													</table>
