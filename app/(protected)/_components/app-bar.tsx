@@ -191,20 +191,9 @@ export const AppBar = () => {
 					))
 				) : (
 					<>
-						<Skeleton className="md:visible size-[36px] md:size-[72px] bg-white animate-pulse" />
-						<Skeleton className="md:visible size-[36px] md:size-[72px] bg-white animate-pulse" />
-						<Skeleton className="md:visible size-[36px] md:size-[72px] bg-white animate-pulse" />
-						<Skeleton className="md:visible size-[36px] md:size-[72px] bg-white animate-pulse" />
-						<Skeleton className="md:visible size-[36px] md:size-[72px] bg-white animate-pulse" />
-						<Skeleton className="hidden md:visible size-[36px] md:size-[72px] bg-white animate-pulse" />
-						<Skeleton className="hidden md:visible size-[36px] md:size-[72px] bg-white animate-pulse" />
-						<Skeleton className="hidden md:visible size-[36px] md:size-[72px] bg-white animate-pulse" />
-						<Skeleton className="hidden md:visible size-[36px] md:size-[72px] bg-white animate-pulse" />
-						<Skeleton className="hidden md:visible size-[36px] md:size-[72px] bg-white animate-pulse" />
-						<Skeleton className="hidden md:visible size-[36px] md:size-[72px] bg-white animate-pulse" />
-						<Skeleton className="hidden md:visible size-[36px] md:size-[72px] bg-white animate-pulse" />
-						<Skeleton className="hidden md:visible size-[36px] md:size-[72px] bg-white animate-pulse" />
-						<Skeleton className="hidden md:visible size-[36px] md:size-[72px] bg-white animate-pulse" />
+						<Skeleton className="size-[36px] md:size-[72px] bg-white animate-pulse" />
+						<Skeleton className="size-[36px] md:size-[72px] bg-white animate-pulse" />
+						<Skeleton className="size-[36px] md:size-[72px] bg-white animate-pulse" />
 					</>
 				)}
 				<Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
