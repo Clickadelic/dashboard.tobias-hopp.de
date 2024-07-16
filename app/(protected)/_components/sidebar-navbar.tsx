@@ -10,7 +10,7 @@ import Image from "next/image";
 import Link from "next/link";
 import logoSrc from "@/public/favicon.svg";
 
-import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
+import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger, SheetClose } from "@/components/ui/sheet";
 import { Skeleton } from "@/components/ui/skeleton";
 
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
@@ -98,13 +98,13 @@ export const SidebarNavbar = () => {
 						{/* TODO: useMediaQuery() */}
 						<Sheet>
 							<SheetTrigger className="ml-2 md:hidden">
-								<Image src={logoSrc} width={32} height={32} className="logo size-8 inline-block mt-[-8px]" alt="Tailwind Dashboard" />
+								<Image src={logoSrc} width={32} height={32} className="logo size-8 inline-block md:mt-[-8px]" alt="Tailwind Dashboard" />
 							</SheetTrigger>
 							<SheetContent side="left">
 								<SheetHeader>
 									<SheetTitle>
 										<h1>
-											<Link href={DEFAULT_LOGIN_REDIRECT} className="flex justify-between mt-2 text-slate-900 hover:opacity-75">
+											<Link href={DEFAULT_LOGIN_REDIRECT} className="flex justify-start mt-2 text-slate-900 hover:opacity-75">
 												<Image src={logoSrc} width={16} height={16} className="logo inline -mt-1 size-8" alt="Tailwind Dashboard" />
 												{!isToggled && (
 													<span className="ml-2">
@@ -133,14 +133,12 @@ export const SidebarNavbar = () => {
 							<SheetHeader className="text-left">
 								<SheetTitle>
 									<h1>
-										<Link href={DEFAULT_LOGIN_REDIRECT} className="flex justify-between mt-2 text-slate-900 hover:opacity-75">
+										<Link href={DEFAULT_LOGIN_REDIRECT} className="flex justify-start mt-2 text-slate-900 hover:opacity-75">
 											<Image src={logoSrc} width={16} height={16} className="logo inline -mt-1 size-8" alt="Tailwind Dashboard" />
-											{!isToggled && (
-												<span className="ml-2">
-													<span className={cn("md:inline-block font-medium mr-1 text-2xl", laBelleAurore.className)}>Toby&apos;s</span>
-													<span className="md:inline-block font-bold">Dashboard</span>
-												</span>
-											)}
+											<span className="ml-2">
+												<span className={cn("md:inline-block font-medium mr-1 text-2xl", laBelleAurore.className)}>Toby&apos;s</span>
+												<span className="md:inline-block font-bold">Dashboard</span>
+											</span>
 										</Link>
 									</h1>
 								</SheetTitle>
