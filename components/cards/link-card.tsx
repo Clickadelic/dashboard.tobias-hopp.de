@@ -22,6 +22,7 @@ import { Link as Hyperlink } from "@prisma/client";
 import { LinkSchema } from "@/schemas";
 import { addLink, getLinksByUserId, getLatestLink } from "@/actions/link";
 
+// TODO: Fix broken layout shift when Loading...
 export const LinkCard = () => {
 	const { status } = useSession({ required: true });
 	const [isPending, startTransition] = useTransition();
@@ -68,7 +69,7 @@ export const LinkCard = () => {
 	};
 
 	return (
-		<div className="bg-white rounded-xl shadow border p-2 md:p-4">
+		<div className="bg-white rounded-xl shadow-sm border p-2 md:p-4">
 			<h2 className="text-xs md:text-sm border-bottom text-slate-900 flex justify-between mb-2">
 				<Link href="/links" className="hover:text-slate-700 hover:underline" title="Zur Link-Übersicht">
 					Links

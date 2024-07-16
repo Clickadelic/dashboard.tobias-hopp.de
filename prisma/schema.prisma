@@ -110,23 +110,22 @@ model TwoFactorConfirmation {
     @@unique([userId])
 }
 
-enum LinkTarget {
-    self
-    blank
-}
-
 model App {
-    id        String     @id @default(cuid())
+    id        String   @id @default(cuid())
     title     String
     url       String
-    target    LinkTarget @default(blank)
-    createdAt DateTime   @default(now())
-    updatedAt DateTime   @default(now())
+    createdAt DateTime @default(now())
+    updatedAt DateTime @default(now())
 
     userId String
     user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
     @@unique([id])
+}
+
+enum LinkTarget {
+    self
+    blank
 }
 
 model Link {
