@@ -71,7 +71,7 @@ export const AppBar = () => {
 						</FormItem>
 					)}
 				/>
-				<Button disabled={isPending} aria-label="App hinzufügen" type="submit" className="w-full">
+				<Button disabled={isPending} aria-label="App hinzufügen" type="submit" className="w-full rounded-sm">
 					hinzufügen
 				</Button>
 			</form>

@@ -68,7 +68,7 @@ export const FormNotice = ({ formClasses, notice }: FormNoticeProps = {}) => {
 						</FormItem>
 					)}
 				/>
-				<Button disabled={isPending} variant="primary" type="submit" className="w-full">
+				<Button disabled={isPending} variant="primary" type="submit" className="w-full rounded-sm">
 					<FiPlus className="inline text-white mr-2" />
 					Notiz hinzufügen
 				</Button>

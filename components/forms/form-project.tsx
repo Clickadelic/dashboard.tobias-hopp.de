@@ -1,56 +1,56 @@
-"use client";
-import * as z from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
+"use client"
+import * as z from "zod"
+import { zodResolver } from "@hookform/resolvers/zod"
 
-import { useTransition, useState, useEffect } from "react";
-import { useForm } from "react-hook-form";
-import { useSession } from "next-auth/react";
+import { useTransition, useState, useEffect } from "react"
+import { useForm } from "react-hook-form"
+import { useSession } from "next-auth/react"
 
-import { Input } from "@/components/ui/input";
-import { Form, FormControl, FormLabel, FormField, FormItem, FormMessage } from "@/components/ui/form";
-import { Textarea } from "@/components/ui/textarea";
-import { Skeleton } from "@/components/ui/skeleton";
-import { toast } from "sonner";
-import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input"
+import { Form, FormControl, FormLabel, FormField, FormItem, FormMessage } from "@/components/ui/form"
+import { Textarea } from "@/components/ui/textarea"
+import { Skeleton } from "@/components/ui/skeleton"
+import { toast } from "sonner"
+import { Button } from "@/components/ui/button"
 
-import { FiPlus } from "react-icons/fi";
+import { FiPlus } from "react-icons/fi"
 
-import { ProjectSchema } from "@/schemas";
-import { Project } from "@prisma/client";
-import { addProject } from "@/actions/project";
+import { ProjectSchema } from "@/schemas"
+import { Project } from "@prisma/client"
+import { addProject } from "@/actions/project"
 
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/utils"
 
 interface FormProjectProps {
-	formClasses?: string;
-	project?: Project;
+	formClasses?: string
+	project?: Project
 }
 
 export const FormProject = ({ formClasses, project }: FormProjectProps = {}) => {
-	console.log("Child project: ", project);
-	const { status } = useSession({ required: true });
-	const [isDialogOpen, setIsDialogOpen] = useState(false);
+	console.log("Child project: ", project)
+	const { status } = useSession({ required: true })
+	const [isDialogOpen, setIsDialogOpen] = useState(false)
 
-	const [isPending, startTransition] = useTransition();
-	const [isLoading, setIsLoading] = useState<boolean>(false);
+	const [isPending, startTransition] = useTransition()
+	const [isLoading, setIsLoading] = useState<boolean>(false)
 
 	const form = useForm<z.infer<typeof ProjectSchema>>({
 		resolver: zodResolver(ProjectSchema),
 		defaultValues: { title: "", url: "", description: "" }
-	});
+	})
 
 	const onSubmit = async (values: z.infer<typeof ProjectSchema>) => {
 		startTransition(async () => {
-			const result = await addProject(values);
+			const result = await addProject(values)
 			if (result.error) {
-				toast.error(result.error);
+				toast.error(result.error)
 			} else if (result.success) {
-				toast.success(result.success);
-				form.reset();
-				setIsDialogOpen(false);
+				toast.success(result.success)
+				form.reset()
+				setIsDialogOpen(false)
 			}
-		});
-	};
+		})
+	}
 
 	return (
 		<Form {...form}>
@@ -94,11 +94,11 @@ export const FormProject = ({ formClasses, project }: FormProjectProps = {}) => 
 						</FormItem>
 					)}
 				/>
-				<Button disabled={isPending} variant="primary" type="submit" className="w-full">
+				<Button disabled={isPending} variant="primary" type="submit" className="w-full rounded-sm">
 					<FiPlus className="inline text-white mr-2" />
 					Projekt hinzufügen
 				</Button>
 			</form>
 		</Form>
-	);
-};
+	)
+}
