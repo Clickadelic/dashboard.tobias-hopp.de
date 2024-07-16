@@ -121,7 +121,7 @@ export const AppBar = () => {
 						>
 							<Link href={app.url} className="w-full h-full flex flex-col items-center justify-center pt-1.5" target="_blank">
 								<Image src={getFavicon(app.url, 24) || ""} alt={app.title} width={24} height={24} className="rounded-full mb-2" />
-								<span className="hidden md:visible text-xs text-slate-900">{app.title}</span>
+								<span className="hidden md:inline-block text-xs text-slate-900">{app.title}</span>
 							</Link>
 							<Popover>
 								<PopoverTrigger asChild className="absolute top-1.5 right-1 rounded-full hover:bg-white/30 text-slate-700">
