@@ -1,114 +1,115 @@
-"use client";
+"use client"
 
-import * as z from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod"
+import { zodResolver } from "@hookform/resolvers/zod"
 
-import { useState, useEffect, useTransition } from "react";
-import { useSession } from "next-auth/react";
-import { useForm } from "react-hook-form";
+import { useState, useEffect, useTransition } from "react"
+import { useSession } from "next-auth/react"
+import { useForm } from "react-hook-form"
 
-import Image from "next/image";
-import Link from "next/link";
+import Image from "next/image"
+import Link from "next/link"
 
-import { Input } from "@/components/ui/input";
-import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";
-import { Button } from "@/components/ui/button";
-import { Skeleton } from "@/components/ui/skeleton";
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Input } from "@/components/ui/input"
+import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form"
+import { Button } from "@/components/ui/button"
+import { Skeleton } from "@/components/ui/skeleton"
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 
-import { toast } from "sonner";
+import { toast } from "sonner"
 
-import { HiOutlineDotsVertical } from "react-icons/hi";
-import { FiPlus } from "react-icons/fi";
-import { BsTrash } from "react-icons/bs";
+import { BsApp } from "react-icons/bs"
+import { HiOutlineDotsVertical } from "react-icons/hi"
+import { FiPlus } from "react-icons/fi"
+import { BsTrash } from "react-icons/bs"
 
-import { AppSchema } from "@/schemas";
-import { App } from "@prisma/client";
-import { addApp, editApp, deleteApp, getAppsByUserId } from "@/actions/app";
+import { AppSchema } from "@/schemas"
+import { App } from "@prisma/client"
+import { addApp, editApp, deleteApp, getAppsByUserId } from "@/actions/app"
 
-import { getFavicon } from "@/lib/utils";
+import { getFavicon } from "@/lib/utils"
 
 export const AppBar = () => {
-	const { status } = useSession({ required: true });
-	const [isDialogOpen, setIsDialogOpen] = useState(false);
+	const { status } = useSession({ required: true })
+	const [isDialogOpen, setIsDialogOpen] = useState(false)
 
-	const [isPending, startTransition] = useTransition();
-	const [isLoading, setIsLoading] = useState<boolean>(false);
-	const [apps, setApps] = useState<App[]>([]);
+	const [isPending, startTransition] = useTransition()
+	const [isLoading, setIsLoading] = useState<boolean>(false)
+	const [apps, setApps] = useState<App[]>([])
 
 	const fetchApps = async () => {
 		try {
-			const response = await getAppsByUserId();
-			setApps(response);
+			const response = await getAppsByUserId()
+			setApps(response)
 		} catch (error) {
-			toast.error("Fehler beim Laden der Apps.");
+			toast.error("Fehler beim Laden der Apps.")
 		}
-	};
+	}
 
 	useEffect(() => {
-		setIsLoading(true);
-		fetchApps();
-		setIsLoading(false);
-	}, []);
+		setIsLoading(true)
+		fetchApps()
+		setIsLoading(false)
+	}, [])
 
 	const newForm = useForm<z.infer<typeof AppSchema>>({
 		resolver: zodResolver(AppSchema),
 		defaultValues: { title: "", url: "" }
-	});
+	})
 
 	const dynamicForm = useForm<z.infer<typeof AppSchema>>({
 		resolver: zodResolver(AppSchema),
 		defaultValues: { title: "", url: "" }
-	});
+	})
 
 	const onAdd = async (values: z.infer<typeof AppSchema>) => {
 		startTransition(async () => {
-			const result = await addApp(values);
+			const result = await addApp(values)
 			if (result.error) {
-				toast.error(result.error);
+				toast.error(result.error)
 			} else if (result.success) {
-				toast.success(result.success);
-				newForm.reset();
-				fetchApps();
+				toast.success(result.success)
+				newForm.reset()
+				fetchApps()
 			}
-		});
-		setIsDialogOpen(false);
-	};
+		})
+		setIsDialogOpen(false)
+	}
 
 	const setEditValues = (id: string) => {
-		const app = apps.find(app => app.id === id);
+		const app = apps.find(app => app.id === id)
 		if (app) {
 			dynamicForm.reset({
 				title: app.title,
 				url: app.url
-			});
+			})
 		}
-	};
+	}
 
 	const onEdit = async (id: string, values: z.infer<typeof AppSchema>) => {
 		startTransition(async () => {
-			const result = await editApp(id, values);
+			const result = await editApp(id, values)
 			if (result.error) {
-				toast.error(result.error);
+				toast.error(result.error)
 			} else if (result.success) {
-				toast.success(result.success);
-				fetchApps();
+				toast.success(result.success)
+				fetchApps()
 			}
-		});
-	};
+		})
+	}
 
 	const onDelete = async (id: string) => {
 		startTransition(async () => {
-			const result = await deleteApp(id);
+			const result = await deleteApp(id)
 			if (result.error) {
-				toast.error(result.error);
+				toast.error(result.error)
 			} else if (result.success) {
-				toast.success(result.success);
-				fetchApps();
+				toast.success(result.success)
+				fetchApps()
 			}
-		});
-	};
+		})
+	}
 
 	return (
 		<div className="w-full mb-8">
@@ -117,8 +118,7 @@ export const AppBar = () => {
 					apps.map(app => (
 						<div
 							key={app.id}
-							className="size-[36px] md:size-[72px] relative flex flex-col justify-center place-content-center bg-white shadow-sm border backdrop-blur hover:bg-white/30 rounded-xl"
-						>
+							className="size-[36px] md:size-[72px] relative flex flex-col justify-center place-content-center bg-white shadow-sm border backdrop-blur hover:bg-white/30 rounded-xl">
 							<Link href={app.url} className="w-full h-full flex flex-col items-center justify-center pt-1.5" target="_blank">
 								<Image src={getFavicon(app.url, 24) || ""} alt={app.title} width={24} height={24} className="rounded-full mb-2" />
 								<span className="hidden md:inline-block text-xs text-slate-900">{app.title}</span>
@@ -129,9 +129,8 @@ export const AppBar = () => {
 										title="App bearbeiten"
 										aria-label="App bearbeiten"
 										onClick={() => {
-											setEditValues(app.id);
-										}}
-									>
+											setEditValues(app.id)
+										}}>
 										<HiOutlineDotsVertical />
 									</button>
 								</PopoverTrigger>
@@ -139,10 +138,9 @@ export const AppBar = () => {
 									<Form {...dynamicForm}>
 										<form
 											onSubmit={dynamicForm.handleSubmit(() => {
-												onEdit(app.id, dynamicForm.getValues());
+												onEdit(app.id, dynamicForm.getValues())
 											})}
-											className="space-y-2 mb-3"
-										>
+											className="space-y-2 mb-3">
 											<FormField
 												control={dynamicForm.control}
 												name="title"
@@ -179,9 +177,8 @@ export const AppBar = () => {
 										aria-label="App löschen"
 										className="text-sm border-destructive text-destructive bg-transparent shadow-none hover:text-rose-700"
 										onClick={() => {
-											onDelete(app.id);
-										}}
-									>
+											onDelete(app.id)
+										}}>
 										<BsTrash className="mt-[-2px] mr-2 inline-block" />
 										löschen
 									</button>
@@ -194,6 +191,8 @@ export const AppBar = () => {
 						<Skeleton className="size-[36px] md:size-[72px] bg-white animate-pulse" />
 						<Skeleton className="size-[36px] md:size-[72px] bg-white animate-pulse" />
 						<Skeleton className="size-[36px] md:size-[72px] bg-white animate-pulse" />
+						<Skeleton className="size-[36px] md:size-[72px] bg-white animate-pulse" />
+						<Skeleton className="size-[36px] md:size-[72px] bg-white animate-pulse" />
 					</>
 				)}
 				<Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
@@ -202,7 +201,10 @@ export const AppBar = () => {
 					</DialogTrigger>
 					<DialogContent>
 						<DialogHeader>
-							<DialogTitle>App-Link hinzufügen</DialogTitle>
+							<DialogTitle>
+								<BsApp className="inline -mt-1 mr-2" />
+								App-Link hinzufügen
+							</DialogTitle>
 							<DialogDescription>Quick-Links für Deine Startseite</DialogDescription>
 						</DialogHeader>
 						<Form {...newForm}>
@@ -242,5 +244,5 @@ export const AppBar = () => {
 				</Dialog>
 			</div>
 		</div>
-	);
-};
+	)
+}

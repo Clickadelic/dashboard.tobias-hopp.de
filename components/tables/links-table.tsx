@@ -154,11 +154,9 @@ const LinksTable = () => {
 				</Form>
 			</div>
 			<div className="bg-white rounded-xl shadow-sm border p-2 md:p-4">
-				<div className="space-x-3 mb-3 flex justify-between">
-					<div className="flex justify-between">
-						<DownloadCSVButton data={links} fileName="links" btnClasses="p-1 text-sm rounded-lg hover:underline" />
-						<DownloadJSONButton data={links} fileName="links" btnClasses="p-1 text-sm rounded-lg hover:underline" />
-					</div>
+				<div className="space-x-3 mb-3 flex justify-end items-end">
+					<DownloadCSVButton data={links} fileName="links" btnClasses="bg-mantis-primary text-white rounded-sm p-2 text-sm" />
+					<DownloadJSONButton data={links} fileName="links" btnClasses="bg-mantis-primary text-white rounded-sm p-2 text-sm" />
 				</div>
 				<Table className="w-full">
 					<TableHeader>

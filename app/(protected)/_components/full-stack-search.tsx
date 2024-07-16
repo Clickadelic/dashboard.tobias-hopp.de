@@ -7,7 +7,7 @@ import { AiOutlineSearch } from "react-icons/ai";
 interface FullStackSearchProps {
 	classNames?: string;
 }
-// TODO: Finish functionality LOL
+// TODO: Finish functionality
 export const FullStackSearch = ({ classNames }: FullStackSearchProps) => {
 	const searchParams = useSearchParams();
 	const pathname = usePathname();
