@@ -1,36 +1,48 @@
-"use client";
+"use client"
 
-import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
-import { BarChart, Bar } from "recharts";
+import { type ChartConfig } from "@/components/ui/chart"
 
-import { type ChartConfig } from "@/components/ui/chart";
+import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart"
+import { BarChart, Bar } from "recharts"
 
-const chartData = [
-	{ month: "January", desktop: 186, mobile: 80 },
-	{ month: "February", desktop: 305, mobile: 200 },
-	{ month: "March", desktop: 237, mobile: 120 },
-	{ month: "April", desktop: 73, mobile: 190 },
-	{ month: "May", desktop: 209, mobile: 130 },
-	{ month: "June", desktop: 214, mobile: 140 }
-];
+import { useState, useEffect } from "react"
+import { Project } from "@prisma/client"
+import { getProjectsByUserId } from "@/actions/project"
 
 const chartConfig = {
-	desktop: {
-		label: "Desktop",
-		color: "#2563eb"
-	},
-	mobile: {
-		label: "Mobile",
-		color: "#60a5fa"
+	projects: {
+		label: "Projekte",
+		color: "#1677ff"
 	}
-} satisfies ChartConfig;
+} satisfies ChartConfig
 
-export const Charts = () => {
+export function Charts() {
+	const chartData = []
+
+	const [isLoading, setIsLoading] = useState<boolean>(false)
+	const [projectCount, setProjectCount] = useState<Project[]>([])
+
+	const myProjectCount = async () => {
+		const projectResults = await getProjectsByUserId()
+		setProjectCount(projectResults)
+		const month = new Date().getMonth()
+		chartData.push({
+			projects: projectResults?.length
+		})
+		console.log(chartData)
+	}
+
+	useEffect(() => {
+		setIsLoading(true)
+		myProjectCount()
+		setIsLoading(false)
+	}, [])
 	return (
-		<ChartContainer config={chartConfig} className="min-h-[100px] max-h-[352px] w-full">
+		<ChartContainer config={chartConfig} className="min-h-[200px] w-full">
 			<BarChart accessibilityLayer data={chartData}>
-				<Bar dataKey="links" fill="var(--color-desktop)" radius={4} />
+				<Bar dataKey="projects" fill="var(--color-projects)" radius={4} />
+				<ChartTooltip content={<ChartTooltipContent />} />
 			</BarChart>
 		</ChartContainer>
-	);
-};
+	)
+}

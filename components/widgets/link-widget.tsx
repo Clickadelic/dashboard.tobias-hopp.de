@@ -19,7 +19,7 @@ import { GoTrash } from "react-icons/go"
 import { LiaEdit } from "react-icons/lia"
 
 import { LinkSchema } from "@/schemas"
-import { addLink, getLinksByUserId, deleteLinkById } from "@/actions/link"
+import { addLink, editLinkById, deleteLinkById, getLinksByUserId } from "@/actions/link"
 import { Link } from "@prisma/client"
 
 export const LinkWidget = () => {
@@ -54,6 +54,30 @@ export const LinkWidget = () => {
 	const onSubmit = async (values: z.infer<typeof LinkSchema>) => {
 		startTransition(async () => {
 			const result = await addLink(values)
+			if (result.error) {
+				toast.error(result.error)
+			} else if (result.success) {
+				toast.success(result.success)
+				form.reset()
+				fetchLinks()
+			}
+		})
+	}
+
+	const setEditValues = (linkId: string) => {
+		const link = links.find(link => link.id === linkId)
+		if (link) {
+			form.reset({
+				title: link.title,
+				url: link.url,
+				description: link.description || ""
+			})
+		}
+	}
+
+	const onEdit = async (id: string, values: z.infer<typeof LinkSchema>) => {
+		startTransition(async () => {
+			const result = await editLinkById(id, values)
 			if (result.error) {
 				toast.error(result.error)
 			} else if (result.success) {
@@ -124,9 +148,13 @@ export const LinkWidget = () => {
 						</span>
 						<span className="space-x-3 flex">
 							<button>
-								<LiaEdit />
+								<LiaEdit
+									onClick={() => {
+										setEditValues(link.id)
+									}}
+								/>
 							</button>
-							<button onClick={() => deleteLinkById(link.id)} className="text-rose-500 hover:text-rose-600">
+							<button onClick={() => setEditValues(link.id)} className="text-rose-500 hover:text-rose-600">
 								<GoTrash className="size-4 mx-auto" />
 							</button>
 						</span>
