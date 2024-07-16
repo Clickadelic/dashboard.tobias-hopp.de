@@ -113,7 +113,7 @@ export const AppBar = () => {
 
 	return (
 		<div className="w-full mb-8">
-			<div className="grid grid-cols-6 gap-3 md:flex md:items-start md:justify-start md:space-x-3 md:overflow-y-scroll">
+			<div className="grid grid-cols-6 gap-3 md:flex md:items-start md:justify-start md:space-x-3 overflow-x-auto">
 				{apps.length > 0 ? (
 					apps.map(app => (
 						<div

@@ -88,7 +88,7 @@ export const NoticeCard = () => {
 						</>
 					)}
 				</span>
-				<span className="text-md font-normal">{status === "loading" || isLoading ? <Skeleton className="mt-3 mb-5 w-12 h-4 bg-primary/10 animate-pulse" /> : latestNotice?.noticetext}</span>
+				<span className="text-sm font-normal">{status === "loading" || isLoading ? <Skeleton className="mt-3 mb-5 w-12 h-4 bg-primary/10 animate-pulse" /> : latestNotice?.noticetext}</span>
 			</h3>
 			<Popover>
 				<PopoverTrigger className="flex justify-center w-full p-3 py-2 bg-white text-mantis-primary border border-mantis-primary hover:text-white hover:bg-mantis-primary text-sm rounded-sm">

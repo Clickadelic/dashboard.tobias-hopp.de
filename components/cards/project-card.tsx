@@ -90,7 +90,7 @@ export const ProjectCard = () => {
 						</>
 					)}
 				</span>
-				<span className="text-md font-normal">{status === "loading" || isLoading ? <Skeleton className="mt-[-3px] w-12 h-4 bg-primary/10 animate-pulse" /> : latestProject?.title}</span>
+				<span className="text-sm font-normal">{status === "loading" || isLoading ? <Skeleton className="mt-[-3px] w-12 h-4 bg-primary/10 animate-pulse" /> : latestProject?.title}</span>
 			</h3>
 			<Popover>
 				<PopoverTrigger className="flex justify-center w-full p-3 py-2 bg-white text-mantis-primary border border-mantis-primary hover:text-white hover:bg-mantis-primary text-sm rounded-sm">
