@@ -171,11 +171,14 @@ export const TodoWidget = ({ classNames }: TodoWidgetProps = { classNames: "" })
 				) : (
 					todos.map(todo => (
 						<li key={todo.id} className="flex justify-between text-sm">
-							<span className="flex justify-start">
+							<span className="flex-grow justify-start">
 								<span className="hover:bg-mantis-hover px-[10px] pt-2 pb-[5px] rounded-sm">
 									<input type="checkbox" disabled={isPending} checked={todo.isCompleted} onChange={() => onIsCompleted(todo.id)} />
 								</span>
-								<span className={cn("ml-2 mt-1.5 text-slate-900", todo.isCompleted ? "line-through text-slate-400" : "")}>{todo.title}</span>
+								<span className="w-full">
+									<span className={cn("ml-2 mt-1.5 text-slate-900 inline-block", todo.isCompleted ? "line-through text-slate-400" : "")}>{todo.title}</span>
+									<span className="text-xs">{todo.description}</span>
+								</span>
 							</span>
 							<span>
 								<button

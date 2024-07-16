@@ -24,7 +24,7 @@ import { LuInfo } from "react-icons/lu"
 
 import Link from "next/link"
 import { LinkSchema } from "@/schemas"
-import { addLink, editLink, deleteLinkById, getLinksByUserId } from "@/actions/link"
+import { addLink, editLinkById, deleteLinkById, getLinksByUserId } from "@/actions/link"
 
 import { ClipboardButton } from "../../app/(protected)/_components/clipboard-button"
 import { germanDateFormat } from "@/lib/utils"
@@ -100,7 +100,7 @@ const LinksTable = () => {
 
 	const editCurrentLink = async (id: string, values: z.infer<typeof LinkSchema>) => {
 		startTransition(async () => {
-			const result = await editLink(id, values)
+			const result = await editLinkById(id, values)
 			if (result.error) {
 				toast.error(result.error)
 			} else if (result.success) {
