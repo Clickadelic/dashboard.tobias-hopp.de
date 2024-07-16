@@ -10,7 +10,7 @@ import Image from "next/image";
 import Link from "next/link";
 import logoSrc from "@/public/favicon.svg";
 
-import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
+import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger, SheetClose } from "@/components/ui/sheet";
 import { Skeleton } from "@/components/ui/skeleton";
 
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
@@ -20,6 +20,7 @@ import { NavSidebarSimple } from "./sidebar-simple";
 import { FaUser } from "react-icons/fa";
 import { BsTextIndentRight } from "react-icons/bs";
 import { BsTextIndentLeft } from "react-icons/bs";
+import { HiMenuAlt3 } from "react-icons/hi";
 
 import { cn } from "@/lib/utils";
 import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
@@ -92,18 +93,18 @@ export const SidebarNavbar = () => {
 				)}
 			</aside>
 			<header className={cn("App-header flex fixed top-0 md:ml-64 w-screen p-2 border-b bg-white z-50", isToggled ? "md:ml-16" : "md:ml-64")}>
-				<nav className="header-navflex justify-between w-max">
-					<div className="inline-block md:mb-.5">
+				<nav className="header-nav flex justify-between w-max">
+					<div className="inline-flex md:mb-.5">
 						{/* TODO: useMediaQuery() */}
 						<Sheet>
 							<SheetTrigger className="ml-2 md:hidden">
-								<Image src={logoSrc} width={32} height={32} className="logo size-8 inline-block mt-[-8px]" alt="Tailwind Dashboard" />
+								<Image src={logoSrc} width={32} height={32} className="logo size-8 inline-block md:mt-[-8px]" alt="Tailwind Dashboard" />
 							</SheetTrigger>
 							<SheetContent side="left">
 								<SheetHeader>
 									<SheetTitle>
 										<h1>
-											<Link href={DEFAULT_LOGIN_REDIRECT} className="flex justify-between mt-2 text-slate-900 hover:opacity-75">
+											<Link href={DEFAULT_LOGIN_REDIRECT} className="flex justify-start mt-2 text-slate-900 hover:opacity-75">
 												<Image src={logoSrc} width={16} height={16} className="logo inline -mt-1 size-8" alt="Tailwind Dashboard" />
 												{!isToggled && (
 													<span className="ml-2">
@@ -124,21 +125,20 @@ export const SidebarNavbar = () => {
 						<FullStackSearch classNames="inline-flex relative mx-3 md:-top-1" />
 					</div>
 					{/* TODO: rechter Mobile Button, umbauen auf Media Query */}
-					<button className="fixed right-5 md:hidden bg-slate-100 rounded p-2 mt-1">asd</button>
 					<Sheet>
-						<SheetTrigger className="ml-2 md:hidden">asdasdasd</SheetTrigger>
+						<SheetTrigger className="ml-2 md:hidden">
+							<HiMenuAlt3 />
+						</SheetTrigger>
 						<SheetContent side="right">
-							<SheetHeader>
+							<SheetHeader className="text-left">
 								<SheetTitle>
 									<h1>
-										<Link href={DEFAULT_LOGIN_REDIRECT} className="flex justify-between mt-2 text-slate-900 hover:opacity-75">
+										<Link href={DEFAULT_LOGIN_REDIRECT} className="flex justify-start mt-2 text-slate-900 hover:opacity-75">
 											<Image src={logoSrc} width={16} height={16} className="logo inline -mt-1 size-8" alt="Tailwind Dashboard" />
-											{!isToggled && (
-												<span className="ml-2">
-													<span className={cn("md:inline-block font-medium mr-1 text-2xl", laBelleAurore.className)}>Toby&apos;s</span>
-													<span className="md:inline-block font-bold">Dashboard</span>
-												</span>
-											)}
+											<span className="ml-2">
+												<span className={cn("md:inline-block font-medium mr-1 text-2xl", laBelleAurore.className)}>Toby&apos;s</span>
+												<span className="md:inline-block font-bold">Dashboard</span>
+											</span>
 										</Link>
 									</h1>
 								</SheetTitle>
