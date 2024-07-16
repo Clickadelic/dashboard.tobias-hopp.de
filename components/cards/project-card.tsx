@@ -93,7 +93,7 @@ export const ProjectCard = () => {
 				<span className="text-md font-normal">{status === "loading" || isLoading ? <Skeleton className="mt-[-3px] w-12 h-4 bg-primary/10 animate-pulse" /> : latestProject?.title}</span>
 			</h3>
 			<Popover>
-				<PopoverTrigger className="flex justify-center w-full p-3 py-2 bg-slate-100 text-slate-900 hover:text-slate-800 hover:bg-slate-200 text-sm rounded-sm">
+				<PopoverTrigger className="flex justify-center w-full p-3 py-2 bg-white text-mantis-primary border border-mantis-primary hover:text-white hover:bg-mantis-primary text-sm rounded-sm">
 					<FiPlus className="mt-[3px] mr-2" /> Projekt hinzufügen
 				</PopoverTrigger>
 				<PopoverContent>
