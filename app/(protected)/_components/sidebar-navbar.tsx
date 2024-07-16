@@ -133,6 +133,18 @@ export const SidebarNavbar = () => {
 								<SheetTitle>Men&uuml;</SheetTitle>
 								<SheetDescription>Platz für weitere Funktionen</SheetDescription>
 							</SheetHeader>
+							<p>
+								Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sint itaque tempore aperiam vel, eius dicta. Eos, exercitationem quibusdam. Fuga distinctio vel aliquam
+								ratione consectetur? Vitae nostrum quibusdam deserunt commodi quos vel nulla odio suscipit debitis provident eos aliquam rem veniam reiciendis enim, id explicabo
+								dignissimos omnis numquam quasi odit fugiat. Maxime, rerum. Dolorem consectetur temporibus ullam rerum ea sunt distinctio expedita molestias quo cupiditate tempora
+								delectus reiciendis aspernatur dolore id, consequatur at ipsa ducimus praesentium voluptate hic repudiandae veniam nulla officiis. Molestias maiores quae ullam!
+								Necessitatibus nisi corrupti excepturi beatae, perferendis illum? Dicta est corporis tempore consequuntur dolorum eligendi architecto, iure laborum dolorem voluptates
+								maxime libero, similique doloremque qui soluta earum eveniet, totam fugiat harum expedita inventore. Fugiat eius quidem nisi libero corporis? Autem ex numquam sint
+								consectetur. Nulla officiis nihil, obcaecati animi neque fuga quo adipisci, iusto maxime esse aliquam deserunt error blanditiis cumque dignissimos, repudiandae qui.
+								Illo quidem ullam laborum beatae aut accusamus, repudiandae minima asperiores. Amet est recusandae inventore architecto, placeat assumenda ducimus veritatis quod totam
+								error. In, ratione? Deserunt laboriosam libero doloremque quod hic blanditiis voluptates! Veniam nulla quas ex molestias laboriosam deleniti consequuntur dolorum modi,
+								placeat aliquam ad maiores dolorem est unde. Cupiditate, obcaecati enim.
+							</p>
 						</SheetContent>
 					</Sheet>
 					<ul className="hidden space-x-1 fixed right-5 md:inline-flex md:mt-1 p-3 md:p-0 md:mr-1">

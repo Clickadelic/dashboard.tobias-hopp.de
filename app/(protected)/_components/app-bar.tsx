@@ -112,13 +112,16 @@ export const AppBar = () => {
 
 	return (
 		<div className="w-full mb-8">
-			<div className="flex items-start justify-start space-x-3">
+			<div className="grid grid-cols-6 gap-3 md:flex md:items-start md:justify-start md:space-x-3 md:overflow-y-scroll">
 				{apps.length > 0 ? (
 					apps.map(app => (
-						<div key={app.id} className="size-[72px] relative flex flex-col justify-center place-content-center bg-white shadow-sm border backdrop-blur hover:bg-white/30 rounded-xl">
+						<div
+							key={app.id}
+							className="size-[36px] md:size-[72px] relative flex flex-col justify-center place-content-center bg-white shadow-sm border backdrop-blur hover:bg-white/30 rounded-xl"
+						>
 							<Link href={app.url} className="w-full h-full flex flex-col items-center justify-center pt-1.5" target="_blank">
 								<Image src={getFavicon(app.url, 24) || ""} alt={app.title} width={24} height={24} className="rounded-full mb-2" />
-								<span className="text-xs text-slate-900">{app.title}</span>
+								<span className="hidden md:visible text-xs text-slate-900">{app.title}</span>
 							</Link>
 							<Popover>
 								<PopoverTrigger asChild className="absolute top-1.5 right-1 rounded-full hover:bg-white/30 text-slate-700">
@@ -188,24 +191,24 @@ export const AppBar = () => {
 					))
 				) : (
 					<>
-						<Skeleton className="size-[72px] bg-white animate-pulse" />
-						<Skeleton className="size-[72px] bg-white animate-pulse" />
-						<Skeleton className="size-[72px] bg-white animate-pulse" />
-						<Skeleton className="size-[72px] bg-white animate-pulse" />
-						<Skeleton className="size-[72px] bg-white animate-pulse" />
-						<Skeleton className="size-[72px] bg-white animate-pulse" />
-						<Skeleton className="size-[72px] bg-white animate-pulse" />
-						<Skeleton className="size-[72px] bg-white animate-pulse" />
-						<Skeleton className="size-[72px] bg-white animate-pulse" />
-						<Skeleton className="size-[72px] bg-white animate-pulse" />
-						<Skeleton className="size-[72px] bg-white animate-pulse" />
-						<Skeleton className="size-[72px] bg-white animate-pulse" />
-						<Skeleton className="size-[72px] bg-white animate-pulse" />
-						<Skeleton className="size-[72px] bg-white animate-pulse" />
+						<Skeleton className="md:visible size-[36px] md:size-[72px] bg-white animate-pulse" />
+						<Skeleton className="md:visible size-[36px] md:size-[72px] bg-white animate-pulse" />
+						<Skeleton className="md:visible size-[36px] md:size-[72px] bg-white animate-pulse" />
+						<Skeleton className="md:visible size-[36px] md:size-[72px] bg-white animate-pulse" />
+						<Skeleton className="md:visible size-[36px] md:size-[72px] bg-white animate-pulse" />
+						<Skeleton className="hidden md:visible size-[36px] md:size-[72px] bg-white animate-pulse" />
+						<Skeleton className="hidden md:visible size-[36px] md:size-[72px] bg-white animate-pulse" />
+						<Skeleton className="hidden md:visible size-[36px] md:size-[72px] bg-white animate-pulse" />
+						<Skeleton className="hidden md:visible size-[36px] md:size-[72px] bg-white animate-pulse" />
+						<Skeleton className="hidden md:visible size-[36px] md:size-[72px] bg-white animate-pulse" />
+						<Skeleton className="hidden md:visible size-[36px] md:size-[72px] bg-white animate-pulse" />
+						<Skeleton className="hidden md:visible size-[36px] md:size-[72px] bg-white animate-pulse" />
+						<Skeleton className="hidden md:visible size-[36px] md:size-[72px] bg-white animate-pulse" />
+						<Skeleton className="hidden md:visible size-[36px] md:size-[72px] bg-white animate-pulse" />
 					</>
 				)}
 				<Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-					<DialogTrigger className="size-[72px] flex flex-col justify-center place-content-center items-center bg-white shadow-sm border hover:bg-white/30 rounded-lg">
+					<DialogTrigger className="size-[36px] md:size-[72px] flex flex-col justify-center place-content-center items-center bg-white shadow-sm border hover:bg-white/30 rounded-lg">
 						<FiPlus className="mx-auto text-slate-700" />
 					</DialogTrigger>
 					<DialogContent>
