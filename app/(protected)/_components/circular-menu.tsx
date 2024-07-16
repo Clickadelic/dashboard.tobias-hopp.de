@@ -41,7 +41,7 @@ export const CircularMenu = () => {
 	const [isLinkDialogOpen, setIsLinkDialogOpen] = useState<boolean>(false)
 
 	return (
-		<div className="fixed bottom-8 right-8 max-w-12">
+		<div className="fixed right-4 bottom-4 md:bottom-8 md:right-8 max-w-12">
 			<div className={cn("absolute -top-48 left-1 flex justify-center space-y-2", showMenu ? "block" : "hidden")}>
 				<Dialog open={isTodoDialogOpen} onOpenChange={setIsTodoDialogOpen}>
 					<DialogTrigger className="relative bg-mantis-primary hover:bg-mantis-primary/90 p-3 text-white rounded-full">
