@@ -41,19 +41,19 @@ const DashboardPage = () => {
 							<TabsList className="w-full flex justify-start mb-3">
 								<TabsTrigger
 									value="todos"
-									className="flex-grow border border-transparent data-[state=active]:bg-white data-[state=active]:text-mantis-primary data-[state=active]:border-mantis-primary"
+									className="flex-grow border border-transparent text-slate-900 hover:text-mantis-primary data-[state=active]:bg-white data-[state=active]:text-mantis-primary data-[state=active]:border-mantis-primary"
 								>
 									Todo&apos;s
 								</TabsTrigger>
 								<TabsTrigger
 									value="notices"
-									className="flex-grow border border-transparent data-[state=active]:bg-white data-[state=active]:text-mantis-primary data-[state=active]:border-mantis-primary"
+									className="flex-grow border border-transparent text-slate-900 hover:text-mantis-primary data-[state=active]:bg-white data-[state=active]:text-mantis-primary data-[state=active]:border-mantis-primary"
 								>
 									Notizen
 								</TabsTrigger>
 								<TabsTrigger
 									value="links"
-									className="flex-grow border border-transparent data-[state=active]:bg-white data-[state=active]:text-mantis-primary data-[state=active]:border-mantis-primary"
+									className="flex-grow border border-transparent text-slate-900 hover:text-mantis-primary data-[state=active]:bg-white data-[state=active]:text-mantis-primary data-[state=active]:border-mantis-primary"
 								>
 									Links
 								</TabsTrigger>
