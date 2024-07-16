@@ -20,6 +20,7 @@ import { NavSidebarSimple } from "./sidebar-simple";
 import { FaUser } from "react-icons/fa";
 import { BsTextIndentRight } from "react-icons/bs";
 import { BsTextIndentLeft } from "react-icons/bs";
+import { HiMenuAlt3 } from "react-icons/hi";
 
 import { cn } from "@/lib/utils";
 import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
@@ -97,7 +98,7 @@ export const SidebarNavbar = () => {
 						{/* TODO: useMediaQuery() */}
 						<Sheet>
 							<SheetTrigger className="ml-2 md:hidden">
-								<Image src={logoSrc} width={32} height={32} className="logo size-8 inline-block mt-[-8px]" alt="Tailwind Dashboard" />
+								<Image src={logoSrc} width={32} height={32} className="logo size-8 inline-block" alt="Tailwind Dashboard" />
 							</SheetTrigger>
 							<SheetContent side="left">
 								<SheetHeader>
@@ -123,27 +124,27 @@ export const SidebarNavbar = () => {
 						</button>
 						<FullStackSearch classNames="inline-block relative mx-3 md:-top-1" />
 					</div>
-					{/* TODO: rechter Mobile Button, umbauen auf Media Query */}
-					<button className="fixed right-5 md:hidden bg-slate-100 rounded p-2 mt-1">asd</button>
 					<Sheet>
-						<SheetTrigger className="ml-2 md:hidden">asdasdasd</SheetTrigger>
+						<SheetTrigger className="inline md:hidden">
+							<HiMenuAlt3 className="inline" />
+						</SheetTrigger>
 						<SheetContent side="right">
 							<SheetHeader>
-								<SheetTitle>
-									<h1>
-										<Link href={DEFAULT_LOGIN_REDIRECT} className="flex justify-between mt-2 text-slate-900 hover:opacity-75">
-											<Image src={logoSrc} width={16} height={16} className="logo inline -mt-1 size-8" alt="Tailwind Dashboard" />
-											{!isToggled && (
-												<span className="ml-2">
-													<span className={cn("md:inline-block font-medium mr-1 text-2xl", laBelleAurore.className)}>Toby&apos;s</span>
-													<span className="md:inline-block font-bold">Dashboard</span>
-												</span>
-											)}
-										</Link>
-									</h1>
-								</SheetTitle>
-								<SheetDescription>Mobile Sidebar rechts</SheetDescription>
+								<SheetTitle>Men&uuml;</SheetTitle>
+								<SheetDescription>Platz für weitere Funktionen</SheetDescription>
 							</SheetHeader>
+							<p>
+								Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sint itaque tempore aperiam vel, eius dicta. Eos, exercitationem quibusdam. Fuga distinctio vel aliquam
+								ratione consectetur? Vitae nostrum quibusdam deserunt commodi quos vel nulla odio suscipit debitis provident eos aliquam rem veniam reiciendis enim, id explicabo
+								dignissimos omnis numquam quasi odit fugiat. Maxime, rerum. Dolorem consectetur temporibus ullam rerum ea sunt distinctio expedita molestias quo cupiditate tempora
+								delectus reiciendis aspernatur dolore id, consequatur at ipsa ducimus praesentium voluptate hic repudiandae veniam nulla officiis. Molestias maiores quae ullam!
+								Necessitatibus nisi corrupti excepturi beatae, perferendis illum? Dicta est corporis tempore consequuntur dolorum eligendi architecto, iure laborum dolorem voluptates
+								maxime libero, similique doloremque qui soluta earum eveniet, totam fugiat harum expedita inventore. Fugiat eius quidem nisi libero corporis? Autem ex numquam sint
+								consectetur. Nulla officiis nihil, obcaecati animi neque fuga quo adipisci, iusto maxime esse aliquam deserunt error blanditiis cumque dignissimos, repudiandae qui.
+								Illo quidem ullam laborum beatae aut accusamus, repudiandae minima asperiores. Amet est recusandae inventore architecto, placeat assumenda ducimus veritatis quod totam
+								error. In, ratione? Deserunt laboriosam libero doloremque quod hic blanditiis voluptates! Veniam nulla quas ex molestias laboriosam deleniti consequuntur dolorum modi,
+								placeat aliquam ad maiores dolorem est unde. Cupiditate, obcaecati enim.
+							</p>
 						</SheetContent>
 					</Sheet>
 					<ul className="hidden space-x-1 fixed right-5 md:inline-flex md:mt-1 p-3 md:p-0 md:mr-1">
