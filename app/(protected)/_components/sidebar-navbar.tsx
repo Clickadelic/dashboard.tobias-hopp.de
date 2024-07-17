@@ -49,8 +49,8 @@ export const SidebarNavbar = () => {
 			<aside className={cn("App-sidebar hidden fixed md:block top-0 left-0 min-h-screen border-r bg-white", isToggled ? "w-16" : "w-64")}>
 				<div className="sidebar-logo hidden md:flex justify-center px-2 py-3">
 					<h1>
-						<Link href={DEFAULT_LOGIN_REDIRECT} className="flex justify-between mt-2 text-slate-900 hover:opacity-75">
-							<Image src={logoSrc} width={16} height={16} className="logo inline -mt-1 size-8" alt="Tailwind Dashboard" />
+						<Link href={DEFAULT_LOGIN_REDIRECT} className="flex justify-between pt-2 text-slate-900 hover:opacity-75">
+							<Image src={logoSrc} width={16} height={16} className="logo inline  size-8" alt="Tailwind Dashboard" />
 							{!isToggled && (
 								<span className="ml-2">
 									<span className={cn("md:inline-block font-medium mr-1 text-2xl", laBelleAurore.className)}>Toby&apos;s</span>
@@ -146,7 +146,7 @@ export const SidebarNavbar = () => {
 							</SheetHeader>
 						</SheetContent>
 					</Sheet>
-					<ul className="hidden space-x-1 fixed right-5 md:inline-flex md:mr-1">
+					<ul className="hidden space-x-1 fixed right-5 md:inline-flex md:mr-1 mb-1">
 						<li>
 							<MegaMenu />
 						</li>
