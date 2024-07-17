@@ -41,8 +41,6 @@ export const SidebarNavbar = () => {
 	const { status } = useSession({ required: true })
 	const user = useCurrentUser()
 	const { isToggled, setToggle } = useAppContext()
-	// const searchParams = useSearchParams()
-	// const router = useRouter()
 
 	return (
 		<>
@@ -94,10 +92,10 @@ export const SidebarNavbar = () => {
 			</aside>
 			<header className={cn("App-header flex fixed top-0 md:ml-64 w-screen p-3 border-b bg-white z-50", isToggled ? "md:ml-16" : "md:ml-64")}>
 				<nav className="header-nav flex justify-between w-max">
-					<div className="inline-flex md:mb-.5">
+					<div className="inline-flex gap-3">
 						{/* TODO: useMediaQuery() */}
 						<Sheet>
-							<SheetTrigger className="ml-2 md:hidden">
+							<SheetTrigger className="md:hidden">
 								<Image src={logoSrc} width={32} height={32} className="logo size-8 inline-block md:mt-[-8px]" alt="Tailwind Dashboard" />
 							</SheetTrigger>
 							<SheetContent side="left">
@@ -119,10 +117,10 @@ export const SidebarNavbar = () => {
 								</SheetHeader>
 							</SheetContent>
 						</Sheet>
-						<button onClick={() => setToggle(prev => !prev)} className="hidden md:inline hover:bg-slate-100 ml-2 white rounded p-2">
+						<button onClick={() => setToggle(prev => !prev)} className="hidden md:inline hover:bg-slate-100 white rounded p-2">
 							{isToggled ? <BsTextIndentLeft className="size-5" /> : <BsTextIndentRight className="size-5" />}
 						</button>
-						<FullStackSearch classNames="inline-flex relative mx-3" />
+						<FullStackSearch classNames="inline-flex" />
 					</div>
 					{/* TODO: rechter Mobile Button, umbauen auf Media Query */}
 					<Sheet>
@@ -146,7 +144,7 @@ export const SidebarNavbar = () => {
 							</SheetHeader>
 						</SheetContent>
 					</Sheet>
-					<ul className="hidden space-x-1 fixed right-5 md:inline-flex md:mr-1 mb-1">
+					<ul className="hidden md:space-x-1 md:fixed md:right-5 md:mt-[-2px] md:inline-flex md:mr-1 mb-1">
 						<li>
 							<MegaMenu />
 						</li>
