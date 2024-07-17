@@ -144,7 +144,7 @@ export const SidebarNavbar = () => {
 							</SheetHeader>
 						</SheetContent>
 					</Sheet>
-					<ul className="hidden space-x-1 fixed right-5 md:inline-flex md:mr-1 mb-1">
+					<ul className="hidden md:space-x-1 md:fixed md:right-5 md:mt-[-2px] md:inline-flex md:mr-1 mb-1">
 						<li>
 							<MegaMenu />
 						</li>
