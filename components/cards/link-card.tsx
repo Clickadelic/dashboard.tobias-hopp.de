@@ -87,7 +87,7 @@ export const LinkCard = () => {
 						</>
 					)}
 				</span>
-				<span className="text-md font-normal">
+				<span>
 					{status === "loading" || isLoading ? (
 						<Skeleton className="mt-3 mb-5 w-12 h-4 bg-primary/10 animate-pulse" />
 					) : (
