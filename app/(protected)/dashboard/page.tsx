@@ -10,8 +10,6 @@ import { NoticeWidget } from "@/components/widgets/notice-widget"
 import { LinkWidget } from "@/components/widgets/link-widget"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
-import { Charts } from "../_components/charts"
-
 const DashboardPage = () => {
 	return (
 		<div className="page-wrapper pb-16">
@@ -27,10 +25,8 @@ const DashboardPage = () => {
 			</div>
 			<div className="grid grid-cols-1 md:grid-cols-3 gap-4">
 				<div className="col-span-2">
-					<h2 className="text-md font-bold text-slate-900 mt-3 mb-5">Stats</h2>
-					<div className="bg-white rounded-xl shadow-sm border p-2 md:p-4">
-						<Charts />
-					</div>
+					<h2 className="text-md font-bold text-slate-900 mt-3 mb-5">Statistiken</h2>
+					<div className="bg-white rounded-xl shadow-sm border p-2 md:p-4">sind in Arbeit...{/* <Charts /> */}</div>
 				</div>
 				<div className="col-span-2 md:col-span-1">
 					<h2 className="text-md font-bold text-slate-900 mt-3 mb-5">Widgets</h2>

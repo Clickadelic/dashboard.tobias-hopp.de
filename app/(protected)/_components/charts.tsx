@@ -100,7 +100,6 @@ export function Charts() {
 		getChartData()
 		setIsLoading(false)
 	}, [])
-	console.log("Is it loading?:", isLoading)
 	return (
 		<ChartContainer config={chartConfig} className="min-h-[200px] flex justify-start items-start">
 			<BarChart accessibilityLayer data={chartData}>
