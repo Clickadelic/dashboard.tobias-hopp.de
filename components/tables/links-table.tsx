@@ -260,8 +260,8 @@ const LinksTable = () => {
 												<tbody>
 													<tr>
 														<td className="text-truncate overflow-hidden text-ellipsis p-1">{link.id}</td>
-														<td className="text-truncate overflow-hidden text-ellipsis p-1">{germanDateFormat(link.createdAt)}</td>
-														<td className="text-truncate overflow-hidden text-ellipsis p-1">{germanDateFormat(link.updatedAt)}</td>
+														<td className="text-truncate overflow-hidden text-ellipsis p-1">{new Date(link.createdAt).toLocaleString()}</td>
+														<td className="text-truncate overflow-hidden text-ellipsis p-1">{new Date(link.updatedAt).toLocaleString()}</td>
 													</tr>
 												</tbody>
 											</table>
