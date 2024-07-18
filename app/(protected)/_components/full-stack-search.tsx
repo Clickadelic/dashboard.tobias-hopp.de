@@ -1,28 +1,38 @@
-"use client"
+"use client";
 
-import { cn } from "@/lib/utils"
-import { useSearchParams, useRouter, usePathname } from "next/navigation"
-import { useDebounce } from "use-debounce"
-import { AiOutlineSearch } from "react-icons/ai"
+import { cn } from "@/lib/utils";
+import { useEffect, useState } from "react";
+import { useSearchParams, useRouter, usePathname } from "next/navigation";
+import { useDebounce } from "use-debounce";
+import { AiOutlineSearch } from "react-icons/ai";
 
 interface FullStackSearchProps {
-	classNames?: string
+	classNames?: string;
 }
 // TODO: Finish functionality
 export const FullStackSearch = ({ classNames }: FullStackSearchProps) => {
-	const searchParams = useSearchParams()
-	const pathname = usePathname()
-	const { replace } = useRouter()
+	const searchParams = useSearchParams();
+	const pathname = usePathname();
+	const { replace } = useRouter();
+
+	const [searchTerm, setSearchTerm] = useState<string>(searchParams.get("q")?.toString() || "");
+	const [debouncedSearchTerm] = useDebounce(searchTerm, 500);
 
 	const handleSearch = (term: string) => {
-		const params = new URLSearchParams(searchParams)
-		if (term) {
-			params.set("q", term)
-		} else {
-			params.delete("q")
+		setSearchTerm(term);
+	};
+
+	useEffect(() => {
+		if (debouncedSearchTerm.length >= 4 || debouncedSearchTerm.length === 0) {
+			const params = new URLSearchParams(searchParams);
+			if (debouncedSearchTerm) {
+				params.set("q", debouncedSearchTerm);
+			} else {
+				params.delete("q");
+			}
+			replace(`${pathname}?${params.toString()}`);
 		}
-		replace(`${pathname}?${params.toString()}`)
-	}
+	}, [debouncedSearchTerm, searchParams, pathname, replace]);
 
 	return (
 		<div className={classNames}>
@@ -40,5 +50,5 @@ export const FullStackSearch = ({ classNames }: FullStackSearchProps) => {
 				</button>
 			</div>
 		</div>
-	)
-}
+	);
+};

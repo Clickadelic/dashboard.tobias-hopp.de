@@ -1,12 +1,12 @@
-"use server"
-import { db } from "@/lib/db"
-import { auth } from "@/auth"
+"use server";
+import { db } from "@/lib/db";
+import { auth } from "@/auth";
 
 export const getFullStackSearchResults = async (query: string) => {
-	const results = []
-	const session = await auth()
-	const user = session?.user
-	const userId = user?.id
+	const results = [];
+	const session = await auth();
+	const user = session?.user;
+	const userId = user?.id;
 
 	const linkresults = await db.link.findMany({
 		where: {
@@ -29,8 +29,8 @@ export const getFullStackSearchResults = async (query: string) => {
 				}
 			]
 		}
-	})
-	if (linkresults.length > 0) results.push(linkresults)
+	});
+	if (linkresults.length > 0) results.push(linkresults);
 
 	const noticeResults = await db.notice.findMany({
 		where: {
@@ -41,8 +41,8 @@ export const getFullStackSearchResults = async (query: string) => {
 				id: userId
 			}
 		}
-	})
-	if (noticeResults.length > 0) results.push(noticeResults)
+	});
+	if (noticeResults.length > 0) results.push(noticeResults);
 
 	const todoResults = await db.todo.findMany({
 		where: {
@@ -65,8 +65,9 @@ export const getFullStackSearchResults = async (query: string) => {
 				}
 			]
 		}
-	})
-	if (todoResults.length > 0) results.push(todoResults)
+	});
+
+	if (todoResults.length > 0) results.push(todoResults);
 	const projectResults = await db.project.findMany({
 		where: {
 			title: {
@@ -88,9 +89,9 @@ export const getFullStackSearchResults = async (query: string) => {
 				}
 			]
 		}
-	})
-	if (projectResults.length > 0) results.push(projectResults)
+	});
+	if (projectResults.length > 0) results.push(projectResults);
 
 	// console.log("Full results are:", results)
-	return results
-}
+	return results;
+};
