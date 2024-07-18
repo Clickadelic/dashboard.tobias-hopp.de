@@ -1,6 +1,5 @@
 "use client";
 
-import { cn } from "@/lib/utils";
 import { useEffect, useState } from "react";
 import { useSearchParams, useRouter, usePathname } from "next/navigation";
 import { useDebounce } from "use-debounce";
@@ -9,7 +8,7 @@ import { AiOutlineSearch } from "react-icons/ai";
 interface FullStackSearchProps {
 	classNames?: string;
 }
-// TODO: Finish functionality
+
 export const FullStackSearch = ({ classNames }: FullStackSearchProps) => {
 	const searchParams = useSearchParams();
 	const pathname = usePathname();
