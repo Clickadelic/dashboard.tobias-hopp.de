@@ -1,7 +1,7 @@
-import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from "@radix-ui/react-dropdown-menu"
-import { Button } from "@/components/ui/button"
-import { PiTranslate } from "react-icons/pi"
-import Link from "next/link"
+import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from "@radix-ui/react-dropdown-menu";
+import { Button } from "@/components/ui/button";
+import { PiTranslate } from "react-icons/pi";
+import Link from "next/link";
 
 export const LanguagesButton = () => {
 	return (
@@ -11,7 +11,7 @@ export const LanguagesButton = () => {
 					<PiTranslate className="size-5" />
 				</Button>
 			</DropdownMenuTrigger>
-			<DropdownMenuContent align="end" className="bg-white md:w-[440px] min-h-[300px] md:flex justify-around shadow-sm border p-8 gap-8">
+			<DropdownMenuContent align="end" className="md:w-[440px] mt-1 bg-white min-h-[300px] md:flex justify-around shadow-sm border p-8 gap-8">
 				<div>
 					<h3 className="text-md font-bold mb-3">Empty Column</h3>
 					<ul className="list-disc ml-5">
@@ -59,5 +59,5 @@ export const LanguagesButton = () => {
 				</div>
 			</DropdownMenuContent>
 		</DropdownMenu>
-	)
-}
+	);
+};

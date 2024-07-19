@@ -76,7 +76,7 @@ export const UserProfileCard = ({ classNames }: UserProfileCardProps) => {
 			<div className="bg-white rounded-lg pb-12 border">
 				<Form {...form}>
 					<form onSubmit={form.handleSubmit(userFormSubmit)}>
-						<div className="rounded-tl-lg rounded-tr-lg bg-gradient-to-b from-sky-400 to-mantis-primary h-28">{/* Ghost Div */}</div>
+						<div className="rounded-tl-lg rounded-tr-lg bg-gradient-to-b from-mantis-primary to-blue-700 h-28">{/* Ghost Div */}</div>
 						<div className="bg-slate-100 mb-8">
 							<Avatar className="size-28 shadow-lg border mx-auto -translate-y-1/2">
 								<AvatarImage className="size-10" src={user?.profileImage || ""} />
@@ -85,10 +85,9 @@ export const UserProfileCard = ({ classNames }: UserProfileCardProps) => {
 								</AvatarFallback>
 							</Avatar>
 						</div>
-
 						<h1 className="text-2xl font-medium text-center">{user?.name}</h1>
 						<h2 className="text-xl font-light text-center">{user?.email}</h2>
-						<div className="w-96 mx-auto space-y-3">
+						<div className="min-w-72 max-w-96 mx-auto space-y-3 p-4">
 							<div className="my-2 h-[44px]">
 								<FormError message={error} />
 								<FormSuccess message={success} />
