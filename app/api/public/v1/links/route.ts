@@ -1,5 +1,8 @@
+import { db } from "@/lib/db";
+
 export async function GET() {
-	return new Response("Hello, Next.js!");
+	const links = await db.link.findMany();
+	return new Response(JSON.stringify(links));
 }
 
 export async function POST(request: Request) {

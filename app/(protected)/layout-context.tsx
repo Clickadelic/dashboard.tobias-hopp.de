@@ -48,7 +48,6 @@ const LayoutContext = ({ children }: LayoutContextProps) => {
 		}
 	}, [q]);
 
-	// TODO: Add loading state
 	return (
 		<>
 			<SidebarNavbar />
@@ -65,7 +64,7 @@ const LayoutContext = ({ children }: LayoutContextProps) => {
 									{results.map((resultArray, outerIndex) => (
 										<div className="bg-white" key={outerIndex}>
 											{resultArray.map((result: any, innerIndex: number) => (
-												<li key={innerIndex} className="bg-white p-4 border border-gray-200 rounded-lg shadow-sm">
+												<li key={innerIndex} className="p-4 border border-gray-200 rounded shadow-sm">
 													<h3 className="text-lg font-semibold">{result.title || result.noticetext}</h3>
 													<p>{result.description || ""}</p>
 													<p>Erstellt am: {new Date(result.createdAt).toLocaleString()}</p>
