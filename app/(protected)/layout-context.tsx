@@ -1,56 +1,52 @@
-"use client"
+"use client";
 
-import { useAppContext } from "@/context/app-context"
-import { useSearchParams, useRouter } from "next/navigation"
-import { useState, useEffect } from "react"
+import { useAppContext } from "@/context/app-context";
+import { useSearchParams, useRouter } from "next/navigation";
+import { useState, useEffect } from "react";
 
-import { useDebounce } from "use-debounce"
+// import { useDebounce } from "use-debounce";
 
-import { SidebarNavbar } from "./_components/sidebar-navbar"
-import { Cockpit } from "./_components/cockpit"
-import { CircularMenu } from "./_components/circular-menu"
+import { SidebarNavbar } from "./_components/sidebar-navbar";
+import { Cockpit } from "./_components/cockpit";
+import { CircularMenu } from "./_components/circular-menu";
 
-import { getFullStackSearchResults } from "@/actions/search"
-import { cn } from "@/lib/utils"
+import { getFullStackSearchResults } from "@/actions/search";
+import { cn } from "@/lib/utils";
 
 interface LayoutContextProps {
-	children: React.ReactNode
+	children: React.ReactNode;
 }
 
 const LayoutContext = ({ children }: LayoutContextProps) => {
-	const { isToggled } = useAppContext()
-	const searchParams = useSearchParams()
-	const [isLoading, setIsLoading] = useState<boolean>(false)
-	const [results, setResults] = useState<any[]>([])
-	const [error, setError] = useState<string | null>(null)
+	const { isToggled } = useAppContext();
+	const searchParams = useSearchParams();
+	const [isLoading, setIsLoading] = useState<boolean>(false);
+	const [results, setResults] = useState<any[]>([]);
+	const [error, setError] = useState<string | null>(null);
 
-	const q = searchParams.get("q")
-	const [key, setKey] = useState("")
+	const q = searchParams.get("q");
 
-	const handleKeyDown = (event: KeyboardEvent) => {
-		setKey(event.key)
-		console.log(key)
-	}
+	// const [key, setKey] = useState("");
+	// const [debouncedKey] = useDebounce(key, 500);
 
 	const findQuery = async (query: string) => {
 		try {
-			const searchResults = await getFullStackSearchResults(query)
-			setResults(searchResults)
-			console.log("Ergebnis der Suche:", searchResults)
+			const searchResults = await getFullStackSearchResults(query);
+			setResults(searchResults);
 		} catch (err) {
-			console.error("Fehler bei der Suche:", err)
-			setError("Es gab ein Problem bei der Suche. Bitte versuche es später erneut.")
+			console.error("Fehler bei der Suche:", err);
+			setError("Es gab ein Problem bei der Suche. Bitte versuche es später erneut.");
 		}
-	}
+	};
 
 	useEffect(() => {
 		if (q) {
-			setIsLoading(true)
-			findQuery(q).finally(() => setIsLoading(false))
+			setIsLoading(true);
+			findQuery(q).finally(() => setIsLoading(false));
 		} else {
-			setResults([])
+			setResults([]);
 		}
-	}, [q])
+	}, [q]);
 
 	// TODO: Add loading state
 	return (
@@ -67,7 +63,7 @@ const LayoutContext = ({ children }: LayoutContextProps) => {
 							{!isLoading && results.length > 0 && (
 								<ul className="space-y-4">
 									{results.map((resultArray, outerIndex) => (
-										<div key={outerIndex}>
+										<div className="bg-white" key={outerIndex}>
 											{resultArray.map((result: any, innerIndex: number) => (
 												<li key={innerIndex} className="bg-white p-4 border border-gray-200 rounded-lg shadow-sm">
 													<h3 className="text-lg font-semibold">{result.title || result.noticetext}</h3>
@@ -89,7 +85,7 @@ const LayoutContext = ({ children }: LayoutContextProps) => {
 			<Cockpit />
 			<CircularMenu />
 		</>
-	)
-}
+	);
+};
 
-export default LayoutContext
+export default LayoutContext;
