@@ -22,7 +22,7 @@ import { FiPlus } from "react-icons/fi"
 import { ProjectSchema } from "@/schemas"
 import { Project } from "@prisma/client"
 
-import { addProject, getProjectsByUserId, getLatestProject } from "@/actions/project"
+import { addProject, getProjectsByUserId } from "@/actions/project"
 import { BsBuildings } from "react-icons/bs"
 
 export const ProjectCard = () => {
@@ -35,9 +35,8 @@ export const ProjectCard = () => {
 		setIsLoading(true)
 		try {
 			const response = await getProjectsByUserId()
-			const latest = await getLatestProject()
 			setProjects(response)
-			setLatestProject(latest[0])
+			setLatestProject(response[0])
 		} catch (error) {
 			console.error("Error fetching links:", error)
 			toast.error("Failed to fetch links.")
@@ -72,17 +71,16 @@ export const ProjectCard = () => {
 
 	return (
 		<div className="bg-white rounded-xl shadow-sm border p-4">
-			<h2 className="text-xs md:text-sm border-bottom text-slate-900 flex justify-between mb-2">
-				<Link href="/projekte" className="hover:text-slate-700 hover:underline" title="Zur Projektübersicht">
+			<h2 className="flex justify-between text-xs md:text-sm mb-2">
+				<Link href="/projekte" className="text-slate-900 hover:text-slate-700 hover:underline" title="Zur Projektübersicht">
 					Projekte
 				</Link>
-				{/* <Link href="/projekte">zur Übersicht</Link> */}
 				<span>neuestes Projekt</span>
 			</h2>
-			<h3 className="mb-4 flex justify-between">
+			<h3 className="flex justify-between mb-4">
 				<span className="font-bold">
 					{status === "loading" || isLoading ? (
-						<Skeleton className="mt-[-3px]w-8 h-4 bg-primary/10 animate-pulse" />
+						<Skeleton className="mt-[-3px] w-8 h-4 bg-primary/10 animate-pulse" />
 					) : (
 						<>
 							<BsBuildings className="inline-block mr-2 mt-[-3px]" />

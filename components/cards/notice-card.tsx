@@ -20,7 +20,7 @@ import { Button } from "@/components/ui/button"
 import { FiPlus } from "react-icons/fi"
 import { CiEdit } from "react-icons/ci"
 
-import { addNotice, getNoticesByUserId, getLatestNotice } from "@/actions/notice"
+import { addNotice, getNoticesByUserId } from "@/actions/notice"
 import { Notice } from "@prisma/client"
 
 export const NoticeCard = () => {
@@ -34,9 +34,8 @@ export const NoticeCard = () => {
 		setIsLoading(true)
 		try {
 			const response = await getNoticesByUserId()
-			const latest = await getLatestNotice()
 			setNotices(response)
-			setLatestNotice(latest[0])
+			setLatestNotice(response[0])
 		} catch (error) {
 			toast.error("Fehler beim Laden der Notizen.")
 		} finally {

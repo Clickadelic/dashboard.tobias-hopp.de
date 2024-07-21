@@ -76,11 +76,3 @@ export const deleteNoticeById = async (id: string) => {
 		return { error: "Interner Server-Fehler" }
 	}
 }
-
-export const getLatestNotice = async () => {
-	const session = await auth()
-	const user = session?.user
-	const userId = user?.id
-	const data = await db.notice.findMany({ where: { userId }, take: 1, orderBy: { createdAt: "desc" } })
-	return data
-}

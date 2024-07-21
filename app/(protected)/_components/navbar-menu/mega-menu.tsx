@@ -1,15 +1,14 @@
-import Link from "next/link";
-import { AiOutlineWindows } from "react-icons/ai";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-import { Button } from "@/components/ui/button";
-import { IoArrowForwardOutline } from "react-icons/io5";
+import Link from "next/link"
+import { AiOutlineWindows } from "react-icons/ai"
+import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
+import { Button } from "@/components/ui/button"
+import { IoArrowForwardOutline } from "react-icons/io5"
 
-import Image from "next/image";
+import Image from "next/image"
 
-import knifeSrc from "@/public/images/png/knife.png";
+import knifeSrc from "@/public/images/png/knife.png"
 
 export const MegaMenu = () => {
-	console.log(knifeSrc);
 	return (
 		<DropdownMenu modal={false}>
 			<DropdownMenuTrigger asChild>
@@ -99,5 +98,5 @@ export const MegaMenu = () => {
 				</div>
 			</DropdownMenuContent>
 		</DropdownMenu>
-	);
-};
+	)
+}

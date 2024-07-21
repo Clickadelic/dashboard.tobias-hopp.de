@@ -119,11 +119,3 @@ export const getLinksByUserId = async () => {
 	})
 	return data
 }
-
-export const getLatestLink = async () => {
-	const session = await auth()
-	const user = session?.user
-	const userId = user?.id
-	const data = await db.link.findMany({ where: { userId }, take: 1, orderBy: { createdAt: "desc" } })
-	return data
-}
