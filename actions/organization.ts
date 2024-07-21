@@ -17,13 +17,10 @@ export const addOrganization = async (values: z.infer<typeof OrganizationSchema>
 		}
 
 		const { name, url, description } = validatedFields.data
-		console.log("Name:", name, "URL:", url, "Description:", description)
 
 		const existingOrganization = await db.organization.findFirst({
 			where: {
-				user: {
-					id: userId
-				}
+				url
 			}
 		})
 		if (existingOrganization) {
@@ -118,4 +115,13 @@ export const getOrganizationsByUserId = async () => {
 		}
 	})
 	return organizations
+}
+
+export const getOrganizationById = async (id: string) => {
+	const organization = await db.organization.findFirst({
+		where: {
+			id
+		}
+	})
+	return organization
 }

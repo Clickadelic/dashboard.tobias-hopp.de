@@ -24,12 +24,12 @@ import { addOrganization, getOrganizationsByUserId } from "@/actions/organizatio
 
 import { cn } from "@/lib/utils"
 
-interface FormOrganizationProps {
+interface OrganisationGridProps {
 	formClasses?: string
 	organization?: Organization
 }
 
-export const FormOrganization = ({ formClasses, organization }: FormOrganizationProps = {}) => {
+export const OrganisationGrid = ({ formClasses, organization }: OrganisationGridProps = {}) => {
 	const { status } = useSession({ required: true })
 	const [isDialogOpen, setIsDialogOpen] = useState(false)
 	const [organizations, setOrganizations] = useState<Organization[]>([])
@@ -41,6 +41,18 @@ export const FormOrganization = ({ formClasses, organization }: FormOrganization
 		defaultValues: { name: "", url: "", description: "" }
 	})
 
+	const fetchOrganizations = async () => {
+		setIsLoading(true)
+		try {
+			const response = await getOrganizationsByUserId()
+			setOrganizations(response)
+		} catch (error) {
+			toast.error("Fehler beim Laden der Organisationen.")
+		} finally {
+			setIsLoading(false)
+		}
+	}
+
 	const onSubmit = async (values: z.infer<typeof OrganizationSchema>) => {
 		startTransition(async () => {
 			const result = await addOrganization(values)
@@ -50,9 +62,16 @@ export const FormOrganization = ({ formClasses, organization }: FormOrganization
 				toast.success(result.success)
 				form.reset()
 				setIsDialogOpen(false)
+				fetchOrganizations()
 			}
 		})
 	}
+
+	useEffect(() => {
+		if (status === "authenticated") {
+			fetchOrganizations()
+		}
+	}, [status])
 
 	return (
 		<>
@@ -65,7 +84,7 @@ export const FormOrganization = ({ formClasses, organization }: FormOrganization
 						render={({ field }) => (
 							<FormItem>
 								<FormControl>
-									<Input {...field} placeholder="Name" />
+									<Input {...field} placeholder="Titel" />
 								</FormControl>
 								<FormMessage />
 							</FormItem>
@@ -105,6 +124,21 @@ export const FormOrganization = ({ formClasses, organization }: FormOrganization
 					</Button>
 				</form>
 			</Form>
+			<hr className="my-3" />
+			{organizations.length > 0 && (
+				<ul className="grid grid-cols-4 gap-4">
+					{organizations.map(organization => (
+						<li key={organization.id} className="p-4 border border-slate-200 rounded-lg flex flex-col">
+							<h3 className="font-semibold mb-3">{organization.name}</h3>
+							<p className="h-12 truncate text-ellipsis overflow-hidden">{organization.description}</p>
+
+							<Link href={`/organisationen/${organization.id}`} title="Zur Organisation">
+								Zur Organisation
+							</Link>
+						</li>
+					))}
+				</ul>
+			)}
 		</>
 	)
 }
