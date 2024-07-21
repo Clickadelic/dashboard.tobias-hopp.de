@@ -18,9 +18,9 @@ import { toast } from "sonner"
 import { Button } from "@/components/ui/button"
 
 import { FiPlus } from "react-icons/fi"
-import { BsList, BsListCheck } from "react-icons/bs"
+import { BsListCheck } from "react-icons/bs"
 
-import { addTodo, getTodosByUserId, getLatestTodo } from "@/actions/todo"
+import { addTodo, getTodosByUserId } from "@/actions/todo"
 import { TodoSchema } from "@/schemas"
 import { Todo } from "@prisma/client"
 
@@ -35,9 +35,8 @@ export const TodoCard = () => {
 		setIsLoading(true)
 		try {
 			const response = await getTodosByUserId()
-			const latest = await getLatestTodo()
 			setTodos(response)
-			setLatestTodo(latest[0])
+			setLatestTodo(response[0])
 		} catch (error) {
 			toast.error("Failed to fetch Todos.")
 		} finally {

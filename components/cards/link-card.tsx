@@ -20,7 +20,7 @@ import { GoLink } from "react-icons/go"
 
 import { Link as Hyperlink } from "@prisma/client"
 import { LinkSchema } from "@/schemas"
-import { addLink, getLinksByUserId, getLatestLink } from "@/actions/link"
+import { addLink, getLinksByUserId } from "@/actions/link"
 
 // TODO: Fix broken layout shift when Loading...
 export const LinkCard = () => {
@@ -34,9 +34,8 @@ export const LinkCard = () => {
 		setIsLoading(true)
 		try {
 			const response = await getLinksByUserId()
-			const latest = await getLatestLink()
 			setLinks(response)
-			setLatestLink(latest[0])
+			setLatestLink(response[0])
 		} catch (error) {
 			toast.error("Fehler beim Laden der Links.")
 		} finally {
