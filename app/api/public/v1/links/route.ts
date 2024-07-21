@@ -6,7 +6,7 @@ import Cors from "cors"
 // Initialisiere die cors-Middleware
 const cors = Cors({
 	methods: ["GET", "HEAD", "POST"], // Passen Sie die Methoden nach Bedarf an
-	origin: "https://yourdomain.com" // Ersetzen Sie dies durch die spezifische Domain
+	origin: "https://dasboard.tobias-hopp.de" // Ersetzen Sie dies durch die spezifische Domain
 })
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
