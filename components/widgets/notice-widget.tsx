@@ -89,7 +89,7 @@ export const NoticeWidget = () => {
 						render={({ field }) => (
 							<FormItem>
 								<FormControl>
-									<Textarea rows={4} {...field} className="mb-3" placeholder="Notiztext..." />
+									<Textarea rows={6} {...field} placeholder="Notiztext..." />
 								</FormControl>
 								<FormMessage />
 							</FormItem>

@@ -1,105 +1,105 @@
-"use client";
+"use client"
 
-import * as z from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod"
+import { zodResolver } from "@hookform/resolvers/zod"
 
-import { useTransition, useState, useEffect } from "react";
-import { useForm } from "react-hook-form";
-import { useSession } from "next-auth/react";
+import { useTransition, useState, useEffect } from "react"
+import { useForm } from "react-hook-form"
+import { useSession } from "next-auth/react"
 
-import { Input } from "@/components/ui/input";
-import { Form, FormControl, FormLabel, FormField, FormItem, FormMessage } from "@/components/ui/form";
-import { Textarea } from "@/components/ui/textarea";
-import { Skeleton } from "@/components/ui/skeleton";
-import { toast } from "sonner";
-import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input"
+import { Form, FormControl, FormLabel, FormField, FormItem, FormMessage } from "@/components/ui/form"
+import { Textarea } from "@/components/ui/textarea"
+import { Skeleton } from "@/components/ui/skeleton"
+import { toast } from "sonner"
+import { Button } from "@/components/ui/button"
 
-import { FiPlus } from "react-icons/fi";
-import { GoTrash } from "react-icons/go";
-import { LiaEdit } from "react-icons/lia";
+import { FiPlus } from "react-icons/fi"
+import { GoTrash } from "react-icons/go"
+import { LiaEdit } from "react-icons/lia"
 
-import { LinkSchema } from "@/schemas";
-import { addLink, editLinkById, deleteLinkById, getLinksByUserId } from "@/actions/link";
-import { Link } from "@prisma/client";
+import { LinkSchema } from "@/schemas"
+import { addLink, editLinkById, deleteLinkById, getLinksByUserId } from "@/actions/link"
+import { Link } from "@prisma/client"
 
 export const LinkWidget = () => {
-	const { status } = useSession({ required: true });
-	const [isPending, startTransition] = useTransition();
-	const [isLoading, setIsLoading] = useState<boolean>(false);
-	const [links, setLinks] = useState<any[]>([]);
+	const { status } = useSession({ required: true })
+	const [isPending, startTransition] = useTransition()
+	const [isLoading, setIsLoading] = useState<boolean>(false)
+	const [links, setLinks] = useState<any[]>([])
 
 	const fetchLinks = async () => {
-		setIsLoading(true);
+		setIsLoading(true)
 		try {
-			const response = await getLinksByUserId();
-			setLinks(response);
+			const response = await getLinksByUserId()
+			setLinks(response)
 		} catch (error) {
-			toast.error("Fehler beim Laden der Links.");
+			toast.error("Fehler beim Laden der Links.")
 		} finally {
-			setIsLoading(false);
+			setIsLoading(false)
 		}
-	};
+	}
 
 	useEffect(() => {
-		setIsLoading(true);
-		fetchLinks();
-		setIsLoading(false);
-	}, []);
+		setIsLoading(true)
+		fetchLinks()
+		setIsLoading(false)
+	}, [])
 
 	const form = useForm<z.infer<typeof LinkSchema>>({
 		resolver: zodResolver(LinkSchema),
 		defaultValues: { title: "", url: "", description: "" }
-	});
+	})
 
 	const onSubmit = async (values: z.infer<typeof LinkSchema>) => {
 		startTransition(async () => {
-			const result = await addLink(values);
+			const result = await addLink(values)
 			if (result.error) {
-				toast.error(result.error);
+				toast.error(result.error)
 			} else if (result.success) {
-				toast.success(result.success);
-				form.reset();
-				fetchLinks();
+				toast.success(result.success)
+				form.reset()
+				fetchLinks()
 			}
-		});
-	};
+		})
+	}
 
 	const setEditValues = (linkId: string) => {
-		const link = links.find(link => link.id === linkId);
+		const link = links.find(link => link.id === linkId)
 		if (link) {
 			form.reset({
 				title: link.title,
 				url: link.url,
 				description: link.description || ""
-			});
+			})
 		}
-	};
+	}
 
 	const onEdit = async (id: string, values: z.infer<typeof LinkSchema>) => {
 		startTransition(async () => {
-			const result = await editLinkById(id, values);
+			const result = await editLinkById(id, values)
 			if (result.error) {
-				toast.error(result.error);
+				toast.error(result.error)
 			} else if (result.success) {
-				toast.success(result.success);
-				form.reset();
-				fetchLinks();
+				toast.success(result.success)
+				form.reset()
+				fetchLinks()
 			}
-		});
-	};
+		})
+	}
 
 	const onDelete = async (id: string) => {
 		startTransition(async () => {
-			const result = await deleteLinkById(id);
+			const result = await deleteLinkById(id)
 			if (result.error) {
-				toast.error(result.error);
+				toast.error(result.error)
 			} else if (result.success) {
-				toast.success(result.success);
-				form.reset();
-				fetchLinks();
+				toast.success(result.success)
+				form.reset()
+				fetchLinks()
 			}
-		});
-	};
+		})
+	}
 
 	return (
 		<>
@@ -138,7 +138,7 @@ export const LinkWidget = () => {
 						render={({ field }) => (
 							<FormItem>
 								<FormControl>
-									<Textarea {...field} placeholder="Beschreibung..." />
+									<Textarea rows={2} {...field} placeholder="Beschreibung..." />
 								</FormControl>
 								<FormMessage />
 							</FormItem>
@@ -163,7 +163,7 @@ export const LinkWidget = () => {
 							<button>
 								<LiaEdit
 									onClick={() => {
-										setEditValues(link.id);
+										setEditValues(link.id)
 									}}
 								/>
 							</button>
@@ -175,5 +175,5 @@ export const LinkWidget = () => {
 				))}
 			</ul>
 		</>
-	);
-};
+	)
+}
