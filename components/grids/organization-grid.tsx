@@ -24,12 +24,12 @@ import { addOrganization, getOrganizationsByUserId } from "@/actions/organizatio
 
 import { cn } from "@/lib/utils"
 
-interface OrganisationGridProps {
+interface OrganizationGridProps {
 	formClasses?: string
 	organization?: Organization
 }
 
-export const OrganisationGrid = ({ formClasses, organization }: OrganisationGridProps = {}) => {
+export const OrganizationGrid = ({ formClasses, organization }: OrganizationGridProps = {}) => {
 	const { status } = useSession({ required: true })
 	const [isDialogOpen, setIsDialogOpen] = useState(false)
 	const [organizations, setOrganizations] = useState<Organization[]>([])

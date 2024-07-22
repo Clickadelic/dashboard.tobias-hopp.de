@@ -38,73 +38,62 @@ export const FormOrganization = ({ formClasses, organization }: FormOrganization
 
 	const form = useForm<z.infer<typeof OrganizationSchema>>({
 		resolver: zodResolver(OrganizationSchema),
-		defaultValues: { name: "", url: "", description: "" }
+		defaultValues: { name: organization?.name || "", url: organization?.url || "", description: organization?.description || "" }
 	})
 
-	const onSubmit = async (values: z.infer<typeof OrganizationSchema>) => {
-		startTransition(async () => {
-			const result = await addOrganization(values)
-			if (result.error) {
-				toast.error(result.error)
-			} else if (result.success) {
-				toast.success(result.success)
-				form.reset()
-				setIsDialogOpen(false)
-			}
-		})
+	const onEdit = () => {
+		console.log("Things..")
 	}
 
 	return (
-		<>
-			<Form {...form}>
-				<form onSubmit={form.handleSubmit(onSubmit)} className={cn("space-y-2 w-50", formClasses)}>
-					<FormField
-						control={form.control}
-						name="name"
-						disabled={isPending}
-						render={({ field }) => (
-							<FormItem>
-								<FormControl>
-									<Input {...field} placeholder="Name" />
-								</FormControl>
-								<FormMessage />
-							</FormItem>
-						)}
-					/>
-					<FormField
-						control={form.control}
-						name="url"
-						disabled={isPending}
-						render={({ field }) => (
-							<FormItem>
-								<FormControl>
-									<Input type="url" {...field} placeholder="Url" />
-								</FormControl>
-								<FormMessage />
-							</FormItem>
-						)}
-					/>
+		<Form {...form}>
+			<form onSubmit={form.handleSubmit(onEdit)} className={cn("space-y-2 w-50", formClasses)}>
+				<FormField
+					control={form.control}
+					name="name"
+					disabled={isPending}
+					render={({ field }) => (
+						<FormItem>
+							<FormControl>
+								<Input {...field} placeholder="Name" />
+							</FormControl>
+							<FormMessage />
+						</FormItem>
+					)}
+				/>
+				<FormField
+					control={form.control}
+					name="url"
+					disabled={isPending}
+					render={({ field }) => (
+						<FormItem>
+							<FormControl>
+								<Input type="url" {...field} placeholder="Url" />
+							</FormControl>
+							<FormMessage />
+						</FormItem>
+					)}
+				/>
 
-					<FormField
-						control={form.control}
-						name="description"
-						disabled={isPending}
-						render={({ field }) => (
-							<FormItem>
-								<FormControl>
-									<Textarea {...field} placeholder="Beschreibung" />
-								</FormControl>
-								<FormMessage />
-							</FormItem>
-						)}
-					/>
+				<FormField
+					control={form.control}
+					name="description"
+					disabled={isPending}
+					render={({ field }) => (
+						<FormItem>
+							<FormControl>
+								<Textarea {...field} placeholder="Beschreibung" />
+							</FormControl>
+							<FormMessage />
+						</FormItem>
+					)}
+				/>
 
-					<Button disabled={isPending} variant="primary" type="submit" className="w-full">
-						<FiPlus className="inline text-white mr-2" />
-						Organisation hinzufügen
-					</Button>
-				</form>
-			</Form>
-		</>
+				<Button disabled={isPending} variant="primary" type="submit" className="w-full">
+					<FiPlus className="inline text-white mr-2" />
+					Organisation hinzufügen
+				</Button>
+			</form>
+		</Form>
 	)
 }
