@@ -1,27 +1,25 @@
-"use server"
+"use server";
 
-import * as z from "zod"
+import * as z from "zod";
 
-import { db } from "@/lib/db"
-import { NoticeSchema } from "@/schemas"
-import { auth } from "@/auth"
-
-// TODO: Add Security mit Benutzer ID
+import { db } from "@/lib/db";
+import { NoticeSchema } from "@/schemas";
+import { auth } from "@/auth";
 
 export const addNotice = async (values: z.infer<typeof NoticeSchema>) => {
-	const session = await auth()
-	const user = session?.user
-	const userId = user?.id
+	const session = await auth();
+	const user = session?.user;
+	const userId = user?.id;
 	try {
-		const validatedFields = NoticeSchema.safeParse(values)
+		const validatedFields = NoticeSchema.safeParse(values);
 		if (!validatedFields.success) {
-			return { error: "Ungültige Felder!" }
+			return { error: "Ungültige Felder!" };
 		}
 
-		const { noticetext } = validatedFields.data
+		const { noticetext } = validatedFields.data;
 
 		if (noticetext === "") {
-			return { error: "Notiztext fehlt." }
+			return { error: "Notiztext fehlt." };
 		}
 
 		await db.notice.create({
@@ -31,28 +29,42 @@ export const addNotice = async (values: z.infer<typeof NoticeSchema>) => {
 					connect: { id: userId }
 				}
 			}
-		})
+		});
 
-		return { success: "Notiz hinzugefügt." }
+		return { success: "Notiz hinzugefügt." };
 	} catch (error) {
-		return { error: "Interner Server-Fehler." }
+		return { error: "Interner Server-Fehler." };
 	}
-}
+};
 
-export const getNoticesByUserId = async () => {
-	const session = await auth()
-	const user = session?.user
-	const userId = user?.id
-
-	const data = await db.notice.findMany({
-		where: {
-			user: {
-				id: userId
-			}
+export const editNoticeById = async (id: string, values: z.infer<typeof NoticeSchema>) => {
+	const session = await auth();
+	const user = session?.user;
+	const userId = user?.id;
+	try {
+		const validatedFields = NoticeSchema.safeParse(values);
+		if (!validatedFields.success) {
+			return { error: "Ungültige Felder!" };
 		}
-	})
-	return data
-}
+		const { noticetext } = validatedFields.data;
+
+		if (noticetext === "") {
+			return { error: "Notiztext fehlt." };
+		}
+
+		await db.notice.update({
+			where: {
+				id
+			},
+			data: {
+				noticetext
+			}
+		});
+		return { success: "Notiz geändert." };
+	} catch (error) {
+		return { error: "Interner Server-Fehler." };
+	}
+};
 
 export const deleteNoticeById = async (id: string) => {
 	try {
@@ -60,19 +72,34 @@ export const deleteNoticeById = async (id: string) => {
 			where: {
 				id
 			}
-		})
+		});
 		if (!existingNotice) {
-			return { error: "Notiz nicht vorhanden" }
+			return { error: "Notiz nicht vorhanden" };
 		}
 
 		await db.notice.delete({
 			where: {
 				id
 			}
-		})
+		});
 
-		return { success: "Notiz gelöscht" }
+		return { success: "Notiz gelöscht" };
 	} catch (error) {
-		return { error: "Interner Server-Fehler" }
+		return { error: "Interner Server-Fehler" };
 	}
-}
+};
+
+export const getNoticesByUserId = async () => {
+	const session = await auth();
+	const user = session?.user;
+	const userId = user?.id;
+
+	const data = await db.notice.findMany({
+		where: {
+			user: {
+				id: userId
+			}
+		}
+	});
+	return data;
+};

@@ -5,8 +5,8 @@ import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
 import { cn } from "@/lib/utils";
 
 import { La_Belle_Aurore } from "next/font/google";
-
 const laBelleAurore = La_Belle_Aurore({ subsets: ["latin"], weight: ["400"] });
+
 const Logo = () => {
 	return (
 		<h1>

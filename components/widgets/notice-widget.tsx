@@ -1,82 +1,82 @@
-"use client"
+"use client";
 
-import * as z from "zod"
-import { zodResolver } from "@hookform/resolvers/zod"
+import * as z from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 
-import { useTransition, useState, useEffect } from "react"
-import { useForm } from "react-hook-form"
-import { useSession } from "next-auth/react"
+import { useTransition, useState, useEffect } from "react";
+import { useForm } from "react-hook-form";
+import { useSession } from "next-auth/react";
 
-import { NoticeSchema } from "@/schemas"
-import { Form, FormControl, FormLabel, FormField, FormItem, FormMessage } from "@/components/ui/form"
-import { Textarea } from "@/components/ui/textarea"
-import { Skeleton } from "@/components/ui/skeleton"
-import { toast } from "sonner"
-import { Button } from "@/components/ui/button"
+import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";
+import { Textarea } from "@/components/ui/textarea";
+import { Skeleton } from "@/components/ui/skeleton";
+import { toast } from "sonner";
+import { Button } from "@/components/ui/button";
 
-import { FiPlus } from "react-icons/fi"
-import { GoTrash } from "react-icons/go"
-import { LiaEdit } from "react-icons/lia"
+import { FiPlus } from "react-icons/fi";
+import { GoTrash } from "react-icons/go";
+import { LiaEdit } from "react-icons/lia";
 
-import { addNotice, deleteNoticeById, getNoticesByUserId } from "@/actions/notice"
-import { Notice } from "@prisma/client"
+import { Notice } from "@prisma/client";
+import { NoticeSchema } from "@/schemas";
+import { addNotice, deleteNoticeById, getNoticesByUserId } from "@/actions/notice";
 
 export const NoticeWidget = () => {
-	const { status } = useSession({ required: true })
+	const { status } = useSession({ required: true });
 
-	const [isPending, startTransition] = useTransition()
-	const [isLoading, setIsLoading] = useState<boolean>(false)
-	const [notices, setNotices] = useState<Notice[]>([])
+	const [isPending, startTransition] = useTransition();
+	const [isLoading, setIsLoading] = useState<boolean>(false);
+	const [notices, setNotices] = useState<Notice[]>([]);
 
 	const fetchNotices = async () => {
-		setIsLoading(true)
+		setIsLoading(true);
 		try {
-			const response = await getNoticesByUserId()
-			setNotices(response)
+			const response = await getNoticesByUserId();
+			setNotices(response);
 		} catch (error) {
-			toast.error("Fehler beim Laden der Notizen.")
+			toast.error("Fehler beim Laden der Notizen.");
 		} finally {
-			setIsLoading(false)
+			setIsLoading(false);
 		}
-	}
+	};
 
 	useEffect(() => {
-		setIsLoading(true)
-		fetchNotices()
-		setIsLoading(false)
-	}, [])
+		setIsLoading(true);
+		fetchNotices();
+		setIsLoading(false);
+	}, []);
 
 	const form = useForm<z.infer<typeof NoticeSchema>>({
 		resolver: zodResolver(NoticeSchema),
 		defaultValues: { noticetext: "" }
-	})
+	});
 
 	const onSubmit = async (values: z.infer<typeof NoticeSchema>) => {
-		const validatedFields = NoticeSchema.safeParse(values)
+		const validatedFields = NoticeSchema.safeParse(values);
 		startTransition(async () => {
-			const result = await addNotice(values)
+			const result = await addNotice(values);
 			if (result.error) {
-				toast.error(result.error)
+				toast.error(result.error);
 			} else if (result.success) {
-				toast.success(result.success)
-				form.reset()
-				fetchNotices()
+				toast.success(result.success);
+				form.reset();
+				fetchNotices();
 			}
-		})
-	}
+		});
+	};
 
 	const onDelete = async (id: string) => {
 		startTransition(async () => {
-			const result = await deleteNoticeById(id)
+			const result = await deleteNoticeById(id);
 			if (result.error) {
-				toast.error(result.error)
+				toast.error(result.error);
 			} else if (result.success) {
-				toast.success(result.success)
-				form.reset()
-				fetchNotices()
+				toast.success(result.success);
+				form.reset();
+				fetchNotices();
 			}
-		})
-	}
+		});
+	};
 
 	return (
 		<>
@@ -128,5 +128,5 @@ export const NoticeWidget = () => {
 				)}
 			</ul>
 		</>
-	)
-}
+	);
+};
