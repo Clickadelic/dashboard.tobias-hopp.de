@@ -94,8 +94,8 @@ const UsersTable = () => {
 		setIsLoading(false);
 	}, []);
 
-	const onRoleChange = async (email: string, role: string) => {
-		const result = await updateUserRole(email, role);
+	const onRoleChange = async (email: string, UserRole: UserRole) => {
+		const result = await updateUserRole(email, UserRole);
 		if (result.error) {
 			toast.error(result.error);
 		} else if (result.success) {
@@ -127,7 +127,7 @@ const UsersTable = () => {
 							{user?.isTwoFactorEnabled ? <CheckCircledIcon className="size-4 text-emerald-500 mr-2" /> : <AiOutlineExclamationCircle className="size-4 text-rose-500 mr-2" />}
 						</TableCell>
 						<TableCell>
-							<Select onValueChange={value => onRoleChange(user?.email, value)}>
+							<Select onValueChange={value => onRoleChange(user?.email, value as UserRole)}>
 								<SelectTrigger className="w-[180px]">
 									<SelectValue placeholder={user?.role} />
 								</SelectTrigger>
