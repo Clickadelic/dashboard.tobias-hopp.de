@@ -88,12 +88,6 @@ const UsersTable = () => {
 		}
 	};
 
-	useEffect(() => {
-		setIsLoading(true);
-		fetchUsers();
-		setIsLoading(false);
-	}, []);
-
 	const onRoleChange = async (email: string, UserRole: UserRole) => {
 		const result = await updateUserRole(email, UserRole);
 		if (result.error) {
@@ -103,6 +97,12 @@ const UsersTable = () => {
 			fetchUsers();
 		}
 	};
+
+	useEffect(() => {
+		setIsLoading(true);
+		fetchUsers();
+		setIsLoading(false);
+	}, []);
 
 	return (
 		<Table>
@@ -160,7 +160,7 @@ const UsersTable = () => {
 							</Select>
 						</TableCell>
 						<TableCell>
-							<button onClick={() => deleteUserByEmail(user?.email)} title="Benutzer löschen" className="text-rose-500 hover:text-rose-600">
+							<button onClick={() => onDelete(user?.email)} title="Benutzer löschen" className="text-rose-500 hover:text-rose-600">
 								<BsFillTrash3Fill className="size-4 mx-auto" />
 							</button>
 						</TableCell>
