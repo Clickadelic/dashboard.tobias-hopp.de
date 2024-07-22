@@ -4,28 +4,7 @@ import { db } from "@/lib/db";
 import { User } from "@prisma/client";
 import { UserRole } from "@prisma/client";
 
-export const deleteUser = async (email: string) => {
-	try {
-		const existingUser = await db.user.findUnique({
-			where: {
-				email
-			}
-		});
-		if (!existingUser) {
-			return { error: "Benutzer nicht vorhanden." };
-		}
-
-		await db.user.delete({
-			where: {
-				email
-			}
-		});
-
-		return { success: "Benutzer gelöscht." };
-	} catch (error) {
-		return { error: "Interner Server-Fehler." };
-	}
-};
+import { currentRole } from "@/lib/auth";
 
 /**
  * Returns a user object without password key
@@ -46,16 +25,32 @@ export const getUsersWithoutPassword = async (): Promise<UserWithoutPassword[]> 
 };
 
 export const deleteUserByEmail = async (email: string) => {
-	try {
-		const user = await db.user.findUnique({ where: { email } });
-		if (!user) {
-			return { error: "Benutzer nicht vorhanden." };
+	const role = await currentRole();
+
+	if (role === UserRole.ADMIN) {
+		try {
+			const existingUser = await db.user.findUnique({
+				where: {
+					email
+				}
+			});
+			if (!existingUser) {
+				return { error: "Benutzer nicht vorhanden" };
+			}
+
+			await db.user.delete({
+				where: {
+					email
+				}
+			});
+
+			return { success: "Benutzer gelöscht" };
+		} catch (error) {
+			return { error: "Interner Server-Fehler" };
 		}
-		await db.user.delete({ where: { email } });
-		return { success: "Benutzer gelöscht." };
-	} catch (error) {
-		return { error: "Interner Server-Fehler." };
 	}
+
+	return { error: "Fehlende Berechtigung" };
 };
 
 export const updateUserRole = async (email: string, role: UserRole) => {

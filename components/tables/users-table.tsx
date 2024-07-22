@@ -10,7 +10,6 @@ import { useSession } from "next-auth/react";
 
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { useCurrentUser } from "@/hooks/use-current-user";
-import { capitalizeFirstLetter } from "@/lib/utils";
 
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 
@@ -88,14 +87,8 @@ const UsersTable = () => {
 		}
 	};
 
-	useEffect(() => {
-		setIsLoading(true);
-		fetchUsers();
-		setIsLoading(false);
-	}, []);
-
-	const onRoleChange = async (email: string, role: string) => {
-		const result = await updateUserRole(email, role);
+	const onRoleChange = async (email: string, UserRole: UserRole) => {
+		const result = await updateUserRole(email, UserRole);
 		if (result.error) {
 			toast.error(result.error);
 		} else if (result.success) {
@@ -103,6 +96,12 @@ const UsersTable = () => {
 			fetchUsers();
 		}
 	};
+
+	useEffect(() => {
+		setIsLoading(true);
+		fetchUsers();
+		setIsLoading(false);
+	}, []);
 
 	return (
 		<Table>
@@ -114,7 +113,7 @@ const UsersTable = () => {
 					<TableHead>Account verifiziert</TableHead>
 					<TableHead>2FA-Aktiviert</TableHead>
 					<TableHead>Rolle</TableHead>
-					<TableHead>löschen</TableHead>
+					<TableHead>Aktion</TableHead>
 				</TableRow>
 			</TableHeader>
 			<TableBody>
@@ -122,23 +121,64 @@ const UsersTable = () => {
 					<TableRow key={user?.id}>
 						<TableCell>{user?.name}</TableCell>
 						<TableCell>{user?.email}</TableCell>
-						<TableCell>{user?.emailVerified ? <CheckCircledIcon className="size-4 text-emerald-500 mr-2" /> : <AiOutlineExclamationCircle className="size-4 text-rose-500" />}</TableCell>
 						<TableCell>
-							{user?.isTwoFactorEnabled ? <CheckCircledIcon className="size-4 text-emerald-500 mr-2" /> : <AiOutlineExclamationCircle className="size-4 text-rose-500 mr-2" />}
+							{user?.emailVerified ? (
+								<Badge variant="success" className="border-emerald-500 bg-emerald-500/15 text-emerald-500 cursor-default">
+									<CheckCircledIcon className="size-4 mr-2" />
+									verifiziert
+								</Badge>
+							) : (
+								<Badge variant="destructive" className="border-rose-500 bg-rose-500/15 text-rose-500 cursor-default">
+									<AiOutlineExclamationCircle className="size-4 text-rose-500 mr-2" />
+									nicht verifiziert
+								</Badge>
+							)}
 						</TableCell>
 						<TableCell>
-							<Select onValueChange={value => onRoleChange(user?.email, value)}>
+							{user?.isTwoFactorEnabled ? (
+								<Badge variant="success" className="border-emerald-500 bg-emerald-500/15 text-emerald-500 cursor-default">
+									<CheckCircledIcon className="size-4 text-emerald-500 mr-2" />
+									aktiv
+								</Badge>
+							) : (
+								<Badge variant="destructive" className="border-rose-500 bg-rose-500/15 hover:bg-rose-500/15 text-rose-500 cursor-default">
+									<AiOutlineExclamationCircle className="size-4 text-rose-500 mr-2" />
+									inaktiv
+								</Badge>
+							)}
+						</TableCell>
+						<TableCell>
+							<Select onValueChange={value => onRoleChange(user?.email, value as UserRole)}>
 								<SelectTrigger className="w-[180px]">
 									<SelectValue placeholder={user?.role} />
 								</SelectTrigger>
 								<SelectContent defaultValue={user?.role}>
-									<SelectItem value={UserRole.USER}>Benutzer</SelectItem>
-									<SelectItem value={UserRole.ADMIN}>Administrator</SelectItem>
+									<SelectItem value={UserRole.USER}>USER</SelectItem>
+									<SelectItem value={UserRole.ADMIN}>ADMIN</SelectItem>
 								</SelectContent>
 							</Select>
 						</TableCell>
-						<TableCell>
-							<button onClick={() => deleteUserByEmail(user?.email)} className="text-rose-500 hover:text-rose-600">
+						<TableCell className="space-x-4">
+							<Popover>
+								<PopoverTrigger>
+									<BsInfoCircle className="size-4 mx-auto" />
+								</PopoverTrigger>
+								<PopoverContent align="end" className="md:w-[260px]">
+									<table className="w-full text-sm font-light text-left">
+										<thead>
+											<tr>
+												<th className="text-truncate overflow-hidden text-ellipsis p-1">User-Id</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<td className="text-truncate overflow-hidden text-ellipsis p-1">{user?.id}</td>
+											</tr>
+										</tbody>
+									</table>
+								</PopoverContent>
+							</Popover>
+							<button onClick={() => onDelete(user?.email)} title="Benutzer löschen" className="text-rose-500 hover:text-rose-600">
 								<BsFillTrash3Fill className="size-4 mx-auto" />
 							</button>
 						</TableCell>
