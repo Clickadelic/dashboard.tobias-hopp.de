@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import puppeteer from "puppeteer";
 import path from "path";
-import fs from "fs";
+// import fs from "fs";
 
 export async function POST(req: NextRequest) {
 	const { url } = await req.json();
