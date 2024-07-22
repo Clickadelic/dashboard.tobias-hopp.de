@@ -10,7 +10,6 @@ import { useSession } from "next-auth/react";
 
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { useCurrentUser } from "@/hooks/use-current-user";
-import { capitalizeFirstLetter } from "@/lib/utils";
 
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 
@@ -124,12 +123,12 @@ const UsersTable = () => {
 						<TableCell>{user?.email}</TableCell>
 						<TableCell>
 							{user?.emailVerified ? (
-								<Badge variant="success" className="border-emerald-500 bg-emerald-500/15 text-emerald-500">
+								<Badge variant="success" className="border-emerald-500 bg-emerald-500/15 text-emerald-500 cursor-default">
 									<CheckCircledIcon className="size-4 mr-2" />
 									verifiziert
 								</Badge>
 							) : (
-								<Badge variant="destructive" className="border-rose-500 bg-rose-500/15 text-rose-500">
+								<Badge variant="destructive" className="border-rose-500 bg-rose-500/15 text-rose-500 cursor-default">
 									<AiOutlineExclamationCircle className="size-4 text-rose-500 mr-2" />
 									nicht verifiziert
 								</Badge>
@@ -137,12 +136,12 @@ const UsersTable = () => {
 						</TableCell>
 						<TableCell>
 							{user?.isTwoFactorEnabled ? (
-								<Badge variant="success" className="border-emerald-500 bg-emerald-500/15 text-emerald-500">
-									<CheckCircledIcon className="size-4 text-white mr-2" />
+								<Badge variant="success" className="border-emerald-500 bg-emerald-500/15 text-emerald-500 cursor-default">
+									<CheckCircledIcon className="size-4 text-emerald-500 mr-2" />
 									aktiv
 								</Badge>
 							) : (
-								<Badge variant="destructive" className="border-rose-500 bg-rose-500/15 text-rose-500">
+								<Badge variant="destructive" className="border-rose-500 bg-rose-500/15 hover:bg-rose-500/15 text-rose-500 cursor-default">
 									<AiOutlineExclamationCircle className="size-4 text-rose-500 mr-2" />
 									inaktiv
 								</Badge>
@@ -159,7 +158,26 @@ const UsersTable = () => {
 								</SelectContent>
 							</Select>
 						</TableCell>
-						<TableCell>
+						<TableCell className="space-x-4">
+							<Popover>
+								<PopoverTrigger>
+									<BsInfoCircle className="size-4 mx-auto" />
+								</PopoverTrigger>
+								<PopoverContent align="end" className="md:w-[260px]">
+									<table className="w-full text-sm font-light text-left">
+										<thead>
+											<tr>
+												<th className="text-truncate overflow-hidden text-ellipsis p-1">User-Id</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<td className="text-truncate overflow-hidden text-ellipsis p-1">{user?.id}</td>
+											</tr>
+										</tbody>
+									</table>
+								</PopoverContent>
+							</Popover>
 							<button onClick={() => onDelete(user?.email)} title="Benutzer löschen" className="text-rose-500 hover:text-rose-600">
 								<BsFillTrash3Fill className="size-4 mx-auto" />
 							</button>
