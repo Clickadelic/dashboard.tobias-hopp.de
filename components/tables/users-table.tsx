@@ -13,16 +13,20 @@ import { useCurrentUser } from "@/hooks/use-current-user";
 import { capitalizeFirstLetter } from "@/lib/utils";
 
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+
+import { Badge } from "@/components/ui/badge";
 import { toast } from "sonner";
 import { AiOutlineExclamationCircle } from "react-icons/ai";
 import { CheckCircledIcon } from "@radix-ui/react-icons";
 import { BsInfoCircle } from "react-icons/bs";
 import { BsFillTrash3Fill } from "react-icons/bs";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 import { settings } from "@/actions/user-settings";
-import { deleteUser } from "@/actions/user";
-import { getUsersWithoutPassword } from "@/data/user";
+import { deleteUserByEmail } from "@/actions/user";
+import { getUsersWithoutPassword, updateUserRole } from "@/actions/user";
 import { User } from "@prisma/client";
+import { UserRole } from "@prisma/client";
 
 type UserWithoutPassword = Omit<User, "password">;
 
@@ -74,8 +78,8 @@ const UsersTable = () => {
 		setIsLoading(false);
 	};
 
-	const deleteUserByEmail = async (email: string) => {
-		const result = await deleteUser(email);
+	const onDelete = async (email: string) => {
+		const result = await deleteUserByEmail(email);
 		if (result.error) {
 			toast.error(result.error);
 		} else if (result.success) {
@@ -90,15 +94,24 @@ const UsersTable = () => {
 		setIsLoading(false);
 	}, []);
 
+	const onRoleChange = async (email: string, role: string) => {
+		const result = await updateUserRole(email, role);
+		if (result.error) {
+			toast.error(result.error);
+		} else if (result.success) {
+			toast.success(result.success);
+			fetchUsers();
+		}
+	};
+
 	return (
 		<Table>
 			<TableCaption>{status === "loading" || isLoading ? "Lade Benutzer..." : `${users.length} Benutzer.`}</TableCaption>
 			<TableHeader>
 				<TableRow>
-					<TableHead>Id</TableHead>
 					<TableHead>Name</TableHead>
 					<TableHead>E-Mail Adresse</TableHead>
-					<TableHead>E-Mail verifiziert</TableHead>
+					<TableHead>Account verifiziert</TableHead>
 					<TableHead>2FA-Aktiviert</TableHead>
 					<TableHead>Rolle</TableHead>
 					<TableHead>löschen</TableHead>
@@ -107,19 +120,23 @@ const UsersTable = () => {
 			<TableBody>
 				{users.map((user: any) => (
 					<TableRow key={user?.id}>
-						<TableCell>
-							<Popover>
-								<PopoverTrigger>
-									<BsInfoCircle />
-								</PopoverTrigger>
-								<PopoverContent>{user?.id}</PopoverContent>
-							</Popover>
-						</TableCell>
 						<TableCell>{user?.name}</TableCell>
 						<TableCell>{user?.email}</TableCell>
-						<TableCell>{user?.emailVerified ? <CheckCircledIcon className="size-4 text-emerald-500" /> : <AiOutlineExclamationCircle className="size-4 text-rose-500" />}</TableCell>
-						<TableCell>{user?.isTwoFactorEnabled ? <CheckCircledIcon className="size-4 text-emerald-500" /> : <AiOutlineExclamationCircle className="size-4 text-rose-500" />}</TableCell>
-						<TableCell>{capitalizeFirstLetter(user?.role)}</TableCell>
+						<TableCell>{user?.emailVerified ? <CheckCircledIcon className="size-4 text-emerald-500 mr-2" /> : <AiOutlineExclamationCircle className="size-4 text-rose-500" />}</TableCell>
+						<TableCell>
+							{user?.isTwoFactorEnabled ? <CheckCircledIcon className="size-4 text-emerald-500 mr-2" /> : <AiOutlineExclamationCircle className="size-4 text-rose-500 mr-2" />}
+						</TableCell>
+						<TableCell>
+							<Select onValueChange={value => onRoleChange(user?.email, value)}>
+								<SelectTrigger className="w-[180px]">
+									<SelectValue placeholder={user?.role} />
+								</SelectTrigger>
+								<SelectContent defaultValue={user?.role}>
+									<SelectItem value={UserRole.USER}>Benutzer</SelectItem>
+									<SelectItem value={UserRole.ADMIN}>Administrator</SelectItem>
+								</SelectContent>
+							</Select>
+						</TableCell>
 						<TableCell>
 							<button onClick={() => deleteUserByEmail(user?.email)} className="text-rose-500 hover:text-rose-600">
 								<BsFillTrash3Fill className="size-4 mx-auto" />

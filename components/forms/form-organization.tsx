@@ -6,6 +6,8 @@ import { useTransition, useState, useEffect } from "react"
 import { useForm } from "react-hook-form"
 import { useSession } from "next-auth/react"
 
+import Link from "next/link"
+
 import { Input } from "@/components/ui/input"
 
 import { Form, FormControl, FormLabel, FormField, FormItem, FormMessage } from "@/components/ui/form"
@@ -18,7 +20,7 @@ import { FiPlus } from "react-icons/fi"
 
 import { OrganizationSchema } from "@/schemas"
 import { Organization } from "@prisma/client"
-import { addOrganization } from "@/actions/organization"
+import { addOrganization, getOrganizationsByUserId } from "@/actions/organization"
 
 import { cn } from "@/lib/utils"
 
@@ -28,34 +30,24 @@ interface FormOrganizationProps {
 }
 
 export const FormOrganization = ({ formClasses, organization }: FormOrganizationProps = {}) => {
-	console.log("Child link: ", organization)
 	const { status } = useSession({ required: true })
 	const [isDialogOpen, setIsDialogOpen] = useState(false)
-
+	const [organizations, setOrganizations] = useState<Organization[]>([])
 	const [isPending, startTransition] = useTransition()
 	const [isLoading, setIsLoading] = useState<boolean>(false)
 
 	const form = useForm<z.infer<typeof OrganizationSchema>>({
 		resolver: zodResolver(OrganizationSchema),
-		defaultValues: { name: "", url: "", description: "" }
+		defaultValues: { name: organization?.name || "", url: organization?.url || "", description: organization?.description || "" }
 	})
 
-	const onSubmit = async (values: z.infer<typeof OrganizationSchema>) => {
-		startTransition(async () => {
-			const result = await addOrganization(values)
-			if (result.error) {
-				toast.error(result.error)
-			} else if (result.success) {
-				toast.success(result.success)
-				form.reset()
-				setIsDialogOpen(false)
-			}
-		})
+	const onEdit = () => {
+		console.log("Things..")
 	}
 
 	return (
 		<Form {...form}>
-			<form onSubmit={form.handleSubmit(onSubmit)} className={cn("space-y-2 mb-3", formClasses)}>
+			<form onSubmit={form.handleSubmit(onEdit)} className={cn("space-y-2 w-50", formClasses)}>
 				<FormField
 					control={form.control}
 					name="name"
@@ -63,7 +55,7 @@ export const FormOrganization = ({ formClasses, organization }: FormOrganization
 					render={({ field }) => (
 						<FormItem>
 							<FormControl>
-								<Input {...field} placeholder="Titel" />
+								<Input {...field} placeholder="Name" />
 							</FormControl>
 							<FormMessage />
 						</FormItem>

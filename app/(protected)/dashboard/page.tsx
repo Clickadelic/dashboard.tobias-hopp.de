@@ -31,7 +31,6 @@ const DashboardPage = () => {
 				<div className="col-span-2 md:col-span-1">
 					<h2 className="text-md font-bold text-slate-900 mt-3 mb-5">Widgets</h2>
 					<div className="bg-white rounded-xl shadow-sm border p-2 md:p-4 md:min-h-96">
-						{/* TODO: Build widget master component (with Tabs) */}
 						<Tabs defaultValue="todos" className="w-full">
 							<TabsList className="w-full flex justify-start mb-3">
 								<TabsTrigger

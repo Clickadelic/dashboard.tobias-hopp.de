@@ -120,15 +120,15 @@ export const TodoWidget = ({ classNames }: TodoWidgetProps = { classNames: "" })
 	}
 
 	return (
-		<div className={cn("min-h-28 pb-1", classNames)}>
+		<>
 			<Form {...newForm}>
-				<form onSubmit={newForm.handleSubmit(onSubmit)}>
+				<form onSubmit={newForm.handleSubmit(onSubmit)} className="space-y-2">
 					<FormField
 						control={newForm.control}
 						name="title"
 						disabled={isPending}
 						render={({ field }) => (
-							<FormItem className="w-full shadow-none block p-0 mb-3">
+							<FormItem className="w-full shadow-none block p-0">
 								<FormControl>
 									<Input {...field} className="w-full shadow-none h-8 text-sm block" placeholder="neues Todo" />
 								</FormControl>
@@ -141,9 +141,9 @@ export const TodoWidget = ({ classNames }: TodoWidgetProps = { classNames: "" })
 						name="description"
 						disabled={isPending}
 						render={({ field }) => (
-							<FormItem className="w-full shadow-none block p-0 mb-3">
+							<FormItem className="w-full shadow-none block p-0">
 								<FormControl>
-									<Textarea {...field} rows={3} className="w-full shadow-none text-sm block" placeholder="Beschreibung" />
+									<Textarea {...field} rows={4} className="w-full shadow-none text-sm block" placeholder="Beschreibung" />
 								</FormControl>
 								<FormMessage />
 							</FormItem>
@@ -156,7 +156,7 @@ export const TodoWidget = ({ classNames }: TodoWidgetProps = { classNames: "" })
 			</Form>
 			<hr className="my-3" />
 			<ul>
-				{status === "loading" || isLoading || status !== "authenticated" || isPending || todos.length === 0 ? (
+				{status === "loading" || isLoading ? (
 					<>
 						<li className="my-1">
 							<Skeleton className="w-full h-5 bg-black/10 mb-3 animate-pulse" />
@@ -195,6 +195,6 @@ export const TodoWidget = ({ classNames }: TodoWidgetProps = { classNames: "" })
 					))
 				)}
 			</ul>
-		</div>
+		</>
 	)
 }
