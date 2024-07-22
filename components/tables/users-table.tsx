@@ -114,7 +114,7 @@ const UsersTable = () => {
 					<TableHead>Account verifiziert</TableHead>
 					<TableHead>2FA-Aktiviert</TableHead>
 					<TableHead>Rolle</TableHead>
-					<TableHead>löschen</TableHead>
+					<TableHead>Aktion</TableHead>
 				</TableRow>
 			</TableHeader>
 			<TableBody>
@@ -122,9 +122,31 @@ const UsersTable = () => {
 					<TableRow key={user?.id}>
 						<TableCell>{user?.name}</TableCell>
 						<TableCell>{user?.email}</TableCell>
-						<TableCell>{user?.emailVerified ? <CheckCircledIcon className="size-4 text-emerald-500 mr-2" /> : <AiOutlineExclamationCircle className="size-4 text-rose-500" />}</TableCell>
 						<TableCell>
-							{user?.isTwoFactorEnabled ? <CheckCircledIcon className="size-4 text-emerald-500 mr-2" /> : <AiOutlineExclamationCircle className="size-4 text-rose-500 mr-2" />}
+							{user?.emailVerified ? (
+								<Badge variant="success" className="border-emerald-500 bg-emerald-500/15 text-emerald-500">
+									<CheckCircledIcon className="size-4 mr-2" />
+									verifiziert
+								</Badge>
+							) : (
+								<Badge variant="destructive" className="border-rose-500 bg-rose-500/15 text-rose-500">
+									<AiOutlineExclamationCircle className="size-4 text-rose-500 mr-2" />
+									nicht verifiziert
+								</Badge>
+							)}
+						</TableCell>
+						<TableCell>
+							{user?.isTwoFactorEnabled ? (
+								<Badge variant="success" className="border-emerald-500 bg-emerald-500/15 text-emerald-500">
+									<CheckCircledIcon className="size-4 text-white mr-2" />
+									aktiv
+								</Badge>
+							) : (
+								<Badge variant="destructive" className="border-rose-500 bg-rose-500/15 text-rose-500">
+									<AiOutlineExclamationCircle className="size-4 text-rose-500 mr-2" />
+									inaktiv
+								</Badge>
+							)}
 						</TableCell>
 						<TableCell>
 							<Select onValueChange={value => onRoleChange(user?.email, value as UserRole)}>
@@ -138,7 +160,7 @@ const UsersTable = () => {
 							</Select>
 						</TableCell>
 						<TableCell>
-							<button onClick={() => deleteUserByEmail(user?.email)} className="text-rose-500 hover:text-rose-600">
+							<button onClick={() => deleteUserByEmail(user?.email)} title="Benutzer löschen" className="text-rose-500 hover:text-rose-600">
 								<BsFillTrash3Fill className="size-4 mx-auto" />
 							</button>
 						</TableCell>
