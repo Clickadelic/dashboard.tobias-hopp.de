@@ -24,6 +24,9 @@ export const UserList = async () => {
 							<h2 className="font-semibold">{user?.name}</h2>
 							<p className="text-gray-500">{user?.role}</p>
 						</div>
+						<div className="mt-2 mb-12 text-center">
+							<p>{user?.bio}</p>
+						</div>
 						<p className="mx-4 text-neutral-300 text-center text-sm">Social Media Coming soon</p>
 					</div>
 				</li>
