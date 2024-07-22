@@ -51,6 +51,7 @@ model User {
     todos         Todo[]
     notices       Notice[]
     organizations Organization[]
+    Invitation    Invitation[]
 
     @@unique([id])
 }
@@ -184,4 +185,19 @@ model Project {
     user   User   @relation(fields: [userId], references: [id], onDelete: NoAction)
 
     @@unique([id])
+}
+
+model Invitation {
+    id        String @id @default(cuid())
+    invitedBy User   @relation(fields: [userId], references: [id])
+    userId    String
+    email     String
+}
+
+model Systemsetting {
+    id              Int      @id @default(autoincrement())
+    loginBackground String?  @default("") // URL oder Pfad zum Hintergrundbild
+    // Hier kannst du weitere Felder hinzufügen
+    createdAt       DateTime @default(now())
+    updatedAt       DateTime @updatedAt
 }
