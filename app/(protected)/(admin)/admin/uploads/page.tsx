@@ -1,9 +1,8 @@
-import { list } from "@vercel/blob"
-import Image from "next/image"
-import { DeleteBackgroundImageButton } from "@/app/(protected)/_components/backround-image-upload/delete-background-image-button"
+import { list } from "@vercel/blob";
+import Image from "next/image";
 
 const UploadsPage = async () => {
-	const blobs = await list()
+	const blobs = await list();
 
 	return (
 		<div className="page-wrapper">
@@ -13,13 +12,12 @@ const UploadsPage = async () => {
 					{blobs.blobs.map(blob => (
 						<li key={blob.pathname + "-" + new Date()} className="relative flex items-start space-x-3">
 							<Image src={blob.url} alt={blob.pathname} width={200} height={160} />
-							<DeleteBackgroundImageButton url={blob.url} />
 						</li>
 					))}
 				</ul>
 			</div>
 		</div>
-	)
-}
+	);
+};
 
-export default UploadsPage
+export default UploadsPage;
