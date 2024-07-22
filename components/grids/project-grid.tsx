@@ -1,4 +1,4 @@
-import { MacBook } from "./mac-book"
+import { MacBook } from "../../app/(protected)/_components/mac-book"
 import { getProjectsByUserId } from "@/actions/project"
 
 const ProjectGrid = async () => {
