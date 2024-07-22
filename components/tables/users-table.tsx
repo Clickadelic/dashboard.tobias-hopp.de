@@ -132,8 +132,8 @@ const UsersTable = () => {
 									<SelectValue placeholder={user?.role} />
 								</SelectTrigger>
 								<SelectContent defaultValue={user?.role}>
-									<SelectItem value={UserRole.USER}>Benutzer</SelectItem>
-									<SelectItem value={UserRole.ADMIN}>Administrator</SelectItem>
+									<SelectItem value={UserRole.USER}>USER</SelectItem>
+									<SelectItem value={UserRole.ADMIN}>ADMIN</SelectItem>
 								</SelectContent>
 							</Select>
 						</TableCell>
