@@ -14,11 +14,11 @@ import { useCurrentUser } from "@/hooks/use-current-user";
 import { UserSchema } from "@/schemas";
 import { addBackgroundImage } from "@/actions/upload";
 
-interface BackgroundImageUploadFormProps {
+interface FormBackgroundImageUploadProps {
 	classNames?: string;
 }
 
-export const BackgroundImageUploadForm = ({ classNames }: BackgroundImageUploadFormProps) => {
+export const FormBackgroundImageUpload = ({ classNames }: FormBackgroundImageUploadProps) => {
 	const user = useCurrentUser();
 	const [file, setFile] = useState<File | null>(null);
 	const [preview, setPreview] = useState<string | null>(null);
@@ -45,6 +45,8 @@ export const BackgroundImageUploadForm = ({ classNames }: BackgroundImageUploadF
 		setInProgress(false);
 	};
 
+	console.log("User BG", user?.backgroundImage);
+
 	return (
 		<>
 			<form onSubmit={handleSubmit} className={classNames}>
@@ -54,6 +56,7 @@ export const BackgroundImageUploadForm = ({ classNames }: BackgroundImageUploadF
 				</button>
 			</form>
 			{preview && <Image width={200} height={160} src={preview} alt="Preview" />}
+			{user?.backgroundImage && <Image width={200} height={160} src={user?.backgroundImage} alt="Current Background" />}
 		</>
 	);
 };

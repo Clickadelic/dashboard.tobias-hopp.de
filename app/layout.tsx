@@ -6,7 +6,7 @@ import { siteConfig } from "@/config";
 import { Toaster } from "@/components/ui/sonner";
 import { auth } from "@/auth";
 import { AppProvider } from "@/context/app-context";
-import { loadLoginBackground } from "@/actions/admin";
+// import { loadLoginBackground } from "@/actions/admin";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -30,8 +30,8 @@ interface RootLayoutProps {
 
 const RootLayout = async ({ children }: RootLayoutProps) => {
 	const session = await auth();
-	const loginBackround = await loadLoginBackground();
-	console.log("BG is: ", loginBackround);
+	// const loginBackround = await loadLoginBackground();
+	// console.log("BG is: ", loginBackround);
 
 	return (
 		<html lang="de">
