@@ -1,4 +1,4 @@
-import { NoticesGrid } from "../_components/notices-grid"
+import { NoticesGrid } from "../../../components/grids/notices-grid"
 
 const NoticesPages = () => {
 	return (
