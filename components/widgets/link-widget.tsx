@@ -26,7 +26,9 @@ export const LinkWidget = () => {
 	const { status } = useSession({ required: true });
 	const [isPending, startTransition] = useTransition();
 	const [isLoading, setIsLoading] = useState<boolean>(false);
-	const [links, setLinks] = useState<any[]>([]);
+	const [isEditing, setIsEditing] = useState<boolean>(false);
+	const [editLinkId, setEditLinkId] = useState<string | null>(null);
+	const [links, setLinks] = useState<Link[]>([]);
 
 	const fetchLinks = async () => {
 		setIsLoading(true);
@@ -51,7 +53,7 @@ export const LinkWidget = () => {
 		defaultValues: { title: "", url: "", description: "" }
 	});
 
-	const onSubmit = async (values: z.infer<typeof LinkSchema>) => {
+	const onAdd = async (values: z.infer<typeof LinkSchema>) => {
 		startTransition(async () => {
 			const result = await addLink(values);
 			if (result.error) {
@@ -70,19 +72,28 @@ export const LinkWidget = () => {
 			form.reset({
 				title: link.title,
 				url: link.url,
-				description: link.description || ""
+				description: link.description || undefined
 			});
+			setEditLinkId(linkId); // Set the current editing Todo ID
 		}
+		setIsEditing(true);
 	};
 
-	const onEdit = async (id: string, values: z.infer<typeof LinkSchema>) => {
+	const onEdit = async (values: z.infer<typeof LinkSchema>) => {
+		if (!editLinkId) return; // Ensure there's an ID to edit
 		startTransition(async () => {
-			const result = await editLinkById(id, values);
+			const result = await editLinkById(editLinkId, values);
 			if (result.error) {
 				toast.error(result.error);
 			} else if (result.success) {
 				toast.success(result.success);
-				form.reset();
+				form.reset({
+					title: "",
+					url: "",
+					description: ""
+				});
+				setIsEditing(false);
+				setEditLinkId(null);
 				fetchLinks();
 			}
 		});
@@ -104,7 +115,7 @@ export const LinkWidget = () => {
 	return (
 		<>
 			<Form {...form}>
-				<form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2">
+				<form onSubmit={form.handleSubmit(isEditing ? onEdit : onAdd)} className="space-y-2">
 					<FormField
 						control={form.control}
 						name="title"
@@ -145,7 +156,17 @@ export const LinkWidget = () => {
 						)}
 					/>
 					<Button disabled={isPending} variant="primary" type="submit" className="w-full rounded-sm">
-						<FiPlus className="mr-2" /> Link hinzufügen
+						{isEditing ? (
+							<>
+								<LiaEdit className="mr-2" />
+								Link bearbeiten
+							</>
+						) : (
+							<>
+								<FiPlus className="mr-2" />
+								Link hinzufügen
+							</>
+						)}
 					</Button>
 				</form>
 			</Form>

@@ -53,7 +53,7 @@ export const NoticeWidget = () => {
 		defaultValues: { noticetext: "" }
 	});
 
-	const onSubmit = async (values: z.infer<typeof NoticeSchema>) => {
+	const onAdd = async (values: z.infer<typeof NoticeSchema>) => {
 		const validatedFields = NoticeSchema.safeParse(values);
 		startTransition(async () => {
 			const result = await addNotice(values);
@@ -112,7 +112,7 @@ export const NoticeWidget = () => {
 	return (
 		<>
 			<Form {...form}>
-				<form onSubmit={form.handleSubmit(isEditing ? onEdit : onSubmit)} className="space-y-2">
+				<form onSubmit={form.handleSubmit(isEditing ? onEdit : onAdd)} className="space-y-2">
 					<FormField
 						control={form.control}
 						name="noticetext"
@@ -130,7 +130,7 @@ export const NoticeWidget = () => {
 						{isEditing ? (
 							<>
 								<LiaEdit className="mr-2" />
-								Aktualisieren
+								Notiz aktualisieren
 							</>
 						) : (
 							<>
