@@ -20,7 +20,7 @@ export const DownloadJSONButton = ({ data, fileName, btnClasses }: DownloadJSONB
 
 	return (
 		<button onClick={downloadJSON} className={btnClasses}>
-			<BsDownload className="inline -mt-1.5 mx-2" /> Download .json
+			<BsDownload className="inline -mt-1.5" /> Download .json
 		</button>
 	);
 };

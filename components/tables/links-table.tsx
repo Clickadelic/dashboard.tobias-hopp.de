@@ -1,122 +1,122 @@
-"use client"
+"use client";
 
-import * as z from "zod"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useTransition, useState, useEffect } from "react"
-import { useForm } from "react-hook-form"
-import { useSession } from "next-auth/react"
-import { useCurrentUser } from "@/hooks/use-current-user"
+import * as z from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useTransition, useState, useEffect } from "react";
+import { useForm } from "react-hook-form";
+import { useSession } from "next-auth/react";
+import { useCurrentUser } from "@/hooks/use-current-user";
 
-import { Input } from "@/components/ui/input"
-import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form"
-import { Textarea } from "@/components/ui/textarea"
-import { Skeleton } from "@/components/ui/skeleton"
-import { Button } from "@/components/ui/button"
-import { Table, TableBody, TableCaption, TableCell, TableFooter, TableHead, TableHeader, TableRow } from "@/components/ui/table"
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
-import { toast } from "sonner"
+import { Input } from "@/components/ui/input";
+import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";
+import { Textarea } from "@/components/ui/textarea";
+import { Skeleton } from "@/components/ui/skeleton";
+import { Button } from "@/components/ui/button";
+import { Table, TableBody, TableCaption, TableCell, TableFooter, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { toast } from "sonner";
 
-import { BsFillTrash3Fill } from "react-icons/bs"
-import { FiExternalLink } from "react-icons/fi"
-import { FiPlus } from "react-icons/fi"
-import { LiaEdit } from "react-icons/lia"
-import { LuInfo } from "react-icons/lu"
+import { BsFillTrash3Fill } from "react-icons/bs";
+import { FiExternalLink } from "react-icons/fi";
+import { FiPlus } from "react-icons/fi";
+import { LiaEdit } from "react-icons/lia";
+import { LuInfo } from "react-icons/lu";
 
-import Link from "next/link"
-import { LinkSchema } from "@/schemas"
-import { addLink, editLinkById, deleteLinkById, getLinksByUserId } from "@/actions/link"
+import Link from "next/link";
+import { LinkSchema } from "@/schemas";
+import { addLink, editLinkById, deleteLinkById, getLinksByUserId } from "@/actions/link";
 
-import { ClipboardButton } from "../../app/(protected)/_components/clipboard-button"
-import { germanDateFormat } from "@/lib/utils"
-import { Link as Hyperlink } from "@prisma/client"
+import { ClipboardButton } from "../../app/(protected)/_components/clipboard-button";
+import { germanDateFormat } from "@/lib/utils";
+import { Link as Hyperlink } from "@prisma/client";
 
-import { DownloadCSVButton } from "./download-csv-button"
-import { DownloadJSONButton } from "./download-json-button"
+import { DownloadCSVButton } from "./download-csv-button";
+import { DownloadJSONButton } from "./download-json-button";
 
 const LinksTable = () => {
-	const { status } = useSession({ required: true })
-	const userId = useCurrentUser()?.id
+	const { status } = useSession({ required: true });
+	const userId = useCurrentUser()?.id;
 
-	const [isPending, startTransition] = useTransition()
-	const [isLoading, setIsLoading] = useState<boolean>(false)
-	const [links, setLinks] = useState<Hyperlink[]>([])
+	const [isPending, startTransition] = useTransition();
+	const [isLoading, setIsLoading] = useState<boolean>(false);
+	const [links, setLinks] = useState<Hyperlink[]>([]);
 
 	const fetchLinks = async () => {
-		setIsLoading(true)
-		const response = await getLinksByUserId()
-		setLinks(response)
-		setIsLoading(false)
-	}
+		setIsLoading(true);
+		const response = await getLinksByUserId();
+		setLinks(response);
+		setIsLoading(false);
+	};
 
 	const deleteCurrentLinkById = async (id: string) => {
-		const result = await deleteLinkById(id)
+		const result = await deleteLinkById(id);
 		if (result.error) {
-			toast.error(result.error)
+			toast.error(result.error);
 		} else if (result.success) {
-			toast.success(result.success)
-			fetchLinks()
+			toast.success(result.success);
+			fetchLinks();
 		}
-	}
+	};
 
 	useEffect(() => {
-		setIsLoading(true)
-		fetchLinks()
-		setIsLoading(false)
-	}, [])
+		setIsLoading(true);
+		fetchLinks();
+		setIsLoading(false);
+	}, []);
 
 	const setEditValues = (linkId: string) => {
-		const link = links.find(link => link.id === linkId)
+		const link = links.find(link => link.id === linkId);
 		if (link) {
 			dynamicForm.reset({
 				title: link.title,
 				url: link.url,
 				description: link.description || ""
-			})
+			});
 		}
-	}
+	};
 
 	const newForm = useForm<z.infer<typeof LinkSchema>>({
 		resolver: zodResolver(LinkSchema),
 		defaultValues: { title: "", url: "", description: "" }
-	})
+	});
 
 	const dynamicForm = useForm<z.infer<typeof LinkSchema>>({
 		resolver: zodResolver(LinkSchema),
 		defaultValues: { title: "", url: "", description: "" }
-	})
+	});
 
-	const addNewLink = async (values: z.infer<typeof LinkSchema>) => {
+	const onAdd = async (values: z.infer<typeof LinkSchema>) => {
 		startTransition(async () => {
-			const result = await addLink(values)
+			const result = await addLink(values);
 			if (result.error) {
-				toast.error(result.error)
+				toast.error(result.error);
 			} else if (result.success) {
-				toast.success(result.success)
-				newForm.reset()
-				fetchLinks()
+				toast.success(result.success);
+				newForm.reset();
+				fetchLinks();
 			}
-		})
-	}
+		});
+	};
 
-	const editCurrentLink = async (id: string, values: z.infer<typeof LinkSchema>) => {
+	const onEdit = async (id: string, values: z.infer<typeof LinkSchema>) => {
 		startTransition(async () => {
-			const result = await editLinkById(id, values)
+			const result = await editLinkById(id, values);
 			if (result.error) {
-				toast.error(result.error)
+				toast.error(result.error);
 			} else if (result.success) {
-				toast.success(result.success)
-				dynamicForm.reset()
-				fetchLinks()
+				toast.success(result.success);
+				dynamicForm.reset();
+				fetchLinks();
 			}
-		})
-	}
+		});
+	};
 
 	return (
 		<>
 			<div className="bg-white rounded-xl shadow-sm border p-2 md:p-4 mb-5">
 				<h2 className="text-md font-bold text-slate-700 mb-5">Neuer Link</h2>
 				<Form {...newForm}>
-					<form onSubmit={newForm.handleSubmit(addNewLink)} className="md:grid md:grid-cols-4 gap-4">
+					<form onSubmit={newForm.handleSubmit(onAdd)} className="md:grid md:grid-cols-4 gap-4">
 						<FormField
 							control={newForm.control}
 							name="title"
@@ -147,7 +147,7 @@ const LinksTable = () => {
 								</FormItem>
 							)}
 						/>
-						<Button variant="primary" className="w-full" type="submit" disabled={isPending}>
+						<Button variant="primary" className="w-full rounded-sm" type="submit" disabled={isPending}>
 							<FiPlus className=" mr-2" /> Link hinzufügen
 						</Button>
 					</form>
@@ -155,8 +155,8 @@ const LinksTable = () => {
 			</div>
 			<div className="bg-white rounded-xl shadow-sm border p-2 md:p-4">
 				<div className="space-x-3 mb-3 flex justify-end items-end">
-					<DownloadCSVButton data={links} fileName="links" btnClasses="bg-mantis-primary text-white rounded-sm p-2 text-sm" />
-					<DownloadJSONButton data={links} fileName="links" btnClasses="bg-mantis-primary text-white rounded-sm p-2 text-sm" />
+					<DownloadCSVButton data={links} fileName="links" btnClasses="bg-mantis-primary text-white rounded-sm p-2 px-3 text-sm" />
+					<DownloadJSONButton data={links} fileName="links" btnClasses="bg-mantis-primary text-white rounded-sm p-2 px-3 text-sm" />
 				</div>
 				<Table className="w-full">
 					<TableHeader>
@@ -189,7 +189,7 @@ const LinksTable = () => {
 										</PopoverTrigger>
 										<PopoverContent align="end">
 											<Form {...dynamicForm}>
-												<form onSubmit={dynamicForm.handleSubmit(() => editCurrentLink(link.id, dynamicForm.getValues()))} className="space-y-2">
+												<form onSubmit={dynamicForm.handleSubmit(() => onEdit(link.id, dynamicForm.getValues()))} className="space-y-2">
 													<FormField
 														control={dynamicForm.control}
 														name="title"
@@ -277,7 +277,7 @@ const LinksTable = () => {
 				</Table>
 			</div>
 		</>
-	)
-}
+	);
+};
 
-export default LinksTable
+export default LinksTable;
