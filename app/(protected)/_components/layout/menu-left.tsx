@@ -21,8 +21,7 @@ import { BsHouseGear } from "react-icons/bs";
 
 import { cn } from "@/lib/utils";
 
-// TODO: Naming überarbeiten (Datei und Funktion)
-export const NavSidebarSimple = () => {
+export const MenuLeft = () => {
 	const { status } = useSession({ required: true });
 	const user = useCurrentUser();
 	const role = useCurrentRole();
@@ -30,7 +29,7 @@ export const NavSidebarSimple = () => {
 	const { isToggled, setToggle } = useAppContext();
 
 	return (
-		<nav>
+		<nav aria-label="Sidebar-Menü">
 			<ul className={isToggled ? "mt-12" : ""}>
 				<li>
 					<span className={cn("text-xs text-neutral-400 ml-4 inline-block my-4", isToggled && "hidden")}>Dashboard</span>

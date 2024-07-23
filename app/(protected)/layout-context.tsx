@@ -1,14 +1,12 @@
 "use client";
 
 import { useAppContext } from "@/context/app-context";
-import { useSearchParams, useRouter } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { useState, useEffect } from "react";
 
-// import { useDebounce } from "use-debounce";
-
-import { SidebarNavbar } from "./_components/sidebar-navbar";
-import { Cockpit } from "./_components/cockpit";
-import { CircularMenu } from "./_components/circular-menu";
+import { SidebarNavbar } from "./_components/layout/sidebar-navbar";
+import { Cockpit } from "./_components/layout/cockpit";
+import { CircularMenu } from "./_components/layout/circular-menu";
 
 import { getFullStackSearchResults } from "@/actions/search";
 import { cn } from "@/lib/utils";
@@ -25,9 +23,6 @@ const LayoutContext = ({ children }: LayoutContextProps) => {
 	const [error, setError] = useState<string | null>(null);
 
 	const q = searchParams.get("q");
-
-	// const [key, setKey] = useState("");
-	// const [debouncedKey] = useDebounce(key, 500);
 
 	const findQuery = async (query: string) => {
 		try {
