@@ -7,16 +7,17 @@ import { useTransition, useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useSession } from "next-auth/react";
 
+import { Popover, PopoverTrigger, PopoverContent } from "@/components/ui/popover";
 import { Input } from "@/components/ui/input";
 import { Form, FormControl, FormLabel, FormField, FormItem, FormMessage } from "@/components/ui/form";
 import { Textarea } from "@/components/ui/textarea";
-import { Skeleton } from "@/components/ui/skeleton";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 
 import { FiPlus } from "react-icons/fi";
-import { GoTrash } from "react-icons/go";
+import { BsInfoCircle } from "react-icons/bs";
 import { LiaEdit } from "react-icons/lia";
+import { GoTrash } from "react-icons/go";
 
 import { Todo } from "@prisma/client";
 import { TodoSchema } from "@/schemas";
@@ -27,7 +28,6 @@ interface TodoWidgetProps {
 	classNames?: string;
 }
 
-// 10 Items = 569 Pixel Höhe
 export const TodoWidget = ({ classNames }: TodoWidgetProps = { classNames: "" }) => {
 	const { status } = useSession({ required: true });
 
@@ -74,14 +74,18 @@ export const TodoWidget = ({ classNames }: TodoWidgetProps = { classNames: "" })
 	};
 
 	const onEdit = async (values: z.infer<typeof TodoSchema>) => {
-		if (!editTodoId) return;
+		if (!editTodoId) return; // Ensure there's an ID to edit
 		startTransition(async () => {
 			const result = await editTodoById(editTodoId, values);
 			if (result.error) {
 				toast.error(result.error);
 			} else if (result.success) {
 				toast.success(result.success);
-				form.reset();
+				form.reset({
+					title: "",
+					description: "",
+					isCompleted: false
+				});
 				setIsEditing(false);
 				setEditTodoId(null);
 				fetchTodos();
@@ -97,7 +101,7 @@ export const TodoWidget = ({ classNames }: TodoWidgetProps = { classNames: "" })
 				description: todo.description || undefined,
 				isCompleted: todo.isCompleted
 			});
-			setEditTodoId(todoId);
+			setEditTodoId(todoId); // Set the current editing Todo ID
 		}
 		setIsEditing(true);
 	};
@@ -125,7 +129,7 @@ export const TodoWidget = ({ classNames }: TodoWidgetProps = { classNames: "" })
 	};
 
 	return (
-		<>
+		<div className={classNames}>
 			<Form {...form}>
 				<form onSubmit={form.handleSubmit(isEditing ? onEdit : onAdd)} className="space-y-2">
 					<FormField
@@ -135,7 +139,7 @@ export const TodoWidget = ({ classNames }: TodoWidgetProps = { classNames: "" })
 						render={({ field }) => (
 							<FormItem className="w-full shadow-none block p-0">
 								<FormControl>
-									<Input {...field} className="w-full shadow-none h-8 text-sm block" placeholder="neues Todo" />
+									<Input {...field} className="w-full shadow-none h-8 text-sm block" placeholder="Neues Todo" />
 								</FormControl>
 								<FormMessage />
 							</FormItem>
@@ -157,11 +161,11 @@ export const TodoWidget = ({ classNames }: TodoWidgetProps = { classNames: "" })
 					<Button disabled={isPending} variant="primary" className="w-full rounded-sm" type="submit">
 						{isEditing ? (
 							<span>
-								<LiaEdit className="size-4 inline mr-2" /> Todo bearbeiten
+								<LiaEdit className="size-4 inline mr-2 mt-[-3px]" /> Todo bearbeiten
 							</span>
 						) : (
 							<span>
-								<FiPlus className="size-4 inline mr-2" /> Todo hinufügen
+								<FiPlus className="size-4 inline mr-2 mt-[-3px]" /> Todo hinufügen
 							</span>
 						)}
 					</Button>
@@ -170,27 +174,53 @@ export const TodoWidget = ({ classNames }: TodoWidgetProps = { classNames: "" })
 			<hr className="my-3" />
 			<ul>
 				{todos.map(todo => (
-					<li key={todo.id} className="flex justify-between text-sm">
-						<span className="flex-grow justify-start">
-							<span className="hover:bg-mantis-hover px-[10px] pt-2 pb-[5px] rounded-sm">
-								<input type="checkbox" disabled={isPending} checked={todo.isCompleted} onChange={() => onIsCompleted(todo.id)} />
+					<li key={todo.id} className="flex justify-between text-sm mb-1">
+						<span className="flex-grow justify-between">
+							<span className="hover:bg-mantis-hover p-2 size-[36px] text-center inline-block rounded-sm">
+								<input
+									type="checkbox"
+									aria-label="Ist erledigt"
+									className="relative top-[1px]"
+									disabled={isPending}
+									checked={todo.isCompleted}
+									onChange={() => onIsCompleted(todo.id)}
+								/>
 							</span>
-							<span className="w-full">
-								<span className={cn("ml-2 mt-1.5 text-slate-900 inline-block", todo.isCompleted ? "line-through text-slate-400" : "")}>{todo.title}</span>
-								<span className="text-xs">{todo.description}</span>
-							</span>
+							<span className={cn("ml-2 text-slate-900 inline-block", todo.isCompleted ? "line-through text-slate-400" : "")}>{todo.title}</span>
 						</span>
-						<span>
-							<button onClick={() => setEditValues(todo.id)} className="text-slate-900 hover:text-slate-500 hover:bg-mantis-hover rounded-sm p-2" disabled={isPending}>
-								<LiaEdit />
+						<span className="flex space-x-1">
+							<Popover>
+								<PopoverTrigger asChild>
+									<button className="size-[36px] text-slate-900 hover:text-black hover:bg-mantis-hover rounded-sm p-2" disabled={isPending}>
+										<BsInfoCircle className="mx-auto" />
+									</button>
+								</PopoverTrigger>
+								<PopoverContent align="end" side="left">
+									{todo.title && <h3 className={cn("mb-1 text-slate-900 text-sm font-bold", todo.isCompleted && "line-through text-slate-400")}>{todo.title}</h3>}
+									{todo.description && <p className={cn("text-slate-900 text-sm", todo.isCompleted && "line-through text-slate-400")}>{todo.description}</p>}
+								</PopoverContent>
+							</Popover>
+							<button
+								onClick={() => setEditValues(todo.id)}
+								aria-label="Bearbeiten"
+								className="size-[36px] text-slate-900 hover:text-black hover:bg-mantis-hover rounded-sm p-2"
+								disabled={isPending}
+							>
+								<LiaEdit className="mx-auto" />
 							</button>
-							<button onClick={() => onDelete(todo.id)} className="text-rose-500 hover:text-rose-600 hover:bg-mantis-hover rounded-sm p-2" disabled={isPending}>
-								<GoTrash />
+							<button
+								onClick={() => onDelete(todo.id)}
+								aria-label="Löschen"
+								className="size-[36px] text-rose-500 hover:text-rose-600 hover:bg-mantis-hover rounded-sm p-2"
+								disabled={isPending}
+							>
+								<GoTrash className="mx-auto" />
 							</button>
 						</span>
 					</li>
 				))}
+				{todos.length === 0 && <p className="text-slate-400 mt-12 text-center">Lege Dein erstes Todo an.</p>}
 			</ul>
-		</>
+		</div>
 	);
 };

@@ -103,29 +103,20 @@ export const NoticeWidget = () => {
 			</Form>
 			<hr className="my-3" />
 			<ul>
-				{status === "loading" ? (
-					<>
-						<Skeleton className="mt-3 mb-5 w-full h-4 bg-black/10 animate-pulse" />
-						<Skeleton className="mt-3 mb-5 w-full h-4 bg-black/10 animate-pulse" />
-						<Skeleton className="mt-3 mb-5 w-75 h-4 bg-black/10 animate-pulse" />
-						<Skeleton className="mt-3 mb-5 w-50 h-4 bg-black/10 animate-pulse" />
-					</>
-				) : (
-					notices.map(notice => (
-						<li key={notice.id} className="flex justify-between mb-2 px-3 py-1 hover:bg-mantis-hover rounded-sm">
-							<p>{notice.noticetext}</p>
-
-							<span className="space-x-3 flex">
-								<button>
-									<LiaEdit />
-								</button>
-								<button onClick={() => onDelete(notice.id)} className="text-rose-500 hover:text-rose-600">
-									<GoTrash className="size-4 mx-auto" />
-								</button>
-							</span>
-						</li>
-					))
-				)}
+				{notices.map(notice => (
+					<li key={notice.id} className="flex justify-between mb-2 px-3 py-1 hover:bg-mantis-hover rounded-sm">
+						<p>{notice.noticetext}</p>
+						<span className="space-x-3 flex">
+							<button>
+								<LiaEdit />
+							</button>
+							<button onClick={() => onDelete(notice.id)} className="text-rose-500 hover:text-rose-600">
+								<GoTrash className="size-4 mx-auto" />
+							</button>
+						</span>
+					</li>
+				))}
+				{notices.length === 0 && <li className="text-md text-neutral-400 text-center mt-12">Lege Deine erste Notiz an.</li>}
 			</ul>
 		</>
 	);
