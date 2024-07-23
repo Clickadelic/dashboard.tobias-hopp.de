@@ -19,10 +19,12 @@ import { LiaEdit } from "react-icons/lia";
 
 import { Notice } from "@prisma/client";
 import { NoticeSchema } from "@/schemas";
-import { addNotice, deleteNoticeById, getNoticesByUserId } from "@/actions/notice";
+import { addNotice, deleteNoticeById, editNoticeById, getNoticesByUserId } from "@/actions/notice";
 
 export const NoticeWidget = () => {
 	const { status } = useSession({ required: true });
+	const [isEditing, setIsEditing] = useState<boolean>(false);
+	const [editNoticeId, setEditNoticeId] = useState<string | null>(null);
 
 	const [isPending, startTransition] = useTransition();
 	const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -51,7 +53,7 @@ export const NoticeWidget = () => {
 		defaultValues: { noticetext: "" }
 	});
 
-	const onSubmit = async (values: z.infer<typeof NoticeSchema>) => {
+	const onAdd = async (values: z.infer<typeof NoticeSchema>) => {
 		const validatedFields = NoticeSchema.safeParse(values);
 		startTransition(async () => {
 			const result = await addNotice(values);
@@ -60,6 +62,35 @@ export const NoticeWidget = () => {
 			} else if (result.success) {
 				toast.success(result.success);
 				form.reset();
+				fetchNotices();
+			}
+		});
+	};
+
+	const setEditValues = (noticeId: string) => {
+		const notice = notices.find(notice => notice.id === noticeId);
+		if (notice) {
+			form.reset({
+				noticetext: notice.noticetext
+			});
+			setEditNoticeId(noticeId); // Set the current editing Todo ID
+		}
+		setIsEditing(true);
+	};
+
+	const onEdit = async (values: z.infer<typeof NoticeSchema>) => {
+		if (!editNoticeId) return; // Ensure there's an ID to edit
+		startTransition(async () => {
+			const result = await editNoticeById(editNoticeId, values);
+			if (result.error) {
+				toast.error(result.error);
+			} else if (result.success) {
+				toast.success(result.success);
+				form.reset({
+					noticetext: ""
+				});
+				setIsEditing(false);
+				setEditNoticeId(null);
 				fetchNotices();
 			}
 		});
@@ -81,7 +112,7 @@ export const NoticeWidget = () => {
 	return (
 		<>
 			<Form {...form}>
-				<form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2">
+				<form onSubmit={form.handleSubmit(isEditing ? onEdit : onAdd)} className="space-y-2">
 					<FormField
 						control={form.control}
 						name="noticetext"
@@ -96,8 +127,17 @@ export const NoticeWidget = () => {
 						)}
 					/>
 					<Button disabled={isPending} variant="primary" type="submit" className="w-full rounded-sm">
-						<FiPlus className="mr-2" />
-						Notiz hinzufügen
+						{isEditing ? (
+							<>
+								<LiaEdit className="mr-2" />
+								Notiz aktualisieren
+							</>
+						) : (
+							<>
+								<FiPlus className="mr-2" />
+								Notiz hinzufügen
+							</>
+						)}
 					</Button>
 				</form>
 			</Form>
@@ -107,7 +147,7 @@ export const NoticeWidget = () => {
 					<li key={notice.id} className="flex justify-between mb-2 px-3 py-1 hover:bg-mantis-hover rounded-sm">
 						<p>{notice.noticetext}</p>
 						<span className="space-x-3 flex">
-							<button>
+							<button onClick={() => setEditValues(notice.id)}>
 								<LiaEdit />
 							</button>
 							<button onClick={() => onDelete(notice.id)} className="text-rose-500 hover:text-rose-600">
@@ -116,7 +156,7 @@ export const NoticeWidget = () => {
 						</span>
 					</li>
 				))}
-				{notices.length === 0 && <li className="text-md text-neutral-400 text-center mt-12">Lege Deine erste Notiz an.</li>}
+				{notices.length === 0 && status !== "loading" && <li className="text-md text-neutral-400 text-center mt-12">Lege Deine erste Notiz an.</li>}
 			</ul>
 		</>
 	);
