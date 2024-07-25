@@ -46,7 +46,7 @@ export function middleware() {
 	// TODO: Mehr Spezifizität für Request url
 	// add the CORS headers to the response
 	res.headers.append("Access-Control-Allow-Credentials", "true")
-	res.headers.append("Access-Control-Allow-Origin", "https://dashboard.tobias-hopp.de/api/public/v1/*") // replace this your actual origin
+	res.headers.append("Access-Control-Allow-Origin", "https://dashboard.tobias-hopp.de/api/public/v1/links") // replace this your actual origin
 	res.headers.append("Access-Control-Allow-Methods", "GET,DELETE,PATCH,POST,PUT")
 	res.headers.append("Access-Control-Allow-Headers", "X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version")
 	return res
