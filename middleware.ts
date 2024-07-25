@@ -1,6 +1,7 @@
 import NextAuth from "next-auth"
-
 import authConfig from "@/auth.config"
+
+import { NextResponse } from "next/server"
 
 import { DEFAULT_LOGIN_REDIRECT, apiAuthPrefix, authRoutes, publicRoutes } from "@/routes"
 
@@ -38,6 +39,19 @@ export default auth(req => {
 
 	return
 })
+
+export function middleware() {
+	// retrieve the current response
+	const res = NextResponse.next()
+
+	// add the CORS headers to the response
+	res.headers.append("Access-Control-Allow-Credentials", "true")
+	res.headers.append("Access-Control-Allow-Origin", "https://dashboard.tobias-hopp.de") // replace this your actual origin
+	res.headers.append("Access-Control-Allow-Methods", "GET,DELETE,PATCH,POST,PUT")
+	res.headers.append("Access-Control-Allow-Headers", "X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version")
+
+	return res
+}
 
 export const config = {
 	matcher: ["/((?!.+\\.[\\w]+$|_next).*)", "/", "/(api|trpc)(.*)"]
