@@ -53,14 +53,6 @@ export const settings = async (values: z.infer<typeof UserSchema>) => {
 		values.newPassword = undefined;
 	}
 
-	if (!values.name) {
-		return { error: "Ein Benutzername ist notwendig" };
-	}
-
-	if (!values.email) {
-		return { error: "Eine E-Mail ist notwendig" };
-	}
-
 	await db.user.update({
 		where: { id: dbUser.id },
 		data: {
