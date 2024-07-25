@@ -1,10 +1,10 @@
-import { NextApiRequest, NextApiResponse } from "next"
+import { NextRequest, NextResponse } from "next/server";
 import Cors from "cors"
 
 // Definiere die Signatur der Middleware-Funktion
-type MiddlewareFn = (req: NextApiRequest, res: NextApiResponse, next: (err?: any) => void) => void
+type MiddlewareFn = (req: NextRequest, res: NextResponse, next: (err?: any) => void) => void
 
-export function runMiddleware(req: NextApiRequest, res: NextApiResponse, fn: MiddlewareFn) {
+export function runMiddleware(req: NextRequest, res: NextResponse, fn: MiddlewareFn) {
 	return new Promise<void>((resolve, reject) => {
 		fn(req, res, result => {
 			if (result instanceof Error) {
