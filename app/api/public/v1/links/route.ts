@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from "next/server"
 import { db } from "@/lib/db"
 
 export async function GET(req: NextRequest, res: NextResponse) {
-	const message = { message: "Hello World" }
+	const links = await db.link.findMany()
 
-	return NextResponse.json({ error: "Error capturing screenshot" }, { status: 500 })
+	return NextResponse.json(links, { status: 200 })
 }
