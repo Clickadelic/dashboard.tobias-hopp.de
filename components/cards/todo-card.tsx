@@ -75,21 +75,14 @@ export const TodoCard = () => {
 				<Link href="/todos" className="hover:text-slate-700 hover:underline" title="Zur Todo-Übersicht">
 					Todo&apos;s
 				</Link>
-
 				<span>neuestes Todo</span>
 			</h2>
 			<h3 className="flex justify-between mb-4">
 				<span className="font-bold">
-					{status === "loading" || isLoading ? (
-						<Skeleton className="mt-[-3px] w-8 h-4 bg-primary/10 animate-pulse" />
-					) : (
-						<>
-							<BsListCheck className="inline-block mr-2 mt-[-3px]" />
-							{todos.length}
-						</>
-					)}
+					<BsListCheck className="inline-block mr-2 mt-[-3px]" />
+					{todos.length}
 				</span>
-				<span className="text-sm font-normal mt-1">{status === "loading" || isLoading ? <Skeleton className="mt-3 mb-5 w-12 h-4 bg-primary/10 animate-pulse" /> : latestTodo?.title}</span>
+				<span className="text-sm font-normal mt-1">{status === "loading" || isLoading ? <Skeleton className="w-12 h-4 bg-primary/10 animate-pulse" /> : latestTodo?.title}</span>
 			</h3>
 			<Popover>
 				<PopoverTrigger className="flex justify-center w-full p-3 py-2 bg-white text-mantis-primary border border-mantis-primary hover:text-white hover:bg-mantis-primary text-sm rounded-sm">

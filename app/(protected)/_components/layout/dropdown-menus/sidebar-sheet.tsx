@@ -1,9 +1,10 @@
-"use client";
+"use client"
 
-import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
-import { GoGear } from "react-icons/go";
-import { Button } from "@/components/ui/button";
-import { FormBackgroundImageUpload } from "@/components/forms/form-bg-image-upload";
+import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet"
+import { GoGear } from "react-icons/go"
+import { Button } from "@/components/ui/button"
+import { FormBackgroundImageUpload } from "@/components/forms/form-bg-image-upload"
+
 export const SidebarSheet = () => {
 	return (
 		<Sheet>
@@ -20,5 +21,5 @@ export const SidebarSheet = () => {
 				<FormBackgroundImageUpload classNames="border-2 border-slate-300 border-dashed rounded-xl p-8" />
 			</SheetContent>
 		</Sheet>
-	);
-};
+	)
+}
