@@ -1,23 +1,14 @@
-import { list } from "@vercel/blob";
-import Image from "next/image";
+import { AdminUploadGrid } from "@/components/grids/admin-upload-grid";
 
-const UploadsPage = async () => {
-	const blobs = await list();
-
+const AdminUploadsPage = () => {
 	return (
 		<div className="page-wrapper">
 			<h2 className="text-md font-bold text-slate-700 mb-5">Uploads</h2>
-			<div className="bg-white rounded-xl shadow-sm border p-2 md:p-4 space-y-3">
-				<ul className="flex gap-3">
-					{blobs.blobs.map(blob => (
-						<li key={blob.pathname + "-" + new Date()} className="relative flex items-start space-x-3">
-							<Image src={blob.url} alt={blob.pathname} width={200} height={160} />
-						</li>
-					))}
-				</ul>
+			<div className="bg-white rounded-xl shadow p-2 md:p-4">
+				<AdminUploadGrid />
 			</div>
 		</div>
 	);
 };
 
-export default UploadsPage;
+export default AdminUploadsPage;
