@@ -66,8 +66,8 @@ export const getFullStackSearchResults = async (query: string) => {
 			]
 		}
 	});
-
 	if (todoResults.length > 0) results.push(todoResults);
+	
 	const projectResults = await db.project.findMany({
 		where: {
 			title: {

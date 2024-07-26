@@ -24,6 +24,7 @@ export const getUsersWithoutPassword = async (): Promise<UserWithoutPassword[]> 
 	return allUsersWithoutPassword;
 };
 
+// TODO: Admin Check hinzufügen
 export const deleteUserByEmail = async (email: string) => {
 	const role = await currentRole();
 
@@ -53,6 +54,7 @@ export const deleteUserByEmail = async (email: string) => {
 	return { error: "Fehlende Berechtigung" };
 };
 
+// TODO: Admin Check hinzufügen
 export const updateUserRole = async (email: string, role: UserRole) => {
 	try {
 		const user = await db.user.update({
