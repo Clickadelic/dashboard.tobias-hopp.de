@@ -17,6 +17,7 @@ import { CiEdit } from "react-icons/ci";
 import { GoLink } from "react-icons/go";
 import { PiEye } from "react-icons/pi";
 import { FiUsers } from "react-icons/fi";
+import { FiUploadCloud } from "react-icons/fi";
 import { BsHouseGear } from "react-icons/bs";
 
 import { cn } from "@/lib/utils";
@@ -118,6 +119,18 @@ export const MenuLeft = () => {
 							>
 								<FiUsers className={cn("inline-block mt-[-3px]", isToggled && "block mx-auto mt-[-3px]")} />
 								<span className={cn("ml-2", isToggled && "hidden")}>Benutzer</span>
+							</Link>
+						</li>
+						<li>
+							<Link
+								href="/admin/uploads"
+								className={cn(
+									"block p-3 hover:bg-mantis-hover hover:text-mantis-primary",
+									path === "/admin/uploads" && "text-mantis-primary border-r-2 border-r-mantis-primary bg-mantis-hover"
+								)}
+							>
+								<FiUploadCloud className={cn("inline-block mt-[-3px]", isToggled && "block mx-auto mt-[-3px]")} />
+								<span className={cn("ml-2", isToggled && "hidden")}>Uploads</span>
 							</Link>
 						</li>
 						<li>

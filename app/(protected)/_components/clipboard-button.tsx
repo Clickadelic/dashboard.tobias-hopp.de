@@ -12,9 +12,9 @@ interface ClipboardButtonProps {
 export const copyToClipboard = async (textToCopy: string) => {
 	try {
 		await navigator.clipboard.writeText(textToCopy);
-		toast.success("Url in Zwischenablage kopiert.");
+		toast.success("Url in Zwischenablage kopiert");
 	} catch (error) {
-		toast.error("Fehler beim kopieren in die Zwischenablage.");
+		toast.error("Fehler beim kopieren in die Zwischenablage");
 	}
 };
 
