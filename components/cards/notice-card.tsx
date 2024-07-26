@@ -78,18 +78,10 @@ export const NoticeCard = () => {
 			</h2>
 			<h3 className="flex justify-between mb-4">
 				<span className="font-bold">
-					{status === "loading" || isLoading ? (
-						<Skeleton className="mt-[-3px] w-8 h-4 bg-primary/10 animate-pulse" />
-					) : (
-						<>
-							<CiEdit className="inline-block mr-2 mt-[-3px]" />
-							{notices.length}
-						</>
-					)}
+					<CiEdit className="inline-block mr-2 mt-[-3px]" />
+					{notices.length}
 				</span>
-				<span className="text-sm font-normal mt-1">
-					{status === "loading" || isLoading ? <Skeleton className="mt-3 mb-5 w-12 h-4 bg-primary/10 animate-pulse" /> : latestNotice?.noticetext}
-				</span>
+				<span className="text-sm font-normal mt-1">{status === "loading" || isLoading ? <Skeleton className="w-12 h-4 bg-primary/10 animate-pulse" /> : latestNotice?.noticetext}</span>
 			</h3>
 			<Popover>
 				<PopoverTrigger className="flex justify-center w-full p-3 py-2 bg-white text-mantis-primary border border-mantis-primary hover:text-white hover:bg-mantis-primary text-sm rounded-sm">
