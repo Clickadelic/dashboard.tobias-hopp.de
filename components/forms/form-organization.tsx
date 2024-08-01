@@ -20,7 +20,6 @@ import { FiPlus } from "react-icons/fi"
 
 import { OrganizationSchema } from "@/schemas"
 import { Organization } from "@prisma/client"
-import { addOrganization, getOrganizationsByUserId } from "@/actions/organization"
 
 import { cn } from "@/lib/utils"
 
@@ -31,6 +30,7 @@ interface FormOrganizationProps {
 
 export const FormOrganization = ({ formClasses, organization }: FormOrganizationProps = {}) => {
 	const { status } = useSession({ required: true })
+
 	const [isDialogOpen, setIsDialogOpen] = useState(false)
 	const [organizations, setOrganizations] = useState<Organization[]>([])
 	const [isPending, startTransition] = useTransition()
@@ -40,6 +40,14 @@ export const FormOrganization = ({ formClasses, organization }: FormOrganization
 		resolver: zodResolver(OrganizationSchema),
 		defaultValues: { name: organization?.name || "", url: organization?.url || "", description: organization?.description || "" }
 	})
+
+	const setEditValues = (organizationId: string) => {
+		if (organization) {
+			form.reset({
+				name: organization.name
+			})
+		}
+	}
 
 	const onEdit = () => {
 		console.log("Things..")

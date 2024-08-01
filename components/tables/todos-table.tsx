@@ -1,116 +1,123 @@
-"use client";
+"use client"
 
-import * as z from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useTransition, useState, useEffect } from "react";
-import { useForm } from "react-hook-form";
-import { useSession } from "next-auth/react";
-import { useCurrentUser } from "@/hooks/use-current-user";
+import * as z from "zod"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useTransition, useState, useEffect } from "react"
+import { useForm } from "react-hook-form"
+import { useSession } from "next-auth/react"
+import { useCurrentUser } from "@/hooks/use-current-user"
 
-import { Input } from "@/components/ui/input";
-import { Form, FormControl, FormLabel, FormField, FormItem, FormMessage, FormDescription } from "@/components/ui/form";
-import { Textarea } from "@/components/ui/textarea";
-import { Skeleton } from "@/components/ui/skeleton";
-import { Switch } from "@/components/ui/switch";
-import { Button } from "@/components/ui/button";
-import { Table, TableBody, TableCaption, TableCell, TableFooter, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { toast } from "sonner";
+import { Input } from "@/components/ui/input"
+import { Form, FormControl, FormLabel, FormField, FormItem, FormMessage } from "@/components/ui/form"
+import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem } from "@/components/ui/dropdown-menu"
+import { Skeleton } from "@/components/ui/skeleton"
+import { Switch } from "@/components/ui/switch"
+import { Button } from "@/components/ui/button"
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
+import { toast } from "sonner"
 
-import { AiOutlineExclamationCircle } from "react-icons/ai";
-import { CheckCircledIcon } from "@radix-ui/react-icons";
-import { BsInfoCircle } from "react-icons/bs";
-import { BsFillTrash3Fill } from "react-icons/bs";
-import { FiPlus } from "react-icons/fi";
-import { LiaEdit } from "react-icons/lia";
-import { TodoSchema } from "@/schemas";
-import { addTodo, editTodoById, deleteTodoById, getTodosByUserId } from "@/actions/todo";
+import { HiDotsHorizontal } from "react-icons/hi"
+import { FiPlus } from "react-icons/fi"
+import { TodoSchema } from "@/schemas"
+import { addTodo, editTodoById, deleteTodoById, getTodosByUserId, toggleIsCompleted } from "@/actions/todo"
 
-import { cn } from "@/lib/utils";
-import { germanDateFormat } from "@/lib/utils";
+import { cn } from "@/lib/utils"
+import { ResponsiveDialog } from "@/app/(protected)/_components/responsive-dialog"
 
 export const TodosTable = () => {
-	const { status } = useSession({ required: true });
-	const userId = useCurrentUser()?.id;
+	const { status } = useSession({ required: true })
+	const userId = useCurrentUser()?.id
 
-	const [isPending, startTransition] = useTransition();
-	const [isLoading, setIsLoading] = useState<boolean>(false);
-	const [todos, setTodos] = useState<any[]>([]);
+	const [isPending, startTransition] = useTransition()
+	const [isLoading, setIsLoading] = useState<boolean>(false)
+	const [todos, setTodos] = useState<any[]>([])
 
 	const fetchTodos = async () => {
-		setIsLoading(true);
+		setIsLoading(true)
 		try {
-			const response = await getTodosByUserId();
-			setTodos(response);
+			const response = await getTodosByUserId()
+			setTodos(response)
 		} catch (error) {
-			toast.error("Failed to fetch Todos.");
+			toast.error("Failed to fetch Todos.")
 		} finally {
-			setIsLoading(false);
+			setIsLoading(false)
 		}
-	};
+	}
 
 	useEffect(() => {
-		setIsLoading(true);
-		fetchTodos();
-		setIsLoading(false);
-	}, []);
+		setIsLoading(true)
+		fetchTodos()
+		setIsLoading(false)
+	}, [])
 
 	const newForm = useForm<z.infer<typeof TodoSchema>>({
 		resolver: zodResolver(TodoSchema),
 		defaultValues: { title: "", description: "", isCompleted: false }
-	});
+	})
 
 	const dynamicForm = useForm<z.infer<typeof TodoSchema>>({
 		resolver: zodResolver(TodoSchema),
 		defaultValues: { title: "", description: "", isCompleted: false }
-	});
+	})
 
 	const addNewTodo = async (values: z.infer<typeof TodoSchema>) => {
 		startTransition(async () => {
-			const result = await addTodo(values);
+			const result = await addTodo(values)
 			if (result.error) {
-				toast.error(result.error);
+				toast.error(result.error)
 			} else if (result.success) {
-				toast.success(result.success);
-				dynamicForm.reset();
-				fetchTodos();
+				toast.success(result.success)
+				dynamicForm.reset()
+				fetchTodos()
 			}
-		});
-	};
+		})
+	}
 
 	const setEditValues = (todoId: string) => {
-		const todo = todos.find(todo => todo.id === todoId);
+		const todo = todos.find(todo => todo.id === todoId)
 		if (todo) {
 			dynamicForm.reset({
 				title: todo.title,
 				description: todo.description,
 				isCompleted: todo.isCompleted
-			});
+			})
 		}
-	};
+	}
 
 	const onEdit = async (id: string, values: z.infer<typeof TodoSchema>) => {
 		startTransition(async () => {
-			const result = await editTodoById(id, values);
+			const result = await editTodoById(id, values)
 			if (result.error) {
-				toast.error(result.error);
+				toast.error(result.error)
 			} else if (result.success) {
-				toast.success(result.success);
-				dynamicForm.reset();
-				fetchTodos();
+				toast.success(result.success)
+				dynamicForm.reset()
+				fetchTodos()
 			}
-		});
-	};
+		})
+	}
 
 	const onDelete = async (id: string) => {
-		const result = await deleteTodoById(id);
+		const result = await deleteTodoById(id)
 		if (result.error) {
-			toast.error(result.error);
+			toast.error(result.error)
 		} else if (result.success) {
-			toast.success(result.success);
-			fetchTodos();
+			toast.success(result.success)
+			fetchTodos()
 		}
-	};
+	}
+
+	const onIsCompleted = async (id: string) => {
+		startTransition(async () => {
+			const result = await toggleIsCompleted(id)
+			if (result.error) {
+				toast.error(result.error)
+			} else if (result.success) {
+				toast.success(result.success)
+				fetchTodos()
+			}
+		})
+	}
 
 	// TODO: IDEE isEditable, setIsEditable für Rows, dann Buttons für Edit, Delete, etc.
 	return (
@@ -162,14 +169,10 @@ export const TodosTable = () => {
 				<Table className="w-full">
 					<TableHeader>
 						<TableRow>
-							<TableHead className="w-[20px]">Id</TableHead>
+							<TableHead>Erledigt</TableHead>
 							<TableHead>Titel</TableHead>
-							<TableHead className="w-[160px]">Beschreibung</TableHead>
-							<TableHead className="w-[160px]">erledigt</TableHead>
-							<TableHead>bearbeiten</TableHead>
-							<TableHead className="w-[180px]">Hinzugefügt am</TableHead>
-							<TableHead className="w-[180px]">Letzte Änderung</TableHead>
-							<TableHead>löschen</TableHead>
+							<TableHead>Beschreibung</TableHead>
+							<TableHead>Aktion</TableHead>
 						</TableRow>
 					</TableHeader>
 					<TableBody>
@@ -190,88 +193,26 @@ export const TodosTable = () => {
 						{todos.map((todo: any) => (
 							<TableRow key={todo.id}>
 								<TableCell>
-									<Popover>
-										<PopoverTrigger>
-											<BsInfoCircle />
-										</PopoverTrigger>
-										<PopoverContent>{todo.id}</PopoverContent>
-									</Popover>
+									<input type="checkbox" checked={todo.isCompleted} id={todo.id} onChange={() => onIsCompleted(todo.id)} />
 								</TableCell>
 								<TableCell className={cn("truncate ellipsis", todo.isCompleted ? "line-through" : "")}>{todo.title}</TableCell>
 								<TableCell className={cn("truncate ellipsis", todo.isCompleted ? "line-through" : "")}>{todo.description}</TableCell>
-								<TableCell className="truncate ellipsis">
-									{todo.isCompleted ? <CheckCircledIcon className="size-5 text-emerald-500" /> : <AiOutlineExclamationCircle className="size-5 text-rose-500" />}
-								</TableCell>
-								<TableCell>
-									<Popover>
-										<PopoverTrigger asChild>
-											<button onClick={() => setEditValues(todo.id)} className="hover:text-mantis-primary rounded-md inline">
-												<LiaEdit className="size-4" />
-											</button>
-										</PopoverTrigger>
-										<PopoverContent align="end">
-											<Form {...dynamicForm}>
-												<form onSubmit={dynamicForm.handleSubmit(() => onEdit(todo.id, dynamicForm.getValues()))} className="space-y-2">
-													<FormField
-														control={dynamicForm.control}
-														name="title"
-														defaultValue={todo.title}
-														disabled={isPending}
-														render={({ field }) => (
-															<FormItem>
-																<FormControl>
-																	<Input {...field} placeholder="Titel" />
-																</FormControl>
-																<FormMessage />
-															</FormItem>
-														)}
-													/>
-
-													<FormField
-														control={dynamicForm.control}
-														name="description"
-														disabled={isPending}
-														render={({ field }) => (
-															<FormItem>
-																<FormControl>
-																	<Textarea {...field} placeholder="Beschreibung..." />
-																</FormControl>
-																<FormMessage />
-															</FormItem>
-														)}
-													/>
-													<FormField
-														control={dynamicForm.control}
-														name="isCompleted"
-														render={({ field }) => (
-															<FormItem className="flex flex-row items-center justify-between rounded-lg p-3">
-																<div className="space-y-.5">
-																	<FormLabel>erledigt</FormLabel>
-																	<FormDescription>Wird als erledigt markiert.</FormDescription>
-																</div>
-																<FormControl>
-																	<Switch disabled={isPending} checked={field.value} onCheckedChange={field.onChange} />
-																</FormControl>
-															</FormItem>
-														)}
-													/>
-
-													<Button disabled={isPending} variant="default" type="submit" className="w-full">
-														Bearbeiten
-													</Button>
-												</form>
-											</Form>
-										</PopoverContent>
-									</Popover>
-								</TableCell>
-
-								<TableCell>{germanDateFormat(todo.createdAt)}</TableCell>
-								<TableCell>{germanDateFormat(todo.updatedAt)}</TableCell>
-
-								<TableCell>
-									<button onClick={() => onDelete(todo.id)} className="text-rose-500 hover:text-rose-600">
-										<BsFillTrash3Fill className="size-4 mx-auto" />
-									</button>
+								<TableCell className="asd">
+									<DropdownMenu>
+										<DropdownMenuTrigger asChild>
+											<Button variant="ghost" size="sm">
+												<HiDotsHorizontal className="size-5" />
+											</Button>
+										</DropdownMenuTrigger>
+										<DropdownMenuContent>
+											<DropdownMenuItem>
+												<button onClick={() => onEdit(todo.id)}>Edit</button>
+											</DropdownMenuItem>
+											<DropdownMenuItem>
+												<button onClick={() => onDelete(todo.id)}>Delete</button>
+											</DropdownMenuItem>
+										</DropdownMenuContent>
+									</DropdownMenu>
 								</TableCell>
 							</TableRow>
 						))}
@@ -279,5 +220,5 @@ export const TodosTable = () => {
 				</Table>
 			</div>
 		</>
-	);
-};
+	)
+}
