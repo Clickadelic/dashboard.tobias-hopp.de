@@ -1,61 +1,65 @@
-"use client"
+"use client";
 
-import * as z from "zod"
-import { useSession } from "next-auth/react"
-import { toast } from "sonner"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
-import { useTransition, useEffect } from "react"
+import * as z from "zod";
+import { useSession } from "next-auth/react";
+import { toast } from "sonner";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { useTransition, useEffect } from "react";
 
-import Image from "next/image"
-import { useState } from "react"
-import { useCurrentUser } from "@/hooks/use-current-user"
+import Image from "next/image";
+import { useState } from "react";
+import { useCurrentUser } from "@/hooks/use-current-user";
 
-import { UserSchema } from "@/schemas"
-import { addBackgroundImage, getUserBackground } from "@/actions/upload"
-import { cn } from "@/lib/utils"
+import { UserSchema } from "@/schemas";
+import { addBackgroundImage, getUserBackground } from "@/actions/upload";
+import { cn } from "@/lib/utils";
 
 interface FormBackgroundImageUploadProps {
-	classNames?: string
+	classNames?: string;
 }
 
 export const FormBackgroundImageUpload = ({ classNames }: FormBackgroundImageUploadProps) => {
-	const user = useCurrentUser()
-	const [file, setFile] = useState<File | null>(null)
-	const [preview, setPreview] = useState<string | null>(null)
-	const [inProgress, setInProgress] = useState<boolean>(false)
-	const [isPending, startTransition] = useTransition()
-	const [isLoading, setIsLoading] = useState<boolean>(false)
+	const user = useCurrentUser();
+	const [file, setFile] = useState<File | null>(null);
+	const [preview, setPreview] = useState<string | null>(null);
+	const [inProgress, setInProgress] = useState<boolean>(false);
+	const [isPending, startTransition] = useTransition();
+	const [isLoading, setIsLoading] = useState<boolean>(false);
 
 	const fetchUserBackground = async () => {
-		setIsLoading(true)
-		const userBg = await getUserBackground()
-		setIsLoading(false)
-		setPreview(userBg?.backgroundImage || null)
-	}
+		setIsLoading(true);
+		try {
+			const userBg = await getUserBackground();
+			console.log(userBg);
+		} catch (error) {
+			return console.error(error);
+		}
+		setIsLoading(false);
+	};
 
 	const handleSubmit = async (event: React.FormEvent) => {
-		setInProgress(true)
-		event.preventDefault()
+		setInProgress(true);
+		event.preventDefault();
 
-		if (!file) return
+		if (!file) return;
 
-		const formData = new FormData()
-		formData.append("file", file as Blob)
+		const formData = new FormData();
+		formData.append("file", file as Blob);
 
 		const response = await fetch(`/api/upload/background-image/${user?.id}`, {
 			method: "POST",
 			body: formData
-		})
+		});
 
-		const data = await response.json()
-		setPreview(data.blob.url)
-		setInProgress(false)
-	}
+		const data = await response.json();
+		setPreview(data.blob.url);
+		setInProgress(false);
+	};
 
 	useEffect(() => {
-		fetchUserBackground()
-	}, [])
+		fetchUserBackground();
+	}, []);
 
 	return (
 		<div>
@@ -77,5 +81,5 @@ export const FormBackgroundImageUpload = ({ classNames }: FormBackgroundImageUpl
 				</div>
 			)}
 		</div>
-	)
-}
+	);
+};
