@@ -18,6 +18,7 @@ import { FormOrganization } from "../forms/form-organization";
 import { HiOutlineDotsHorizontal } from "react-icons/hi";
 import { BsFillTrash3Fill } from "react-icons/bs";
 
+// TODO: Straighten Grid Architecture
 export const OrganizationGrid = () => {
 	const { status } = useSession({ required: true });
 	const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -101,9 +102,6 @@ export const OrganizationGrid = () => {
 									</span>
 								</div>
 							</li>
-							<ResponsiveDialog isOpen={isEditOpen} setIsOpen={setIsEditOpen} title="Organisation bearbeiten">
-								<FormOrganization organization={organization} />
-							</ResponsiveDialog>
 						</>
 					))}
 				</ul>
