@@ -206,7 +206,7 @@ export const TodosTable = () => {
 										</DropdownMenuTrigger>
 										<DropdownMenuContent>
 											<DropdownMenuItem>
-												<button onClick={() => onEdit(todo.id)}>Edit</button>
+												<button onClick={() => setEditValues(todo.id)}>Edit</button>
 											</DropdownMenuItem>
 											<DropdownMenuItem>
 												<button onClick={() => onDelete(todo.id)}>Delete</button>
