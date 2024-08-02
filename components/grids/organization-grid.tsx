@@ -1,58 +1,58 @@
-"use client"
+"use client";
 
-import { useTransition, useState, useEffect } from "react"
-import { useSession } from "next-auth/react"
+import { useTransition, useState, useEffect } from "react";
+import { useSession } from "next-auth/react";
 
-import Link from "next/link"
+import Link from "next/link";
 
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
-import { toast } from "sonner"
-import { Button } from "@/components/ui/button"
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { toast } from "sonner";
+import { Button } from "@/components/ui/button";
 
-import { OrganizationSchema } from "@/schemas"
-import { Organization } from "@prisma/client"
-import { getOrganizationsByUserId, deleteOrganization } from "@/actions/organization"
-import { ResponsiveDialog } from "@/app/(protected)/_components/responsive-dialog"
-import { FormOrganization } from "../forms/form-organization"
+import { OrganizationSchema } from "@/schemas";
+import { Organization } from "@prisma/client";
+import { getOrganizationsByUserId, deleteOrganization } from "@/actions/organization";
+import { ResponsiveDialog } from "@/components/responsive-dialog";
+import { FormOrganization } from "../forms/form-organization";
 
-import { HiOutlineDotsHorizontal } from "react-icons/hi"
-import { BsFillTrash3Fill } from "react-icons/bs"
+import { HiOutlineDotsHorizontal } from "react-icons/hi";
+import { BsFillTrash3Fill } from "react-icons/bs";
 
 export const OrganizationGrid = () => {
-	const { status } = useSession({ required: true })
-	const [isDialogOpen, setIsDialogOpen] = useState(false)
-	const [organizations, setOrganizations] = useState<Organization[]>([])
-	const [isPending, startTransition] = useTransition()
-	const [isLoading, setIsLoading] = useState<boolean>(false)
-	const [isEditOpen, setIsEditOpen] = useState<boolean>(false)
+	const { status } = useSession({ required: true });
+	const [isDialogOpen, setIsDialogOpen] = useState(false);
+	const [organizations, setOrganizations] = useState<Organization[]>([]);
+	const [isPending, startTransition] = useTransition();
+	const [isLoading, setIsLoading] = useState<boolean>(false);
+	const [isEditOpen, setIsEditOpen] = useState<boolean>(false);
 
 	const fetchOrganizations = async () => {
-		setIsLoading(true)
+		setIsLoading(true);
 		try {
-			const response = await getOrganizationsByUserId()
-			setOrganizations(response)
+			const response = await getOrganizationsByUserId();
+			setOrganizations(response);
 		} catch (error) {
-			toast.error("Fehler beim Laden der Organisationen")
+			toast.error("Fehler beim Laden der Organisationen");
 		} finally {
-			setIsLoading(false)
+			setIsLoading(false);
 		}
-	}
+	};
 
 	useEffect(() => {
 		if (status === "authenticated") {
-			fetchOrganizations()
+			fetchOrganizations();
 		}
-	}, [status])
+	}, [status]);
 
 	const onDelete = async (organizationId: string) => {
-		const result = await deleteOrganization(organizationId)
+		const result = await deleteOrganization(organizationId);
 		if (result.error) {
-			toast.error(result.error)
+			toast.error(result.error);
 		} else if (result.success) {
-			toast.success(result.success)
-			fetchOrganizations()
+			toast.success(result.success);
+			fetchOrganizations();
 		}
-	}
+	};
 	return (
 		<>
 			{organizations.length > 0 && (
@@ -78,9 +78,10 @@ export const OrganizationGrid = () => {
 												<DropdownMenuItem className="group flex w-full items-center justify-between  text-left p-0 text-sm font-base text-neutral-500 ">
 													<button
 														onClick={() => {
-															setIsEditOpen(true)
+															setIsEditOpen(true);
 														}}
-														className="w-full justify-start flex rounded-md p-2 transition-all duration-75 hover:bg-neutral-100">
+														className="w-full justify-start flex rounded-md p-2 transition-all duration-75 hover:bg-neutral-100"
+													>
 														SVG
 													</button>
 												</DropdownMenuItem>
@@ -88,9 +89,10 @@ export const OrganizationGrid = () => {
 												<DropdownMenuItem className="group flex w-full items-center justify-between  text-left p-0 text-sm font-base text-neutral-500 ">
 													<button
 														onClick={() => {
-															onDelete(organization.id)
+															onDelete(organization.id);
 														}}
-														className="w-full justify-start flex text-red-500 rounded-sm p-2 transition-all duration-75 hover:bg-neutral-100">
+														className="w-full justify-start flex text-red-500 rounded-sm p-2 transition-all duration-75 hover:bg-neutral-100"
+													>
 														<BsFillTrash3Fill className="mr-2" /> <span>löschen</span>
 													</button>
 												</DropdownMenuItem>
@@ -107,5 +109,5 @@ export const OrganizationGrid = () => {
 				</ul>
 			)}
 		</>
-	)
-}
+	);
+};

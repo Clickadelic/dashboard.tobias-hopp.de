@@ -1,15 +1,16 @@
-"use client"
+"use client";
 
-import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet"
-import { GoGear } from "react-icons/go"
-import { Button } from "@/components/ui/button"
-import { FormBackgroundImageUpload } from "@/components/forms/form-bg-image-upload"
+import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
+import { GoGear } from "react-icons/go";
+import { Button } from "@/components/ui/button";
+import { FormBackgroundImageUpload } from "@/components/forms/form-bg-image-upload";
+import { FormPicker } from "@/components/forms/form-picker";
 
 export const SidebarSheet = () => {
 	return (
 		<Sheet>
 			<SheetTrigger asChild>
-				<Button variant="link" className="hover:bg-slate-100 size-10 p-3 rounded">
+				<Button variant="link" className="p-3 rounded hover:bg-slate-100 size-10">
 					<GoGear className="size-5" />
 				</Button>
 			</SheetTrigger>
@@ -19,7 +20,11 @@ export const SidebarSheet = () => {
 					<SheetDescription>Hintergrundbild, Logo und andere Einstellungen.</SheetDescription>
 				</SheetHeader>
 				<FormBackgroundImageUpload classNames="border-2 border-slate-300 border-dashed rounded-xl p-8" />
+				<hr />
+				<br />
+				<br />
+				<FormPicker id="someid" />
 			</SheetContent>
 		</Sheet>
-	)
-}
+	);
+};

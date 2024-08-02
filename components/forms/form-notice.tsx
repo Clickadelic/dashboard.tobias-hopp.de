@@ -1,60 +1,60 @@
-"use client"
-import * as z from "zod"
-import { zodResolver } from "@hookform/resolvers/zod"
+"use client";
+import * as z from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 
-import { useTransition, useState, useEffect } from "react"
-import { useForm } from "react-hook-form"
-import { useSession } from "next-auth/react"
+import { useTransition, useState, useEffect } from "react";
+import { useForm } from "react-hook-form";
+import { useSession } from "next-auth/react";
 
-import { Input } from "@/components/ui/input"
-import { Form, FormControl, FormLabel, FormField, FormItem, FormMessage } from "@/components/ui/form"
-import { Textarea } from "@/components/ui/textarea"
-import { Skeleton } from "@/components/ui/skeleton"
-import { toast } from "sonner"
-import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input";
+import { Form, FormControl, FormLabel, FormField, FormItem, FormMessage } from "@/components/ui/form";
+import { Textarea } from "@/components/ui/textarea";
+import { Skeleton } from "@/components/ui/skeleton";
+import { toast } from "sonner";
+import { Button } from "@/components/ui/button";
 
-import { FiPlus } from "react-icons/fi"
+import { FiPlus } from "react-icons/fi";
 
-import { NoticeSchema } from "@/schemas"
-import { Notice } from "@prisma/client"
-import { addNotice } from "@/actions/notice"
+import { NoticeSchema } from "@/schemas";
+import { Notice } from "@prisma/client";
+import { addNotice } from "@/actions/notice";
 
-import { cn } from "@/lib/utils"
+import { cn } from "@/lib/utils";
 
 interface FormNoticeProps {
-	formClasses?: string
-	notice?: Notice
+	formClasses?: string;
+	notice?: Notice;
 }
 
+// TODO: children richtig übergeben bei Edit
 export const FormNotice = ({ formClasses, notice }: FormNoticeProps = {}) => {
-	console.log("Child notice: ", notice)
-	const { status } = useSession({ required: true })
-	const [isDialogOpen, setIsDialogOpen] = useState(false)
+	const { status } = useSession({ required: true });
+	const [isDialogOpen, setIsDialogOpen] = useState(false);
 
-	const [isPending, startTransition] = useTransition()
-	const [isLoading, setIsLoading] = useState<boolean>(false)
+	const [isPending, startTransition] = useTransition();
+	const [isLoading, setIsLoading] = useState<boolean>(false);
 
 	const form = useForm<z.infer<typeof NoticeSchema>>({
 		resolver: zodResolver(NoticeSchema),
 		defaultValues: { noticetext: "" }
-	})
+	});
 
 	const onSubmit = async (values: z.infer<typeof NoticeSchema>) => {
 		startTransition(async () => {
-			const result = await addNotice(values)
+			const result = await addNotice(values);
 			if (result.error) {
-				toast.error(result.error)
+				toast.error(result.error);
 			} else if (result.success) {
-				toast.success(result.success)
-				form.reset()
-				setIsDialogOpen(false)
+				toast.success(result.success);
+				form.reset();
+				setIsDialogOpen(false);
 			}
-		})
-	}
+		});
+	};
 
 	return (
 		<Form {...form}>
-			<form onSubmit={form.handleSubmit(onSubmit)} className={cn("space-y-2 mb-3", formClasses)}>
+			<form onSubmit={form.handleSubmit(onSubmit)} className={cn("space-y-2", formClasses)}>
 				<FormField
 					control={form.control}
 					name="noticetext"
@@ -74,5 +74,5 @@ export const FormNotice = ({ formClasses, notice }: FormNoticeProps = {}) => {
 				</Button>
 			</form>
 		</Form>
-	)
-}
+	);
+};

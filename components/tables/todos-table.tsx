@@ -1,123 +1,123 @@
-"use client"
+"use client";
 
-import * as z from "zod"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useTransition, useState, useEffect } from "react"
-import { useForm } from "react-hook-form"
-import { useSession } from "next-auth/react"
-import { useCurrentUser } from "@/hooks/use-current-user"
+import * as z from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useTransition, useState, useEffect } from "react";
+import { useForm } from "react-hook-form";
+import { useSession } from "next-auth/react";
+import { useCurrentUser } from "@/hooks/use-current-user";
 
-import { Input } from "@/components/ui/input"
-import { Form, FormControl, FormLabel, FormField, FormItem, FormMessage } from "@/components/ui/form"
-import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem } from "@/components/ui/dropdown-menu"
-import { Skeleton } from "@/components/ui/skeleton"
-import { Switch } from "@/components/ui/switch"
-import { Button } from "@/components/ui/button"
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
-import { toast } from "sonner"
+import { Input } from "@/components/ui/input";
+import { Form, FormControl, FormLabel, FormField, FormItem, FormMessage } from "@/components/ui/form";
+import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem } from "@/components/ui/dropdown-menu";
+import { Skeleton } from "@/components/ui/skeleton";
+import { Switch } from "@/components/ui/switch";
+import { Button } from "@/components/ui/button";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { toast } from "sonner";
 
-import { HiDotsHorizontal } from "react-icons/hi"
-import { FiPlus } from "react-icons/fi"
-import { TodoSchema } from "@/schemas"
-import { addTodo, editTodoById, deleteTodoById, getTodosByUserId, toggleIsCompleted } from "@/actions/todo"
+import { HiDotsHorizontal } from "react-icons/hi";
+import { FiPlus } from "react-icons/fi";
+import { TodoSchema } from "@/schemas";
+import { addTodo, editTodoById, deleteTodoById, getTodosByUserId, toggleIsCompleted } from "@/actions/todo";
 
-import { cn } from "@/lib/utils"
-import { ResponsiveDialog } from "@/app/(protected)/_components/responsive-dialog"
+import { cn } from "@/lib/utils";
+import { ResponsiveDialog } from "@/components/responsive-dialog";
 
 export const TodosTable = () => {
-	const { status } = useSession({ required: true })
-	const userId = useCurrentUser()?.id
+	const { status } = useSession({ required: true });
+	const userId = useCurrentUser()?.id;
 
-	const [isPending, startTransition] = useTransition()
-	const [isLoading, setIsLoading] = useState<boolean>(false)
-	const [todos, setTodos] = useState<any[]>([])
+	const [isPending, startTransition] = useTransition();
+	const [isLoading, setIsLoading] = useState<boolean>(false);
+	const [todos, setTodos] = useState<any[]>([]);
 
 	const fetchTodos = async () => {
-		setIsLoading(true)
+		setIsLoading(true);
 		try {
-			const response = await getTodosByUserId()
-			setTodos(response)
+			const response = await getTodosByUserId();
+			setTodos(response);
 		} catch (error) {
-			toast.error("Failed to fetch Todos.")
+			toast.error("Failed to fetch Todos.");
 		} finally {
-			setIsLoading(false)
+			setIsLoading(false);
 		}
-	}
+	};
 
 	useEffect(() => {
-		setIsLoading(true)
-		fetchTodos()
-		setIsLoading(false)
-	}, [])
+		setIsLoading(true);
+		fetchTodos();
+		setIsLoading(false);
+	}, []);
 
 	const newForm = useForm<z.infer<typeof TodoSchema>>({
 		resolver: zodResolver(TodoSchema),
 		defaultValues: { title: "", description: "", isCompleted: false }
-	})
+	});
 
 	const dynamicForm = useForm<z.infer<typeof TodoSchema>>({
 		resolver: zodResolver(TodoSchema),
 		defaultValues: { title: "", description: "", isCompleted: false }
-	})
+	});
 
 	const addNewTodo = async (values: z.infer<typeof TodoSchema>) => {
 		startTransition(async () => {
-			const result = await addTodo(values)
+			const result = await addTodo(values);
 			if (result.error) {
-				toast.error(result.error)
+				toast.error(result.error);
 			} else if (result.success) {
-				toast.success(result.success)
-				dynamicForm.reset()
-				fetchTodos()
+				toast.success(result.success);
+				dynamicForm.reset();
+				fetchTodos();
 			}
-		})
-	}
+		});
+	};
 
 	const setEditValues = (todoId: string) => {
-		const todo = todos.find(todo => todo.id === todoId)
+		const todo = todos.find(todo => todo.id === todoId);
 		if (todo) {
 			dynamicForm.reset({
 				title: todo.title,
 				description: todo.description,
 				isCompleted: todo.isCompleted
-			})
+			});
 		}
-	}
+	};
 
 	const onEdit = async (id: string, values: z.infer<typeof TodoSchema>) => {
 		startTransition(async () => {
-			const result = await editTodoById(id, values)
+			const result = await editTodoById(id, values);
 			if (result.error) {
-				toast.error(result.error)
+				toast.error(result.error);
 			} else if (result.success) {
-				toast.success(result.success)
-				dynamicForm.reset()
-				fetchTodos()
+				toast.success(result.success);
+				dynamicForm.reset();
+				fetchTodos();
 			}
-		})
-	}
+		});
+	};
 
 	const onDelete = async (id: string) => {
-		const result = await deleteTodoById(id)
+		const result = await deleteTodoById(id);
 		if (result.error) {
-			toast.error(result.error)
+			toast.error(result.error);
 		} else if (result.success) {
-			toast.success(result.success)
-			fetchTodos()
+			toast.success(result.success);
+			fetchTodos();
 		}
-	}
+	};
 
 	const onIsCompleted = async (id: string) => {
 		startTransition(async () => {
-			const result = await toggleIsCompleted(id)
+			const result = await toggleIsCompleted(id);
 			if (result.error) {
-				toast.error(result.error)
+				toast.error(result.error);
 			} else if (result.success) {
-				toast.success(result.success)
-				fetchTodos()
+				toast.success(result.success);
+				fetchTodos();
 			}
-		})
-	}
+		});
+	};
 
 	// TODO: IDEE isEditable, setIsEditable für Rows, dann Buttons für Edit, Delete, etc.
 	return (
@@ -220,5 +220,5 @@ export const TodosTable = () => {
 				</Table>
 			</div>
 		</>
-	)
-}
+	);
+};
