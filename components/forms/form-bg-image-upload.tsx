@@ -31,7 +31,6 @@ export const FormBackgroundImageUpload = ({ classNames }: FormBackgroundImageUpl
 		setIsLoading(true)
 		const userBg = await getUserBackground()
 		setIsLoading(false)
-		setPreview(userBg?.backgroundImage || null)
 	}
 
 	const handleSubmit = async (event: React.FormEvent) => {
