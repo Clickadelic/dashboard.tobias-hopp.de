@@ -4,6 +4,7 @@ import { LiaClipboard } from "react-icons/lia";
 import { toast } from "sonner";
 
 interface ClipboardButtonProps {
+	label: string;
 	classNames?: string;
 	textToCopy: string;
 }
@@ -17,11 +18,11 @@ export const copyToClipboard = async (textToCopy: string) => {
 	}
 };
 
-export const ClipboardButton = ({ classNames, textToCopy }: ClipboardButtonProps) => {
+export const ClipboardButton = ({ label, classNames, textToCopy }: ClipboardButtonProps) => {
 	return (
-		<button aria-label="In Zwischenablage kopieren" className={classNames} onClick={() => copyToClipboard(textToCopy)}>
+		<button aria-label={label} className={classNames} onClick={() => copyToClipboard(textToCopy)}>
 			<LiaClipboard className="size-4" />
-			<span className="sr-only">In Zwischenablage kopieren</span>
+			<span className="sr-only">{label}</span>
 		</button>
 	);
 };

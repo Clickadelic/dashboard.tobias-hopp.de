@@ -240,7 +240,7 @@ const LinksTable = () => {
 											</Form>
 										</PopoverContent>
 									</Popover>
-									<ClipboardButton classNames="mt-1.5 p-0 hover:text-emerald-500" title="In die Zwischenablage kopieren" textToCopy={link.url} />
+									<ClipboardButton classNames="mt-1.5 p-0 hover:text-emerald-500" label="In die Zwischenablage kopieren" textToCopy={link.url} />
 									<Popover>
 										<PopoverTrigger asChild>
 											<button onClick={() => setEditValues(link.id)} className="hover:text-mantis-primary rounded-md inline">
