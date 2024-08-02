@@ -60,7 +60,7 @@ const LayoutContext = ({ children }: LayoutContextProps) => {
 										<div className="bg-white" key={outerIndex}>
 											{resultArray.map((result: any, innerIndex: number) => (
 												<li key={innerIndex} className="p-4 border border-gray-200 rounded shadow-sm">
-													<h3 className="text-lg font-semibold">{result.title || result.noticetext}</h3>
+													<h3 className="text-lg font-semibold">{result.title || result.noticetext || result.name}</h3>
 													<p>{result.description || ""}</p>
 													<p>Erstellt am: {new Date(result.createdAt).toLocaleString()}</p>
 													<p>Aktualisiert am: {new Date(result.updatedAt).toLocaleString()}</p>

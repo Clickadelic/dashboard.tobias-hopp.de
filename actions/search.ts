@@ -67,7 +67,7 @@ export const getFullStackSearchResults = async (query: string) => {
 		}
 	});
 	if (todoResults.length > 0) results.push(todoResults);
-	
+
 	const projectResults = await db.project.findMany({
 		where: {
 			title: {
@@ -92,6 +92,14 @@ export const getFullStackSearchResults = async (query: string) => {
 	});
 	if (projectResults.length > 0) results.push(projectResults);
 
-	// console.log("Full results are:", results)
+	const organizationResults = await db.organization.findMany({
+		where: {
+			name: {
+				contains: query
+			}
+		}
+	});
+	if (organizationResults.length > 0) results.push(organizationResults);
+
 	return results;
 };
