@@ -5,8 +5,8 @@ import { useSearchParams } from "next/navigation";
 import { useState, useEffect } from "react";
 
 import { SidebarNavbar } from "./_components/layout/sidebar-navbar";
-import { Cockpit } from "./_components/layout/cockpit";
-import { CircularMenu } from "./_components/layout/circular-menu";
+import { Cockpit } from "../../components/cockpit";
+import { CircularMenu } from "@/components/circular-menu";
 
 import { getFullStackSearchResults } from "@/actions/search";
 import { cn } from "@/lib/utils";

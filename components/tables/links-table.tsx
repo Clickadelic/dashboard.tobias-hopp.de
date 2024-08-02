@@ -26,7 +26,7 @@ import Link from "next/link";
 import { LinkSchema } from "@/schemas";
 import { addLink, editLinkById, deleteLinkById, getLinksByUserId } from "@/actions/link";
 
-import { ClipboardButton } from "../../app/(protected)/_components/clipboard-button";
+import { ClipboardButton } from "../clipboard-button";
 import { germanDateFormat } from "@/lib/utils";
 import { Link as Hyperlink } from "@prisma/client";
 

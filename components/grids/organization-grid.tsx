@@ -1,144 +1,113 @@
-"use client"
-import * as z from "zod"
-import { zodResolver } from "@hookform/resolvers/zod"
+"use client";
 
-import { useTransition, useState, useEffect } from "react"
-import { useForm } from "react-hook-form"
-import { useSession } from "next-auth/react"
+import { useTransition, useState, useEffect } from "react";
+import { useSession } from "next-auth/react";
 
-import Link from "next/link"
+import Link from "next/link";
 
-import { Input } from "@/components/ui/input"
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { toast } from "sonner";
+import { Button } from "@/components/ui/button";
 
-import { Form, FormControl, FormLabel, FormField, FormItem, FormMessage } from "@/components/ui/form"
-import { Textarea } from "@/components/ui/textarea"
-import { Skeleton } from "@/components/ui/skeleton"
-import { toast } from "sonner"
-import { Button } from "@/components/ui/button"
+import { OrganizationSchema } from "@/schemas";
+import { Organization } from "@prisma/client";
+import { getOrganizationsByUserId, deleteOrganization } from "@/actions/organization";
+import { ResponsiveDialog } from "@/components/responsive-dialog";
+import { FormOrganization } from "../forms/form-organization";
 
-import { FiPlus } from "react-icons/fi"
+import { HiOutlineDotsHorizontal } from "react-icons/hi";
+import { BsFillTrash3Fill } from "react-icons/bs";
 
-import { OrganizationSchema } from "@/schemas"
-import { Organization } from "@prisma/client"
-import { addOrganization, getOrganizationsByUserId } from "@/actions/organization"
-
-import { cn } from "@/lib/utils"
-
-interface OrganizationGridProps {
-	formClasses?: string
-	organization?: Organization
-}
-
-export const OrganizationGrid = ({ formClasses, organization }: OrganizationGridProps = {}) => {
-	const { status } = useSession({ required: true })
-	const [isDialogOpen, setIsDialogOpen] = useState(false)
-	const [organizations, setOrganizations] = useState<Organization[]>([])
-	const [isPending, startTransition] = useTransition()
-	const [isLoading, setIsLoading] = useState<boolean>(false)
-
-	const form = useForm<z.infer<typeof OrganizationSchema>>({
-		resolver: zodResolver(OrganizationSchema),
-		defaultValues: { name: "", url: "", description: "" }
-	})
+export const OrganizationGrid = () => {
+	const { status } = useSession({ required: true });
+	const [isDialogOpen, setIsDialogOpen] = useState(false);
+	const [organizations, setOrganizations] = useState<Organization[]>([]);
+	const [isPending, startTransition] = useTransition();
+	const [isLoading, setIsLoading] = useState<boolean>(false);
+	const [isEditOpen, setIsEditOpen] = useState<boolean>(false);
 
 	const fetchOrganizations = async () => {
-		setIsLoading(true)
+		setIsLoading(true);
 		try {
-			const response = await getOrganizationsByUserId()
-			setOrganizations(response)
+			const response = await getOrganizationsByUserId();
+			setOrganizations(response);
 		} catch (error) {
-			toast.error("Fehler beim Laden der Organisationen.")
+			toast.error("Fehler beim Laden der Organisationen");
 		} finally {
-			setIsLoading(false)
+			setIsLoading(false);
 		}
-	}
-
-	const onSubmit = async (values: z.infer<typeof OrganizationSchema>) => {
-		startTransition(async () => {
-			const result = await addOrganization(values)
-			if (result.error) {
-				toast.error(result.error)
-			} else if (result.success) {
-				toast.success(result.success)
-				form.reset()
-				setIsDialogOpen(false)
-				fetchOrganizations()
-			}
-		})
-	}
+	};
 
 	useEffect(() => {
 		if (status === "authenticated") {
-			fetchOrganizations()
+			fetchOrganizations();
 		}
-	}, [status])
+	}, [status]);
 
+	const onDelete = async (organizationId: string) => {
+		const result = await deleteOrganization(organizationId);
+		if (result.error) {
+			toast.error(result.error);
+		} else if (result.success) {
+			toast.success(result.success);
+			fetchOrganizations();
+		}
+	};
 	return (
 		<>
-			<Form {...form}>
-				<form onSubmit={form.handleSubmit(onSubmit)} className={cn("space-y-2 w-50", formClasses)}>
-					<FormField
-						control={form.control}
-						name="name"
-						disabled={isPending}
-						render={({ field }) => (
-							<FormItem>
-								<FormControl>
-									<Input {...field} placeholder="Titel" />
-								</FormControl>
-								<FormMessage />
-							</FormItem>
-						)}
-					/>
-					<FormField
-						control={form.control}
-						name="url"
-						disabled={isPending}
-						render={({ field }) => (
-							<FormItem>
-								<FormControl>
-									<Input type="url" {...field} placeholder="Url" />
-								</FormControl>
-								<FormMessage />
-							</FormItem>
-						)}
-					/>
-
-					<FormField
-						control={form.control}
-						name="description"
-						disabled={isPending}
-						render={({ field }) => (
-							<FormItem>
-								<FormControl>
-									<Textarea {...field} placeholder="Beschreibung" />
-								</FormControl>
-								<FormMessage />
-							</FormItem>
-						)}
-					/>
-
-					<Button disabled={isPending} variant="primary" type="submit" className="w-full">
-						<FiPlus className="inline text-white mr-2" />
-						Organisation hinzufügen
-					</Button>
-				</form>
-			</Form>
-			<hr className="my-3" />
 			{organizations.length > 0 && (
 				<ul className="grid grid-cols-4 gap-4">
 					{organizations.map(organization => (
-						<li key={organization.id} className="p-4 border border-slate-200 rounded-lg flex flex-col">
-							<h3 className="font-semibold mb-3">{organization.name}</h3>
-							<p className="h-12 truncate text-ellipsis overflow-hidden">{organization.description}</p>
-
-							<Link href={`/organisationen/${organization.id}`} title="Zur Organisation">
-								Zur Organisation
-							</Link>
-						</li>
+						<>
+							<li key={organization.id} className="relative p-4 border border-slate-200 rounded-lg flex flex-col">
+								<h3 className="font-semibold mb-3">{organization.name}</h3>
+								<p className="h-12 truncate text-ellipsis overflow-hidden">{organization.description}</p>
+								<Link href={`/organisationen/${organization.id}`} title="Zur Organisation">
+									Zur Organisation
+								</Link>
+								<div className="absolute right-3 top-3 z-10">
+									<span>
+										<DropdownMenu>
+											<DropdownMenuTrigger asChild>
+												<Button variant="ghost" className="flex h-8 w-8 p-0 data-[state=open]:bg-muted">
+													<HiOutlineDotsHorizontal />
+													<span className="sr-only">Open menu</span>
+												</Button>
+											</DropdownMenuTrigger>
+											<DropdownMenuContent align="end" className="w-[160px] z-50">
+												<DropdownMenuItem className="group flex w-full items-center justify-between  text-left p-0 text-sm font-base text-neutral-500 ">
+													<button
+														onClick={() => {
+															setIsEditOpen(true);
+														}}
+														className="w-full justify-start flex rounded-md p-2 transition-all duration-75 hover:bg-neutral-100"
+													>
+														SVG
+													</button>
+												</DropdownMenuItem>
+												<DropdownMenuSeparator />
+												<DropdownMenuItem className="group flex w-full items-center justify-between  text-left p-0 text-sm font-base text-neutral-500 ">
+													<button
+														onClick={() => {
+															onDelete(organization.id);
+														}}
+														className="w-full justify-start flex text-red-500 rounded-sm p-2 transition-all duration-75 hover:bg-neutral-100"
+													>
+														<BsFillTrash3Fill className="mr-2" /> <span>löschen</span>
+													</button>
+												</DropdownMenuItem>
+											</DropdownMenuContent>
+										</DropdownMenu>
+									</span>
+								</div>
+							</li>
+							<ResponsiveDialog isOpen={isEditOpen} setIsOpen={setIsEditOpen} title="Organisation bearbeiten">
+								<FormOrganization organization={organization} />
+							</ResponsiveDialog>
+						</>
 					))}
 				</ul>
 			)}
 		</>
-	)
-}
+	);
+};

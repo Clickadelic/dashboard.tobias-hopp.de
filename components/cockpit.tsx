@@ -1,10 +1,11 @@
-"use client";
-import { Drawer, DrawerClose, DrawerContent, DrawerDescription, DrawerFooter, DrawerHeader, DrawerTitle, DrawerTrigger } from "@/components/ui/drawer";
+"use client"
 
-import { Button } from "@/components/ui/button";
-import { IoMdClose } from "react-icons/io";
-import { BsChatRightText } from "react-icons/bs";
-import { BsSend } from "react-icons/bs";
+import { Drawer, DrawerClose, DrawerContent, DrawerDescription, DrawerFooter, DrawerHeader, DrawerTitle, DrawerTrigger } from "@/components/ui/drawer"
+
+import { Button } from "@/components/ui/button"
+import { IoMdClose } from "react-icons/io"
+import { BsChatRightText } from "react-icons/bs"
+import { BsSend } from "react-icons/bs"
 
 export const Cockpit = () => {
 	return (
@@ -42,5 +43,5 @@ export const Cockpit = () => {
 				</DrawerFooter>
 			</DrawerContent>
 		</Drawer>
-	);
-};
+	)
+}

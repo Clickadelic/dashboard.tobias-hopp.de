@@ -1,46 +1,44 @@
-"use client"
+"use client";
 
-import * as z from "zod"
-import { zodResolver } from "@hookform/resolvers/zod"
+import * as z from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 
-import { useState, useEffect, useTransition } from "react"
-import { useSession } from "next-auth/react"
-import { useForm } from "react-hook-form"
+import { useState, useEffect, useTransition } from "react";
+import { useForm } from "react-hook-form";
+import { useAppContext } from "@/context/app-context";
 
-import { Input } from "@/components/ui/input"
-import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form"
-import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input";
+import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";
+import { Button } from "@/components/ui/button";
 
-import { toast } from "sonner"
+import { toast } from "sonner";
 
-import { AppSchema } from "@/schemas"
-import { addApp } from "@/actions/app"
+import { AppSchema } from "@/schemas";
+import { addApp } from "@/actions/app";
+import { FiPlus } from "react-icons/fi";
 
-export const AppBar = () => {
-	const { status } = useSession({ required: true })
-	const [isDialogOpen, setIsDialogOpen] = useState(false)
+export const FormApp = () => {
 
-	const [isPending, startTransition] = useTransition()
-	const [isLoading, setIsLoading] = useState<boolean>(false)
+	const { isAppDialogOpen, setAppDialogOpen } = useAppContext();
+	const [isPending, startTransition] = useTransition();
 
 	const form = useForm<z.infer<typeof AppSchema>>({
 		resolver: zodResolver(AppSchema),
 		defaultValues: { title: "", url: "" }
-	})
+	});
 
 	const onAdd = async (values: z.infer<typeof AppSchema>) => {
 		startTransition(async () => {
-			const result = await addApp(values)
+			const result = await addApp(values);
 			if (result.error) {
-				toast.error(result.error)
+				toast.error(result.error);
 			} else if (result.success) {
-				toast.success(result.success)
-				form.reset()
-				setIsDialogOpen(false)
+				toast.success(result.success);
+				form.reset();
+				setAppDialogOpen(false);
 			}
-		})
-		setIsDialogOpen(false)
-	}
+		});
+	};
 
 	return (
 		<Form {...form}>
@@ -71,10 +69,11 @@ export const AppBar = () => {
 						</FormItem>
 					)}
 				/>
-				<Button disabled={isPending} aria-label="App hinzufügen" type="submit" className="w-full rounded-sm">
-					hinzufügen
+				<Button disabled={isPending} variant="primary" aria-label="App hinzufügen" type="submit" className="w-full rounded-sm">
+					<FiPlus className="inline text-white mr-2" />
+					App hinzufügen
 				</Button>
 			</form>
 		</Form>
-	)
-}
+	);
+};
