@@ -46,15 +46,6 @@ export const MenuLeft = () => {
 				</li>
 				<li>
 					<Link
-						href="/reports"
-						className={cn("block p-3 hover:bg-mantis-hover hover:text-mantis-primary", path === "/reports" && "text-mantis-primary border-r-2 border-r-mantis-primary bg-mantis-hover")}
-					>
-						<HiOutlineDocumentReport className={cn("inline-block mt-[-3px]", isToggled && "block mx-auto mt-[-3px]")} />
-						<span className={cn("ml-2", isToggled && "hidden")}>Reports</span>
-					</Link>
-				</li>
-				<li>
-					<Link
 						href="/projekte"
 						className={cn("block p-3 hover:bg-mantis-hover hover:text-mantis-primary", path === "/projekte" && "text-mantis-primary border-r-2 border-r-mantis-primary bg-mantis-hover")}
 					>
