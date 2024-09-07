@@ -128,10 +128,18 @@ export const TodoWidget = ({ classNames }: TodoWidgetProps = { classNames: "" })
 		}
 	};
 
+	const onAbort = () => {
+		form.reset({
+			title: "",
+			description: "",
+			isCompleted: false
+		});
+	};
+
 	return (
 		<div className={classNames}>
 			<Form {...form}>
-				<form onSubmit={form.handleSubmit(isEditing ? onEdit : onAdd)} className="space-y-2">
+				<form onSubmit={form.handleSubmit(isEditing ? onEdit : onAdd)} className="space-y-2 mb-2">
 					<FormField
 						control={form.control}
 						name="title"
@@ -171,6 +179,9 @@ export const TodoWidget = ({ classNames }: TodoWidgetProps = { classNames: "" })
 					</Button>
 				</form>
 			</Form>
+			<Button disabled={isPending} variant="outline" className="w-full shadow-none" onClick={() => onAbort()}>
+				abbrechen
+			</Button>
 			<hr className="my-3" />
 			<ul>
 				{todos.map(todo => (

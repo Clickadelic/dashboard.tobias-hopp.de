@@ -1,3 +1,5 @@
+"use client";
+
 const BlogPage = () => {
 	return (
 		<div className="page-wrapper">
@@ -7,7 +9,7 @@ const BlogPage = () => {
 				<p>Coming soon...</p>
 			</div>
 		</div>
-	)
-}
+	);
+};
 
-export default BlogPage
+export default BlogPage;
