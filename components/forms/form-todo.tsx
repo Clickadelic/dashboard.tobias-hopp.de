@@ -1,57 +1,57 @@
-"use client"
-import * as z from "zod"
-import { zodResolver } from "@hookform/resolvers/zod"
+"use client";
+import * as z from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 
-import { useTransition, useState, useEffect } from "react"
-import { useForm } from "react-hook-form"
-import { useSession } from "next-auth/react"
+import { useTransition, useState, useEffect } from "react";
+import { useForm } from "react-hook-form";
+import { useSession } from "next-auth/react";
 
-import { Input } from "@/components/ui/input"
+import { Input } from "@/components/ui/input";
 
-import { Form, FormControl, FormLabel, FormField, FormItem, FormMessage } from "@/components/ui/form"
-import { Textarea } from "@/components/ui/textarea"
-import { Skeleton } from "@/components/ui/skeleton"
-import { toast } from "sonner"
-import { Button } from "@/components/ui/button"
+import { Form, FormControl, FormLabel, FormField, FormItem, FormMessage } from "@/components/ui/form";
+import { Textarea } from "@/components/ui/textarea";
+import { Skeleton } from "@/components/ui/skeleton";
+import { toast } from "sonner";
+import { Button } from "@/components/ui/button";
 
-import { FiPlus } from "react-icons/fi"
+import { FiPlus } from "react-icons/fi";
 
-import { TodoSchema } from "@/schemas"
-import { Todo } from "@prisma/client"
-import { addTodo } from "@/actions/todo"
+import { TodoSchema } from "@/schemas";
+import { Todo } from "@prisma/client";
+import { addTodo } from "@/actions/todo";
 
-import { cn } from "@/lib/utils"
+import { cn } from "@/lib/utils";
 
 interface FormTodoProps {
-	formClasses?: string
-	todo?: Todo
+	formClasses?: string;
+	todo?: Todo;
 }
 
 export const FormTodo = ({ formClasses, todo }: FormTodoProps = {}) => {
-	console.log("Child todo: ", todo)
-	const { status } = useSession({ required: true })
-	const [isDialogOpen, setIsDialogOpen] = useState(false)
+	console.log("Child todo: ", todo);
+	const { status } = useSession({ required: true });
+	const [isDialogOpen, setIsDialogOpen] = useState(false);
 
-	const [isPending, startTransition] = useTransition()
-	const [isLoading, setIsLoading] = useState<boolean>(false)
+	const [isPending, startTransition] = useTransition();
+	const [isLoading, setIsLoading] = useState<boolean>(false);
 
 	const form = useForm<z.infer<typeof TodoSchema>>({
 		resolver: zodResolver(TodoSchema),
 		defaultValues: { title: "", description: "", isCompleted: false }
-	})
+	});
 
 	const onSubmit = async (values: z.infer<typeof TodoSchema>) => {
 		startTransition(async () => {
-			const result = await addTodo(values)
+			const result = await addTodo(values);
 			if (result.error) {
-				toast.error(result.error)
+				toast.error(result.error);
 			} else if (result.success) {
-				toast.success(result.success)
-				form.reset()
-				setIsDialogOpen(false)
+				toast.success(result.success);
+				form.reset();
+				setIsDialogOpen(false);
 			}
-		})
-	}
+		});
+	};
 
 	return (
 		<Form {...form}>
@@ -90,5 +90,5 @@ export const FormTodo = ({ formClasses, todo }: FormTodoProps = {}) => {
 				</Button>
 			</form>
 		</Form>
-	)
-}
+	);
+};
