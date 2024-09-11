@@ -62,11 +62,21 @@ export const AppBar = () => {
 			<div className="grid grid-cols-6 gap-3 md:flex md:items-start md:justify-start md:space-x-3 overflow-x-auto">
 				{isLoading || status === "loading" ? (
 					<>
-						<Skeleton className="size-[36px] bg-black/10 animate-pulse" />
-						<Skeleton className="size-[36px] bg-black/10 animate-pulse" />
-						<Skeleton className="size-[36px] bg-black/10 animate-pulse" />
-						<Skeleton className="size-[36px] bg-black/10 animate-pulse" />
-						<Skeleton className="size-[36px] bg-black/10 animate-pulse" />
+						<Skeleton className="size-[36px] md:size-[72px] relative flex flex-col justify-center place-content-center bg-black/15 shadow-sm border backdrop-blur rounded-xl" />
+						<Skeleton className="size-[36px] md:size-[72px] relative flex flex-col justify-center place-content-center bg-black/15 shadow-sm border backdrop-blur rounded-xl" />
+						<Skeleton className="size-[36px] md:size-[72px] relative flex flex-col justify-center place-content-center bg-black/15 shadow-sm border backdrop-blur rounded-xl" />
+						<Skeleton className="size-[36px] md:size-[72px] relative flex flex-col justify-center place-content-center bg-black/15 shadow-sm border backdrop-blur rounded-xl" />
+						<Skeleton className="size-[36px] md:size-[72px] relative flex flex-col justify-center place-content-center bg-black/15 shadow-sm border backdrop-blur rounded-xl" />
+						<Skeleton className="size-[36px] md:size-[72px] relative flex flex-col justify-center place-content-center bg-black/15 shadow-sm border backdrop-blur rounded-xl" />
+						<Skeleton className="size-[36px] md:size-[72px] relative flex flex-col justify-center place-content-center bg-black/15 shadow-sm border backdrop-blur rounded-xl" />
+						<Skeleton className="size-[36px] md:size-[72px] relative flex flex-col justify-center place-content-center bg-black/15 shadow-sm border backdrop-blur rounded-xl" />
+						<Skeleton className="size-[36px] md:size-[72px] relative flex flex-col justify-center place-content-center bg-black/15 shadow-sm border backdrop-blur rounded-xl" />
+						<Skeleton className="size-[36px] md:size-[72px] relative flex flex-col justify-center place-content-center bg-black/15 shadow-sm border backdrop-blur rounded-xl" />
+						<Skeleton className="size-[36px] md:size-[72px] relative flex flex-col justify-center place-content-center bg-black/15 shadow-sm border backdrop-blur rounded-xl" />
+						<Skeleton className="size-[36px] md:size-[72px] relative flex flex-col justify-center place-content-center bg-black/15 shadow-sm border backdrop-blur rounded-xl" />
+						<Skeleton className="size-[36px] md:size-[72px] relative flex flex-col justify-center place-content-center bg-black/15 shadow-sm border backdrop-blur rounded-xl" />
+						<Skeleton className="size-[36px] md:size-[72px] relative flex flex-col justify-center place-content-center bg-black/15 shadow-sm border backdrop-blur rounded-xl" />
+						<Skeleton className="size-[36px] md:size-[72px] relative flex flex-col justify-center place-content-center bg-black/15 shadow-sm border backdrop-blur rounded-xl" />
 					</>
 				) : apps.length > 0 ? (
 					apps.map(app => (
@@ -106,9 +116,23 @@ export const AppBar = () => {
 						</div>
 					))
 				) : (
-					<div className="size-[36px] md:size-[72px] relative flex flex-col justify-center place-content-center bg-white shadow-sm border backdrop-blur hover:bg-white/30 rounded-xl">
-						<button>#</button>
-					</div>
+					<>
+						<Skeleton className="size-[36px] md:size-[72px] relative flex flex-col justify-center place-content-center bg-black/15 shadow-sm border backdrop-blur rounded-xl" />
+						<Skeleton className="size-[36px] md:size-[72px] relative flex flex-col justify-center place-content-center bg-black/15 shadow-sm border backdrop-blur rounded-xl" />
+						<Skeleton className="size-[36px] md:size-[72px] relative flex flex-col justify-center place-content-center bg-black/15 shadow-sm border backdrop-blur rounded-xl" />
+						<Skeleton className="size-[36px] md:size-[72px] relative flex flex-col justify-center place-content-center bg-black/15 shadow-sm border backdrop-blur rounded-xl" />
+						<Skeleton className="size-[36px] md:size-[72px] relative flex flex-col justify-center place-content-center bg-black/15 shadow-sm border backdrop-blur rounded-xl" />
+						<Skeleton className="size-[36px] md:size-[72px] relative flex flex-col justify-center place-content-center bg-black/15 shadow-sm border backdrop-blur rounded-xl" />
+						<Skeleton className="size-[36px] md:size-[72px] relative flex flex-col justify-center place-content-center bg-black/15 shadow-sm border backdrop-blur rounded-xl" />
+						<Skeleton className="size-[36px] md:size-[72px] relative flex flex-col justify-center place-content-center bg-black/15 shadow-sm border backdrop-blur rounded-xl" />
+						<Skeleton className="size-[36px] md:size-[72px] relative flex flex-col justify-center place-content-center bg-black/15 shadow-sm border backdrop-blur rounded-xl" />
+						<Skeleton className="size-[36px] md:size-[72px] relative flex flex-col justify-center place-content-center bg-black/15 shadow-sm border backdrop-blur rounded-xl" />
+						<Skeleton className="size-[36px] md:size-[72px] relative flex flex-col justify-center place-content-center bg-black/15 shadow-sm border backdrop-blur rounded-xl" />
+						<Skeleton className="size-[36px] md:size-[72px] relative flex flex-col justify-center place-content-center bg-black/15 shadow-sm border backdrop-blur rounded-xl" />
+						<Skeleton className="size-[36px] md:size-[72px] relative flex flex-col justify-center place-content-center bg-black/15 shadow-sm border backdrop-blur rounded-xl" />
+						<Skeleton className="size-[36px] md:size-[72px] relative flex flex-col justify-center place-content-center bg-black/15 shadow-sm border backdrop-blur rounded-xl" />
+						<Skeleton className="size-[36px] md:size-[72px] relative flex flex-col justify-center place-content-center bg-black/15 shadow-sm border backdrop-blur rounded-xl" />
+					</>
 				)}
 			</div>
 		</div>
