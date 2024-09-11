@@ -4,9 +4,9 @@ import { useAppContext } from "@/context/app-context";
 import { useSearchParams } from "next/navigation";
 import { useState, useEffect } from "react";
 
-import { SidebarNavbar } from "./_components/layout/sidebar-navbar";
-import { Cockpit } from "../../components/cockpit";
-import { CircularMenu } from "@/components/circular-menu";
+import { SidebarNavbar } from "@/components/layout/sidebar-navbar";
+import { Cockpit } from "@/components/layout/cockpit";
+import { CircularMenu } from "@/components/layout/circular-menu";
 
 import { getFullStackSearchResults } from "@/actions/search";
 import { cn } from "@/lib/utils";

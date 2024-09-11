@@ -60,7 +60,7 @@ export const AppBar = () => {
 	return (
 		<div className="w-full mb-8">
 			<div className="grid grid-cols-6 gap-3 md:flex md:items-start md:justify-start md:space-x-3 overflow-x-auto">
-				{isLoading ? (
+				{isLoading || status === "loading" ? (
 					<>
 						<Skeleton className="size-[36px] bg-black/10 animate-pulse" />
 						<Skeleton className="size-[36px] bg-black/10 animate-pulse" />

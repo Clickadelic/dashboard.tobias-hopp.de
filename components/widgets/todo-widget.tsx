@@ -230,7 +230,7 @@ export const TodoWidget = ({ classNames }: TodoWidgetProps = { classNames: "" })
 						</span>
 					</li>
 				))}
-				{todos.length === 0 && <p className="text-slate-400 mt-12 text-center">Lege Dein erstes Todo an.</p>}
+				{todos.length === 0 && <p className="text-slate-400 my-12 text-center">Lege Dein erstes Todo an.</p>}
 			</ul>
 		</div>
 	);

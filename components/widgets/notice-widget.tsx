@@ -109,10 +109,16 @@ export const NoticeWidget = () => {
 		});
 	};
 
+	const onAbort = () => {
+		form.reset({
+			noticetext: ""
+		});
+	};
+
 	return (
 		<>
 			<Form {...form}>
-				<form onSubmit={form.handleSubmit(isEditing ? onEdit : onAdd)} className="space-y-2">
+				<form onSubmit={form.handleSubmit(isEditing ? onEdit : onAdd)} className="space-y-2 mb-2">
 					<FormField
 						control={form.control}
 						name="noticetext"
@@ -140,6 +146,9 @@ export const NoticeWidget = () => {
 						)}
 					</Button>
 				</form>
+				<Button disabled={isPending} variant="outline" className="w-full shadow-none" onClick={() => onAbort()}>
+					abbrechen
+				</Button>
 			</Form>
 			<hr className="my-3" />
 			<ul>
@@ -156,7 +165,7 @@ export const NoticeWidget = () => {
 						</span>
 					</li>
 				))}
-				{notices.length === 0 && status !== "loading" && <li className="text-md text-neutral-400 text-center mt-12">Lege Deine erste Notiz an.</li>}
+				{notices.length === 0 && status !== "loading" && <li className="text-md text-neutral-400 text-center my-12">Lege Deine erste Notiz an.</li>}
 			</ul>
 		</>
 	);
