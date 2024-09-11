@@ -18,7 +18,6 @@ import { addApp } from "@/actions/app";
 import { FiPlus } from "react-icons/fi";
 
 export const FormApp = () => {
-
 	const { isAppDialogOpen, setAppDialogOpen } = useAppContext();
 	const [isPending, startTransition] = useTransition();
 
