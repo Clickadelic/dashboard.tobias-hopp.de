@@ -1,8 +1,8 @@
-import ProjectGrid from "@/components/grids/project-grid"
+import ProjectGrid from "./project-grid";
 
-import { HiOutlineChevronRight } from "react-icons/hi"
-import Link from "next/link"
-import { BiHomeAlt2 } from "react-icons/bi"
+import { HiOutlineChevronRight } from "react-icons/hi";
+import Link from "next/link";
+import { BiHomeAlt2 } from "react-icons/bi";
 
 const ProjectPage = () => {
 	return (
@@ -12,7 +12,7 @@ const ProjectPage = () => {
 				<ProjectGrid />
 			</div>
 		</div>
-	)
-}
+	);
+};
 
-export default ProjectPage
+export default ProjectPage;
