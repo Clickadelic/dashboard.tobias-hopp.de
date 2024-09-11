@@ -134,6 +134,8 @@ export const TodoWidget = ({ classNames }: TodoWidgetProps = { classNames: "" })
 			description: "",
 			isCompleted: false
 		});
+		setIsEditing(false);
+		setEditTodoId(null);
 	};
 
 	return (

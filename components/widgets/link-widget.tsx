@@ -112,10 +112,20 @@ export const LinkWidget = () => {
 		});
 	};
 
+	const onAbort = () => {
+		form.reset({
+			title: "",
+			url: "",
+			description: ""
+		});
+		setIsEditing(false);
+		setEditLinkId(null);
+	};
+
 	return (
 		<>
 			<Form {...form}>
-				<form onSubmit={form.handleSubmit(isEditing ? onEdit : onAdd)} className="space-y-2">
+				<form onSubmit={form.handleSubmit(isEditing ? onEdit : onAdd)} className="space-y-2 mb-2">
 					<FormField
 						control={form.control}
 						name="title"
@@ -170,6 +180,9 @@ export const LinkWidget = () => {
 					</Button>
 				</form>
 			</Form>
+			<Button variant="outline" onClick={onAbort} className="w-full">
+				abbrechen
+			</Button>
 			<hr className="my-3" />
 			<ul>
 				{links.map((link: Link) => (
