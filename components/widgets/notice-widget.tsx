@@ -113,6 +113,8 @@ export const NoticeWidget = () => {
 		form.reset({
 			noticetext: ""
 		});
+		setIsEditing(false);
+		setEditNoticeId(null);
 	};
 
 	return (

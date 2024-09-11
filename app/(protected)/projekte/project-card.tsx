@@ -1,16 +1,16 @@
-import Link from "next/link"
-import { slugify } from "@/lib/utils"
-import { FaArrowRightLong } from "react-icons/fa6"
+import Link from "next/link";
+import { slugify } from "@/lib/utils";
+import { FaArrowRightLong } from "react-icons/fa6";
 
 interface ProjectProps {
-	id: string
-	title: string
-	url: string
-	description: string | null
+	id: string;
+	title: string;
+	url: string;
+	description: string | null;
 }
 
-export const MacBook = ({ id, title, url, description }: ProjectProps) => {
-	const slug = slugify(title)
+export const ProjectCard = ({ id, title, url, description }: ProjectProps) => {
+	const slug = slugify(title);
 	return (
 		<div key={id}>
 			<div className="w-full h-auto hover:opacity-90">
@@ -31,5 +31,5 @@ export const MacBook = ({ id, title, url, description }: ProjectProps) => {
 				</Link>
 			</div>
 		</div>
-	)
-}
+	);
+};
