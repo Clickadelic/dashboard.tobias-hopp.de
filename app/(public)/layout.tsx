@@ -1,16 +1,16 @@
-import NavbarPublic from "./_components/navbar-public"
+import NavbarPublic from "./_components/navbar-public";
 
 interface PublicLayoutProps {
-	children: React.ReactNode
+	children: React.ReactNode;
 }
 
 const PublicLayout = ({ children }: PublicLayoutProps) => {
 	return (
 		<div className="min-h-screen bg-slate-100">
 			<NavbarPublic />
-			<main>{children}</main>
+			<main className="container-md m-auto">{children}</main>
 		</div>
-	)
-}
+	);
+};
 
-export default PublicLayout
+export default PublicLayout;
