@@ -10,7 +10,7 @@ import OpenAI from "openai";
 
 // OpenAI-Instanz erstellen
 const openai = new OpenAI({
-	apiKey: process.env.NEXT_PUBLIC_OPENAI_API_KEY // Stelle sicher, dass der API-Schlüssel korrekt geladen wird
+	apiKey: process.env.OPENAI_API_KEY // Stelle sicher, dass der API-Schlüssel korrekt geladen wird
 });
 
 export const Cockpit = () => {
