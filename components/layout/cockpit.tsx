@@ -9,9 +9,9 @@ import { useState } from "react";
 import OpenAI from "openai";
 
 // OpenAI-Instanz erstellen
-const openai = new OpenAI({
-	apiKey: process.env.OPENAI_API_KEY // Stelle sicher, dass der API-Schlüssel korrekt geladen wird
-});
+// const openai = new OpenAI({
+// 	apiKey: process.env.OPENAI_API_KEY // Stelle sicher, dass der API-Schlüssel korrekt geladen wird
+// });
 
 export const Cockpit = () => {
 	const [query, setQuery] = useState<string>("");
@@ -24,24 +24,24 @@ export const Cockpit = () => {
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
 
-		if (!query) return;
+		// if (!query) return;
 
-		try {
-			// Anfrage an OpenAI API senden
-			const completion = await openai.chat.completions.create({
-				model: "gpt-4", // oder "gpt-3.5-turbo", je nach verfügbarem Modell
-				messages: [
-					{ role: "system", content: "You are a helpful assistant." },
-					{ role: "user", content: query }
-				]
-			});
+		// try {
+		// 	// Anfrage an OpenAI API senden
+		// 	const completion = await openai.chat.completions.create({
+		// 		model: "gpt-4", // oder "gpt-3.5-turbo", je nach verfügbarem Modell
+		// 		messages: [
+		// 			{ role: "system", content: "You are a helpful assistant." },
+		// 			{ role: "user", content: query }
+		// 		]
+		// 	});
 
-			// Antwort speichern und anzeigen
-			setResponse(completion.choices[0].message.content || "Keine Antwort erhalten.");
-		} catch (error) {
-			console.error("Fehler bei der Anfrage:", error);
-			setResponse("Fehler bei der Anfrage.");
-		}
+		// 	// Antwort speichern und anzeigen
+		// 	setResponse(completion.choices[0].message.content || "Keine Antwort erhalten.");
+		// } catch (error) {
+		// 	console.error("Fehler bei der Anfrage:", error);
+		// 	setResponse("Fehler bei der Anfrage.");
+		// }
 	};
 
 	return (
