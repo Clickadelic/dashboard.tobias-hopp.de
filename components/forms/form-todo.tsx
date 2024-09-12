@@ -28,7 +28,6 @@ interface FormTodoProps {
 }
 
 export const FormTodo = ({ formClasses, todo }: FormTodoProps = {}) => {
-	console.log("Child todo: ", todo);
 	const { status } = useSession({ required: true });
 	const [isDialogOpen, setIsDialogOpen] = useState(false);
 
