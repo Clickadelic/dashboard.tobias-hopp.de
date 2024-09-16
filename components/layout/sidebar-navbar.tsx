@@ -2,7 +2,7 @@
 
 import { La_Belle_Aurore } from "next/font/google";
 
-import { useAppContext } from "@/context/app-context";
+import { useSidebarStore } from "@/hooks/use-sidebar-store";
 import { useSession } from "next-auth/react";
 import { useCurrentUser } from "@/hooks/use-current-user";
 
@@ -41,16 +41,21 @@ const laBelleAurore = La_Belle_Aurore({ subsets: ["latin"], weight: ["400"] });
 export const SidebarNavbar = () => {
 	const { status } = useSession({ required: true });
 	const user = useCurrentUser();
-	const { isToggled, setToggle } = useAppContext();
+	const sidebarOpen = useSidebarStore(state => state.sidebarOpen);
+	const toggleSidebar = useSidebarStore(state => state.toggleSidebar);
+
+	const handleSidebar = () => {
+		toggleSidebar();
+	};
 
 	return (
 		<>
-			<aside className={cn("App-sidebar hidden fixed md:block top-0 left-0 min-h-screen border-r bg-white", isToggled ? "w-16" : "w-64")}>
+			<aside className={cn("App-sidebar hidden fixed md:block top-0 left-0 min-h-screen border-r bg-white", sidebarOpen ? "w-16" : "w-64")}>
 				<div className="sidebar-logo hidden md:flex justify-center px-2 py-3">
 					<h1>
 						<Link href={DEFAULT_LOGIN_REDIRECT} className="flex justify-between pt-2 text-slate-900 hover:opacity-75">
 							<Image src={logoSrc} width={16} height={16} className="logo inline  size-8" alt="Tailwind Dashboard" />
-							{!isToggled && (
+							{!sidebarOpen && (
 								<span className="ml-2">
 									<span className={cn("md:inline-block font-medium mr-1 text-2xl", laBelleAurore.className)}>Toby&apos;s</span>
 									<span className="md:inline-block font-bold">Dashboard</span>
@@ -74,14 +79,14 @@ export const SidebarNavbar = () => {
 					</div>
 				) : (
 					<>
-						<div className={cn("fixed left-[-1px] bottom-5 w-64 p-4 flex bg-white mr-[1px]", isToggled ? "w-16" : "w-64")}>
+						<div className={cn("fixed left-[-1px] bottom-5 w-64 p-4 flex bg-white mr-[1px]", sidebarOpen ? "w-16" : "w-64")}>
 							<Avatar className="size-8 mt-1 mr-3">
 								<AvatarImage src={user?.profileImage || ""} alt={`${user?.name} Profilbild`} />
 								<AvatarFallback className="bg-slate-200 border border-slate-300">
 									<FaUser className="text-slate-400" />
 								</AvatarFallback>
 							</Avatar>
-							{!isToggled && (
+							{!sidebarOpen && (
 								<div className="text-toggle">
 									<h4 className="text-base text-neutral-600">{user?.name}</h4>
 									<span className="inline-flex items-center rounded-md bg-yellow-50 px-2 py-1 text-xs text-yellow-800 ring-1 ring-inset ring-yellow-600/20">{user?.role}</span>
@@ -91,7 +96,7 @@ export const SidebarNavbar = () => {
 					</>
 				)}
 			</aside>
-			<header className={cn("App-header flex fixed top-0 md:ml-64 w-screen p-3 border-b bg-white z-50", isToggled ? "md:ml-16" : "md:ml-64")}>
+			<header className={cn("App-header flex fixed top-0 md:ml-64 w-screen p-3 border-b bg-white z-50", sidebarOpen ? "md:ml-16" : "md:ml-64")}>
 				<nav className="header-nav flex justify-between w-max">
 					<div className="inline-flex gap-3">
 						{/* TODO: useMediaQuery() */}
@@ -105,7 +110,7 @@ export const SidebarNavbar = () => {
 										<h1>
 											<Link href={DEFAULT_LOGIN_REDIRECT} className="flex justify-start mt-2 text-slate-900 hover:opacity-75">
 												<Image src={logoSrc} width={16} height={16} className="logo inline -mt-1 size-8" alt="Tailwind Dashboard" />
-												{!isToggled && (
+												{!sidebarOpen && (
 													<span className="ml-2">
 														<span className={cn("md:inline-block font-medium mr-1 text-2xl", laBelleAurore.className)}>Toby&apos;s</span>
 														<span className="md:inline-block font-bold">Dashboard</span>
@@ -114,12 +119,12 @@ export const SidebarNavbar = () => {
 											</Link>
 										</h1>
 									</SheetTitle>
-									<SheetDescription>Mobile Sidebar links</SheetDescription>
 								</SheetHeader>
+								<MenuLeft />
 							</SheetContent>
 						</Sheet>
-						<button onClick={() => setToggle(prev => !prev)} className="hidden md:inline hover:bg-slate-100 white rounded p-2">
-							{isToggled ? <BsTextIndentLeft className="size-5" /> : <BsTextIndentRight className="size-5" />}
+						<button onClick={() => handleSidebar()} className="hidden md:inline hover:bg-slate-100 white rounded p-2">
+							{sidebarOpen ? <BsTextIndentLeft className="size-5" /> : <BsTextIndentRight className="size-5" />}
 						</button>
 						<FullStackSearch classNames="inline-flex" />
 					</div>

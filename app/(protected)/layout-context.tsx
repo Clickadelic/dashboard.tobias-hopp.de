@@ -1,6 +1,6 @@
 "use client";
 
-import { useAppContext } from "@/context/app-context";
+import { useSidebarStore } from "@/hooks/use-sidebar-store";
 import { useSearchParams } from "next/navigation";
 import { useState, useEffect } from "react";
 
@@ -16,11 +16,13 @@ interface LayoutContextProps {
 }
 
 const LayoutContext = ({ children }: LayoutContextProps) => {
-	const { isToggled } = useAppContext();
 	const searchParams = useSearchParams();
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 	const [results, setResults] = useState<any[]>([]);
 	const [error, setError] = useState<string | null>(null);
+
+	const sidebarOpen = useSidebarStore(state => state.sidebarOpen);
+	const toggleSidebar = useSidebarStore(state => state.toggleSidebar);
 
 	const q = searchParams.get("q");
 
@@ -46,7 +48,7 @@ const LayoutContext = ({ children }: LayoutContextProps) => {
 	return (
 		<>
 			<SidebarNavbar />
-			<main className={cn("flex-1 transition-all duration-300 ease-in-out", isToggled ? "md:ml-16" : "md:ml-64")}>
+			<main className={cn("flex-1 transition-all duration-300 ease-in-out", sidebarOpen ? "md:ml-16" : "md:ml-64")}>
 				<div className="container pt-20">
 					{q ? (
 						<div className="page-wrapper pb-16">
