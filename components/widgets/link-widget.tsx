@@ -6,6 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useTransition, useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useSession } from "next-auth/react";
+import { useLinksStore } from "@/hooks/use-links-store";
 
 import { Input } from "@/components/ui/input";
 import { Form, FormControl, FormLabel, FormField, FormItem, FormMessage } from "@/components/ui/form";
@@ -28,7 +29,8 @@ export const LinkWidget = () => {
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 	const [isEditing, setIsEditing] = useState<boolean>(false);
 	const [editLinkId, setEditLinkId] = useState<string | null>(null);
-	const [links, setLinks] = useState<Link[]>([]);
+	const links = useLinksStore(state => state.links);
+	const setLinks = useLinksStore(state => state.setLinks);
 
 	const fetchLinks = async () => {
 		setIsLoading(true);
