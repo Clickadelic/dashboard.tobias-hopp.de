@@ -10,9 +10,6 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { toast } from "sonner";
 import { BsListCheck } from "react-icons/bs";
 
-import { getTodosByUserId } from "@/actions/todo";
-import { Todo } from "@prisma/client";
-
 export const TodoCard = () => {
 	const { status } = useSession({ required: true });
 	const [isLoading, setIsLoading] = useState<boolean>(false);
