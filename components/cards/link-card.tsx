@@ -1,26 +1,16 @@
 "use client";
 
-import * as z from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { useTransition, useState, useEffect } from "react";
-import { useForm } from "react-hook-form";
+
 import { useSession } from "next-auth/react";
 
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { Input } from "@/components/ui/input";
-import { Form, FormControl, FormLabel, FormField, FormItem, FormMessage } from "@/components/ui/form";
-import { Textarea } from "@/components/ui/textarea";
 import { Skeleton } from "@/components/ui/skeleton";
 import { toast } from "sonner";
-import { Button } from "@/components/ui/button";
-
-import { FiPlus } from "react-icons/fi";
 import { GoLink } from "react-icons/go";
 
 import { Link as Hyperlink } from "@prisma/client";
-import { LinkSchema } from "@/schemas";
-import { addLink, getLinksByUserId } from "@/actions/link";
+import { getLinksByUserId } from "@/actions/link";
 
 // TODO: Fix broken layout shift when Loading...
 export const LinkCard = () => {

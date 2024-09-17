@@ -1,33 +1,19 @@
 "use client";
 
-import * as z from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-
 import { useTransition, useState, useEffect } from "react";
-import { useForm } from "react-hook-form";
 import { useSession } from "next-auth/react";
 
 import Link from "next/link";
 
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { Input } from "@/components/ui/input";
-import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";
-import { Textarea } from "@/components/ui/textarea";
 import { Skeleton } from "@/components/ui/skeleton";
 import { toast } from "sonner";
-import { Button } from "@/components/ui/button";
-
-import { FiPlus } from "react-icons/fi";
-
-import { ProjectSchema } from "@/schemas";
 import { Project } from "@prisma/client";
 
-import { addProject, getProjectsByUserId } from "@/actions/project";
+import { getProjectsByUserId } from "@/actions/project";
 import { BsBuildings } from "react-icons/bs";
 
 export const ProjectCard = () => {
 	const { status } = useSession({ required: true });
-	const [isPending, startTransition] = useTransition();
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 	const [projects, setProjects] = useState<any[]>([]);
 	const [latestProject, setLatestProject] = useState<Project | null>(null);

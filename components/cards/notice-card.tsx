@@ -1,35 +1,24 @@
 "use client";
 
-import * as z from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-
-import { useTransition, useState, useEffect } from "react";
-import { useForm } from "react-hook-form";
+import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 
 import Link from "next/link";
-
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { NoticeSchema } from "@/schemas";
-import { Form, FormControl, FormLabel, FormField, FormItem, FormMessage } from "@/components/ui/form";
-import { Textarea } from "@/components/ui/textarea";
 import { Skeleton } from "@/components/ui/skeleton";
 import { toast } from "sonner";
-import { Button } from "@/components/ui/button";
 
-import { FiPlus } from "react-icons/fi";
 import { CiEdit } from "react-icons/ci";
 
-import { addNotice, getNoticesByUserId } from "@/actions/notice";
+import { getNoticesByUserId } from "@/actions/notice";
 import { Notice } from "@prisma/client";
 
 export const NoticeCard = () => {
 	const { status } = useSession({ required: true });
 
-	const [isPending, startTransition] = useTransition();
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 	const [notices, setNotices] = useState<Notice[]>([]);
 	const [latestNotice, setLatestNotice] = useState<Notice | null>(null);
+	
 	const fetchNotices = async () => {
 		setIsLoading(true);
 		try {

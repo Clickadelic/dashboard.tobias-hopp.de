@@ -1,42 +1,27 @@
 "use client";
 
-import * as z from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
+import { useState, useEffect } from "react";
+import { useSession } from "next-auth/react";
+import { useTodosStore } from "@/hooks/use-todos-store";
+
 import Link from "next/link";
 
-import { useTransition, useState, useEffect } from "react";
-import { useForm } from "react-hook-form";
-import { useSession } from "next-auth/react";
-
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { Input } from "@/components/ui/input";
-import { Form, FormControl, FormLabel, FormField, FormItem, FormMessage } from "@/components/ui/form";
-import { Textarea } from "@/components/ui/textarea";
-import { Checkbox } from "@/components/ui/checkbox";
 import { Skeleton } from "@/components/ui/skeleton";
 import { toast } from "sonner";
-import { Button } from "@/components/ui/button";
-
-import { FiPlus } from "react-icons/fi";
 import { BsListCheck } from "react-icons/bs";
-
-import { addTodo, getTodosByUserId } from "@/actions/todo";
-import { TodoSchema } from "@/schemas";
-import { Todo } from "@prisma/client";
 
 export const TodoCard = () => {
 	const { status } = useSession({ required: true });
-
-	const [isPending, startTransition] = useTransition();
 	const [isLoading, setIsLoading] = useState<boolean>(false);
-	const [todos, setTodos] = useState<Todo[]>([]);
-	const [latestTodo, setLatestTodo] = useState<Todo | null>(null);
+
+	const todos = useTodosStore(state => state.todos);
+	const latestTodo = useTodosStore(state => state.todos[0]);
+	const setTodos = useTodosStore(state => state.setTodos);
+
 	const fetchTodos = async () => {
 		setIsLoading(true);
 		try {
-			const response = await getTodosByUserId();
-			setTodos(response);
-			setLatestTodo(response[0]);
+			setTodos(todos);
 		} catch (error) {
 			toast.error("Failed to fetch Todos.");
 		} finally {
