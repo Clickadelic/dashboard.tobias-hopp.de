@@ -1,16 +1,17 @@
 "use client";
+
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import { useTransition, useState, useEffect } from "react";
+import { useTransition, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useSession } from "next-auth/react";
+import { useTodosStore } from "@/hooks/use-todos-store";
 
 import { Input } from "@/components/ui/input";
 
 import { Form, FormControl, FormLabel, FormField, FormItem, FormMessage } from "@/components/ui/form";
 import { Textarea } from "@/components/ui/textarea";
-import { Skeleton } from "@/components/ui/skeleton";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 
@@ -34,9 +35,12 @@ export const FormTodo = ({ formClasses, todo }: FormTodoProps = {}) => {
 	const [isPending, startTransition] = useTransition();
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 
+	const todos = useTodosStore(state => state.todos);
+	const setTodos = useTodosStore(state => state.setTodos);
+
 	const form = useForm<z.infer<typeof TodoSchema>>({
 		resolver: zodResolver(TodoSchema),
-		defaultValues: { title: "", description: "", isCompleted: false }
+		defaultValues: { title: todo?.title || "", description: todo?.description || "", isCompleted: todo?.isCompleted || false }
 	});
 
 	const onSubmit = async (values: z.infer<typeof TodoSchema>) => {

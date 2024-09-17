@@ -19,8 +19,8 @@ const DashboardPage = () => {
 			</div>
 			<div className="grid grid-cols-1 gap-3 md:grid-cols-4 mb-5">
 				<ProjectCard />
-				<NoticeCard />
 				<TodoCard />
+				<NoticeCard />
 				<LinkCard />
 			</div>
 			<div className="grid grid-cols-1 md:grid-cols-3 gap-4">
