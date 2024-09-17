@@ -5,6 +5,7 @@ import { La_Belle_Aurore } from "next/font/google";
 import { useSidebarStore } from "@/hooks/use-sidebar-store";
 import { useSession } from "next-auth/react";
 import { useCurrentUser } from "@/hooks/use-current-user";
+import { useMediaQuery } from "@/hooks/use-media-query";
 
 import Image from "next/image";
 import Link from "next/link";
@@ -41,6 +42,8 @@ const laBelleAurore = La_Belle_Aurore({ subsets: ["latin"], weight: ["400"] });
 export const SidebarNavbar = () => {
 	const { status } = useSession({ required: true });
 	const user = useCurrentUser();
+	const isDesktop = useMediaQuery("(min-width: 768px)");
+
 	const sidebarOpen = useSidebarStore(state => state.sidebarOpen);
 	const toggleSidebar = useSidebarStore(state => state.toggleSidebar);
 
@@ -99,30 +102,31 @@ export const SidebarNavbar = () => {
 			<header className={cn("App-header flex fixed top-0 md:ml-64 w-screen p-3 border-b bg-white z-50", sidebarOpen ? "md:ml-16" : "md:ml-64")}>
 				<nav className="header-nav flex justify-between w-max">
 					<div className="inline-flex gap-3">
-						{/* TODO: useMediaQuery() */}
-						<Sheet>
-							<SheetTrigger className="md:hidden">
-								<Image src={logoSrc} width={32} height={32} className="logo size-8 inline-block md:mt-[-8px]" alt="Tailwind Dashboard" />
-							</SheetTrigger>
-							<SheetContent side="left">
-								<SheetHeader>
-									<SheetTitle>
-										<h1>
-											<Link href={DEFAULT_LOGIN_REDIRECT} className="flex justify-start mt-2 text-slate-900 hover:opacity-75">
-												<Image src={logoSrc} width={16} height={16} className="logo inline -mt-1 size-8" alt="Tailwind Dashboard" />
-												{!sidebarOpen && (
-													<span className="ml-2">
-														<span className={cn("md:inline-block font-medium mr-1 text-2xl", laBelleAurore.className)}>Toby&apos;s</span>
-														<span className="md:inline-block font-bold">Dashboard</span>
-													</span>
-												)}
-											</Link>
-										</h1>
-									</SheetTitle>
-								</SheetHeader>
-								<MenuLeft />
-							</SheetContent>
-						</Sheet>
+						{!isDesktop && (
+							<Sheet>
+								<SheetTrigger className="md:hidden">
+									<Image src={logoSrc} width={32} height={32} className="logo size-8 inline-block md:mt-[-8px]" alt="Tailwind Dashboard" />
+								</SheetTrigger>
+								<SheetContent side="left">
+									<SheetHeader>
+										<SheetTitle>
+											<h1>
+												<Link href={DEFAULT_LOGIN_REDIRECT} className="flex justify-start mt-2 text-slate-900 hover:opacity-75">
+													<Image src={logoSrc} width={16} height={16} className="logo inline -mt-1 size-8" alt="Tailwind Dashboard" />
+													{!sidebarOpen && (
+														<span className="ml-2">
+															<span className={cn("md:inline-block font-medium mr-1 text-2xl", laBelleAurore.className)}>Toby&apos;s</span>
+															<span className="md:inline-block font-bold">Dashboard</span>
+														</span>
+													)}
+												</Link>
+											</h1>
+										</SheetTitle>
+									</SheetHeader>
+									<MenuLeft />
+								</SheetContent>
+							</Sheet>
+						)}
 						<button onClick={() => handleSidebar()} className="hidden md:inline hover:bg-slate-100 white rounded p-2">
 							{sidebarOpen ? <BsTextIndentLeft className="size-5" /> : <BsTextIndentRight className="size-5" />}
 						</button>

@@ -3,6 +3,8 @@
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
+import { useTodosStore } from "@/hooks/use-todos-store";
+
 import { useTransition, useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useSession } from "next-auth/react";
@@ -19,7 +21,6 @@ import { BsInfoCircle } from "react-icons/bs";
 import { LiaEdit } from "react-icons/lia";
 import { GoTrash } from "react-icons/go";
 
-import { Todo } from "@prisma/client";
 import { TodoSchema } from "@/schemas";
 import { addTodo, editTodoById, deleteTodoById, getTodosByUserId, toggleIsCompleted } from "@/actions/todo";
 import { cn } from "@/lib/utils";
@@ -35,7 +36,9 @@ export const TodoWidget = ({ classNames }: TodoWidgetProps = { classNames: "" })
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 	const [isEditing, setIsEditing] = useState<boolean>(false);
 	const [editTodoId, setEditTodoId] = useState<string | null>(null); // Track the current editing Todo ID
-	const [todos, setTodos] = useState<Todo[]>([]);
+
+	const todos = useTodosStore(state => state.todos);
+	const setTodos = useTodosStore(state => state.setTodos);
 
 	const fetchTodos = async () => {
 		setIsLoading(true);

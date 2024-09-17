@@ -3,6 +3,7 @@
 import { useState, useEffect, useTransition } from "react";
 import { useSession } from "next-auth/react";
 import { useAppContext } from "@/context/app-context";
+import { useAppsStore } from "@/hooks/use-apps-store";
 
 import Image from "next/image";
 import Link from "next/link";
@@ -16,7 +17,6 @@ import { HiOutlineDotsVertical } from "react-icons/hi";
 import { BsTrash } from "react-icons/bs";
 import { AiOutlineEdit } from "react-icons/ai";
 
-import { App } from "@prisma/client";
 import { getAppsByUserId, deleteApp } from "@/actions/app";
 
 import { getFavicon } from "@/lib/utils";
@@ -24,7 +24,9 @@ import { getFavicon } from "@/lib/utils";
 export const AppBar = () => {
 	const { status } = useSession({ required: true });
 
-	const [apps, setApps] = useState<App[]>([]);
+	const apps = useAppsStore(state => state.Apps);
+	const setApps = useAppsStore(state => state.setApps);
+
 	const [isPending, startTransition] = useTransition();
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 
@@ -62,21 +64,21 @@ export const AppBar = () => {
 			<div className="grid grid-cols-6 gap-3 md:flex md:items-start md:justify-start md:space-x-3 overflow-x-auto">
 				{isLoading || status === "loading" ? (
 					<>
-						<Skeleton className="size-[36px] md:size-[72px] relative flex flex-col justify-center place-content-center bg-black/15 shadow-sm border backdrop-blur rounded-xl" />
-						<Skeleton className="size-[36px] md:size-[72px] relative flex flex-col justify-center place-content-center bg-black/15 shadow-sm border backdrop-blur rounded-xl" />
-						<Skeleton className="size-[36px] md:size-[72px] relative flex flex-col justify-center place-content-center bg-black/15 shadow-sm border backdrop-blur rounded-xl" />
-						<Skeleton className="size-[36px] md:size-[72px] relative flex flex-col justify-center place-content-center bg-black/15 shadow-sm border backdrop-blur rounded-xl" />
-						<Skeleton className="size-[36px] md:size-[72px] relative flex flex-col justify-center place-content-center bg-black/15 shadow-sm border backdrop-blur rounded-xl" />
-						<Skeleton className="size-[36px] md:size-[72px] relative flex flex-col justify-center place-content-center bg-black/15 shadow-sm border backdrop-blur rounded-xl" />
-						<Skeleton className="size-[36px] md:size-[72px] relative flex flex-col justify-center place-content-center bg-black/15 shadow-sm border backdrop-blur rounded-xl" />
-						<Skeleton className="size-[36px] md:size-[72px] relative flex flex-col justify-center place-content-center bg-black/15 shadow-sm border backdrop-blur rounded-xl" />
-						<Skeleton className="size-[36px] md:size-[72px] relative flex flex-col justify-center place-content-center bg-black/15 shadow-sm border backdrop-blur rounded-xl" />
-						<Skeleton className="size-[36px] md:size-[72px] relative flex flex-col justify-center place-content-center bg-black/15 shadow-sm border backdrop-blur rounded-xl" />
-						<Skeleton className="size-[36px] md:size-[72px] relative flex flex-col justify-center place-content-center bg-black/15 shadow-sm border backdrop-blur rounded-xl" />
-						<Skeleton className="size-[36px] md:size-[72px] relative flex flex-col justify-center place-content-center bg-black/15 shadow-sm border backdrop-blur rounded-xl" />
-						<Skeleton className="size-[36px] md:size-[72px] relative flex flex-col justify-center place-content-center bg-black/15 shadow-sm border backdrop-blur rounded-xl" />
-						<Skeleton className="size-[36px] md:size-[72px] relative flex flex-col justify-center place-content-center bg-black/15 shadow-sm border backdrop-blur rounded-xl" />
-						<Skeleton className="size-[36px] md:size-[72px] relative flex flex-col justify-center place-content-center bg-black/15 shadow-sm border backdrop-blur rounded-xl" />
+						<Skeleton className="size-[36px] md:size-[72px] relative flex flex-col justify-center place-content-center bg-primary/10 shadow-sm border backdrop-blur rounded-xl" />
+						<Skeleton className="size-[36px] md:size-[72px] relative flex flex-col justify-center place-content-center bg-primary/10 shadow-sm border backdrop-blur rounded-xl" />
+						<Skeleton className="size-[36px] md:size-[72px] relative flex flex-col justify-center place-content-center bg-primary/10 shadow-sm border backdrop-blur rounded-xl" />
+						<Skeleton className="size-[36px] md:size-[72px] relative flex flex-col justify-center place-content-center bg-primary/10 shadow-sm border backdrop-blur rounded-xl" />
+						<Skeleton className="size-[36px] md:size-[72px] relative flex flex-col justify-center place-content-center bg-primary/10 shadow-sm border backdrop-blur rounded-xl" />
+						<Skeleton className="size-[36px] md:size-[72px] relative flex flex-col justify-center place-content-center bg-primary/10 shadow-sm border backdrop-blur rounded-xl" />
+						<Skeleton className="size-[36px] md:size-[72px] relative flex flex-col justify-center place-content-center bg-primary/10 shadow-sm border backdrop-blur rounded-xl" />
+						<Skeleton className="size-[36px] md:size-[72px] relative flex flex-col justify-center place-content-center bg-primary/10 shadow-sm border backdrop-blur rounded-xl" />
+						<Skeleton className="size-[36px] md:size-[72px] relative flex flex-col justify-center place-content-center bg-primary/10 shadow-sm border backdrop-blur rounded-xl" />
+						<Skeleton className="size-[36px] md:size-[72px] relative flex flex-col justify-center place-content-center bg-primary/10 shadow-sm border backdrop-blur rounded-xl" />
+						<Skeleton className="size-[36px] md:size-[72px] relative flex flex-col justify-center place-content-center bg-primary/10 shadow-sm border backdrop-blur rounded-xl" />
+						<Skeleton className="size-[36px] md:size-[72px] relative flex flex-col justify-center place-content-center bg-primary/10 shadow-sm border backdrop-blur rounded-xl" />
+						<Skeleton className="size-[36px] md:size-[72px] relative flex flex-col justify-center place-content-center bg-primary/10 shadow-sm border backdrop-blur rounded-xl" />
+						<Skeleton className="size-[36px] md:size-[72px] relative flex flex-col justify-center place-content-center bg-primary/10 shadow-sm border backdrop-blur rounded-xl" />
+						<Skeleton className="size-[36px] md:size-[72px] relative flex flex-col justify-center place-content-center bg-primary/10 shadow-sm border backdrop-blur rounded-xl" />
 					</>
 				) : apps.length > 0 ? (
 					apps.map(app => (
@@ -117,21 +119,21 @@ export const AppBar = () => {
 					))
 				) : (
 					<>
-						<Skeleton className="size-[36px] md:size-[72px] relative flex flex-col justify-center place-content-center bg-black/15 shadow-sm border backdrop-blur rounded-xl" />
-						<Skeleton className="size-[36px] md:size-[72px] relative flex flex-col justify-center place-content-center bg-black/15 shadow-sm border backdrop-blur rounded-xl" />
-						<Skeleton className="size-[36px] md:size-[72px] relative flex flex-col justify-center place-content-center bg-black/15 shadow-sm border backdrop-blur rounded-xl" />
-						<Skeleton className="size-[36px] md:size-[72px] relative flex flex-col justify-center place-content-center bg-black/15 shadow-sm border backdrop-blur rounded-xl" />
-						<Skeleton className="size-[36px] md:size-[72px] relative flex flex-col justify-center place-content-center bg-black/15 shadow-sm border backdrop-blur rounded-xl" />
-						<Skeleton className="size-[36px] md:size-[72px] relative flex flex-col justify-center place-content-center bg-black/15 shadow-sm border backdrop-blur rounded-xl" />
-						<Skeleton className="size-[36px] md:size-[72px] relative flex flex-col justify-center place-content-center bg-black/15 shadow-sm border backdrop-blur rounded-xl" />
-						<Skeleton className="size-[36px] md:size-[72px] relative flex flex-col justify-center place-content-center bg-black/15 shadow-sm border backdrop-blur rounded-xl" />
-						<Skeleton className="size-[36px] md:size-[72px] relative flex flex-col justify-center place-content-center bg-black/15 shadow-sm border backdrop-blur rounded-xl" />
-						<Skeleton className="size-[36px] md:size-[72px] relative flex flex-col justify-center place-content-center bg-black/15 shadow-sm border backdrop-blur rounded-xl" />
-						<Skeleton className="size-[36px] md:size-[72px] relative flex flex-col justify-center place-content-center bg-black/15 shadow-sm border backdrop-blur rounded-xl" />
-						<Skeleton className="size-[36px] md:size-[72px] relative flex flex-col justify-center place-content-center bg-black/15 shadow-sm border backdrop-blur rounded-xl" />
-						<Skeleton className="size-[36px] md:size-[72px] relative flex flex-col justify-center place-content-center bg-black/15 shadow-sm border backdrop-blur rounded-xl" />
-						<Skeleton className="size-[36px] md:size-[72px] relative flex flex-col justify-center place-content-center bg-black/15 shadow-sm border backdrop-blur rounded-xl" />
-						<Skeleton className="size-[36px] md:size-[72px] relative flex flex-col justify-center place-content-center bg-black/15 shadow-sm border backdrop-blur rounded-xl" />
+						<Skeleton className="size-[36px] md:size-[72px] relative flex flex-col justify-center place-content-center bg-primary/10 shadow-sm border backdrop-blur rounded-xl" />
+						<Skeleton className="size-[36px] md:size-[72px] relative flex flex-col justify-center place-content-center bg-primary/10 shadow-sm border backdrop-blur rounded-xl" />
+						<Skeleton className="size-[36px] md:size-[72px] relative flex flex-col justify-center place-content-center bg-primary/10 shadow-sm border backdrop-blur rounded-xl" />
+						<Skeleton className="size-[36px] md:size-[72px] relative flex flex-col justify-center place-content-center bg-primary/10 shadow-sm border backdrop-blur rounded-xl" />
+						<Skeleton className="size-[36px] md:size-[72px] relative flex flex-col justify-center place-content-center bg-primary/10 shadow-sm border backdrop-blur rounded-xl" />
+						<Skeleton className="size-[36px] md:size-[72px] relative flex flex-col justify-center place-content-center bg-primary/10 shadow-sm border backdrop-blur rounded-xl" />
+						<Skeleton className="size-[36px] md:size-[72px] relative flex flex-col justify-center place-content-center bg-primary/10 shadow-sm border backdrop-blur rounded-xl" />
+						<Skeleton className="size-[36px] md:size-[72px] relative flex flex-col justify-center place-content-center bg-primary/10 shadow-sm border backdrop-blur rounded-xl" />
+						<Skeleton className="size-[36px] md:size-[72px] relative flex flex-col justify-center place-content-center bg-primary/10 shadow-sm border backdrop-blur rounded-xl" />
+						<Skeleton className="size-[36px] md:size-[72px] relative flex flex-col justify-center place-content-center bg-primary/10 shadow-sm border backdrop-blur rounded-xl" />
+						<Skeleton className="size-[36px] md:size-[72px] relative flex flex-col justify-center place-content-center bg-primary/10 shadow-sm border backdrop-blur rounded-xl" />
+						<Skeleton className="size-[36px] md:size-[72px] relative flex flex-col justify-center place-content-center bg-primary/10 shadow-sm border backdrop-blur rounded-xl" />
+						<Skeleton className="size-[36px] md:size-[72px] relative flex flex-col justify-center place-content-center bg-primary/10 shadow-sm border backdrop-blur rounded-xl" />
+						<Skeleton className="size-[36px] md:size-[72px] relative flex flex-col justify-center place-content-center bg-primary/10 shadow-sm border backdrop-blur rounded-xl" />
+						<Skeleton className="size-[36px] md:size-[72px] relative flex flex-col justify-center place-content-center bg-primary/10 shadow-sm border backdrop-blur rounded-xl" />
 					</>
 				)}
 			</div>
