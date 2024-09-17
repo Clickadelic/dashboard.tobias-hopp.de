@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useTransition, useState, useEffect } from "react";
 
 import { useSession } from "next-auth/react";
+import { useLinksStore } from "@/hooks/use-links-store";
 
 import { Skeleton } from "@/components/ui/skeleton";
 import { toast } from "sonner";
@@ -17,15 +18,16 @@ export const LinkCard = () => {
 	const { status } = useSession({ required: true });
 	const [isPending, startTransition] = useTransition();
 	const [isLoading, setIsLoading] = useState<boolean>(false);
-	const [links, setLinks] = useState<Hyperlink[]>([]);
-	const [latestLink, setLatestLink] = useState<Hyperlink | null>(null);
+
+	const links = useLinksStore(state => state.links);
+	const setLinks = useLinksStore(state => state.setLinks);
+	const latestLink = useLinksStore(state => state.links[0]);
 
 	const fetchLinks = async () => {
 		setIsLoading(true);
 		try {
 			const response = await getLinksByUserId();
 			setLinks(response);
-			setLatestLink(response[0]);
 		} catch (error) {
 			toast.error("Fehler beim Laden der Links.");
 		} finally {
