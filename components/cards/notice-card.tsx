@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
+import { useNoticesStore } from "@/hooks/use-notices-store";
 
 import Link from "next/link";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -10,21 +11,21 @@ import { toast } from "sonner";
 import { CiEdit } from "react-icons/ci";
 
 import { getNoticesByUserId } from "@/actions/notice";
-import { Notice } from "@prisma/client";
 
 export const NoticeCard = () => {
 	const { status } = useSession({ required: true });
 
 	const [isLoading, setIsLoading] = useState<boolean>(false);
-	const [notices, setNotices] = useState<Notice[]>([]);
-	const [latestNotice, setLatestNotice] = useState<Notice | null>(null);
-	
+
+	const notices = useNoticesStore(state => state.notices);
+	const setNotices = useNoticesStore(state => state.setNotices);
+	const latestNotice = useNoticesStore(state => state.notices[0]);
+
 	const fetchNotices = async () => {
 		setIsLoading(true);
 		try {
-			const response = await getNoticesByUserId();
-			setNotices(response);
-			setLatestNotice(response[0]);
+			const notices = await getNoticesByUserId();
+			setNotices(notices);
 		} catch (error) {
 			toast.error("Fehler beim Laden der Notizen.");
 		} finally {
