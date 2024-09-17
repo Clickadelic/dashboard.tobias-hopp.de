@@ -22,7 +22,6 @@ interface AppProviderProps {
 }
 
 const AppProvider = ({ children }: AppProviderProps) => {
-	const [isToggled, setToggle] = useState<boolean>(false);
 	const [isAppDialogOpen, setAppDialogOpen] = useState<boolean>(false);
 	const [isLinkDialogOpen, setLinkDialogOpen] = useState<boolean>(false);
 	const [isProjectDialogOpen, setProjectDialogOpen] = useState<boolean>(false);
