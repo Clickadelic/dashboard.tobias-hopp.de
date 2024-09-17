@@ -6,6 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useTransition, useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useSession } from "next-auth/react";
+import { useNoticesStore } from "@/hooks/use-notices-store";
 
 import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";
 import { Textarea } from "@/components/ui/textarea";
@@ -17,18 +18,19 @@ import { FiPlus } from "react-icons/fi";
 import { GoTrash } from "react-icons/go";
 import { LiaEdit } from "react-icons/lia";
 
-import { Notice } from "@prisma/client";
 import { NoticeSchema } from "@/schemas";
 import { addNotice, deleteNoticeById, editNoticeById, getNoticesByUserId } from "@/actions/notice";
 
 export const NoticeWidget = () => {
 	const { status } = useSession({ required: true });
-	const [isEditing, setIsEditing] = useState<boolean>(false);
-	const [editNoticeId, setEditNoticeId] = useState<string | null>(null);
 
 	const [isPending, startTransition] = useTransition();
 	const [isLoading, setIsLoading] = useState<boolean>(false);
-	const [notices, setNotices] = useState<Notice[]>([]);
+	const [isEditing, setIsEditing] = useState<boolean>(false);
+	const [editNoticeId, setEditNoticeId] = useState<string | null>(null);
+
+	const notices = useNoticesStore(state => state.notices);
+	const setNotices = useNoticesStore(state => state.setNotices);
 
 	const fetchNotices = async () => {
 		setIsLoading(true);

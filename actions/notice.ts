@@ -99,7 +99,8 @@ export const getNoticesByUserId = async () => {
 			user: {
 				id: userId
 			}
-		}
+		},
+		orderBy: { createdAt: "desc" }
 	});
 	return data;
 };
