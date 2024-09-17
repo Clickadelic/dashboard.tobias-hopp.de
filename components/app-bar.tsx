@@ -24,7 +24,7 @@ import { getFavicon } from "@/lib/utils";
 export const AppBar = () => {
 	const { status } = useSession({ required: true });
 
-	const apps = useAppsStore(state => state.Apps);
+	const apps = useAppsStore(state => state.apps);
 	const setApps = useAppsStore(state => state.setApps);
 
 	const [isPending, startTransition] = useTransition();
