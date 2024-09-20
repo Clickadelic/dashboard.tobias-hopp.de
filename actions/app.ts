@@ -47,7 +47,7 @@ export const addApp = async (values: z.infer<typeof AppSchema>) => {
 	}
 }
 
-export const editApp = async (id: string, values: z.infer<typeof AppSchema>) => {
+export const editAppById = async (id: string, values: z.infer<typeof AppSchema>) => {
 	const session = await auth()
 	const user = session?.user
 	const userId = user?.id
@@ -84,7 +84,7 @@ export const editApp = async (id: string, values: z.infer<typeof AppSchema>) => 
 	}
 }
 
-export const deleteApp = async (id: string) => {
+export const deleteAppById = async (id: string) => {
 	try {
 		const existingApp = await db.app.findFirst({
 			where: {
