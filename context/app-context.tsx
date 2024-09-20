@@ -3,8 +3,6 @@
 import { createContext, useState, ReactNode, Dispatch, SetStateAction, useContext } from "react";
 
 interface AppContextProps {
-	isAppDialogOpen: boolean;
-	setAppDialogOpen: Dispatch<SetStateAction<boolean>>;
 	isLinkDialogOpen: boolean;
 	setLinkDialogOpen: Dispatch<SetStateAction<boolean>>;
 	isProjectDialogOpen: boolean;
@@ -22,7 +20,6 @@ interface AppProviderProps {
 }
 
 const AppProvider = ({ children }: AppProviderProps) => {
-	const [isAppDialogOpen, setAppDialogOpen] = useState<boolean>(false);
 	const [isLinkDialogOpen, setLinkDialogOpen] = useState<boolean>(false);
 	const [isProjectDialogOpen, setProjectDialogOpen] = useState<boolean>(false);
 	const [isNoticeDialogOpen, setNoticeDialogOpen] = useState<boolean>(false);
@@ -30,8 +27,6 @@ const AppProvider = ({ children }: AppProviderProps) => {
 	return (
 		<AppContext.Provider
 			value={{
-				isAppDialogOpen,
-				setAppDialogOpen,
 				isLinkDialogOpen,
 				setLinkDialogOpen,
 				isProjectDialogOpen,

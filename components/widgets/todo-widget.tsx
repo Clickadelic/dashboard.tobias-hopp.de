@@ -46,7 +46,7 @@ export const TodoWidget = ({ classNames }: TodoWidgetProps = { classNames: "" })
 			const response = await getTodosByUserId();
 			setTodos(response);
 		} catch (error) {
-			toast.error("Failed to fetch Todos.");
+			toast.error("Fehler beim Laden der Todos");
 		} finally {
 			setIsLoading(false);
 		}

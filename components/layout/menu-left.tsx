@@ -20,6 +20,8 @@ import { FiUsers } from "react-icons/fi";
 import { FiUploadCloud } from "react-icons/fi";
 import { BsHouseGear } from "react-icons/bs";
 
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+
 import { cn } from "@/lib/utils";
 
 export const MenuLeft = () => {
@@ -37,22 +39,46 @@ export const MenuLeft = () => {
 					<span className={cn("text-xs text-neutral-400 ml-4 inline-block my-4", sidebarOpen && "hidden")}>Dashboard</span>
 				</li>
 				<li>
-					<Link
-						href="/dashboard"
-						className={cn("block p-3 hover:bg-mantis-hover hover:text-mantis-primary", path === "/dashboard" && "text-mantis-primary border-r-2 border-r-mantis-primary bg-mantis-hover")}
-					>
-						<IoSpeedometerOutline className={cn("inline-block mt-[-3px]", sidebarOpen && "block mx-auto mt-[-3px]")} />
-						<span className={cn("ml-2", sidebarOpen && "hidden")}>Dashboard</span>
-					</Link>
+					<TooltipProvider>
+						<Tooltip>
+							<TooltipTrigger asChild data-state="instant-open">
+								<Link
+									href="/dashboard"
+									className={cn(
+										"block p-3 hover:bg-mantis-hover hover:text-mantis-primary",
+										path === "/dashboard" && "text-mantis-primary border-r-2 border-r-mantis-primary bg-mantis-hover"
+									)}
+								>
+									<IoSpeedometerOutline className={cn("inline-block mt-[-3px]", sidebarOpen && "block mx-auto mt-[-3px]")} />
+									<span className={cn("ml-2", sidebarOpen && "hidden")}>Dashboard</span>
+								</Link>
+							</TooltipTrigger>
+							<TooltipContent side="right">
+								<p>Dashboard</p>
+							</TooltipContent>
+						</Tooltip>
+					</TooltipProvider>
 				</li>
 				<li>
-					<Link
-						href="/projekte"
-						className={cn("block p-3 hover:bg-mantis-hover hover:text-mantis-primary", path === "/projekte" && "text-mantis-primary border-r-2 border-r-mantis-primary bg-mantis-hover")}
-					>
-						<BsBuildings className={cn("inline-block mt-[-3px]", sidebarOpen && "block mx-auto mt-[-3px]")} />
-						<span className={cn("ml-2", sidebarOpen && "hidden")}>Projekte</span>
-					</Link>
+					<TooltipProvider>
+						<Tooltip>
+							<TooltipTrigger asChild data-state="instant-open">
+								<Link
+									href="/projekte"
+									className={cn(
+										"block p-3 hover:bg-mantis-hover hover:text-mantis-primary",
+										path === "/projekte" && "text-mantis-primary border-r-2 border-r-mantis-primary bg-mantis-hover"
+									)}
+								>
+									<BsBuildings className={cn("inline-block mt-[-3px]", sidebarOpen && "block mx-auto mt-[-3px]")} />
+									<span className={cn("ml-2", sidebarOpen && "hidden")}>Projekte</span>
+								</Link>
+							</TooltipTrigger>
+							<TooltipContent side="right">
+								<p>Projekte</p>
+							</TooltipContent>
+						</Tooltip>
+					</TooltipProvider>
 				</li>
 				<li>
 					<span className={cn("text-xs text-neutral-400 ml-4 inline-block my-4", sidebarOpen && "hidden")}>Widgets</span>

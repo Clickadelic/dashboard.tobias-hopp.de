@@ -5,15 +5,20 @@ import Logo from "@/components/layout/logo";
 const NavbarPublic = () => {
 	return (
 		<>
-			<header className="flex justify-between p-2 bg-white mb-4">
-				<Logo />
-				<nav className="flex justify-between">
-					<ul className="flex justify-between space-x-3 mr-3 mt-2">
-						<li>
-							<Link href="/about">About</Link>
-						</li>
-					</ul>
-				</nav>
+			<header className="p-2 bg-white mb-4">
+				<div className="container-md m-auto flex justify-between">
+					<Logo />
+					<nav className="flex justify-between">
+						<ul className="flex justify-between space-x-3 mr-3 mt-2">
+							<li>
+								<Link href="/auth/login">Login</Link>
+							</li>
+							<li>
+								<Link href="/auth/register">Register</Link>
+							</li>
+						</ul>
+					</nav>
+				</div>
 			</header>
 		</>
 	);
