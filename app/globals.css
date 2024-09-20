@@ -92,6 +92,10 @@ body,
 	}
 }
 
+.arrow-mantis-primary {
+	fill: #1677ff;
+}
+
 .macbook {
 	padding: 4% 6%;
 	margin: 0 auto;
@@ -110,7 +114,9 @@ body,
 .screen:before {
 	border: 2px solid #cacacc;
 	border-radius: 3% 3% 0.5% 0.5% / 5%;
-	box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.8) inset, 0 0 1px 2px rgba(255, 255, 255, 0.3) inset;
+	box-shadow:
+		0 0 0 1px rgba(0, 0, 0, 0.8) inset,
+		0 0 1px 2px rgba(255, 255, 255, 0.3) inset;
 	content: "";
 	display: block;
 	/* for aspect ratio ~67:100 */
@@ -176,7 +182,9 @@ body,
 .notch {
 	background: #ddd;
 	border-radius: 0 0 7% 7% / 0 0 95% 95%;
-	box-shadow: -5px -1px 3px rgba(0, 0, 0, 0.2) inset, 5px -1px 3px rgba(0, 0, 0, 0.2) inset;
+	box-shadow:
+		-5px -1px 3px rgba(0, 0, 0, 0.2) inset,
+		5px -1px 3px rgba(0, 0, 0, 0.2) inset;
 	margin-left: auto;
 	margin-right: auto;
 	margin-top: -3.5%;
