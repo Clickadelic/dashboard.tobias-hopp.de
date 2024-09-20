@@ -67,7 +67,7 @@ export const SidebarNavbar = () => {
 						</Link>
 					</h1>
 				</div>
-				<section className="sidebar-accordion mt-[18px] mb-6">
+				<section className="sidebar-accordion mt-[18px] mb-6 overflow-y-auto">
 					<MenuLeft />
 				</section>
 				{status === "loading" ? (
@@ -131,29 +131,30 @@ export const SidebarNavbar = () => {
 							{sidebarOpen ? <BsTextIndentLeft className="size-5" /> : <BsTextIndentRight className="size-5" />}
 						</button>
 						<FullStackSearch classNames="inline-flex" />
+						{!isDesktop && (
+							<Sheet>
+								<SheetTrigger className="ml-2 md:hidden">
+									<HiMenuAlt3 />
+								</SheetTrigger>
+								<SheetContent side="right">
+									<SheetHeader className="text-left">
+										<SheetTitle>
+											<h1>
+												<Link href={DEFAULT_LOGIN_REDIRECT} className="flex justify-start mt-2 text-slate-900 hover:opacity-75">
+													<Image src={logoSrc} width={16} height={16} className="logo inline -mt-1 size-8" alt="Tailwind Dashboard" />
+													<span className="ml-2">
+														<span className={cn("md:inline-block font-medium mr-1 text-2xl", laBelleAurore.className)}>Toby&apos;s</span>
+														<span className="md:inline-block font-bold">Dashboard</span>
+													</span>
+												</Link>
+											</h1>
+										</SheetTitle>
+										<SheetDescription>Mobile Sidebar rechts</SheetDescription>
+									</SheetHeader>
+								</SheetContent>
+							</Sheet>
+						)}
 					</div>
-					{/* TODO: rechter Mobile Button, umbauen auf Media Query */}
-					<Sheet>
-						<SheetTrigger className="ml-2 md:hidden">
-							<HiMenuAlt3 />
-						</SheetTrigger>
-						<SheetContent side="right">
-							<SheetHeader className="text-left">
-								<SheetTitle>
-									<h1>
-										<Link href={DEFAULT_LOGIN_REDIRECT} className="flex justify-start mt-2 text-slate-900 hover:opacity-75">
-											<Image src={logoSrc} width={16} height={16} className="logo inline -mt-1 size-8" alt="Tailwind Dashboard" />
-											<span className="ml-2">
-												<span className={cn("md:inline-block font-medium mr-1 text-2xl", laBelleAurore.className)}>Toby&apos;s</span>
-												<span className="md:inline-block font-bold">Dashboard</span>
-											</span>
-										</Link>
-									</h1>
-								</SheetTitle>
-								<SheetDescription>Mobile Sidebar rechts</SheetDescription>
-							</SheetHeader>
-						</SheetContent>
-					</Sheet>
 					<ul className="hidden md:space-x-1 md:fixed md:right-5 md:mt-[-2px] md:inline-flex md:mr-1 mb-1">
 						<li>
 							<MegaMenu />
