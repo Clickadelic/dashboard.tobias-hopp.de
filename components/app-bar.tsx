@@ -1,63 +1,65 @@
-"use client";
+"use client"
+import z from "zod"
+import { zodResolver } from "@hookform/resolvers/zod"
 
-import { useState, useEffect, useTransition } from "react";
-import { useSession } from "next-auth/react";
-import { useAppContext } from "@/context/app-context";
-import { useAppsStore } from "@/hooks/use-apps-store";
+import { useState, useEffect, useTransition } from "react"
+import { useSession } from "next-auth/react"
+import { useAppsStore } from "@/hooks/use-apps-store"
 
-import Image from "next/image";
-import Link from "next/link";
+import Image from "next/image"
+import Link from "next/link"
 
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-import { Skeleton } from "@/components/ui/skeleton";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
+import { Skeleton } from "@/components/ui/skeleton"
 
-import { toast } from "sonner";
+import { toast } from "sonner"
 
-import { HiOutlineDotsVertical } from "react-icons/hi";
-import { BsTrash } from "react-icons/bs";
-import { AiOutlineEdit } from "react-icons/ai";
+import { HiOutlineDotsVertical } from "react-icons/hi"
+import { BsTrash } from "react-icons/bs"
+import { AiOutlineEdit } from "react-icons/ai"
 
-import { getAppsByUserId, deleteApp } from "@/actions/app";
+import { getAppsByUserId, deleteAppById, editAppById } from "@/actions/app"
 
-import { getFavicon } from "@/lib/utils";
+import { AppSchema } from "@/schemas"
+import { getFavicon } from "@/lib/utils"
 
 export const AppBar = () => {
-	const { status } = useSession({ required: true });
+	const { status } = useSession({ required: true })
 
-	const apps = useAppsStore(state => state.apps);
-	const setApps = useAppsStore(state => state.setApps);
+	const [isPending, startTransition] = useTransition()
+	const [isLoading, setIsLoading] = useState<boolean>(false)
 
-	const [isPending, startTransition] = useTransition();
-	const [isLoading, setIsLoading] = useState<boolean>(false);
-
-	const { isAppDialogOpen, setAppDialogOpen } = useAppContext();
+	const isAppDialogOpen = useAppsStore(state => state.isAppDialogOpen)
+	const toggleAppDialog = useAppsStore(state => state.toggleAppDialog)
+	const apps = useAppsStore(state => state.apps)
+	const setApps = useAppsStore(state => state.setApps)
 
 	const fetchApps = async () => {
 		try {
-			const response = await getAppsByUserId();
-			setApps(response);
+			const response = await getAppsByUserId()
+			setApps(response)
 		} catch (error) {
-			toast.error("Fehler beim Laden der Apps.");
+			toast.error("Fehler beim Laden der Apps.")
 		}
-	};
+	}
 
 	useEffect(() => {
-		setIsLoading(true);
-		fetchApps();
-		setIsLoading(false);
-	}, []);
+		setIsLoading(true)
+		fetchApps()
+		setIsLoading(false)
+	}, [])
 
 	const onDelete = async (id: string) => {
 		startTransition(async () => {
-			const result = await deleteApp(id);
+			const result = await deleteAppById(id)
 			if (result.error) {
-				toast.error(result.error);
+				toast.error(result.error)
 			} else if (result.success) {
-				toast.success(result.success);
-				fetchApps();
+				toast.success(result.success)
+				fetchApps()
 			}
-		});
-	};
+		})
+	}
 
 	return (
 		<div className="w-full mb-8">
@@ -100,7 +102,7 @@ export const AppBar = () => {
 									<DropdownMenuItem>
 										<button
 											onClick={() => {
-												setAppDialogOpen(true);
+												toggleAppDialog()
 											}}
 											className="flex justify-between"
 										>
@@ -138,5 +140,5 @@ export const AppBar = () => {
 				)}
 			</div>
 		</div>
-	);
-};
+	)
+}
