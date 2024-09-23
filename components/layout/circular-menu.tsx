@@ -29,9 +29,8 @@ export const CircularMenu = () => {
 
 	const apps = useAppsStore(state => state.apps);
 	const setApps = useAppsStore(state => state.setApps);
-	const isAppDialogOpen = useAppsStore(state => state.isAppDialogOpen);
-	const toggleAppDialog = useAppsStore(state => state.toggleAppDialog);
 
+	const { isAppDialogOpen, setAppDialogOpen } = useAppContext();
 	const { isLinkDialogOpen, setLinkDialogOpen } = useAppContext();
 	const { isTodoDialogOpen, setTodoDialogOpen } = useAppContext();
 	const { isNoticeDialogOpen, setNoticeDialogOpen } = useAppContext();
@@ -43,7 +42,7 @@ export const CircularMenu = () => {
 				<TooltipProvider>
 					<Tooltip>
 						<TooltipTrigger asChild data-state="instant-open">
-							<button onClick={() => toggleAppDialog()} className="rounded-full bg-mantis-primary hover:bg-mantis-primary/90 text-white p-3">
+							<button onClick={() => setAppDialogOpen(true)} className="rounded-full bg-mantis-primary hover:bg-mantis-primary/90 text-white p-3">
 								<BsApp />
 							</button>
 						</TooltipTrigger>
@@ -53,7 +52,7 @@ export const CircularMenu = () => {
 						</TooltipContent>
 					</Tooltip>
 				</TooltipProvider>
-				<ResponsiveDialog isOpen={isAppDialogOpen} setIsOpen={toggleAppDialog} title="App hinzufügen" description="Füge eine App als Schnellzugriff hinzu" icon={<BsApp />}>
+				<ResponsiveDialog isOpen={isAppDialogOpen} setIsOpen={setAppDialogOpen} title="App hinzufügen" description="Füge eine App als Schnellzugriff hinzu" icon={<BsApp />}>
 					<FormApp />
 				</ResponsiveDialog>
 				<TooltipProvider>
@@ -72,7 +71,6 @@ export const CircularMenu = () => {
 				<ResponsiveDialog isOpen={isLinkDialogOpen} setIsOpen={setLinkDialogOpen} title="Link hinzufügen" description="Füge einen Link zu Deiner Kollektion hinzu" icon={<GoLink />}>
 					<FormLink />
 				</ResponsiveDialog>
-
 				<TooltipProvider>
 					<Tooltip>
 						<TooltipTrigger asChild data-state="instant-open">
@@ -89,7 +87,6 @@ export const CircularMenu = () => {
 				<ResponsiveDialog isOpen={isTodoDialogOpen} setIsOpen={setTodoDialogOpen} title="Todo hinzufügen" description="Füge ein neues Todo hinzu" icon={<BsListCheck />}>
 					<FormTodo />
 				</ResponsiveDialog>
-
 				<TooltipProvider>
 					<Tooltip>
 						<TooltipTrigger asChild data-state="instant-open">

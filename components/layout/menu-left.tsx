@@ -1,10 +1,10 @@
 "use client";
 
-import { useSidebarStore } from "@/hooks/use-sidebar-store";
 import { usePathname } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { useCurrentRole } from "@/hooks/use-current-role";
 import { useCurrentUser } from "@/hooks/use-current-user";
+import { useAppContext } from "@/context/app-context";
 
 import { UserRole } from "@prisma/client";
 
@@ -30,13 +30,13 @@ export const MenuLeft = () => {
 	const role = useCurrentRole();
 	const path = usePathname();
 
-	const sidebarOpen = useSidebarStore(state => state.sidebarOpen);
+	const { isSidebarOpen, setSidebarOpen } = useAppContext();
 
 	return (
 		<nav aria-label="Sidebar-Menü">
-			<ul className={sidebarOpen ? "mt-12" : ""}>
+			<ul className={isSidebarOpen ? "mt-12" : ""}>
 				<li>
-					<span className={cn("text-xs text-neutral-400 ml-4 inline-block my-4", sidebarOpen && "hidden")}>Dashboard</span>
+					<span className={cn("text-xs text-neutral-400 ml-4 inline-block my-4", isSidebarOpen && "hidden")}>Dashboard</span>
 				</li>
 				{/* // TODO: Responsive Menu Items mit ToolTip erstellen */}
 				<li>
@@ -50,8 +50,8 @@ export const MenuLeft = () => {
 										path === "/dashboard" && "text-mantis-primary border-r-2 border-r-mantis-primary bg-mantis-hover"
 									)}
 								>
-									<IoSpeedometerOutline className={cn("inline-block mt-[-3px]", sidebarOpen && "block mx-auto mt-[-3px]")} />
-									<span className={cn("ml-2", sidebarOpen && "hidden")}>Dashboard</span>
+									<IoSpeedometerOutline className={cn("inline-block mt-[-3px]", isSidebarOpen && "block mx-auto mt-[-3px]")} />
+									<span className={cn("ml-2", isSidebarOpen && "hidden")}>Dashboard</span>
 								</Link>
 							</TooltipTrigger>
 							<TooltipContent side="right">
@@ -72,8 +72,8 @@ export const MenuLeft = () => {
 										path === "/projekte" && "text-mantis-primary border-r-2 border-r-mantis-primary bg-mantis-hover"
 									)}
 								>
-									<BsBuildings className={cn("inline-block mt-[-3px]", sidebarOpen && "block mx-auto mt-[-3px]")} />
-									<span className={cn("ml-2", sidebarOpen && "hidden")}>Projekte</span>
+									<BsBuildings className={cn("inline-block mt-[-3px]", isSidebarOpen && "block mx-auto mt-[-3px]")} />
+									<span className={cn("ml-2", isSidebarOpen && "hidden")}>Projekte</span>
 								</Link>
 							</TooltipTrigger>
 							<TooltipContent side="right">
@@ -84,7 +84,7 @@ export const MenuLeft = () => {
 					</TooltipProvider>
 				</li>
 				<li>
-					<span className={cn("text-xs text-neutral-400 ml-4 inline-block my-4", sidebarOpen && "hidden")}>Widgets</span>
+					<span className={cn("text-xs text-neutral-400 ml-4 inline-block my-4", isSidebarOpen && "hidden")}>Widgets</span>
 				</li>
 				<li>
 					<TooltipProvider>
@@ -97,8 +97,8 @@ export const MenuLeft = () => {
 										path === "/todos" && "text-mantis-primary border-r-2 border-r-mantis-primary bg-mantis-hover"
 									)}
 								>
-									<BsListCheck className={cn("inline-block mt-[-3px]", sidebarOpen && "block mx-auto mt-[-3px]")} />
-									<span className={cn("ml-2", sidebarOpen && "hidden")}>Todos</span>
+									<BsListCheck className={cn("inline-block mt-[-3px]", isSidebarOpen && "block mx-auto mt-[-3px]")} />
+									<span className={cn("ml-2", isSidebarOpen && "hidden")}>Todos</span>
 								</Link>
 							</TooltipTrigger>
 							<TooltipContent side="right">
@@ -119,8 +119,8 @@ export const MenuLeft = () => {
 										path === "/notizen" && "text-mantis-primary border-r-2 border-r-mantis-primary bg-mantis-hover"
 									)}
 								>
-									<CiEdit className={cn("inline-block mt-[-3px]", sidebarOpen && "block mx-auto mt-[-3px]")} />
-									<span className={cn("ml-2", sidebarOpen && "hidden")}>Notizen</span>
+									<CiEdit className={cn("inline-block mt-[-3px]", isSidebarOpen && "block mx-auto mt-[-3px]")} />
+									<span className={cn("ml-2", isSidebarOpen && "hidden")}>Notizen</span>
 								</Link>
 							</TooltipTrigger>
 							<TooltipContent side="right">
@@ -141,8 +141,8 @@ export const MenuLeft = () => {
 										path === "/links" && "text-mantis-primary border-r-2 border-r-mantis-primary bg-mantis-hover"
 									)}
 								>
-									<GoLink className={cn("inline-block mt-[-3px]", sidebarOpen && "block mx-auto mt-[-3px]")} />
-									<span className={cn("ml-2", sidebarOpen && "hidden")}>Links</span>
+									<GoLink className={cn("inline-block mt-[-3px]", isSidebarOpen && "block mx-auto mt-[-3px]")} />
+									<span className={cn("ml-2", isSidebarOpen && "hidden")}>Links</span>
 								</Link>
 							</TooltipTrigger>
 							<TooltipContent side="right">
@@ -155,7 +155,7 @@ export const MenuLeft = () => {
 				{role === UserRole.ADMIN && (
 					<>
 						<li>
-							<span className={cn("text-xs text-neutral-400 ml-4 inline-block my-4", sidebarOpen && "hidden")}>Admin</span>
+							<span className={cn("text-xs text-neutral-400 ml-4 inline-block my-4", isSidebarOpen && "hidden")}>Admin</span>
 						</li>
 						<li>
 							<TooltipProvider>
@@ -168,8 +168,8 @@ export const MenuLeft = () => {
 												path === "/admin" && "text-mantis-primary border-r-2 border-r-mantis-primary bg-mantis-hover"
 											)}
 										>
-											<PiEye className={cn("inline-block mt-[-3px]", sidebarOpen && "block mx-auto mt-[-3px]")} />
-											<span className={cn("ml-2", sidebarOpen && "hidden")}>Admin</span>
+											<PiEye className={cn("inline-block mt-[-3px]", isSidebarOpen && "block mx-auto mt-[-3px]")} />
+											<span className={cn("ml-2", isSidebarOpen && "hidden")}>Admin</span>
 										</Link>
 									</TooltipTrigger>
 									<TooltipContent side="right">
@@ -190,8 +190,8 @@ export const MenuLeft = () => {
 												path === "/admin/benutzer" && "text-mantis-primary border-r-2 border-r-mantis-primary bg-mantis-hover"
 											)}
 										>
-											<FiUsers className={cn("inline-block mt-[-3px]", sidebarOpen && "block mx-auto mt-[-3px]")} />
-											<span className={cn("ml-2", sidebarOpen && "hidden")}>Benutzer</span>
+											<FiUsers className={cn("inline-block mt-[-3px]", isSidebarOpen && "block mx-auto mt-[-3px]")} />
+											<span className={cn("ml-2", isSidebarOpen && "hidden")}>Benutzer</span>
 										</Link>
 									</TooltipTrigger>
 									<TooltipContent side="right">
@@ -212,8 +212,8 @@ export const MenuLeft = () => {
 												path === "/admin/uploads" && "text-mantis-primary border-r-2 border-r-mantis-primary bg-mantis-hover"
 											)}
 										>
-											<FiUploadCloud className={cn("inline-block mt-[-3px]", sidebarOpen && "block mx-auto mt-[-3px]")} />
-											<span className={cn("ml-2", sidebarOpen && "hidden")}>Uploads</span>
+											<FiUploadCloud className={cn("inline-block mt-[-3px]", isSidebarOpen && "block mx-auto mt-[-3px]")} />
+											<span className={cn("ml-2", isSidebarOpen && "hidden")}>Uploads</span>
 										</Link>
 									</TooltipTrigger>
 									<TooltipContent side="right">
@@ -234,8 +234,8 @@ export const MenuLeft = () => {
 												path === "/admin/system" && "text-mantis-primary border-r-2 border-r-mantis-primary bg-mantis-hover"
 											)}
 										>
-											<BsHouseGear className={cn("inline-block mt-[-3px]", sidebarOpen && "block mx-auto mt-[-3px]")} />
-											<span className={cn("ml-2", sidebarOpen && "hidden")}>System</span>
+											<BsHouseGear className={cn("inline-block mt-[-3px]", isSidebarOpen && "block mx-auto mt-[-3px]")} />
+											<span className={cn("ml-2", isSidebarOpen && "hidden")}>System</span>
 										</Link>
 									</TooltipTrigger>
 									<TooltipContent side="right">
