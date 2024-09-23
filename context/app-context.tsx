@@ -39,7 +39,7 @@ const AppProvider = ({ children }: AppProviderProps) => {
 	return (
 		<AppContext.Provider
 			value={{
-				isSidebarOpen: true,
+				isSidebarOpen,
 				setSidebarOpen,
 				isAppDialogOpen,
 				setAppDialogOpen,

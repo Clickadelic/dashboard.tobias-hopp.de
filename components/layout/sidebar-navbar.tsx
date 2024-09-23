@@ -45,7 +45,7 @@ export const SidebarNavbar = () => {
 
 	const { isSidebarOpen, setSidebarOpen } = useAppContext();
 
-	const handleSidebarToggle = () => {
+	const toggleSidebar = () => {
 		setSidebarOpen(!isSidebarOpen);
 	};
 
@@ -125,7 +125,7 @@ export const SidebarNavbar = () => {
 								</SheetContent>
 							</Sheet>
 						)}
-						<button onClick={() => handleSidebarToggle()} className="hidden md:inline hover:bg-slate-100 white rounded p-2">
+						<button onClick={() => toggleSidebar()} className="hidden md:inline hover:bg-slate-100 white rounded p-2">
 							{isSidebarOpen ? <BsTextIndentLeft className="size-5" /> : <BsTextIndentRight className="size-5" />}
 						</button>
 						<FullStackSearch classNames="inline-flex" />
