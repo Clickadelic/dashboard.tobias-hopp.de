@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import { usePathname } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { useCurrentRole } from "@/hooks/use-current-role";
