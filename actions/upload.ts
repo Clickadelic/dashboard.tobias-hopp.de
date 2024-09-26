@@ -1,9 +1,9 @@
-"use server";
+"use server"
 
-import { put } from "@vercel/blob";
-import { revalidatePath } from "next/cache";
-import { auth } from "@/auth";
-import { db } from "@/lib/db";
+import { put } from "@vercel/blob"
+import { revalidatePath } from "next/cache"
+import { auth } from "@/auth"
+import { db } from "@/lib/db"
 
 /**
  * Uploads a background image for a user.
@@ -12,30 +12,25 @@ import { db } from "@/lib/db";
  * @return {Promise<Blob>} - A promise that resolves to the uploaded image blob.
  */
 export const addBackgroundImage = async (formData: FormData) => {
-	const session = await auth();
-	const user = session?.user;
-	const userId = user?.id;
+	const session = await auth()
+	const user = session?.user
+	const userId = user?.id
 
-	const imageFile = formData.get("image") as File;
+	const imageFile = formData.get("image") as File
 	const blob = await put(imageFile.name, imageFile, {
 		access: "public"
-	});
-	console.log(blob);
+	})
+	console.log(blob)
 
-	revalidatePath("/");
+	revalidatePath("/")
 
-	return blob;
-};
+	return blob
+}
 
-/**
- * Retrieves the background image of the currently authenticated user from the database.
- *
- * @return {Promise<User['backgroundImage'] | null>} The background image URL of the user, or null if not found.
- */
 export const getUserBackground = async () => {
-	const session = await auth();
-	const user = session?.user;
-	const userId = user?.id;
+	const session = await auth()
+	const user = session?.user
+	const userId = user?.id
 	try {
 		const userBackground = await db.user.findUnique({
 			where: {
@@ -44,12 +39,12 @@ export const getUserBackground = async () => {
 			select: {
 				backgroundImage: true
 			}
-		});
+		})
 
-		if (!userBackground) return { error: "No background found" };
+		if (!userBackground) return { error: "No background found" }
 
-		return userBackground;
+		return userBackground
 	} catch (error) {
-		return { error: "Ein Fehler ist aufgetreten." };
+		return { error: "Ein Fehler ist aufgetreten." }
 	}
-};
+}

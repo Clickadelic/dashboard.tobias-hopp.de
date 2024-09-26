@@ -1,42 +1,42 @@
-"use client";
+"use client"
 
-import * as z from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
+import * as z from "zod"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useForm } from "react-hook-form"
 
-import { useState, useTransition, useEffect } from "react";
-import { useSession } from "next-auth/react";
-import { useCurrentUser } from "@/hooks/use-current-user";
+import { useState, useTransition, useEffect } from "react"
+import { useSession } from "next-auth/react"
+import { useCurrentUser } from "@/hooks/use-current-user"
 
-import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
-import { Switch } from "@/components/ui/switch";
-import { Form, FormField, FormControl, FormItem, FormLabel, FormDescription, FormMessage } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { FormError } from "@/components/forms/form-error";
-import { FormSuccess } from "@/components/forms/form-success";
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar"
+import { Button } from "@/components/ui/button"
+import { Switch } from "@/components/ui/switch"
+import { Form, FormField, FormControl, FormItem, FormLabel, FormDescription, FormMessage } from "@/components/ui/form"
+import { Input } from "@/components/ui/input"
+import { FormError } from "@/components/forms/form-error"
+import { FormSuccess } from "@/components/forms/form-success"
 
-import { toast } from "sonner";
+import { toast } from "sonner"
 
-import { settings } from "@/actions/user-settings";
-import { UserSchema } from "@/schemas";
-import { FaUser } from "react-icons/fa";
-import { Textarea } from "../ui/textarea";
-import { getUserBackground } from "@/actions/upload";
-import { cn } from "@/lib/utils";
+import { settings } from "@/actions/user-settings"
+import { UserSchema } from "@/schemas"
+import { FaUser } from "react-icons/fa"
+import { Textarea } from "../ui/textarea"
+import { getUserBackground } from "@/actions/upload"
+import { cn } from "@/lib/utils"
 
 interface FormUserProfileProps {
-	classNames?: string;
+	classNames?: string
 }
 
 export const FormUserProfile = ({ classNames }: FormUserProfileProps) => {
-	const user = useCurrentUser();
-	const { update } = useSession();
+	const user = useCurrentUser()
+	const { update } = useSession()
 
-	const [error, setError] = useState<string | undefined>();
-	const [success, setSuccess] = useState<string | undefined>();
-	const [isPending, startTransition] = useTransition();
-	const [background, setBackground] = useState<string>();
+	const [error, setError] = useState<string | undefined>()
+	const [success, setSuccess] = useState<string | undefined>()
+	const [isPending, startTransition] = useTransition()
+	const [background, setBackground] = useState<string>()
 
 	const form = useForm<z.infer<typeof UserSchema>>({
 		resolver: zodResolver(UserSchema),
@@ -51,37 +51,37 @@ export const FormUserProfile = ({ classNames }: FormUserProfileProps) => {
 			password: undefined,
 			newPassword: undefined
 		}
-	});
+	})
 
 	const onSubmit = (values: z.infer<typeof UserSchema>) => {
 		startTransition(() => {
 			const result = settings(values)
 				.then(data => {
-					update({ name: values.name, email: values.email });
+					update({ name: values.name, email: values.email })
 					if (data.error) {
-						setError(data.error);
-						toast.error(data.error);
+						setError(data.error)
+						toast.error(data.error)
 					}
 
 					if (data.success) {
-						toast.success(data.success);
-						setSuccess(data.success);
+						toast.success(data.success)
+						setSuccess(data.success)
 					}
 				})
 				.catch(error => {
-					setError("Irgendwas ging schief - Ursache unbekannt");
-				});
-		});
-	};
+					setError("Irgendwas ging schief - Ursache unbekannt")
+				})
+		})
+	}
 
 	const getCurrentUserBackground = async () => {
-		const background = await getUserBackground();
-		console.log(background);
-	};
+		const background = await getUserBackground()
+		console.log("bg:", background)
+	}
 
 	useEffect(() => {
-		getCurrentUserBackground();
-	});
+		getCurrentUserBackground()
+	})
 
 	return (
 		<div className={classNames}>
@@ -200,5 +200,5 @@ export const FormUserProfile = ({ classNames }: FormUserProfileProps) => {
 				</form>
 			</Form>
 		</div>
-	);
-};
+	)
+}

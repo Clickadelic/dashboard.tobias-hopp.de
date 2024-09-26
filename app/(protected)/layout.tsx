@@ -5,9 +5,10 @@ interface ProtectedLayoutProps {
 	children: React.ReactNode
 }
 
-const ProtectedLayout = ({ children }: ProtectedLayoutProps) => {
+const ProtectedLayout = async ({ children }: ProtectedLayoutProps) => {
+	const userBackground = await getUserBackground()
 	return (
-		<div className="min-h-screen flex">
+		<div className="min-h-screen bg-mantis-background flex" style={{ backgroundImage: `url(${userBackground})` || "none", backgroundSize: "cover" }}>
 			<LayoutContext>{children}</LayoutContext>
 		</div>
 	)
