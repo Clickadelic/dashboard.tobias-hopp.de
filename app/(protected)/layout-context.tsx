@@ -3,6 +3,7 @@
 import { useSearchParams } from "next/navigation"
 import { useState, useEffect } from "react"
 import { useAppContext } from "@/context/app-context"
+import { useCurrentUser } from "@/hooks/use-current-user"
 
 import { SidebarNavbar } from "@/components/layout/sidebar-navbar"
 import { Cockpit } from "@/components/layout/cockpit"
@@ -17,6 +18,7 @@ interface LayoutContextProps {
 
 const LayoutContext = ({ children }: LayoutContextProps) => {
 	const { isSidebarOpen } = useAppContext()
+
 	const searchParams = useSearchParams()
 	const [isLoading, setIsLoading] = useState<boolean>(false)
 	const [results, setResults] = useState<any[]>([])

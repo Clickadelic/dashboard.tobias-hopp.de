@@ -1,5 +1,4 @@
 import LayoutContext from "./layout-context"
-import { getUserBackground } from "@/actions/upload"
 
 interface ProtectedLayoutProps {
 	children: React.ReactNode
@@ -7,7 +6,7 @@ interface ProtectedLayoutProps {
 
 const ProtectedLayout = ({ children }: ProtectedLayoutProps) => {
 	return (
-		<div className="min-h-screen flex">
+		<div className="min-h-screen bg-mantis-background flex">
 			<LayoutContext>{children}</LayoutContext>
 		</div>
 	)
