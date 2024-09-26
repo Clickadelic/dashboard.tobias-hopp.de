@@ -8,6 +8,7 @@ interface ProtectedLayoutProps {
 const ProtectedLayout = ({ children }: ProtectedLayoutProps) => {
 	const fetchPath = async () => {
 		const imagePath = await getUserBackground()
+		return imagePath
 	}
 
 	const myPath = fetchPath()
