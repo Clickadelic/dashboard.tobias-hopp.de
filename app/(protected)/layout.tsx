@@ -6,10 +6,15 @@ interface ProtectedLayoutProps {
 }
 
 const ProtectedLayout = ({ children }: ProtectedLayoutProps) => {
-	const imagePath = getUserBackground()
-	console.log("imagePath:", imagePath)
+	const fetchPath = async () => {
+		const imagePath = await getUserBackground()
+	}
+
+	const myPath = fetchPath()
+
+	console.log("imagePath:", myPath)
 	return (
-		<div className="min-h-screen flex" style={{ backgroundImage: `url(${imagePath})` }}>
+		<div className="min-h-screen flex" style={{ backgroundImage: `url(${myPath})` }}>
 			<LayoutContext>{children}</LayoutContext>
 		</div>
 	)
