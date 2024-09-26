@@ -5,10 +5,9 @@ interface ProtectedLayoutProps {
 	children: React.ReactNode
 }
 
-const imagePath = getUserBackground()
-console.log("imagePath:", imagePath)
-
 const ProtectedLayout = ({ children }: ProtectedLayoutProps) => {
+	const imagePath = getUserBackground()
+	console.log("imagePath:", imagePath)
 	return (
 		<div className="min-h-screen flex" style={{ backgroundImage: `url(${imagePath})` }}>
 			<LayoutContext>{children}</LayoutContext>
