@@ -1,16 +1,18 @@
 import Link from "next/link";
 import { slugify } from "@/lib/utils";
 import { FaArrowRightLong } from "react-icons/fa6";
+import { ProjectSchema } from "@/schemas";
+
+import { Project } from "@prisma/client";
 
 interface ProjectProps {
-	id: string;
-	title: string;
-	url: string;
-	description: string | null;
+	formClasses?: string;
+	project?: Project;
 }
 
-export const ProjectCard = ({ id, title, url, description }: ProjectProps) => {
-	const slug = slugify(title);
+export const ProjectCard = ({ formClasses, project }: ProjectProps) => {
+	const { id, title, url, description } = project || {};
+
 	return (
 		<div key={id}>
 			<div className="w-full h-auto hover:opacity-90">

@@ -26,7 +26,6 @@ interface FormProjectProps {
 }
 
 export const FormProject = ({ formClasses, project }: FormProjectProps = {}) => {
-	console.log("Child project: ", project);
 	const { status } = useSession({ required: true });
 	const [isDialogOpen, setIsDialogOpen] = useState(false);
 
@@ -35,7 +34,7 @@ export const FormProject = ({ formClasses, project }: FormProjectProps = {}) => 
 
 	const form = useForm<z.infer<typeof ProjectSchema>>({
 		resolver: zodResolver(ProjectSchema),
-		defaultValues: { title: "", url: "", description: "" }
+		defaultValues: { title: project?.title || "", url: project?.url || "", description: project?.description || "" }
 	});
 
 	const onSubmit = async (values: z.infer<typeof ProjectSchema>) => {

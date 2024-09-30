@@ -52,27 +52,9 @@ const UsersTable = () => {
 		}
 	});
 
-	const onSubmit = (email: string, values: z.infer<typeof UserSchema>) => {
-		startTransition(() => {
-			settings(values)
-				.then(data => {
-					if (data.error) {
-						setError(data.error);
-					}
-					if (data.success) {
-						update();
-						setSuccess(data.success);
-					}
-				})
-				.catch(() => {
-					setError("Irgendwas ging serverseitig schief.");
-				});
-		});
-	};
-
 	const fetchUsers = async () => {
 		setIsLoading(true);
-		const users = await getUsersWithoutPassword();
+		const users: UserWithoutPassword[] = await getUsersWithoutPassword();
 		setUsers(users);
 		setIsLoading(false);
 	};
