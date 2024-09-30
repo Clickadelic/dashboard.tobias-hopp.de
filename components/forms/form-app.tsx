@@ -23,7 +23,7 @@ export const FormApp = () => {
 	const apps = useAppsStore(state => state.apps);
 	const setApps = useAppsStore(state => state.setApps);
 	const isAppDialogOpen = useAppsStore(state => state.isAppDialogOpen);
-	const toggleAppDialog = useAppsStore(state => state.toggleAppDialog);
+	const setAppDialogOpen = useAppsStore(state => state.setAppDialogOpen);
 
 	const form = useForm<z.infer<typeof AppSchema>>({
 		resolver: zodResolver(AppSchema),
@@ -38,7 +38,7 @@ export const FormApp = () => {
 			} else if (result.success) {
 				toast.success(result.success);
 				form.reset();
-				toggleAppDialog();
+				setAppDialogOpen();
 				const newApps = await getAppsByUserId();
 				setApps(newApps);
 			}
