@@ -1,49 +1,48 @@
-"use client"
+"use client";
 
-import { useSearchParams } from "next/navigation"
-import { useState, useEffect } from "react"
-import { useAppContext } from "@/context/app-context"
-import { useCurrentUser } from "@/hooks/use-current-user"
+import { useSearchParams } from "next/navigation";
+import { useState, useEffect } from "react";
+import { useAppContext } from "@/context/app-context";
 
-import { SidebarNavbar } from "@/components/layout/sidebar-navbar"
-import { Cockpit } from "@/components/layout/cockpit"
-import { CircularMenu } from "@/components/layout/circular-menu"
+import { SidebarNavbar } from "@/components/layout/sidebar-navbar";
+import { Cockpit } from "@/components/layout/cockpit";
+import { CircularMenu } from "@/components/layout/circular-menu";
 
-import { getFullStackSearchResults } from "@/actions/search"
-import { cn } from "@/lib/utils"
+import { getFullStackSearchResults } from "@/actions/search";
+import { cn } from "@/lib/utils";
 
 interface LayoutContextProps {
-	children: React.ReactNode
+	children: React.ReactNode;
 }
 
 const LayoutContext = ({ children }: LayoutContextProps) => {
-	const { isSidebarOpen } = useAppContext()
+	const { isSidebarOpen } = useAppContext();
 
-	const searchParams = useSearchParams()
-	const [isLoading, setIsLoading] = useState<boolean>(false)
-	const [results, setResults] = useState<any[]>([])
-	const [error, setError] = useState<string | null>(null)
+	const searchParams = useSearchParams();
+	const [isLoading, setIsLoading] = useState<boolean>(false);
+	const [results, setResults] = useState<any[]>([]);
+	const [error, setError] = useState<string | null>(null);
 
-	const q = searchParams.get("q")
+	const q = searchParams.get("q");
 
 	const findQuery = async (query: string) => {
 		try {
-			const searchResults = await getFullStackSearchResults(query)
-			setResults(searchResults)
+			const searchResults = await getFullStackSearchResults(query);
+			setResults(searchResults);
 		} catch (err) {
-			console.error("Fehler bei der Suche:", err)
-			setError("Es gab ein Problem bei der Suche. Bitte versuche es später erneut.")
+			console.error("Fehler bei der Suche:", err);
+			setError("Es gab ein Problem bei der Suche. Bitte versuche es später erneut.");
 		}
-	}
+	};
 
 	useEffect(() => {
 		if (q) {
-			setIsLoading(true)
-			findQuery(q).finally(() => setIsLoading(false))
+			setIsLoading(true);
+			findQuery(q).finally(() => setIsLoading(false));
 		} else {
-			setResults([])
+			setResults([]);
 		}
-	}, [q])
+	}, [q]);
 
 	return (
 		<>
@@ -81,7 +80,7 @@ const LayoutContext = ({ children }: LayoutContextProps) => {
 			<Cockpit />
 			<CircularMenu />
 		</>
-	)
-}
+	);
+};
 
-export default LayoutContext
+export default LayoutContext;
