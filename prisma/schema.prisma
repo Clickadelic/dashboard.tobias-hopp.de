@@ -194,10 +194,10 @@ model Invitation {
     email     String
 }
 
+// TODO: CUID anstatt autoincrement
 model Systemsetting {
     id              Int      @id @default(autoincrement())
-    loginBackground String?  @default("") // URL oder Pfad zum Hintergrundbild
-    // Hier kannst du weitere Felder hinzufügen
+    loginBackground String?  @default("")
     createdAt       DateTime @default(now())
     updatedAt       DateTime @updatedAt
 }

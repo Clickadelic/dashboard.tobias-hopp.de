@@ -1,49 +1,49 @@
-"use client"
+"use client";
 
-import * as z from "zod"
-import { zodResolver } from "@hookform/resolvers/zod"
+import * as z from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 
-import { useTransition } from "react"
-import { useForm } from "react-hook-form"
-import { useAppsStore } from "@/hooks/use-apps-store"
+import { useTransition } from "react";
+import { useForm } from "react-hook-form";
+import { useAppsStore } from "@/hooks/use-apps-store";
 
-import { Input } from "@/components/ui/input"
-import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form"
-import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input";
+import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";
+import { Button } from "@/components/ui/button";
 
-import { toast } from "sonner"
+import { toast } from "sonner";
 
-import { AppSchema } from "@/schemas"
-import { addApp, getAppsByUserId } from "@/actions/app"
-import { FiPlus } from "react-icons/fi"
+import { AppSchema } from "@/schemas";
+import { addApp, getAppsByUserId } from "@/actions/app";
+import { FiPlus } from "react-icons/fi";
 
 export const FormApp = () => {
-	const [isPending, startTransition] = useTransition()
+	const [isPending, startTransition] = useTransition();
 
-	const apps = useAppsStore(state => state.apps)
-	const setApps = useAppsStore(state => state.setApps)
-	const isAppDialogOpen = useAppsStore(state => state.isAppDialogOpen)
-	const toggleAppDialog = useAppsStore(state => state.toggleAppDialog)
+	const apps = useAppsStore(state => state.apps);
+	const setApps = useAppsStore(state => state.setApps);
+	const isAppDialogOpen = useAppsStore(state => state.isAppDialogOpen);
+	const toggleAppDialog = useAppsStore(state => state.toggleAppDialog);
 
 	const form = useForm<z.infer<typeof AppSchema>>({
 		resolver: zodResolver(AppSchema),
 		defaultValues: { title: "", url: "" }
-	})
+	});
 
 	const onAdd = async (values: z.infer<typeof AppSchema>) => {
 		startTransition(async () => {
-			const result = await addApp(values)
+			const result = await addApp(values);
 			if (result.error) {
-				toast.error(result.error)
+				toast.error(result.error);
 			} else if (result.success) {
-				toast.success(result.success)
-				form.reset()
-				toggleAppDialog()
-				const newApps = await getAppsByUserId()
-				setApps(newApps)
+				toast.success(result.success);
+				form.reset();
+				toggleAppDialog();
+				const newApps = await getAppsByUserId();
+				setApps(newApps);
 			}
-		})
-	}
+		});
+	};
 
 	return (
 		<Form {...form}>
@@ -80,5 +80,5 @@ export const FormApp = () => {
 				</Button>
 			</form>
 		</Form>
-	)
-}
+	);
+};

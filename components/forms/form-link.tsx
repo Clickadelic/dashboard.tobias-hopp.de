@@ -28,7 +28,6 @@ interface FormLinkProps {
 }
 
 export const FormLink = ({ formClasses, link }: FormLinkProps = {}) => {
-	console.log("Child link: ", link);
 	const { status } = useSession({ required: true });
 	const [isDialogOpen, setIsDialogOpen] = useState(false);
 
