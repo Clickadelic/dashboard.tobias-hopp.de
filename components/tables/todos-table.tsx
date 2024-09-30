@@ -19,7 +19,7 @@ import { cn } from "@/lib/utils";
 export const TodosTable = () => {
 	const { status } = useSession({ required: true });
 	const userId = useCurrentUser()?.id;
-
+	const [isPending, startTransition] = useTransition();
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 	const [todos, setTodos] = useState<any[]>([]);
 
