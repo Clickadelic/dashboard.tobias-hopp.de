@@ -2,8 +2,6 @@ import { useState } from "react";
 import { useSession } from "next-auth/react";
 import { useAppContext } from "@/context/app-context";
 
-import { useAppsStore } from "@/hooks/use-apps-store";
-
 import { BsApp } from "react-icons/bs";
 import { BsBuildings } from "react-icons/bs";
 import { BsListCheck } from "react-icons/bs";
@@ -26,9 +24,6 @@ import { ResponsiveDialog } from "@/components/responsive-dialog";
 export const CircularMenu = () => {
 	const { status } = useSession({ required: true });
 	const [showMenu, setShowMenu] = useState<boolean>(false);
-
-	const apps = useAppsStore(state => state.apps);
-	const setApps = useAppsStore(state => state.setApps);
 
 	const { isAppDialogOpen, setAppDialogOpen } = useAppContext();
 	const { isLinkDialogOpen, setLinkDialogOpen } = useAppContext();

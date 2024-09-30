@@ -9,15 +9,6 @@ import { UserRole } from "@prisma/client";
 
 import { currentRole } from "@/lib/auth";
 
-// export const admin = async () => {
-// 	const role = await currentRole();
-
-// 	if (role === UserRole.ADMIN) {
-// 		return { success: "Server Action Admin Powers." };
-// 	}
-// 	return { error: "Keine Berechtigung für diese Aktion." };
-// };
-
 export const addBackgroundImage = async (formData: FormData) => {
 	const session = await auth();
 	const user = session?.user;
