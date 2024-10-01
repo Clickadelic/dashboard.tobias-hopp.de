@@ -1,9 +1,9 @@
 import { AppBar } from "@/components/app-bar";
 
-import { ProjectCard } from "@/components/cards/project-card";
-import { TodoCard } from "@/components/cards/todo-card";
-import { LinkCard } from "@/components/cards/link-card";
-import { NoticeCard } from "@/components/cards/notice-card";
+import { ProjectCard } from "@/components/dasboard-cards/project-card";
+import { TodoCard } from "@/components/dasboard-cards/todo-card";
+import { LinkCard } from "@/components/dasboard-cards/link-card";
+import { NoticeCard } from "@/components/dasboard-cards/notice-card";
 
 import { TodoWidget } from "@/components/widgets/todo-widget";
 import { NoticeWidget } from "@/components/widgets/notice-widget";
@@ -12,7 +12,11 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 import { Charts } from "@/components/charts";
 
+import { EmailList } from "@/components/lists/email-list";
+import { RSSFeedReader } from "@/components/rss-feed-reader";
+
 const DashboardPage = () => {
+	const feeds: string[] = ["https://feeds.feedburner.com/TechCrunch/", "https://www.smashingmagazine.com/feed/", "https://css-tricks.com/feed/"];
 	return (
 		<div className="page-wrapper pb-16">
 			<h2 className="text-md font-bold text-slate-900 mb-5">Dashboard</h2>
@@ -70,12 +74,16 @@ const DashboardPage = () => {
 				</div>
 				<div className="col-span-2 md:col-span-1">
 					<h2 className="text-md font-bold text-slate-900 mt-3 mb-5">RSS Feed</h2>
-					<div className="bg-white rounded-xl shadow-sm border p-2 md:p-4">RSS Feed Articles</div>
+					<div className="bg-white rounded-xl shadow-sm border p-2 md:p-4">
+						<RSSFeedReader />
+					</div>
 				</div>
 				<div className="col-span-2">
 					<div>
 						<h2 className="text-md font-bold text-slate-900 mt-3 mb-5">E-Mails</h2>
-						<div className="bg-white rounded-xl shadow-sm border p-2 md:p-4">E-Mail Liste</div>
+						<div className="bg-white rounded-xl shadow-sm border p-2 md:p-4">
+							<EmailList />
+						</div>
 					</div>
 				</div>
 			</div>
