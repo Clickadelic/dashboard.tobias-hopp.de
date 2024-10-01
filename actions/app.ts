@@ -12,13 +12,11 @@ export const addApp = async (values: z.infer<typeof AppSchema>) => {
 	const userId = user?.id;
 	try {
 		const validatedFields = AppSchema.safeParse(values);
-		console.log("Validated Fields:", validatedFields);
 		if (!validatedFields.success) {
 			return { error: "Ungültige Werte" };
 		}
 
 		const { title, url } = validatedFields.data;
-		console.log("Title:", title, "URL:", url);
 
 		const existingLink = await db.app.findFirst({
 			where: {
