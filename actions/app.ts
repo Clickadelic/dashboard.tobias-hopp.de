@@ -45,10 +45,16 @@ export const addApp = async (values: z.infer<typeof AppSchema>) => {
 	}
 };
 
-export const editAppById = async (id: string) => {
+export const editAppById = async (id: string, values: z.infer<typeof AppSchema>) => {
 	const session = await auth();
 	const user = session?.user;
 	const userId = user?.id;
+	const validatedFields = AppSchema.safeParse(values);
+	if (!validatedFields.success) {
+		return { error: "Ungültige Werte" };
+	}
+
+	const { title, url } = validatedFields.data;
 	try {
 		const existingApp = await db.app.findFirst({
 			where: {
