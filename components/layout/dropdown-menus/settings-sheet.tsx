@@ -4,9 +4,8 @@ import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTr
 import { GoGear } from "react-icons/go";
 import { Button } from "@/components/ui/button";
 import { FormBackgroundImageUpload } from "@/components/forms/form-bg-image-upload";
-import { FormPicker } from "@/components/forms/form-picker";
 
-export const SidebarSheet = () => {
+export const SettingsSheet = () => {
 	return (
 		<Sheet>
 			<SheetTrigger asChild>
@@ -19,11 +18,7 @@ export const SidebarSheet = () => {
 					<SheetTitle>Dashboard-Einstellungen</SheetTitle>
 					<SheetDescription>Hintergrundbild, Logo und andere Einstellungen.</SheetDescription>
 				</SheetHeader>
-				<FormBackgroundImageUpload classNames="border-2 border-slate-300 border-dashed rounded-xl p-8" />
-				<hr />
-				<br />
-				<br />
-				<FormPicker id="someid" />
+				<FormBackgroundImageUpload />
 			</SheetContent>
 		</Sheet>
 	);

@@ -1,53 +1,53 @@
-"use client"
+"use client";
 
-import { La_Belle_Aurore } from "next/font/google"
+import { La_Belle_Aurore } from "next/font/google";
 
-import { useSession } from "next-auth/react"
-import { useCurrentUser } from "@/hooks/use-current-user"
-import { useMediaQuery } from "@/hooks/use-media-query"
+import { useSession } from "next-auth/react";
+import { useCurrentUser } from "@/hooks/use-current-user";
+import { useMediaQuery } from "@/hooks/use-media-query";
 
-import Image from "next/image"
-import Link from "next/link"
-import logoSrc from "@/public/favicon.svg"
+import Image from "next/image";
+import Link from "next/link";
+import logoSrc from "@/public/favicon.svg";
 
-import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet"
-import { Skeleton } from "@/components/ui/skeleton"
+import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
+import { Skeleton } from "@/components/ui/skeleton";
 
-import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar"
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 
-import { MenuLeft } from "./menu-left"
+import { MenuLeft } from "./menu-left";
 
-import { FaUser } from "react-icons/fa"
-import { BsTextIndentRight } from "react-icons/bs"
-import { BsTextIndentLeft } from "react-icons/bs"
-import { HiMenuAlt3 } from "react-icons/hi"
+import { FaUser } from "react-icons/fa";
+import { BsTextIndentRight } from "react-icons/bs";
+import { BsTextIndentLeft } from "react-icons/bs";
+import { HiMenuAlt3 } from "react-icons/hi";
 
-import { cn } from "@/lib/utils"
-import { DEFAULT_LOGIN_REDIRECT } from "@/routes"
+import { cn } from "@/lib/utils";
+import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
 
-import { MegaMenu } from "./dropdown-menus/mega-menu"
-import { LanguagesButton } from "./dropdown-menus/languages-button"
-import { InboxButton } from "./dropdown-menus/inbox-button"
-import { NotificationsButton } from "./dropdown-menus/notifications-button"
-import { FullscreenButton } from "./dropdown-menus/fullscreen-button"
-import { SidebarSheet } from "./dropdown-menus/sidebar-sheet"
-import { ProfileDropdown } from "./dropdown-menus/profile-drowndown"
+import { MegaMenu } from "./dropdown-menus/mega-menu";
+import { LanguagesButton } from "./dropdown-menus/languages-button";
+import { InboxButton } from "./dropdown-menus/inbox-button";
+import { NotificationsButton } from "./dropdown-menus/notifications-button";
+import { FullscreenButton } from "./dropdown-menus/fullscreen-button";
+import { SettingsSheet } from "./dropdown-menus/settings-sheet";
+import { ProfileDropdown } from "./dropdown-menus/profile-drowndown";
 
-import { FullStackSearch } from "./full-stack-search"
-import { useAppContext } from "@/context/app-context"
+import { FullStackSearch } from "./full-stack-search";
+import { useAppContext } from "@/context/app-context";
 
-const laBelleAurore = La_Belle_Aurore({ subsets: ["latin"], weight: ["400"] })
+const laBelleAurore = La_Belle_Aurore({ subsets: ["latin"], weight: ["400"] });
 
 export const SidebarNavbar = () => {
-	const { status } = useSession({ required: true })
-	const user = useCurrentUser()
-	const isDesktop = useMediaQuery("(min-width: 768px)")
+	const { status } = useSession({ required: true });
+	const user = useCurrentUser();
+	const isDesktop = useMediaQuery("(min-width: 768px)");
 
-	const { isSidebarOpen, setSidebarOpen } = useAppContext()
+	const { isSidebarOpen, setSidebarOpen } = useAppContext();
 
 	const toggleSidebar = () => {
-		setSidebarOpen(!isSidebarOpen)
-	}
+		setSidebarOpen(!isSidebarOpen);
+	};
 
 	return (
 		<>
@@ -170,7 +170,7 @@ export const SidebarNavbar = () => {
 							<FullscreenButton />
 						</li>
 						<li>
-							<SidebarSheet />
+							<SettingsSheet />
 						</li>
 						<li>
 							<ProfileDropdown />
@@ -179,5 +179,5 @@ export const SidebarNavbar = () => {
 				</nav>
 			</header>
 		</>
-	)
-}
+	);
+};

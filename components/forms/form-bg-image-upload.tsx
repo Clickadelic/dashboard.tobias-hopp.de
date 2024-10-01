@@ -11,15 +11,10 @@ import Image from "next/image";
 import { useState } from "react";
 import { useCurrentUser } from "@/hooks/use-current-user";
 
-import { UserSchema } from "@/schemas";
-import { addBackgroundImage, getUserBackground } from "@/actions/upload";
+import { getUserBackground } from "@/actions/upload";
 import { cn } from "@/lib/utils";
 
-interface FormBackgroundImageUploadProps {
-	classNames?: string;
-}
-
-export const FormBackgroundImageUpload = ({ classNames }: FormBackgroundImageUploadProps) => {
+export const FormBackgroundImageUpload = () => {
 	const user = useCurrentUser();
 	const [file, setFile] = useState<File | null>(null);
 	const [preview, setPreview] = useState<string | null>(null);
@@ -63,7 +58,7 @@ export const FormBackgroundImageUpload = ({ classNames }: FormBackgroundImageUpl
 
 	return (
 		<div>
-			<form onSubmit={handleSubmit} className={cn("mb-3", classNames)}>
+			<form onSubmit={handleSubmit} className={cn("mb-3")}>
 				<input id="dropzone-file" onChange={event => setFile(event.target.files?.[0] || null)} type="file" />
 				<button type="submit" className="w-full bg-mantis-primary rounded-sm p-2 text-white mt-3 text-sm text-center">
 					{inProgress ? "...uploading" : "Hintergrundbild hochladen"}
@@ -72,12 +67,6 @@ export const FormBackgroundImageUpload = ({ classNames }: FormBackgroundImageUpl
 			{preview && (
 				<div className="border flex items-center rounded-xl p-2 bg-slate-200">
 					<Image src={preview} width={240} height={160} className="w-full rounded-lg" alt="Upload Vorschau" />
-				</div>
-			)}
-			{user?.backgroundImage && (
-				<div className="border flex items-center rounded-xl p-2 bg-slate-200">
-					<button>asd</button>
-					<Image src={user?.backgroundImage || ""} width={240} height={160} className="w-full rounded-xl" alt="Aktuelles Hintergrundbild" />
 				</div>
 			)}
 		</div>

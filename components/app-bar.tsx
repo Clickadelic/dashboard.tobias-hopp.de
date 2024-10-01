@@ -1,10 +1,9 @@
 "use client";
-import z from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
 
 import { useState, useEffect, useTransition } from "react";
 import { useSession } from "next-auth/react";
 import { useAppsStore } from "@/hooks/use-apps-store";
+import { useAppContext } from "@/context/app-context";
 
 import Image from "next/image";
 import Link from "next/link";
@@ -20,7 +19,6 @@ import { AiOutlineEdit } from "react-icons/ai";
 
 import { getAppsByUserId, deleteAppById, editAppById } from "@/actions/app";
 
-import { AppSchema } from "@/schemas";
 import { getFavicon } from "@/lib/utils";
 
 export const AppBar = () => {
@@ -29,8 +27,8 @@ export const AppBar = () => {
 	const [isPending, startTransition] = useTransition();
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 
-	const isAppDialogOpen = useAppsStore(state => state.isAppDialogOpen);
-	const setAppDialogOpen = useAppsStore(state => state.setAppDialogOpen);
+	const { isAppDialogOpen, setAppDialogOpen } = useAppContext();
+
 	const apps = useAppsStore(state => state.apps);
 	const setApps = useAppsStore(state => state.setApps);
 
@@ -49,9 +47,8 @@ export const AppBar = () => {
 		setIsLoading(false);
 	}, []);
 
-	const onPrepareEdit = async (id: string) => {
-		setAppDialogOpen();
-		console.log(id);
+	const onEdit = async (id: string) => {
+		setAppDialogOpen(true);
 	};
 
 	const onDelete = async (id: string) => {
@@ -107,7 +104,7 @@ export const AppBar = () => {
 									<DropdownMenuItem>
 										<button
 											onClick={() => {
-												onPrepareEdit(app.id);
+												onEdit(app.id);
 											}}
 											className="flex justify-between"
 										>

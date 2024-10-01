@@ -6,24 +6,30 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { useAppsStore } from "@/hooks/use-apps-store";
+import { useAppContext } from "@/context/app-context";
 
+import { AppSchema } from "@/schemas";
+import { App } from "@prisma/client";
 import { Input } from "@/components/ui/input";
 import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
 
 import { toast } from "sonner";
 
-import { AppSchema } from "@/schemas";
 import { addApp, getAppsByUserId } from "@/actions/app";
 import { FiPlus } from "react-icons/fi";
 
-export const FormApp = () => {
+interface FormAppProps {
+	app?: App;
+}
+
+export const FormApp = ({ app }: FormAppProps = {}) => {
 	const [isPending, startTransition] = useTransition();
 
 	const apps = useAppsStore(state => state.apps);
 	const setApps = useAppsStore(state => state.setApps);
-	const isAppDialogOpen = useAppsStore(state => state.isAppDialogOpen);
-	const setAppDialogOpen = useAppsStore(state => state.setAppDialogOpen);
+
+	const { isAppDialogOpen, setAppDialogOpen } = useAppContext();
 
 	const form = useForm<z.infer<typeof AppSchema>>({
 		resolver: zodResolver(AppSchema),
@@ -38,7 +44,7 @@ export const FormApp = () => {
 			} else if (result.success) {
 				toast.success(result.success);
 				form.reset();
-				setAppDialogOpen();
+				setAppDialogOpen(false);
 				const newApps = await getAppsByUserId();
 				setApps(newApps);
 			}
