@@ -5,7 +5,7 @@ import Parser from "rss-parser";
 interface FeedItem {
 	title: string;
 	link: string;
-	contentSnippet: string;
+	// contentSnippet: string;
 	pubDate?: string;
 	creator?: string;
 }
@@ -22,7 +22,7 @@ export async function GET() {
 			const parsedItems = feed.items.map(item => ({
 				title: item.title || "Kein Titel",
 				link: item.link || "#",
-				contentSnippet: item.contentSnippet || "",
+				// contentSnippet: item.contentSnippet || "",
 				pubDate: item.pubDate,
 				creator: item.creator
 			}));

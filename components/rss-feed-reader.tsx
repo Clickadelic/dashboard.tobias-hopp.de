@@ -16,8 +16,9 @@ export const RSSFeedReader = () => {
 	useEffect(() => {
 		const loadFeeds = async () => {
 			try {
-				const response = await fetch("/api/rss"); // Abruf der serverseitigen API
+				const response = await fetch("/api/rss-feed"); // Abruf der serverseitigen API
 				const data: FeedItem[] = await response.json();
+				data.length = 5;
 				setItems(data);
 			} catch (error) {
 				console.error("Fehler beim Laden der Feeds:", error);
@@ -28,18 +29,17 @@ export const RSSFeedReader = () => {
 	}, []);
 
 	return (
-		<div>
-			<h1>Web-Entwicklung RSS-Feeds</h1>
-			<ul>
+		<div className="pl-4">
+			<ol className="list-decimal">
 				{items.map((item, index) => (
 					<li key={index}>
-						<a href={item.link} target="_blank" rel="noopener noreferrer">
+						<a href={item.link} className="text-slate-700 text-md hover:cursor-pointer hover:text-mantis-primary" target="_blank" rel="noopener noreferrer">
 							{item.title}
 						</a>
 						<p>{item.contentSnippet}</p>
 					</li>
 				))}
-			</ul>
+			</ol>
 		</div>
 	);
 };
