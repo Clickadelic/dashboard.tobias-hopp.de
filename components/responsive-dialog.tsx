@@ -3,9 +3,7 @@ import * as React from "react";
 import { useMediaQuery } from "@/hooks/use-media-query";
 
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { Drawer, DrawerClose, DrawerContent, DrawerFooter, DrawerHeader, DrawerTitle } from "@/components/ui/drawer";
-import { Button } from "@/components/ui/button";
-import { DialogClose } from "@radix-ui/react-dialog";
+import { Drawer, DrawerContent, DrawerHeader, DrawerTitle } from "@/components/ui/drawer";
 
 interface ResponsiveDialogProps {
 	icon: React.ReactNode;
@@ -16,7 +14,7 @@ interface ResponsiveDialogProps {
 	children: React.ReactNode;
 }
 
-export const ResponsiveDialog = ({ children, isOpen, setIsOpen, title, description, icon }: ResponsiveDialogProps) => {
+export const ResponsiveDialog = ({ icon, title, description, isOpen, setIsOpen, children }: ResponsiveDialogProps) => {
 	const isDesktop = useMediaQuery("(min-width: 768px)");
 
 	if (isDesktop) {
@@ -31,11 +29,6 @@ export const ResponsiveDialog = ({ children, isOpen, setIsOpen, title, descripti
 						{description && <DialogDescription>{description}</DialogDescription>}
 					</DialogHeader>
 					{children}
-					<DialogClose>
-						<Button variant="outline" className="w-full">
-							abbrechen
-						</Button>
-					</DialogClose>
 				</DialogContent>
 			</Dialog>
 		);
@@ -49,11 +42,6 @@ export const ResponsiveDialog = ({ children, isOpen, setIsOpen, title, descripti
 					{description && <DialogDescription>{description}</DialogDescription>}
 				</DrawerHeader>
 				{children}
-				<DrawerFooter className="pt-2">
-					<DrawerClose asChild>
-						<Button variant="outline">abbrechen</Button>
-					</DrawerClose>
-				</DrawerFooter>
 			</DrawerContent>
 		</Drawer>
 	);
