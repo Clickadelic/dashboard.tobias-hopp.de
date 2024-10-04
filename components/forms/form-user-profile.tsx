@@ -22,7 +22,7 @@ import { settings } from "@/actions/user-settings"
 import { UserSchema } from "@/schemas"
 import { FaUser } from "react-icons/fa"
 import { Textarea } from "../ui/textarea"
-import { getUserBackground } from "@/actions/upload"
+import { getUserBackground } from "@/actions/user"
 import { cn } from "@/lib/utils"
 
 interface FormUserProfileProps {
