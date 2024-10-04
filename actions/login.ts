@@ -55,7 +55,6 @@ export const login = async (values: z.infer<typeof LoginSchema>, callbackUrl: st
 			})
 
 			const existingConfirmation = await getTwoFactorConfirmationByUserId(existingUser.id)
-			console.log(existingConfirmation)
 
 			if (existingConfirmation) {
 				await db.twoFactorConfirmation.delete({

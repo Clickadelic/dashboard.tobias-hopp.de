@@ -20,31 +20,8 @@ export const addBackgroundImage = async (formData: FormData) => {
 	const blob = await put(imageFile.name, imageFile, {
 		access: "public"
 	})
-	console.log(blob)
 
 	revalidatePath("/")
 
 	return blob
-}
-
-export const getUserBackground = async () => {
-	const session = await auth()
-	const user = session?.user
-	const userId = user?.id
-	try {
-		const userBackground = await db.user.findUnique({
-			where: {
-				id: userId
-			},
-			select: {
-				backgroundImage: true
-			}
-		})
-
-		if (!userBackground) return { error: "No background found" }
-
-		return userBackground
-	} catch (error) {
-		return { error: "Ein Fehler ist aufgetreten." }
-	}
 }

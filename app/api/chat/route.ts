@@ -2,7 +2,6 @@ import { NextRequest, NextResponse } from "next/server"
 
 export async function POST(req: NextRequest) {
 	const { prompt } = await req.json()
-	console.log(prompt)
 
 	try {
 		const response = await fetch("https://api.openai.com/v1/engines/davinci-codex/completions", {

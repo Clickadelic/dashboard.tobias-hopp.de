@@ -15,6 +15,7 @@ import { getLinksByUserId } from "@/actions/link"
 
 export function Charts() {
 	const [isLoading, setIsLoading] = useState<boolean>(false)
+
 	const [projectCount, setProjectCount] = useState<Project[]>([])
 	const [noticeCount, setNoticeCount] = useState<Notice[]>([])
 	const [todoCount, setTodoCount] = useState<Todo[]>([])
@@ -32,7 +33,7 @@ export function Charts() {
 			const linkResults = await getLinksByUserId()
 			setLinkCount(linkResults)
 		} catch (error) {
-			console.log(error)
+			console.error(error)
 		}
 		setIsLoading(false)
 	}
