@@ -1,6 +1,5 @@
 import { getUsersWithoutPassword } from "@/actions/user"
 import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar"
-import { FaUser } from "react-icons/fa"
 import Image from "next/image"
 
 export const UserList = async () => {

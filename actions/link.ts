@@ -49,7 +49,6 @@ export const addLink = async (values: z.infer<typeof LinkSchema>) => {
 export const editLinkById = async (id: string, values: z.infer<typeof LinkSchema>) => {
 	try {
 		const validatedFields = LinkSchema.safeParse(values)
-		console.log("Validated Fields:", validatedFields)
 		if (!validatedFields.success) {
 			return { error: "Ungültige Felder!" }
 		}

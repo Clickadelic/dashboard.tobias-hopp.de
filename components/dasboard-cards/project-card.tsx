@@ -2,6 +2,7 @@
 
 import { useTransition, useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
+import { useProjectsStore } from "@/hooks/use-projects-store";
 
 import Link from "next/link";
 
@@ -15,14 +16,16 @@ import { BsBuildings } from "react-icons/bs";
 export const ProjectCard = () => {
 	const { status } = useSession({ required: true });
 	const [isLoading, setIsLoading] = useState<boolean>(false);
-	const [projects, setProjects] = useState<any[]>([]);
-	const [latestProject, setLatestProject] = useState<Project | null>(null);
+
+	const projects = useProjectsStore<Project[]>(state => state.projects);
+	const latestProject = useProjectsStore<Project>(state => state.projects[0]);
+	const setProjects = useProjectsStore(state => state.setProjects);
+
 	const fetchProjects = async () => {
 		setIsLoading(true);
 		try {
 			const response = await getProjectsByUserId();
 			setProjects(response);
-			setLatestProject(response[0]);
 		} catch (error) {
 			console.error("Error fetching links:", error);
 			toast.error("Failed to fetch links.");
@@ -37,8 +40,8 @@ export const ProjectCard = () => {
 	}, []);
 
 	return (
-		<div className="bg-white rounded-xl shadow-sm border p-4">
-			<h2 className="flex justify-between text-xs md:text-sm mb-2">
+		<div className="p-4 bg-white border shadow-sm rounded-xl">
+			<h2 className="flex justify-between mb-2 text-xs md:text-sm">
 				<Link href="/projekte" className="text-slate-900 hover:text-slate-700 hover:underline" title="Zur Projektübersicht">
 					Projekte
 				</Link>
@@ -55,7 +58,7 @@ export const ProjectCard = () => {
 						</>
 					)}
 				</span>
-				<span className="text-sm font-normal mt-1">{status === "loading" || isLoading ? <Skeleton className="mt-[-3px] w-12 h-4 bg-primary/10 animate-pulse" /> : latestProject?.title}</span>
+				<span className="mt-1 text-sm font-normal">{status === "loading" || isLoading ? <Skeleton className="mt-[-3px] w-12 h-4 bg-primary/10 animate-pulse" /> : latestProject?.title}</span>
 			</h3>
 		</div>
 	);
