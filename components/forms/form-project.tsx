@@ -93,7 +93,7 @@ export const FormProject = ({ formClasses, project }: FormProjectProps = {}) => 
 					)}
 				/>
 				<Button disabled={isPending} variant="primary" type="submit" className="w-full rounded-sm">
-					<FiPlus className="inline text-white mr-2" />
+					<FiPlus className="inline mr-2 text-white" />
 					Projekt hinzufügen
 				</Button>
 			</form>

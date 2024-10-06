@@ -1,42 +1,55 @@
-"use client"
+"use client";
 
-import { type ChartConfig } from "@/components/ui/chart"
+import { type ChartConfig } from "@/components/ui/chart";
 
-import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart"
-import { BarChart, Bar, CartesianGrid, XAxis } from "recharts"
+import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
+import { BarChart, Bar, CartesianGrid, XAxis } from "recharts";
 
-import { useState, useEffect } from "react"
+import { useState, useEffect } from "react";
 
-import { Project, Notice, Todo, Link } from "@prisma/client"
-import { getProjectsByUserId } from "@/actions/project"
-import { getNoticesByUserId } from "@/actions/notice"
-import { getTodosByUserId } from "@/actions/todo"
-import { getLinksByUserId } from "@/actions/link"
+import { Project, Notice, Todo, Link } from "@prisma/client";
+
+import { getProjectsByUserId } from "@/actions/project";
+import { getNoticesByUserId } from "@/actions/notice";
+import { getTodosByUserId } from "@/actions/todo";
+import { getLinksByUserId } from "@/actions/link";
+
+import { useTodosStore } from "@/hooks/use-todos-store";
+import { useProjectsStore } from "@/hooks/use-projects-store";
+import { useNoticesStore } from "@/hooks/use-notices-store";
+import { useLinksStore } from "@/hooks/use-links-store";
 
 export function Charts() {
-	const [isLoading, setIsLoading] = useState<boolean>(false)
+	const [isLoading, setIsLoading] = useState<boolean>(false);
 
-	const [projectCount, setProjectCount] = useState<Project[]>([])
-	const [noticeCount, setNoticeCount] = useState<Notice[]>([])
-	const [todoCount, setTodoCount] = useState<Todo[]>([])
-	const [linkCount, setLinkCount] = useState<Link[]>([])
+	const projectCount = useProjectsStore<Project[]>(state => state.projects);
+	const setProjectCount = useProjectsStore(state => state.setProjects);
+
+	const noticeCount = useNoticesStore<Notice[]>(state => state.notices);
+	const setNoticeCount = useNoticesStore(state => state.setNotices);
+
+	const todoCount = useTodosStore<Todo[]>(state => state.todos);
+	const setTodoCount = useTodosStore(state => state.setTodos);
+
+	const linkCount = useLinksStore<Link[]>(state => state.links);
+	const setLinkCount = useLinksStore(state => state.setLinks);
 
 	const getChartData = async () => {
-		setIsLoading(true)
+		setIsLoading(true);
 		try {
-			const projectResults = await getProjectsByUserId()
-			setProjectCount(projectResults)
-			const noticeResults = await getNoticesByUserId()
-			setNoticeCount(noticeResults)
-			const todoResults = await getTodosByUserId()
-			setTodoCount(todoResults)
-			const linkResults = await getLinksByUserId()
-			setLinkCount(linkResults)
+			const projectResults = await getProjectsByUserId();
+			setProjectCount(projectResults);
+			const noticeResults = await getNoticesByUserId();
+			setNoticeCount(noticeResults);
+			const todoResults = await getTodosByUserId();
+			setTodoCount(todoResults);
+			const linkResults = await getLinksByUserId();
+			setLinkCount(linkResults);
 		} catch (error) {
-			console.error(error)
+			console.error(error);
 		}
-		setIsLoading(false)
-	}
+		setIsLoading(false);
+	};
 
 	const chartData = [
 		{
@@ -55,52 +68,32 @@ export function Charts() {
 			name: "Links",
 			links: linkCount.length
 		}
-	]
-
-	// const chartData = [
-	// 	{ month: "January", desktop: 186, mobile: 80 },
-	// 	{ month: "February", desktop: 305, mobile: 200 },
-	// 	{ month: "March", desktop: 237, mobile: 120 },
-	// 	{ month: "April", desktop: 73, mobile: 190 },
-	// 	{ month: "May", desktop: 209, mobile: 130 },
-	// 	{ month: "June", desktop: 214, mobile: 140 }
-	// ]
-
-	// const chartConfig = {
-	// 	desktop: {
-	// 		label: "Desktop",
-	// 		color: "#2563eb"
-	// 	},
-	// 	mobile: {
-	// 		label: "Mobile",
-	// 		color: "#60a5fa"
-	// 	}
-	// } satisfies ChartConfig
+	];
 
 	const chartConfig = {
 		projects: {
 			label: "Projekte",
 			color: "#1677ff"
 		},
-		notices: {
-			label: "Notizen",
-			color: "#1677ff"
-		},
 		todos: {
 			label: "Todos",
+			color: "#1677ff"
+		},
+		notices: {
+			label: "Notizen",
 			color: "#1677ff"
 		},
 		links: {
 			label: "Links",
 			color: "#1677ff"
 		}
-	} satisfies ChartConfig
+	} satisfies ChartConfig;
 
 	useEffect(() => {
-		setIsLoading(true)
-		getChartData()
-		setIsLoading(false)
-	}, [])
+		setIsLoading(true);
+		getChartData();
+		setIsLoading(false);
+	}, []);
 	return (
 		<ChartContainer config={chartConfig} className="min-h-[200px] flex justify-start items-start">
 			<BarChart accessibilityLayer data={chartData}>
@@ -113,5 +106,5 @@ export function Charts() {
 				<Bar dataKey="links" fill="var(--color-links)" radius={4} />
 			</BarChart>
 		</ChartContainer>
-	)
+	);
 }
