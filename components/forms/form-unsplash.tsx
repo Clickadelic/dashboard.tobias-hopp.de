@@ -1,35 +1,35 @@
-import { unsplash } from "@/lib/unsplash"
-import { useState, useEffect } from "react"
-import Image from "next/image"
-import { defaultImages } from "@/config/images"
+import { unsplash } from "@/lib/unsplash";
+import { useState, useEffect } from "react";
+import Image from "next/image";
+import { defaultImages } from "@/config/images";
 
 export const FormUnsplash = () => {
-	const [images, setImages] = useState<Array<Record<string, any>>>([])
-	const [isLoading, setIsLoading] = useState(true)
+	const [images, setImages] = useState<Array<Record<string, any>>>([]);
+	const [isLoading, setIsLoading] = useState(true);
 
 	const fetchImages = async () => {
 		try {
 			const result = await unsplash.photos.getRandom({
 				collectionIds: ["317099"],
 				count: 9
-			})
+			});
 			if (result && result.response) {
-				const newImages = result.response as Array<Record<string, any>>
-				setImages(newImages)
+				const newImages = result.response as Array<Record<string, any>>;
+				setImages(newImages);
 			} else {
-				console.log("Error: failed to load images")
+				console.error("Error: failed to load images");
 			}
 		} catch (error) {
-			console.error(error)
-			setImages([defaultImages])
+			console.error(error);
+			setImages([defaultImages]);
 		} finally {
-			setIsLoading(false)
+			setIsLoading(false);
 		}
-	}
+	};
 
 	useEffect(() => {
-		fetchImages()
-	}, [])
+		fetchImages();
+	}, []);
 
 	return (
 		<div className="relative">
@@ -41,5 +41,5 @@ export const FormUnsplash = () => {
 				))}
 			</div>
 		</div>
-	)
-}
+	);
+};

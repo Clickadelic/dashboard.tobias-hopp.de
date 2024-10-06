@@ -9,7 +9,7 @@ import { UserRole } from "@prisma/client";
 
 import { currentRole } from "@/lib/auth";
 
-export const addBackgroundImage = async (formData: FormData) => {
+export const addLoginBackgroundImage = async (formData: FormData) => {
 	const session = await auth();
 	const user = session?.user;
 	const userId = user?.id;
@@ -51,7 +51,7 @@ export const addBackgroundImage = async (formData: FormData) => {
 	return { error: "Keine Berechtigung für diese Aktion." };
 };
 
-export const loadLoginBackground = async () => {
+export const loadLoginBackgroundImage = async () => {
 	const background = await db.systemsetting.findFirst({
 		where: {
 			loginBackground: {
