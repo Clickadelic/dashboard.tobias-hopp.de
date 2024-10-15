@@ -1,31 +1,19 @@
-import LayoutContext from "./layout-context"
+import LayoutContext from "./layout-context";
 
-import { auth } from "@/auth"
+import { auth } from "@/auth";
 
-import { getUserBackground } from "@/actions/user"
+import { getUserBackground } from "@/actions/user";
 
 interface ProtectedLayoutProps {
-	children: React.ReactNode
-}
-
-const getCurrentUserBackground = async () => {
-	const session = await auth()
-	const user = session?.user
-	const userId = user?.id
-	const currentUserBackground = getUserBackground()
-	return currentUserBackground
+	children: React.ReactNode;
 }
 
 const ProtectedLayout = ({ children }: ProtectedLayoutProps) => {
-	const test = getCurrentUserBackground()
-
-	console.log("ProtectedLayout", test)
-
 	return (
-		<div className="min-h-screen bg-mantis-background flex">
+		<div className="flex min-h-screen bg-mantis-background">
 			<LayoutContext>{children}</LayoutContext>
 		</div>
-	)
-}
+	);
+};
 
-export default ProtectedLayout
+export default ProtectedLayout;

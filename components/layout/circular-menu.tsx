@@ -1,35 +1,35 @@
-import { useState } from "react";
-import { useSession } from "next-auth/react";
-import { useAppContext } from "@/context/app-context";
+import { useState } from "react"
+import { useSession } from "next-auth/react"
+import { useAppContext } from "@/context/app-context"
 
-import { BsApp } from "react-icons/bs";
-import { BsBuildings } from "react-icons/bs";
-import { BsListCheck } from "react-icons/bs";
-import { CiEdit } from "react-icons/ci";
-import { GoLink } from "react-icons/go";
-import { FiPlus } from "react-icons/fi";
+import { BsApp } from "react-icons/bs"
+import { BsBuildings } from "react-icons/bs"
+import { BsListCheck } from "react-icons/bs"
+import { CiEdit } from "react-icons/ci"
+import { GoLink } from "react-icons/go"
+import { FiPlus } from "react-icons/fi"
 
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger, TooltipArrow } from "@/components/ui/tooltip";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger, TooltipArrow } from "@/components/ui/tooltip"
 
-import { FormApp } from "@/components/forms/form-app";
-import { FormProject } from "@/components/forms/form-project";
-import { FormNotice } from "@/components/forms/form-notice";
-import { FormTodo } from "@/components/forms/form-todo";
-import { FormLink } from "@/components/forms/form-link";
+import { FormApp } from "@/components/forms/form-app"
+import { FormProject } from "@/components/forms/form-project"
+import { FormNotice } from "@/components/forms/form-notice"
+import { FormTodo } from "@/components/forms/form-todo"
+import { FormLink } from "@/components/forms/form-link"
 
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/utils"
 
-import { ResponsiveDialog } from "@/components/responsive-dialog";
+import { ResponsiveDialog } from "@/components/responsive-dialog"
 
 export const CircularMenu = () => {
-	const { status } = useSession({ required: true });
-	const [showMenu, setShowMenu] = useState<boolean>(false);
+	const { status } = useSession({ required: true })
+	const [showMenu, setShowMenu] = useState<boolean>(false)
 
-	const { isAppDialogOpen, setAppDialogOpen } = useAppContext();
-	const { isLinkDialogOpen, setLinkDialogOpen } = useAppContext();
-	const { isTodoDialogOpen, setTodoDialogOpen } = useAppContext();
-	const { isNoticeDialogOpen, setNoticeDialogOpen } = useAppContext();
-	const { isProjectDialogOpen, setProjectDialogOpen } = useAppContext();
+	const { isAppDialogOpen, setAppDialogOpen } = useAppContext()
+	const { isLinkDialogOpen, setLinkDialogOpen } = useAppContext()
+	const { isTodoDialogOpen, setTodoDialogOpen } = useAppContext()
+	const { isNoticeDialogOpen, setNoticeDialogOpen } = useAppContext()
+	const { isProjectDialogOpen, setProjectDialogOpen } = useAppContext()
 
 	return (
 		<div className="fixed right-4 bottom-4 md:bottom-8 md:right-8 max-w-12 shadow-sm">
@@ -129,5 +129,5 @@ export const CircularMenu = () => {
 				</Tooltip>
 			</TooltipProvider>
 		</div>
-	);
-};
+	)
+}
