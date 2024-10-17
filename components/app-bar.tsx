@@ -35,17 +35,20 @@ export const AppBar = () => {
 	const apps = useAppsStore(state => state.apps)
 	const setApps = useAppsStore(state => state.setApps)
 
+	const fetchApps = async () => {
+		try {
+			const response = await getAppsByUserId()
+			setApps(response)
+		} catch (error) {
+			toast.error("Fehler beim Laden der Apps.")
+		}
+	}
+
 	useEffect(() => {
 		setIsLoading(true)
-		const fetchApps = async () => {
-			try {
-				const response = await getAppsByUserId()
-				setApps(response)
-			} catch (error) {
-				toast.error("Fehler beim Laden der Apps.")
-			}
-		}
+		fetchApps()
 		setIsLoading(false)
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [])
 
 	const onDelete = async (id: string) => {
