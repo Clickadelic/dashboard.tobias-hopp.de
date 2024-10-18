@@ -1,67 +1,71 @@
-"use client"
+"use client";
 
-import Image from "next/image"
-import Link from "next/link"
+import Image from "next/image";
+import Link from "next/link";
 
-import { useState, useEffect, useTransition } from "react"
-import { useSession } from "next-auth/react"
-import { useAppsStore } from "@/hooks/use-apps-store"
-import { useAppContext } from "@/context/app-context"
+import { useState, useEffect, useTransition } from "react";
+import { useSession } from "next-auth/react";
+import { useAppsStore } from "@/hooks/use-apps-store";
 
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
-import { Skeleton } from "@/components/ui/skeleton"
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { Skeleton } from "@/components/ui/skeleton";
 
-import { toast } from "sonner"
+import { toast } from "sonner";
 
-import { HiOutlineDotsVertical } from "react-icons/hi"
-import { BsTrash } from "react-icons/bs"
-import { AiOutlineEdit } from "react-icons/ai"
-import { BsApp } from "react-icons/bs"
+import { HiOutlineDotsVertical } from "react-icons/hi";
+import { BsTrash } from "react-icons/bs";
+import { AiOutlineEdit } from "react-icons/ai";
 
-import { ResponsiveDialog } from "./responsive-dialog"
-
-import { getAppsByUserId, deleteAppById, editAppById } from "@/actions/app"
-import { getFavicon } from "@/lib/utils"
-import { FormApp } from "./forms/form-app"
+import { getAppsByUserId, deleteAppById, editAppById } from "@/actions/app";
+import { getFavicon } from "@/lib/utils";
 
 export const AppBar = () => {
-	const { status } = useSession({ required: true })
+	const { status } = useSession({ required: true });
 
-	const [isPending, startTransition] = useTransition()
-	const [isLoading, setIsLoading] = useState<boolean>(false)
+	const [isPending, startTransition] = useTransition();
+	const [isLoading, setIsLoading] = useState<boolean>(false);
 
-	const [myDialog, setMyDialog] = useState<boolean>(false)
+	const apps = useAppsStore(state => state.apps);
+	const setApps = useAppsStore(state => state.setApps);
 
-	const apps = useAppsStore(state => state.apps)
-	const setApps = useAppsStore(state => state.setApps)
+	const isAppDialogOpen = useAppsStore(state => state.isAppDialogOpen);
+	const toggleAppDialogOpen = useAppsStore(state => state.toggleAppDialogOpen);
+
+	const isAppEditing = useAppsStore(state => state.isAppEditing);
+	const toggleIsAppEditing = useAppsStore(state => state.toggleIsAppEditing);
 
 	const fetchApps = async () => {
 		try {
-			const response = await getAppsByUserId()
-			setApps(response)
+			const response = await getAppsByUserId();
+			setApps(response);
 		} catch (error) {
-			toast.error("Fehler beim Laden der Apps.")
+			toast.error("Fehler beim Laden der Apps.");
 		}
-	}
+	};
 
 	useEffect(() => {
-		setIsLoading(true)
-		fetchApps()
-		setIsLoading(false)
+		setIsLoading(true);
+		fetchApps();
+		setIsLoading(false);
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [])
+	}, []);
 
 	const onDelete = async (id: string) => {
 		startTransition(async () => {
-			const result = await deleteAppById(id)
+			const result = await deleteAppById(id);
 			if (result.error) {
-				toast.error(result.error)
+				toast.error(result.error);
 			} else if (result.success) {
-				toast.success(result.success)
-				fetchApps()
+				toast.success(result.success);
+				fetchApps();
 			}
-		})
-	}
+		});
+	};
+
+	const onEdit = async (id: string) => {
+		toggleAppDialogOpen();
+		toggleIsAppEditing();
+	};
 
 	return (
 		<div className="w-full mb-8">
@@ -76,7 +80,7 @@ export const AppBar = () => {
 							<Image src={getFavicon(app.url, 24) || ""} alt={app.title} width={24} height={24} className="mb-2 rounded-full" />
 							<span className="hidden text-xs md:inline-block text-slate-900">{app.title}</span>
 						</Link>
-						<DropdownMenu>
+						<DropdownMenu modal={false}>
 							<DropdownMenuTrigger asChild>
 								<button className="absolute top-1 right-[2px] text-slate-500 hover:text-slate-900">
 									<HiOutlineDotsVertical className="size-5" />
@@ -84,7 +88,7 @@ export const AppBar = () => {
 							</DropdownMenuTrigger>
 							<DropdownMenuContent side="right" align="start">
 								<DropdownMenuItem>
-									<button onClick={() => setMyDialog(true)} className="flex justify-between">
+									<button onClick={() => onEdit(app.id)} className="flex justify-between">
 										<AiOutlineEdit className="mt-1 mr-2" />
 										bearbeiten
 									</button>
@@ -96,15 +100,12 @@ export const AppBar = () => {
 								</DropdownMenuItem>
 							</DropdownMenuContent>
 						</DropdownMenu>
-						<ResponsiveDialog isOpen={myDialog} setIsOpen={setMyDialog} title="App bearbeiten" description="Bearbeite die App" icon={<BsApp />}>
-							<FormApp />
-						</ResponsiveDialog>
 					</div>
 				))}
 			</div>
 		</div>
-	)
-}
+	);
+};
 
 AppBar.Skeleton = function AppBarSkeleton() {
 	return (
@@ -125,5 +126,5 @@ AppBar.Skeleton = function AppBarSkeleton() {
 			<Skeleton className="size-[36px] md:size-[72px] relative flex flex-col justify-center place-content-center bg-primary/10 shadow-sm border backdrop-blur hover:bg-primary/30 rounded-xl" />
 			<Skeleton className="size-[36px] md:size-[72px] relative flex flex-col justify-center place-content-center bg-primary/10 shadow-sm border backdrop-blur hover:bg-primary/30 rounded-xl" />
 		</>
-	)
-}
+	);
+};

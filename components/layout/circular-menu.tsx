@@ -1,35 +1,39 @@
-import { useState } from "react"
-import { useSession } from "next-auth/react"
-import { useAppContext } from "@/context/app-context"
+import { useState } from "react";
+import { useAppContext } from "@/context/app-context";
 
-import { BsApp } from "react-icons/bs"
-import { BsBuildings } from "react-icons/bs"
-import { BsListCheck } from "react-icons/bs"
-import { CiEdit } from "react-icons/ci"
-import { GoLink } from "react-icons/go"
-import { FiPlus } from "react-icons/fi"
+import { BsApp } from "react-icons/bs";
+import { BsBuildings } from "react-icons/bs";
+import { BsListCheck } from "react-icons/bs";
+import { CiEdit } from "react-icons/ci";
+import { GoLink } from "react-icons/go";
+import { FiPlus } from "react-icons/fi";
 
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger, TooltipArrow } from "@/components/ui/tooltip"
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger, TooltipArrow } from "@/components/ui/tooltip";
 
-import { FormApp } from "@/components/forms/form-app"
-import { FormProject } from "@/components/forms/form-project"
-import { FormNotice } from "@/components/forms/form-notice"
-import { FormTodo } from "@/components/forms/form-todo"
-import { FormLink } from "@/components/forms/form-link"
+import { FormApp } from "@/components/forms/form-app";
+import { FormProject } from "@/components/forms/form-project";
+import { FormNotice } from "@/components/forms/form-notice";
+import { FormTodo } from "@/components/forms/form-todo";
+import { FormLink } from "@/components/forms/form-link";
 
-import { cn } from "@/lib/utils"
+import { cn } from "@/lib/utils";
 
-import { ResponsiveDialog } from "@/components/responsive-dialog"
+import { ResponsiveDialog } from "@/components/responsive-dialog";
+import { useAppsStore } from "@/hooks/use-apps-store";
 
 export const CircularMenu = () => {
-	const { status } = useSession({ required: true })
-	const [showMenu, setShowMenu] = useState<boolean>(false)
+	const [showMenu, setShowMenu] = useState<boolean>(false);
 
-	const { isAppDialogOpen, setAppDialogOpen } = useAppContext()
-	const { isLinkDialogOpen, setLinkDialogOpen } = useAppContext()
-	const { isTodoDialogOpen, setTodoDialogOpen } = useAppContext()
-	const { isNoticeDialogOpen, setNoticeDialogOpen } = useAppContext()
-	const { isProjectDialogOpen, setProjectDialogOpen } = useAppContext()
+	const isAppDialogOpen = useAppsStore(state => state.isAppDialogOpen);
+	const toggleAppDialogOpen = useAppsStore(state => state.toggleAppDialogOpen);
+
+	const isAppEditing = useAppsStore(state => state.isAppEditing);
+	const toggleIsAppEditing = useAppsStore(state => state.toggleIsAppEditing);
+
+	const { isLinkDialogOpen, setLinkDialogOpen } = useAppContext();
+	const { isTodoDialogOpen, setTodoDialogOpen } = useAppContext();
+	const { isNoticeDialogOpen, setNoticeDialogOpen } = useAppContext();
+	const { isProjectDialogOpen, setProjectDialogOpen } = useAppContext();
 
 	return (
 		<div className="fixed right-4 bottom-4 md:bottom-8 md:right-8 max-w-12 shadow-sm">
@@ -37,7 +41,7 @@ export const CircularMenu = () => {
 				<TooltipProvider>
 					<Tooltip>
 						<TooltipTrigger asChild data-state="instant-open">
-							<button onClick={() => setAppDialogOpen(true)} className="rounded-full bg-mantis-primary hover:bg-mantis-primary/90 text-white p-3">
+							<button onClick={() => toggleAppDialogOpen()} className="rounded-full bg-mantis-primary hover:bg-mantis-primary/90 text-white p-3">
 								<BsApp />
 							</button>
 						</TooltipTrigger>
@@ -47,9 +51,20 @@ export const CircularMenu = () => {
 						</TooltipContent>
 					</Tooltip>
 				</TooltipProvider>
-				<ResponsiveDialog isOpen={isAppDialogOpen} setIsOpen={setAppDialogOpen} title="App hinzufügen" description="Füge eine App als Schnellzugriff hinzu" icon={<BsApp />}>
-					<FormApp />
+				<ResponsiveDialog
+					icon={<BsApp />}
+					title="App hinzufügen"
+					description="Füge eine App als Schnellzugriff hinzu"
+					editTitle="App bearbeiten"
+					editDescription="Ändere Titel oder Url der App"
+					isOpen={isAppDialogOpen}
+					setIsOpen={toggleAppDialogOpen}
+					isEditing={isAppEditing}
+					setIsEditing={toggleIsAppEditing}
+				>
+					<FormApp isAppEditing={isAppEditing} />
 				</ResponsiveDialog>
+
 				<TooltipProvider>
 					<Tooltip>
 						<TooltipTrigger asChild data-state="instant-open">
@@ -129,5 +144,5 @@ export const CircularMenu = () => {
 				</Tooltip>
 			</TooltipProvider>
 		</div>
-	)
-}
+	);
+};
