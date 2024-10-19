@@ -53,7 +53,7 @@ const AdminPage = () => {
 					<CardContent>
 						<Link href={"/admin/systemeinstellungen"} className="flex justify-start hover:text-mantis-primary">
 							<IoArrowForward className="mt-1 mr-2" />
-							Uploads
+							Systemeinstellungen
 						</Link>
 					</CardContent>
 				</Card>
