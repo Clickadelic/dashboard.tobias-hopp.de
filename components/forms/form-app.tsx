@@ -6,7 +6,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { useAppsStore } from "@/hooks/use-apps-store";
-import { useAppContext } from "@/context/app-context";
 
 import { AppSchema } from "@/schemas";
 import { App } from "@prisma/client";
@@ -16,20 +15,19 @@ import { Button } from "@/components/ui/button";
 
 import { toast } from "sonner";
 
-import { addApp, getAppsByUserId } from "@/actions/app";
+import { addApp, getAppsByUserId, editAppById } from "@/actions/app";
 import { FiPlus } from "react-icons/fi";
 
 interface FormAppProps {
 	app?: App;
+	isAppEditing?: boolean;
 }
 
-export const FormApp = ({ app }: FormAppProps = {}) => {
+export const FormApp = ({ isAppEditing }: FormAppProps = {}) => {
 	const [isPending, startTransition] = useTransition();
 
 	const apps = useAppsStore(state => state.apps);
 	const setApps = useAppsStore(state => state.setApps);
-
-	const { isAppDialogOpen, setAppDialogOpen } = useAppContext();
 
 	const form = useForm<z.infer<typeof AppSchema>>({
 		resolver: zodResolver(AppSchema),
@@ -44,16 +42,19 @@ export const FormApp = ({ app }: FormAppProps = {}) => {
 			} else if (result.success) {
 				toast.success(result.success);
 				form.reset();
-				setAppDialogOpen(false);
 				const newApps = await getAppsByUserId();
 				setApps(newApps);
 			}
 		});
 	};
 
+	const onEdit = async (values: z.infer<typeof AppSchema>) => {
+		console.log(values);
+	};
+
 	return (
 		<Form {...form}>
-			<form onSubmit={form.handleSubmit(onAdd)} className="space-y-2">
+			<form onSubmit={form.handleSubmit(isAppEditing ? onEdit : onAdd)} className="space-y-2">
 				<FormField
 					control={form.control}
 					name="title"
@@ -80,9 +81,9 @@ export const FormApp = ({ app }: FormAppProps = {}) => {
 						</FormItem>
 					)}
 				/>
-				<Button disabled={isPending} variant="primary" aria-label="App hinzufügen" type="submit" className="w-full rounded-sm">
+				<Button disabled={isPending} variant="primary" aria-label={isAppEditing ? "App bearbeiten" : "App hinzufugen"} type="submit" className="w-full rounded-sm">
 					<FiPlus className="inline text-white mr-2" />
-					App hinzufügen
+					{isAppEditing ? "App bearbeiten" : "App hinzufugen"}
 				</Button>
 			</form>
 		</Form>

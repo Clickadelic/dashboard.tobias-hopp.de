@@ -13,10 +13,8 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Charts } from "@/components/charts";
 
 import { EmailList } from "@/components/lists/email-list";
-import { RSSFeedReader } from "@/components/rss-feed-reader";
 
 const DashboardPage = () => {
-	const feeds: string[] = ["https://feeds.feedburner.com/TechCrunch/", "https://www.smashingmagazine.com/feed/", "https://css-tricks.com/feed/"];
 	return (
 		<div className="page-wrapper pb-16">
 			<h2 className="text-md font-bold text-slate-900 mb-5">Dashboard</h2>
@@ -73,10 +71,8 @@ const DashboardPage = () => {
 					</div>
 				</div>
 				<div className="col-span-2 md:col-span-1">
-					<h2 className="text-md font-bold text-slate-900 mt-3 mb-5">RSS Feed</h2>
-					<div className="bg-white rounded-xl shadow-sm border p-2 md:p-4">
-						<RSSFeedReader />
-					</div>
+					<h2 className="text-md font-bold text-slate-900 mt-3 mb-5">Blog</h2>
+					<div className="bg-white rounded-xl shadow-sm border p-2 md:p-4">Blogposts</div>
 				</div>
 				<div className="col-span-2">
 					<div>

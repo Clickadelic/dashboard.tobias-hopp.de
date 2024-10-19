@@ -1,7 +1,7 @@
-"use client";
-import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
-import Image from "next/image";
-import Link from "next/link";
+"use client"
+import { DEFAULT_LOGIN_REDIRECT } from "@/routes"
+import Image from "next/image"
+import Link from "next/link"
 
 const Error404Page = () => {
 	return (
@@ -13,7 +13,7 @@ const Error404Page = () => {
 				Zur Startseite
 			</Link>
 		</div>
-	);
-};
+	)
+}
 
-export default Error404Page;
+export default Error404Page

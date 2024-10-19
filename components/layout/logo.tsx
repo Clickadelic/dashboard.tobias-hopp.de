@@ -1,11 +1,11 @@
-import Image from "next/image";
-import Link from "next/link";
-import logoSrc from "@/public/favicon.svg";
-import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
-import { cn } from "@/lib/utils";
+import Image from "next/image"
+import Link from "next/link"
+import logoSrc from "@/public/favicon.svg"
+import { DEFAULT_LOGIN_REDIRECT } from "@/routes"
+import { cn } from "@/lib/utils"
 
-import { La_Belle_Aurore } from "next/font/google";
-const laBelleAurore = La_Belle_Aurore({ subsets: ["latin"], weight: ["400"] });
+import { La_Belle_Aurore } from "next/font/google"
+const laBelleAurore = La_Belle_Aurore({ subsets: ["latin"], weight: ["400"] })
 
 const Logo = () => {
 	return (
@@ -18,7 +18,7 @@ const Logo = () => {
 				</span>
 			</Link>
 		</h1>
-	);
-};
+	)
+}
 
-export default Logo;
+export default Logo
