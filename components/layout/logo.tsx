@@ -8,7 +8,6 @@ import { La_Belle_Aurore } from "next/font/google"
 const laBelleAurore = La_Belle_Aurore({ subsets: ["latin"], weight: ["400"] })
 
 const Logo = () => {
-	console.log("logo test")
 	return (
 		<h1>
 			<Link href={DEFAULT_LOGIN_REDIRECT} className="flex justify-between mt-2 text-slate-900 hover:opacity-75">
