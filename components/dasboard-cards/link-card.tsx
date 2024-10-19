@@ -1,45 +1,42 @@
-"use client";
+"use client"
 
-import Link from "next/link";
-import { useTransition, useState, useEffect } from "react";
+import Link from "next/link"
+import { useTransition, useState, useEffect } from "react"
 
-import { useSession } from "next-auth/react";
-import { useLinksStore } from "@/hooks/use-links-store";
+import { useSession } from "next-auth/react"
+import { useLinksStore } from "@/hooks/use-links-store"
 
-import { Skeleton } from "@/components/ui/skeleton";
-import { toast } from "sonner";
-import { GoLink } from "react-icons/go";
+import { Skeleton } from "@/components/ui/skeleton"
+import { toast } from "sonner"
+import { GoLink } from "react-icons/go"
 
-import { Link as Hyperlink } from "@prisma/client";
-import { getLinksByUserId } from "@/actions/link";
+import { getLinksByUserId } from "@/actions/link"
 
 // TODO: Fix broken layout shift when Loading...
 export const LinkCard = () => {
-	const { status } = useSession({ required: true });
-	const [isPending, startTransition] = useTransition();
-	const [isLoading, setIsLoading] = useState<boolean>(false);
+	const { status } = useSession({ required: true })
+	const [isPending, startTransition] = useTransition()
+	const [isLoading, setIsLoading] = useState<boolean>(false)
 
-	const links = useLinksStore(state => state.links);
-	const setLinks = useLinksStore(state => state.setLinks);
-	const latestLink = useLinksStore(state => state.links[0]);
+	const links = useLinksStore(state => state.links)
+	const setLinks = useLinksStore(state => state.setLinks)
+	const latestLink = useLinksStore(state => state.links[0])
 
 	const fetchLinks = async () => {
-		setIsLoading(true);
+		setIsLoading(true)
 		try {
-			const response = await getLinksByUserId();
-			setLinks(response);
+			const response = await getLinksByUserId()
+			setLinks(response)
 		} catch (error) {
-			toast.error("Fehler beim Laden der Links.");
+			toast.error("Fehler beim Laden der Links.")
 		} finally {
-			setIsLoading(false);
+			setIsLoading(false)
 		}
-	};
+	}
 
 	useEffect(() => {
-		setIsLoading(true);
-		fetchLinks();
-		setIsLoading(false);
-	}, []);
+		fetchLinks()
+	}, [])
 
 	return (
 		<div className="bg-white rounded-xl shadow-sm border p-4">
@@ -71,5 +68,5 @@ export const LinkCard = () => {
 				</span>
 			</h3>
 		</div>
-	);
-};
+	)
+}

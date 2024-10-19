@@ -48,6 +48,21 @@ const AdminPage = () => {
 						</Link>
 					</CardContent>
 				</Card>
+				<Card>
+					<CardHeader>
+						<CardTitle>
+							<FiUploadCloud className="size-10 mb-3" />
+							Systemeinstellungen
+						</CardTitle>
+						<CardDescription>Systemeinstellungen des Dashboards</CardDescription>
+					</CardHeader>
+					<CardContent>
+						<Link href={"/admin/systemeinstellungen"} className="flex justify-start hover:text-mantis-primary">
+							<IoArrowForward className="mt-1 mr-2" />
+							Uploads
+						</Link>
+					</CardContent>
+				</Card>
 			</div>
 		</div>
 	)
