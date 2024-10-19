@@ -4,14 +4,8 @@ import Link from "next/link"
 
 import { IoArrowForward } from "react-icons/io5"
 import { FiUsers } from "react-icons/fi"
-import { IoSpeedometerOutline } from "react-icons/io5"
-import { BsBuildings } from "react-icons/bs"
-import { BsListCheck } from "react-icons/bs"
-import { CiEdit } from "react-icons/ci"
-import { GoLink } from "react-icons/go"
-import { PiEye } from "react-icons/pi"
+
 import { FiUploadCloud } from "react-icons/fi"
-import { BsHouseGear } from "react-icons/bs"
 
 const AdminPage = () => {
 	return (
