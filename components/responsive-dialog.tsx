@@ -29,8 +29,9 @@ export const ResponsiveDialog = ({ icon, title, description, isOpen, setIsOpen, 
 				{isEditing ? (
 					<DialogContent>
 						<DialogHeader>
-							<DialogTitle>
-								<span className="inline mr-2">{icon}</span> {editTitle}
+							<DialogTitle className="flex">
+								<span className="mr-2">{icon}</span>
+								<span>{editTitle}</span>
 							</DialogTitle>
 							{editDescription && <DialogDescription>{editDescription}</DialogDescription>}
 						</DialogHeader>
@@ -39,8 +40,9 @@ export const ResponsiveDialog = ({ icon, title, description, isOpen, setIsOpen, 
 				) : (
 					<DialogContent>
 						<DialogHeader>
-							<DialogTitle>
-								{icon} {title}
+							<DialogTitle className="flex">
+								<span className="mr-2">{icon}</span>
+								<span>{title}</span>
 							</DialogTitle>
 							{description && <DialogDescription>{description}</DialogDescription>}
 						</DialogHeader>
@@ -56,8 +58,9 @@ export const ResponsiveDialog = ({ icon, title, description, isOpen, setIsOpen, 
 			{isEditing ? (
 				<DrawerContent>
 					<DrawerHeader>
-						<DrawerTitle>
-							<span className="inline mr-2">{icon}</span> {editTitle}
+						<DrawerTitle className="flex">
+							<span className="mr-2">{icon}</span>
+							<span>{editTitle}</span>
 						</DrawerTitle>
 						{editDescription && <DrawerDescription>{editDescription}</DrawerDescription>}
 					</DrawerHeader>
@@ -66,8 +69,9 @@ export const ResponsiveDialog = ({ icon, title, description, isOpen, setIsOpen, 
 			) : (
 				<DrawerContent>
 					<DrawerHeader>
-						<DrawerTitle>
-							{icon} {title}
+						<DrawerTitle className="flex">
+							<span className="mr-2">{icon}</span>
+							<span>{title}</span>
 						</DrawerTitle>
 						{description && <DrawerDescription>{description}</DrawerDescription>}
 					</DrawerHeader>
