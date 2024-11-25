@@ -1,7 +1,7 @@
 import React from "react";
 
 const NewBlogpostPage = () => {
-	return <div>Neuer Blogpost</div>;
+	return <div>Neuer Blogpost Page</div>;
 };
 
 export default NewBlogpostPage;
