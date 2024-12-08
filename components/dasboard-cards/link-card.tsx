@@ -46,21 +46,15 @@ export const LinkCard = () => {
 			</h2>
 			<h3 className="flex justify-between">
 				<span className="font-bold">
-					{status === "loading" || isLoading ? (
-						<Skeleton className="mt-3 w-8 h-4 bg-primary/10 animate-pulse" />
-					) : (
-						<>
-							<GoLink className="inline-block mr-2 mt-[-3px]" />
-							{links.length}
-						</>
-					)}
+					<GoLink className="inline-block mr-2 mt-[-3px]" />
+					{links.length}
 				</span>
-				<span>
+				<span className="text-sm font-normal mt-1">
 					{status === "loading" || isLoading ? (
-						<Skeleton className="mt-3 w-12 h-4 bg-primary/10 animate-pulse" />
+						<Skeleton className="w-12 h-4 bg-primary/10 animate-pulse" />
 					) : (
 						<Link href={latestLink?.url || "#"} className="hover:text-mantis-primary max-w-[260px] md:max-w-52 inline-flex overflow-hidden text-sm truncate ellipsis" target="_blank">
-							{latestLink?.url || "erstelle Deinen ersten Link"}
+							{latestLink?.url}
 						</Link>
 					)}
 				</span>
