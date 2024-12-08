@@ -6,7 +6,7 @@ const NavbarPublic = () => {
 	return (
 		<>
 			<header className="p-2 bg-white mb-4">
-				<div className="container-md m-auto flex justify-between">
+				<div className="container m-auto flex justify-between">
 					<Logo />
 					<nav className="flex justify-between">
 						<ul className="flex justify-between space-x-3 mr-3 mt-2">

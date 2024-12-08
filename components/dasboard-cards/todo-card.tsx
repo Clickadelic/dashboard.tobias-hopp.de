@@ -13,7 +13,6 @@ import { BsListCheck } from "react-icons/bs";
 export const TodoCard = () => {
 	const { status } = useSession({ required: true });
 	const [isLoading, setIsLoading] = useState<boolean>(false);
-
 	const todos = useTodosStore(state => state.todos);
 	const latestTodo = useTodosStore(state => state.todos[0]);
 	const setTodos = useTodosStore(state => state.setTodos);

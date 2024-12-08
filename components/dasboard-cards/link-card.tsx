@@ -1,42 +1,41 @@
-"use client"
+"use client";
 
-import Link from "next/link"
-import { useTransition, useState, useEffect } from "react"
+import { useState, useEffect } from "react";
+import { useSession } from "next-auth/react";
+import { useLinksStore } from "@/hooks/use-links-store";
 
-import { useSession } from "next-auth/react"
-import { useLinksStore } from "@/hooks/use-links-store"
+import Link from "next/link";
 
-import { Skeleton } from "@/components/ui/skeleton"
-import { toast } from "sonner"
-import { GoLink } from "react-icons/go"
+import { Skeleton } from "@/components/ui/skeleton";
+import { toast } from "sonner";
+import { GoLink } from "react-icons/go";
 
-import { getLinksByUserId } from "@/actions/link"
+import { getLinksByUserId } from "@/actions/link";
 
 // TODO: Fix broken layout shift when Loading...
 export const LinkCard = () => {
-	const { status } = useSession({ required: true })
-	const [isPending, startTransition] = useTransition()
-	const [isLoading, setIsLoading] = useState<boolean>(false)
+	const { status } = useSession({ required: true });
+	const [isLoading, setIsLoading] = useState<boolean>(false);
 
-	const links = useLinksStore(state => state.links)
-	const setLinks = useLinksStore(state => state.setLinks)
-	const latestLink = useLinksStore(state => state.links[0])
+	const links = useLinksStore(state => state.links);
+	const setLinks = useLinksStore(state => state.setLinks);
+	const latestLink = useLinksStore(state => state.links[0]);
 
 	const fetchLinks = async () => {
-		setIsLoading(true)
+		setIsLoading(true);
 		try {
-			const response = await getLinksByUserId()
-			setLinks(response)
+			const response = await getLinksByUserId();
+			setLinks(response);
 		} catch (error) {
-			toast.error("Fehler beim Laden der Links.")
+			toast.error("Fehler beim Laden der Links.");
 		} finally {
-			setIsLoading(false)
+			setIsLoading(false);
 		}
-	}
+	};
 
 	useEffect(() => {
-		fetchLinks()
-	}, [])
+		fetchLinks();
+	}, []);
 
 	return (
 		<div className="bg-white rounded-xl shadow-sm border p-4">
@@ -59,7 +58,7 @@ export const LinkCard = () => {
 				</span>
 				<span>
 					{status === "loading" || isLoading ? (
-						<Skeleton className="mt-3 mb-5 w-12 h-4 bg-primary/10 animate-pulse" />
+						<Skeleton className="mt-3 w-12 h-4 bg-primary/10 animate-pulse" />
 					) : (
 						<Link href={latestLink?.url || "#"} className="hover:text-mantis-primary max-w-[260px] md:max-w-52 inline-flex overflow-hidden text-sm truncate ellipsis" target="_blank">
 							{latestLink?.url || "erstelle Deinen ersten Link"}
@@ -68,5 +67,5 @@ export const LinkCard = () => {
 				</span>
 			</h3>
 		</div>
-	)
-}
+	);
+};

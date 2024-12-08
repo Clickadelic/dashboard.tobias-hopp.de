@@ -1,40 +1,38 @@
-"use client"
+"use client";
 
-import { useState, useEffect } from "react"
-import { useSession } from "next-auth/react"
-import { useNoticesStore } from "@/hooks/use-notices-store"
+import { useState, useEffect } from "react";
+import { useSession } from "next-auth/react";
+import { useNoticesStore } from "@/hooks/use-notices-store";
 
-import Link from "next/link"
-import { Skeleton } from "@/components/ui/skeleton"
-import { toast } from "sonner"
+import Link from "next/link";
+import { Skeleton } from "@/components/ui/skeleton";
+import { toast } from "sonner";
 
-import { CiEdit } from "react-icons/ci"
-import { getNoticesByUserId } from "@/actions/notice"
+import { CiEdit } from "react-icons/ci";
+import { getNoticesByUserId } from "@/actions/notice";
 
 export const NoticeCard = () => {
-	const { status } = useSession({ required: true })
-
-	const [isLoading, setIsLoading] = useState<boolean>(false)
-
-	const notices = useNoticesStore(state => state.notices)
-	const setNotices = useNoticesStore(state => state.setNotices)
-	const latestNotice = useNoticesStore(state => state.notices[0])
+	const { status } = useSession({ required: true });
+	const [isLoading, setIsLoading] = useState<boolean>(false);
+	const notices = useNoticesStore(state => state.notices);
+	const setNotices = useNoticesStore(state => state.setNotices);
+	const latestNotice = useNoticesStore(state => state.notices[0]);
 
 	const fetchNotices = async () => {
-		setIsLoading(true)
+		setIsLoading(true);
 		try {
-			const notices = await getNoticesByUserId()
-			setNotices(notices)
+			const notices = await getNoticesByUserId();
+			setNotices(notices);
 		} catch (error) {
-			toast.error("Fehler beim Laden der Notizen.")
+			toast.error("Fehler beim Laden der Notizen.");
 		} finally {
-			setIsLoading(false)
+			setIsLoading(false);
 		}
-	}
+	};
 
 	useEffect(() => {
-		fetchNotices()
-	}, [])
+		fetchNotices();
+	}, []);
 
 	return (
 		<div className="bg-white rounded-xl shadow-sm border p-4">
@@ -52,5 +50,5 @@ export const NoticeCard = () => {
 				<span className="text-sm font-normal mt-1">{status === "loading" || isLoading ? <Skeleton className="w-12 h-4 bg-primary/10 animate-pulse" /> : latestNotice?.noticetext}</span>
 			</h3>
 		</div>
-	)
-}
+	);
+};
