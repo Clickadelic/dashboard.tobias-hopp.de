@@ -12,7 +12,6 @@ import { GoLink } from "react-icons/go";
 
 import { getLinksByUserId } from "@/actions/link";
 
-// TODO: Fix broken layout shift when Loading...
 export const LinkCard = () => {
 	const { status } = useSession({ required: true });
 	const [isLoading, setIsLoading] = useState<boolean>(false);
