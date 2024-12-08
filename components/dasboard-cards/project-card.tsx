@@ -1,45 +1,45 @@
-"use client"
+"use client";
 
-import { useState, useEffect } from "react"
-import { useSession } from "next-auth/react"
-import { useProjectsStore } from "@/hooks/use-projects-store"
+import { useState, useEffect } from "react";
+import { useSession } from "next-auth/react";
+import { useProjectsStore } from "@/hooks/use-projects-store";
 
-import Link from "next/link"
+import Link from "next/link";
 
-import { Skeleton } from "@/components/ui/skeleton"
-import { toast } from "sonner"
-import { Project } from "@prisma/client"
+import { Skeleton } from "@/components/ui/skeleton";
+import { toast } from "sonner";
+import { Project } from "@prisma/client";
 
-import { getProjectsByUserId } from "@/actions/project"
-import { BsBuildings } from "react-icons/bs"
+import { getProjectsByUserId } from "@/actions/project";
+import { BsBuildings } from "react-icons/bs";
 
 export const ProjectCard = () => {
-	const { status } = useSession({ required: true })
-	const [isLoading, setIsLoading] = useState<boolean>(false)
+	const { status } = useSession({ required: true });
+	const [isLoading, setIsLoading] = useState<boolean>(false);
 
-	const projects = useProjectsStore<Project[]>(state => state.projects)
-	const latestProject = useProjectsStore<Project>(state => state.projects[0])
-	const setProjects = useProjectsStore(state => state.setProjects)
+	const projects = useProjectsStore<Project[]>(state => state.projects);
+	const latestProject = useProjectsStore<Project>(state => state.projects[0]);
+	const setProjects = useProjectsStore(state => state.setProjects);
 
 	const fetchProjects = async () => {
-		setIsLoading(true)
+		setIsLoading(true);
 		try {
-			const response = await getProjectsByUserId()
-			setProjects(response)
+			const response = await getProjectsByUserId();
+			setProjects(response);
 		} catch (error) {
-			console.error("Error fetching links:", error)
-			toast.error("Failed to fetch links.")
+			console.error("Error fetching links:", error);
+			toast.error("Failed to fetch links.");
 		}
-		setIsLoading(false)
-	}
+		setIsLoading(false);
+	};
 
 	useEffect(() => {
-		fetchProjects()
-	}, [])
+		fetchProjects();
+	}, []);
 
 	return (
-		<div className="p-4 bg-white border shadow-sm rounded-xl">
-			<h2 className="flex justify-between mb-2 text-xs md:text-sm">
+		<div className="bg-white rounded-xl shadow-sm border p-4">
+			<h2 className="text-xs md:text-sm border-bottom text-slate-900 flex justify-between mb-2">
 				<Link href="/projekte" className="text-slate-900 hover:text-slate-700 hover:underline" title="Zur Projektübersicht">
 					Projekte
 				</Link>
@@ -59,5 +59,5 @@ export const ProjectCard = () => {
 				<span className="mt-1 text-sm font-normal">{status === "loading" || isLoading ? <Skeleton className="mt-[-3px] w-12 h-4 bg-primary/10 animate-pulse" /> : latestProject?.title}</span>
 			</h3>
 		</div>
-	)
-}
+	);
+};

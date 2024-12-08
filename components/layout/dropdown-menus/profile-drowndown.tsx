@@ -1,28 +1,28 @@
-"use client"
+"use client";
 
-import { usePathname } from "next/navigation"
-import { useSession } from "next-auth/react"
-import { useCurrentRole } from "@/hooks/use-current-role"
-import { useCurrentUser } from "@/hooks/use-current-user"
+import { usePathname } from "next/navigation";
+import { useSession } from "next-auth/react";
+import { useCurrentRole } from "@/hooks/use-current-role";
+import { useCurrentUser } from "@/hooks/use-current-user";
 
-import Link from "next/link"
+import Link from "next/link";
 
-import { Skeleton } from "@/components/ui/skeleton"
-import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
+import { Skeleton } from "@/components/ui/skeleton";
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 
-import { FaUser } from "react-icons/fa"
-import { LuUser2 } from "react-icons/lu"
-import { GiOrganigram } from "react-icons/gi"
-import { GrAppsRounded } from "react-icons/gr"
+import { FaUser } from "react-icons/fa";
+import { LuUser } from "react-icons/lu";
+import { GiOrganigram } from "react-icons/gi";
+import { GrAppsRounded } from "react-icons/gr";
 
-import { LogoutButton } from "@/components/auth/logout-button"
+import { LogoutButton } from "@/components/auth/logout-button";
 
 export const ProfileDropdown = () => {
-	const { status } = useSession({ required: true })
-	const user = useCurrentUser()
-	const role = useCurrentRole()
-	const path = usePathname()
+	const { status } = useSession({ required: true });
+	const user = useCurrentUser();
+	const role = useCurrentRole();
+	const path = usePathname();
 
 	return (
 		<>
@@ -47,7 +47,7 @@ export const ProfileDropdown = () => {
 						<DropdownMenuSeparator />
 						<DropdownMenuItem>
 							<Link href="/mein-profil" title="Zum Profil">
-								<LuUser2 className="size-4 inline-block mr-2 mt-[-2px]" />
+								<LuUser className="size-4 inline-block mr-2 mt-[-2px]" />
 								Mein Profil
 							</Link>
 						</DropdownMenuItem>
@@ -65,5 +65,5 @@ export const ProfileDropdown = () => {
 				</DropdownMenu>
 			)}
 		</>
-	)
-}
+	);
+};
