@@ -228,7 +228,7 @@ export const MenuLeft = () => {
 								<Tooltip>
 									<TooltipTrigger asChild data-state="instant-open">
 										<Link
-											href="/admin/system"
+											href="/admin/systemeinstellungen"
 											className={cn(
 												"block p-3 hover:bg-mantis-hover hover:text-mantis-primary",
 												path === "/admin/system" && "text-mantis-primary border-r-2 border-r-mantis-primary bg-mantis-hover"
