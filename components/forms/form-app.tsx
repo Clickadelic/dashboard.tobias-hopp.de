@@ -34,47 +34,56 @@ export const FormApp = ({ isEditMode }: FormAppProps = {}) => {
 	const isAppDialogOpen = useAppsStore(state => state.isAppDialogOpen);
 	const setAppDialogOpen = useAppsStore(state => state.setAppDialogOpen);
 
-	var form: any;
+	// BUG: Form Types, improve any
+	let form = useForm<z.infer<typeof AppSchema>>({
+		resolver: zodResolver(AppSchema),
+		defaultValues: { title: "", url: "" }
+	});
 
 	if (isEditMode) {
 		form = useForm<z.infer<typeof AppSchema>>({
 			resolver: zodResolver(AppSchema),
 			defaultValues: { title: formData?.title, url: formData?.url }
 		});
-	} else {
-		form = useForm<z.infer<typeof AppSchema>>({
-			resolver: zodResolver(AppSchema),
-			defaultValues: { title: "", url: "" }
-		});
 	}
 
-	const onAdd = async (values: z.infer<typeof AppSchema>) => {
-		// BUG: Async bug
-		// @ts-ignore
-		startTransition(async () => {
-			const result = await addApp(values);
-			if (result.error) {
-				toast.error(result.error);
-			} else if (result.success) {
-				toast.success(result.success);
-				form.reset();
-				const newApps = await getAppsByUserId();
-				setApps(newApps);
-			}
-		});
-	};
+	const onSubmit = async (values: z.infer<typeof AppSchema>) => {
+		if (isEditMode) {
+			const id = formData?.id as string;
 
-	const onEdit = async (values: z.infer<typeof AppSchema>) => {
-		// BUG: Async bug
-		// @ts-ignore
-		startTransition(async () => {
-			// Code
-		});
+			// BUG: Async bug
+			// @ts-ignore
+			startTransition(async () => {
+				const result = await editAppById(id, values);
+				if (result.error) {
+					toast.error(result.error);
+				} else if (result.success) {
+					toast.success(result.success);
+					form.reset({ title: values?.title, url: values?.url });
+					const newApps = await getAppsByUserId();
+					setApps(newApps);
+				}
+			});
+		} else {
+			// BUG: Async bug
+			// @ts-ignore
+			startTransition(async () => {
+				const result = await addApp(values);
+				if (result.error) {
+					toast.error(result.error);
+				} else if (result.success) {
+					toast.success(result.success);
+					form.reset();
+					const newApps = await getAppsByUserId();
+					setApps(newApps);
+				}
+			});
+		}
 	};
 
 	return (
 		<Form {...form}>
-			<form onSubmit={form.handleSubmit(isEditMode ? onEdit : onAdd)} className="space-y-2">
+			<form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2">
 				<FormField
 					control={form.control}
 					name="title"

@@ -7,8 +7,10 @@ import { Drawer, DrawerContent, DrawerHeader, DrawerDescription, DrawerTitle } f
 
 interface ResponsiveDialogProps {
 	icon: React.ReactNode;
+
 	title: string;
 	editTitle?: string;
+
 	description?: string;
 	editDescription?: string;
 

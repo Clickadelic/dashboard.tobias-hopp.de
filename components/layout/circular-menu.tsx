@@ -26,9 +26,6 @@ export const CircularMenu = () => {
 	const showCircularMenu = useCircularMenuStore(state => state.showCircularMenu);
 	const toggleCircularMenu = useCircularMenuStore(state => state.toggleCircularMenu);
 
-	const formData = useAppsStore(state => state.formData);
-	const setFormData = useAppsStore(state => state.setFormData);
-
 	const isAppDialogOpen = useAppsStore(state => state.isAppDialogOpen);
 	const setAppDialogOpen = useAppsStore(state => state.setAppDialogOpen);
 
