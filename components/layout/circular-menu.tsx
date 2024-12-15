@@ -20,9 +20,11 @@ import { cn } from "@/lib/utils";
 
 import { ResponsiveDialog } from "@/components/responsive-dialog";
 import { useAppsStore } from "@/hooks/use-apps-store";
+import { useCircularMenuStore } from "@/hooks/use-circular-menu-store";
 
 export const CircularMenu = () => {
-	const [showMenu, setShowMenu] = useState<boolean>(false);
+	const showCircularMenu = useCircularMenuStore(state => state.showCircularMenu);
+	const toggleCircularMenu = useCircularMenuStore(state => state.toggleCircularMenu);
 
 	const isAppDialogOpen = useAppsStore(state => state.isAppDialogOpen);
 	const toggleAppDialogOpen = useAppsStore(state => state.toggleAppDialogOpen);
@@ -30,6 +32,7 @@ export const CircularMenu = () => {
 	const isAppEditing = useAppsStore(state => state.isAppEditing);
 	const toggleIsAppEditing = useAppsStore(state => state.toggleIsAppEditing);
 
+	// TODO: Clean up / harmonize / sync with the rest of the architecture
 	const { isLinkDialogOpen, setLinkDialogOpen } = useAppContext();
 	const { isTodoDialogOpen, setTodoDialogOpen } = useAppContext();
 	const { isNoticeDialogOpen, setNoticeDialogOpen } = useAppContext();
@@ -37,7 +40,7 @@ export const CircularMenu = () => {
 
 	return (
 		<div className="fixed right-4 bottom-4 md:bottom-8 md:right-8 max-w-12 shadow-sm">
-			<div className={cn("absolute -top-64 left-[4px] flex justify-center space-y-2", showMenu ? "block" : "hidden")}>
+			<div className={cn("absolute -top-64 left-[4px] flex justify-center space-y-2", showCircularMenu ? "block" : "hidden")}>
 				<TooltipProvider>
 					<Tooltip>
 						<TooltipTrigger asChild data-state="instant-open">
@@ -133,8 +136,8 @@ export const CircularMenu = () => {
 			<TooltipProvider>
 				<Tooltip>
 					<TooltipTrigger asChild data-state="instant-open">
-						<button aria-label="Neuen Inhalt anlegen" className="bg-mantis-primary hover:bg-mantis-primary/90 text-white p-4 text-lg rounded-full" onClick={() => setShowMenu(!showMenu)}>
-							<FiPlus className={cn("transition", showMenu ? "rotate-45" : "")} />
+						<button aria-label="Neuen Inhalt anlegen" className="bg-mantis-primary hover:bg-mantis-primary/90 text-white p-4 text-lg rounded-full" onClick={() => toggleCircularMenu()}>
+							<FiPlus className={cn("transition", showCircularMenu ? "rotate-45" : "")} />
 						</button>
 					</TooltipTrigger>
 					<TooltipContent side="left">

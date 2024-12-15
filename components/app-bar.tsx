@@ -16,7 +16,7 @@ import { HiOutlineDotsVertical } from "react-icons/hi";
 import { BsTrash } from "react-icons/bs";
 import { AiOutlineEdit } from "react-icons/ai";
 
-import { getAppsByUserId, deleteAppById, editAppById } from "@/actions/app";
+import { getAppsByUserId, deleteAppById } from "@/actions/app";
 import { getFavicon } from "@/lib/utils";
 
 export const AppBar = () => {
