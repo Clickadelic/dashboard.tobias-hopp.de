@@ -1,36 +1,36 @@
-"use client"
+"use client";
 
-import { usePathname } from "next/navigation"
-import { useSession } from "next-auth/react"
-import { useCurrentRole } from "@/hooks/use-current-role"
-import { useCurrentUser } from "@/hooks/use-current-user"
-import { useAppContext } from "@/context/app-context"
+import { usePathname } from "next/navigation";
+import { useSession } from "next-auth/react";
+import { useCurrentRole } from "@/hooks/use-current-role";
+import { useCurrentUser } from "@/hooks/use-current-user";
+import { useAppContext } from "@/context/app-context";
 
-import { UserRole } from "@prisma/client"
+import { UserRole } from "@prisma/client";
 
-import Link from "next/link"
+import Link from "next/link";
 
-import { IoSpeedometerOutline } from "react-icons/io5"
-import { BsBuildings } from "react-icons/bs"
-import { BsListCheck } from "react-icons/bs"
-import { CiEdit } from "react-icons/ci"
-import { GoLink } from "react-icons/go"
-import { PiEye } from "react-icons/pi"
-import { FiUsers } from "react-icons/fi"
-import { FiUploadCloud } from "react-icons/fi"
-import { BsHouseGear } from "react-icons/bs"
+import { IoSpeedometerOutline } from "react-icons/io5";
+import { BsBuildings } from "react-icons/bs";
+import { BsListCheck } from "react-icons/bs";
+import { CiEdit } from "react-icons/ci";
+import { GoLink } from "react-icons/go";
+import { PiEye } from "react-icons/pi";
+import { FiUsers } from "react-icons/fi";
+import { FiUploadCloud } from "react-icons/fi";
+import { BsHouseGear } from "react-icons/bs";
 
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger, TooltipArrow } from "@/components/ui/tooltip"
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger, TooltipArrow } from "@/components/ui/tooltip";
 
-import { cn } from "@/lib/utils"
+import { cn } from "@/lib/utils";
 
 export const MenuLeft = () => {
-	const { status } = useSession({ required: true })
-	const user = useCurrentUser()
-	const role = useCurrentRole()
-	const path = usePathname()
+	const { status } = useSession({ required: true });
+	const user = useCurrentUser();
+	const role = useCurrentRole();
+	const path = usePathname();
 
-	const { isSidebarOpen, setSidebarOpen } = useAppContext()
+	const { isSidebarOpen, setSidebarOpen } = useAppContext();
 
 	return (
 		<nav aria-label="Sidebar-Menü" className="overflow-y-auto">
@@ -228,10 +228,10 @@ export const MenuLeft = () => {
 								<Tooltip>
 									<TooltipTrigger asChild data-state="instant-open">
 										<Link
-											href="/admin/system"
+											href="/admin/systemeinstellungen"
 											className={cn(
 												"block p-3 hover:bg-mantis-hover hover:text-mantis-primary",
-												path === "/admin/system" && "text-mantis-primary border-r-2 border-r-mantis-primary bg-mantis-hover"
+												path === "/admin/systemeinstellungen" && "text-mantis-primary border-r-2 border-r-mantis-primary bg-mantis-hover"
 											)}
 										>
 											<BsHouseGear className={cn("inline-block mt-[-3px]", isSidebarOpen && "block mx-auto mt-[-3px]")} />
@@ -249,5 +249,5 @@ export const MenuLeft = () => {
 				)}
 			</ul>
 		</nav>
-	)
-}
+	);
+};

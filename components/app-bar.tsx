@@ -16,7 +16,7 @@ import { HiOutlineDotsVertical } from "react-icons/hi";
 import { BsTrash } from "react-icons/bs";
 import { AiOutlineEdit } from "react-icons/ai";
 
-import { getAppsByUserId, deleteAppById, editAppById } from "@/actions/app";
+import { getAppsByUserId, deleteAppById } from "@/actions/app";
 import { getFavicon } from "@/lib/utils";
 
 export const AppBar = () => {
@@ -28,11 +28,14 @@ export const AppBar = () => {
 	const apps = useAppsStore(state => state.apps);
 	const setApps = useAppsStore(state => state.setApps);
 
-	const isAppDialogOpen = useAppsStore(state => state.isAppDialogOpen);
-	const toggleAppDialogOpen = useAppsStore(state => state.toggleAppDialogOpen);
+	const formData = useAppsStore(state => state.formData);
+	const setFormData = useAppsStore(state => state.setFormData);
 
-	const isAppEditing = useAppsStore(state => state.isAppEditing);
-	const toggleIsAppEditing = useAppsStore(state => state.toggleIsAppEditing);
+	const isAppDialogOpen = useAppsStore(state => state.isAppDialogOpen);
+	const setAppDialogOpen = useAppsStore(state => state.setAppDialogOpen);
+
+	const isEditMode = useAppsStore(state => state.isEditMode);
+	const setIsEditMode = useAppsStore(state => state.setIsEditMode);
 
 	const fetchApps = async () => {
 		try {
@@ -51,6 +54,8 @@ export const AppBar = () => {
 	}, []);
 
 	const onDelete = async (id: string) => {
+		// BUG: await error
+		// @ts-ignore
 		startTransition(async () => {
 			const result = await deleteAppById(id);
 			if (result.error) {
@@ -63,8 +68,10 @@ export const AppBar = () => {
 	};
 
 	const onEdit = async (id: string) => {
-		toggleAppDialogOpen();
-		toggleIsAppEditing();
+		const app = apps.find(app => app.id === id);
+		if (app) setFormData(app);
+		setAppDialogOpen(true);
+		setIsEditMode(true);
 	};
 
 	return (
