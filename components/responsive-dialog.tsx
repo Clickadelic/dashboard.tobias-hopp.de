@@ -14,19 +14,19 @@ interface ResponsiveDialogProps {
 
 	isOpen: boolean;
 	setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
-	isEditing?: boolean;
-	setIsEditing?: React.Dispatch<React.SetStateAction<boolean>>;
+	isEditMode?: boolean;
+	setIsEditMode?: React.Dispatch<React.SetStateAction<boolean>>;
 
 	children: React.ReactNode;
 }
 
-export const ResponsiveDialog = ({ icon, title, description, isOpen, setIsOpen, isEditing, setIsEditing, editTitle, editDescription, children }: ResponsiveDialogProps) => {
+export const ResponsiveDialog = ({ icon, title, description, isOpen, setIsOpen, isEditMode, setIsEditMode, editTitle, editDescription, children }: ResponsiveDialogProps) => {
 	const isDesktop = useMediaQuery("(min-width: 768px)");
 
 	if (isDesktop) {
 		return (
 			<Dialog open={isOpen} onOpenChange={setIsOpen}>
-				{isEditing ? (
+				{isEditMode ? (
 					<DialogContent>
 						<DialogHeader>
 							<DialogTitle className="flex">
@@ -55,7 +55,7 @@ export const ResponsiveDialog = ({ icon, title, description, isOpen, setIsOpen, 
 
 	return (
 		<Drawer open={isOpen} onOpenChange={setIsOpen}>
-			{isEditing ? (
+			{isEditMode ? (
 				<DrawerContent>
 					<DrawerHeader>
 						<DrawerTitle className="flex">

@@ -8,7 +8,7 @@ import { useForm } from "react-hook-form";
 import { useAppsStore } from "@/hooks/use-apps-store";
 
 import { AppSchema } from "@/schemas";
-import { App } from "@prisma/client";
+// import { App } from "@prisma/client";
 import { Input } from "@/components/ui/input";
 import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
@@ -19,22 +19,37 @@ import { addApp, getAppsByUserId, editAppById } from "@/actions/app";
 import { FiPlus } from "react-icons/fi";
 
 interface FormAppProps {
-	app?: App;
-	isAppEditing?: boolean;
+	isEditMode?: boolean;
 }
 
-export const FormApp = ({ isAppEditing }: FormAppProps = {}) => {
+export const FormApp = ({ isEditMode }: FormAppProps = {}) => {
 	const [isPending, startTransition] = useTransition();
 
 	const apps = useAppsStore(state => state.apps);
 	const setApps = useAppsStore(state => state.setApps);
 
-	const form = useForm<z.infer<typeof AppSchema>>({
+	const formData = useAppsStore(state => state.formData);
+	const setFormData = useAppsStore(state => state.setFormData);
+
+	const isAppDialogOpen = useAppsStore(state => state.isAppDialogOpen);
+	const setAppDialogOpen = useAppsStore(state => state.setAppDialogOpen);
+
+	// Var :D
+	var form = useForm<z.infer<typeof AppSchema>>({
 		resolver: zodResolver(AppSchema),
 		defaultValues: { title: "", url: "" }
 	});
 
+	if (isEditMode) {
+		form = useForm<z.infer<typeof AppSchema>>({
+			resolver: zodResolver(AppSchema),
+			defaultValues: { title: formData?.title, url: formData?.url }
+		});
+	}
+
 	const onAdd = async (values: z.infer<typeof AppSchema>) => {
+		// BUG: Async bug
+		// @ts-ignore
 		startTransition(async () => {
 			const result = await addApp(values);
 			if (result.error) {
@@ -54,7 +69,7 @@ export const FormApp = ({ isAppEditing }: FormAppProps = {}) => {
 
 	return (
 		<Form {...form}>
-			<form onSubmit={form.handleSubmit(isAppEditing ? onEdit : onAdd)} className="space-y-2">
+			<form onSubmit={form.handleSubmit(isEditMode ? onEdit : onAdd)} className="space-y-2">
 				<FormField
 					control={form.control}
 					name="title"
@@ -81,9 +96,9 @@ export const FormApp = ({ isAppEditing }: FormAppProps = {}) => {
 						</FormItem>
 					)}
 				/>
-				<Button disabled={isPending} variant="primary" aria-label={isAppEditing ? "App bearbeiten" : "App hinzufugen"} type="submit" className="w-full rounded-sm">
+				<Button disabled={isPending} variant="primary" aria-label={isEditMode ? "App bearbeiten" : "App hinzufugen"} type="submit" className="w-full rounded-sm">
 					<FiPlus className="inline text-white mr-2" />
-					{isAppEditing ? "App bearbeiten" : "App hinzufugen"}
+					{isEditMode ? "App bearbeiten" : "App hinzufugen"}
 				</Button>
 			</form>
 		</Form>

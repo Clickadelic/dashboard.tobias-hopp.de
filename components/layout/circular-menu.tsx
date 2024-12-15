@@ -27,10 +27,10 @@ export const CircularMenu = () => {
 	const toggleCircularMenu = useCircularMenuStore(state => state.toggleCircularMenu);
 
 	const isAppDialogOpen = useAppsStore(state => state.isAppDialogOpen);
-	const toggleAppDialogOpen = useAppsStore(state => state.toggleAppDialogOpen);
+	const setAppDialogOpen = useAppsStore(state => state.setAppDialogOpen);
 
-	const isAppEditing = useAppsStore(state => state.isAppEditing);
-	const toggleIsAppEditing = useAppsStore(state => state.toggleIsAppEditing);
+	const isEditMode = useAppsStore(state => state.isEditMode);
+	const setIsEditMode = useAppsStore(state => state.setIsEditMode);
 
 	// TODO: Clean up / harmonize / sync with the rest of the architecture
 	const { isLinkDialogOpen, setLinkDialogOpen } = useAppContext();
@@ -44,7 +44,7 @@ export const CircularMenu = () => {
 				<TooltipProvider>
 					<Tooltip>
 						<TooltipTrigger asChild data-state="instant-open">
-							<button onClick={() => toggleAppDialogOpen()} className="rounded-full bg-mantis-primary hover:bg-mantis-primary/90 text-white p-3">
+							<button onClick={() => setAppDialogOpen(true)} className="rounded-full bg-mantis-primary hover:bg-mantis-primary/90 text-white p-3">
 								<BsApp />
 							</button>
 						</TooltipTrigger>
@@ -61,11 +61,9 @@ export const CircularMenu = () => {
 					editTitle="App bearbeiten"
 					editDescription="Ändere Titel oder Url der App"
 					isOpen={isAppDialogOpen}
-					setIsOpen={toggleAppDialogOpen}
-					isEditing={isAppEditing}
-					setIsEditing={toggleIsAppEditing}
+					setIsOpen={() => setAppDialogOpen(true ? false : true)}
 				>
-					<FormApp isAppEditing={isAppEditing} />
+					<FormApp isEditMode={isEditMode} />
 				</ResponsiveDialog>
 
 				<TooltipProvider>

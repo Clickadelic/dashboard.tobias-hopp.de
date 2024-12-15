@@ -4,19 +4,27 @@ import { App } from "@prisma/client";
 interface AppsStateProps {
 	apps: App[];
 	setApps: (Apps: App[]) => void;
+
+	formData: App | null;
+	setFormData: (formData: App) => void;
+
 	isAppDialogOpen: boolean;
-	toggleAppDialogOpen: () => void;
-	isAppEditing: boolean;
-	toggleIsAppEditing: () => void;
+	setAppDialogOpen: (isOpen: boolean) => void;
+
+	isEditMode: boolean;
+	setIsEditMode: (isEditMode: boolean) => void;
 }
 
 export const useAppsStore = create<AppsStateProps>(set => ({
 	apps: [],
 	setApps: (apps: App[]) => set({ apps }),
 
-	isAppDialogOpen: false,
-	toggleAppDialogOpen: () => set(state => ({ isAppDialogOpen: !state.isAppDialogOpen })),
+	formData: null,
+	setFormData: (formData: App) => set({ formData }),
 
-	isAppEditing: false,
-	toggleIsAppEditing: () => set(state => ({ isAppEditing: !state.isAppEditing }))
+	isAppDialogOpen: false,
+	setAppDialogOpen: (isOpen: boolean) => set({ isAppDialogOpen: isOpen }),
+
+	isEditMode: false,
+	setIsEditMode: (isEditMode: boolean) => set({ isEditMode: isEditMode })
 }));
