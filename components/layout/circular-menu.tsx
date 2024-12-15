@@ -26,6 +26,9 @@ export const CircularMenu = () => {
 	const showCircularMenu = useCircularMenuStore(state => state.showCircularMenu);
 	const toggleCircularMenu = useCircularMenuStore(state => state.toggleCircularMenu);
 
+	const formData = useAppsStore(state => state.formData);
+	const setFormData = useAppsStore(state => state.setFormData);
+
 	const isAppDialogOpen = useAppsStore(state => state.isAppDialogOpen);
 	const setAppDialogOpen = useAppsStore(state => state.setAppDialogOpen);
 
@@ -38,13 +41,18 @@ export const CircularMenu = () => {
 	const { isNoticeDialogOpen, setNoticeDialogOpen } = useAppContext();
 	const { isProjectDialogOpen, setProjectDialogOpen } = useAppContext();
 
+	const handleAppDialog = () => {
+		setIsEditMode(false);
+		setAppDialogOpen(true);
+	};
+
 	return (
 		<div className="fixed right-4 bottom-4 md:bottom-8 md:right-8 max-w-12 shadow-sm">
 			<div className={cn("absolute -top-64 left-[4px] flex justify-center space-y-2", showCircularMenu ? "block" : "hidden")}>
 				<TooltipProvider>
 					<Tooltip>
 						<TooltipTrigger asChild data-state="instant-open">
-							<button onClick={() => setAppDialogOpen(true)} className="rounded-full bg-mantis-primary hover:bg-mantis-primary/90 text-white p-3">
+							<button onClick={handleAppDialog} className="rounded-full bg-mantis-primary hover:bg-mantis-primary/90 text-white p-3">
 								<BsApp />
 							</button>
 						</TooltipTrigger>
@@ -62,6 +70,7 @@ export const CircularMenu = () => {
 					editDescription="Ändere Titel oder Url der App"
 					isOpen={isAppDialogOpen}
 					setIsOpen={() => setAppDialogOpen(true ? false : true)}
+					isEditMode={isEditMode}
 				>
 					<FormApp isEditMode={isEditMode} />
 				</ResponsiveDialog>

@@ -34,16 +34,17 @@ export const FormApp = ({ isEditMode }: FormAppProps = {}) => {
 	const isAppDialogOpen = useAppsStore(state => state.isAppDialogOpen);
 	const setAppDialogOpen = useAppsStore(state => state.setAppDialogOpen);
 
-	// Var :D
-	var form = useForm<z.infer<typeof AppSchema>>({
-		resolver: zodResolver(AppSchema),
-		defaultValues: { title: "", url: "" }
-	});
+	var form: any;
 
 	if (isEditMode) {
 		form = useForm<z.infer<typeof AppSchema>>({
 			resolver: zodResolver(AppSchema),
 			defaultValues: { title: formData?.title, url: formData?.url }
+		});
+	} else {
+		form = useForm<z.infer<typeof AppSchema>>({
+			resolver: zodResolver(AppSchema),
+			defaultValues: { title: "", url: "" }
 		});
 	}
 
@@ -64,7 +65,11 @@ export const FormApp = ({ isEditMode }: FormAppProps = {}) => {
 	};
 
 	const onEdit = async (values: z.infer<typeof AppSchema>) => {
-		console.log(values);
+		// BUG: Async bug
+		// @ts-ignore
+		startTransition(async () => {
+			// Code
+		});
 	};
 
 	return (

@@ -8,6 +8,8 @@ interface AppsStateProps {
 	formData: App | null;
 	setFormData: (formData: App) => void;
 
+	resetFormData: () => void;
+
 	isAppDialogOpen: boolean;
 	setAppDialogOpen: (isOpen: boolean) => void;
 
