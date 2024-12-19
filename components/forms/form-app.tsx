@@ -84,6 +84,7 @@ export const FormApp = ({ isEditMode }: FormAppProps = {}) => {
 				}
 			});
 		}
+		setAppDialogOpen(false);
 	};
 
 	return (
