@@ -34,18 +34,23 @@ export const FormApp = ({ isEditMode }: FormAppProps = {}) => {
 	const isAppDialogOpen = useAppsStore(state => state.isAppDialogOpen);
 	const setAppDialogOpen = useAppsStore(state => state.setAppDialogOpen);
 
+	const formDefaults = () => {
+		if (isEditMode) {
+			const id = formData?.id as string;
+			const app = apps.find(app => app.id === id);
+			if (app) {
+				return {
+					title: app.title,
+					url: app.url
+				};
+			}
+		}
+	};
 	// BUG: Form Types, improve any
-	let form = useForm<z.infer<typeof AppSchema>>({
+	const form = useForm<z.infer<typeof AppSchema>>({
 		resolver: zodResolver(AppSchema),
-		defaultValues: { title: "", url: "" }
+		defaultValues: formDefaults()
 	});
-
-	if (isEditMode) {
-		form = useForm<z.infer<typeof AppSchema>>({
-			resolver: zodResolver(AppSchema),
-			defaultValues: { title: formData?.title, url: formData?.url }
-		});
-	}
 
 	const onSubmit = async (values: z.infer<typeof AppSchema>) => {
 		if (isEditMode) {
