@@ -1,9 +1,9 @@
 import { AppBar } from "@/components/app-bar";
 
-import { ProjectCard } from "@/components/dasboard-cards/project-card";
-import { TodoCard } from "@/components/dasboard-cards/todo-card";
-import { LinkCard } from "@/components/dasboard-cards/link-card";
-import { NoticeCard } from "@/components/dasboard-cards/notice-card";
+import { ProjectCard } from "@/components/dashboard-cards/project-card";
+import { TodoCard } from "@/components/dashboard-cards/todo-card";
+import { LinkCard } from "@/components/dashboard-cards/link-card";
+import { NoticeCard } from "@/components/dashboard-cards/notice-card";
 
 import { TodoWidget } from "@/components/widgets/todo-widget";
 import { NoticeWidget } from "@/components/widgets/notice-widget";
