@@ -3,7 +3,8 @@
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { GoGear } from "react-icons/go";
 import { Button } from "@/components/ui/button";
-import { FormBackgroundImageUpload } from "@/components/forms/form-bg-image-upload";
+
+import { FormUnsplash } from "@/components/forms/form-unsplash";
 
 export const SettingsSheet = () => {
 	return (
@@ -18,7 +19,7 @@ export const SettingsSheet = () => {
 					<SheetTitle>Dashboard-Einstellungen</SheetTitle>
 					<SheetDescription>Hintergrundbild, Logo und andere Einstellungen.</SheetDescription>
 				</SheetHeader>
-				<FormBackgroundImageUpload />
+				<FormUnsplash />
 			</SheetContent>
 		</Sheet>
 	);

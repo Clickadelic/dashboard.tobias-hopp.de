@@ -1,9 +1,9 @@
-"use server"
+"use server";
 
-import { put } from "@vercel/blob"
-import { revalidatePath } from "next/cache"
-import { auth } from "@/auth"
-import { db } from "@/lib/db"
+import { put } from "@vercel/blob";
+import { revalidatePath } from "next/cache";
+import { auth } from "@/auth";
+import { db } from "@/lib/db";
 
 /**
  * Uploads a background image for a user.
@@ -11,17 +11,18 @@ import { db } from "@/lib/db"
  * @param {FormData} formData - The form data containing the image file.
  * @return {Promise<Blob>} - A promise that resolves to the uploaded image blob.
  */
-export const addBackgroundImage = async (formData: FormData) => {
-	const session = await auth()
-	const user = session?.user
-	const userId = user?.id
 
-	const imageFile = formData.get("image") as File
+export const addBackgroundImage = async (formData: FormData) => {
+	const session = await auth();
+	const user = session?.user;
+	const userId = user?.id;
+
+	const imageFile = formData.get("image") as File;
 	const blob = await put(imageFile.name, imageFile, {
 		access: "public"
-	})
+	});
 
-	revalidatePath("/")
+	revalidatePath("/");
 
-	return blob
-}
+	return blob;
+};

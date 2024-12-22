@@ -14,7 +14,7 @@ import { useCurrentUser } from "@/hooks/use-current-user";
 import { getUserBackground } from "@/actions/user";
 import { cn } from "@/lib/utils";
 
-export const FormBackgroundImageUpload = () => {
+export const FormAuthScreenBgImageUpload = () => {
 	const user = useCurrentUser();
 	const [file, setFile] = useState<File | null>(null);
 	const [preview, setPreview] = useState<string | null>(null);
@@ -41,7 +41,7 @@ export const FormBackgroundImageUpload = () => {
 		const formData = new FormData();
 		formData.append("file", file as Blob);
 
-		const response = await fetch(`/api/upload/background-image/${user?.id}`, {
+		const response = await fetch(`/api/upload/user/background-image/${user?.id}`, {
 			method: "POST",
 			body: formData
 		});

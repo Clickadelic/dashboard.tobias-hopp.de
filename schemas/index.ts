@@ -95,6 +95,6 @@ export const ProjectSchema = z.object({
 	description: z.optional(z.string().max(300, "Projektbeschreibung zu lang"))
 });
 
-export const SettingsSchema = z.object({
+export const SystemSettingsSchema = z.object({
 	loginBackground: z.string().url("Ungültige URL")
 });
