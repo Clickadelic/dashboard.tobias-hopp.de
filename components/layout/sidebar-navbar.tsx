@@ -118,8 +118,6 @@ export const SidebarNavbar = () => {
 												)}
 											</Link>
 										</SheetTitle>
-										{/* BUG: Fix Warning */}
-										{/* <SheetDescription>Description goes here</SheetDescription> */}
 									</SheetHeader>
 									<MenuLeft />
 								</SheetContent>

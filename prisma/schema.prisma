@@ -194,9 +194,8 @@ model Invitation {
     email     String
 }
 
-// TODO: CUID anstatt autoincrement
 model Systemsetting {
-    id              Int      @id @default(autoincrement())
+    id              String   @id @default(cuid())
     loginBackground String?  @default("")
     createdAt       DateTime @default(now())
     updatedAt       DateTime @updatedAt

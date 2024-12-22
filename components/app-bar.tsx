@@ -36,8 +36,8 @@ export const AppBar = () => {
 	const isAppDialogOpen = useAppsStore(state => state.isAppDialogOpen);
 	const setAppDialogOpen = useAppsStore(state => state.setAppDialogOpen);
 
-	const isEditMode = useAppsStore(state => state.isEditMode);
-	const setIsEditMode = useAppsStore(state => state.setIsEditMode);
+	const isAppEditMode = useAppsStore(state => state.isAppEditMode);
+	const setIsAppEditMode = useAppsStore(state => state.setIsAppEditMode);
 
 	const fetchApps = async () => {
 		try {
@@ -72,7 +72,7 @@ export const AppBar = () => {
 		const app = apps.find(app => app.id === id);
 		if (app) setFormData(app);
 		setAppDialogOpen(true);
-		setIsEditMode(true);
+		setIsAppEditMode(true);
 	};
 
 	return (
