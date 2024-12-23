@@ -1,6 +1,10 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
+import { Skeleton } from "../ui/skeleton";
+
+// TODO: Implement correctly
 import { defaultImages } from "@/config/images";
+import { Form } from "react-hook-form";
 
 export const FormUnsplash = () => {
 	const [images, setImages] = useState<Array<Record<string, any>>>([]);
@@ -9,15 +13,22 @@ export const FormUnsplash = () => {
 		try {
 			const response = await fetch(`/api/unsplash`);
 
+			if (response.ok) {
+				const data = await response.json();
+				const allImages = Array.isArray(data) ? data : [];
+				// Nur Querformat-Bilder filtern
+				const filteredimages = allImages.filter((image: any) => image.width / image.height > 1);
+				setImages(filteredimages);
+			}
+
 			if (!response.ok) {
 				throw new Error(`Unsplash API error: ${response.status}`);
 			}
 
-			const data = await response.json();
-			setImages(data);
+			// const data = await response.json();
+			// setImages(data);
 		} catch (error) {
 			console.error(error);
-			setImages([defaultImages]);
 		} finally {
 			setIsLoading(false);
 		}
@@ -31,9 +42,7 @@ export const FormUnsplash = () => {
 		<div className="relative">
 			<div className="grid grid-cols-3 gap-2 mb-2">
 				{isLoading ? (
-					<div className="col-span-3 flex justify-center items-center h-32">
-						<div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900"></div>
-					</div>
+					<FormUnsplash.Skeleton />
 				) : (
 					images.map((image, index) => (
 						<div key={index}>
@@ -43,5 +52,24 @@ export const FormUnsplash = () => {
 				)}
 			</div>
 		</div>
+	);
+};
+
+FormUnsplash.Skeleton = function () {
+	return (
+		<>
+			<Skeleton className="w-[106px] h-[74px] relative flex flex-col justify-center items-center" />
+			<Skeleton className="w-[106px] h-[74px] relative flex flex-col justify-center items-center" />
+			<Skeleton className="w-[106px] h-[74px] relative flex flex-col justify-center items-center" />
+			<Skeleton className="w-[106px] h-[74px] relative flex flex-col justify-center items-center" />
+			<Skeleton className="w-[106px] h-[74px] relative flex flex-col justify-center items-center" />
+			<Skeleton className="w-[106px] h-[74px] relative flex flex-col justify-center items-center" />
+			<Skeleton className="w-[106px] h-[74px] relative flex flex-col justify-center items-center" />
+			<Skeleton className="w-[106px] h-[74px] relative flex flex-col justify-center items-center" />
+			<Skeleton className="w-[106px] h-[74px] relative flex flex-col justify-center items-center" />
+			<Skeleton className="w-[106px] h-[74px] relative flex flex-col justify-center items-center" />
+			<Skeleton className="w-[106px] h-[74px] relative flex flex-col justify-center items-center" />
+			<Skeleton className="w-[106px] h-[74px] relative flex flex-col justify-center items-center" />
+		</>
 	);
 };
