@@ -6,7 +6,7 @@ import { Skeleton } from "../ui/skeleton";
 import { defaultImages } from "@/config/images";
 import { Form } from "react-hook-form";
 
-export const FormUnsplash = () => {
+const FormUnsplash = () => {
 	const [images, setImages] = useState<Array<Record<string, any>>>([]);
 	const [isLoading, setIsLoading] = useState(true);
 	const fetchImages = async () => {
@@ -55,6 +55,8 @@ export const FormUnsplash = () => {
 	);
 };
 
+FormUnsplash.displayName = "FormUnsplash";
+
 FormUnsplash.Skeleton = function () {
 	return (
 		<>
@@ -74,4 +76,4 @@ FormUnsplash.Skeleton = function () {
 	);
 };
 
-FormUnsplash.displayName = "FormUnsplash";
+export default FormUnsplash;
