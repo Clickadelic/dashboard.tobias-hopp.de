@@ -74,4 +74,4 @@ FormUnsplash.Skeleton = function () {
 	);
 };
 
-(FormUnsplash.Skeleton as React.FC).displayName = "FormUnsplashSkeleton";
+FormUnsplash.displayName = "FormUnsplashSkeleton";
