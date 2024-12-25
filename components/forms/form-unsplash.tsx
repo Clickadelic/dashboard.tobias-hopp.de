@@ -73,3 +73,5 @@ FormUnsplash.Skeleton = function () {
 		</>
 	);
 };
+
+FormUnsplash.displayName = "FormUnsplash";
