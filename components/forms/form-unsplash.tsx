@@ -55,6 +55,8 @@ export default function FormUnsplash() {
 	);
 }
 
+FormUnsplash.displayName = "FormUnsplash";
+
 FormUnsplash.Skeleton = function () {
 	return (
 		<>
