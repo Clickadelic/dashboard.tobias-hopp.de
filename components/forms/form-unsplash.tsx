@@ -42,7 +42,18 @@ export default function FormUnsplash() {
 		<div className="relative">
 			<div className="grid grid-cols-3 gap-2 mb-2">
 				{isLoading ? (
-					<FormUnsplash.Skeleton />
+					<>
+						<Skeleton className="w-[106px] h-[74px] relative flex flex-col justify-center items-center" />
+						<Skeleton className="w-[106px] h-[74px] relative flex flex-col justify-center items-center" />
+						<Skeleton className="w-[106px] h-[74px] relative flex flex-col justify-center items-center" />
+						<Skeleton className="w-[106px] h-[74px] relative flex flex-col justify-center items-center" />
+						<Skeleton className="w-[106px] h-[74px] relative flex flex-col justify-center items-center" />
+						<Skeleton className="w-[106px] h-[74px] relative flex flex-col justify-center items-center" />
+						<Skeleton className="w-[106px] h-[74px] relative flex flex-col justify-center items-center" />
+						<Skeleton className="w-[106px] h-[74px] relative flex flex-col justify-center items-center" />
+						<Skeleton className="w-[106px] h-[74px] relative flex flex-col justify-center items-center" />
+						<Skeleton className="w-[106px] h-[74px] relative flex flex-col justify-center items-center" />
+					</>
 				) : (
 					images.map((image, index) => (
 						<div key={index}>
@@ -54,24 +65,3 @@ export default function FormUnsplash() {
 		</div>
 	);
 }
-
-FormUnsplash.Skeleton = function () {
-	return (
-		<>
-			<Skeleton className="w-[106px] h-[74px] relative flex flex-col justify-center items-center" />
-			<Skeleton className="w-[106px] h-[74px] relative flex flex-col justify-center items-center" />
-			<Skeleton className="w-[106px] h-[74px] relative flex flex-col justify-center items-center" />
-			<Skeleton className="w-[106px] h-[74px] relative flex flex-col justify-center items-center" />
-			<Skeleton className="w-[106px] h-[74px] relative flex flex-col justify-center items-center" />
-			<Skeleton className="w-[106px] h-[74px] relative flex flex-col justify-center items-center" />
-			<Skeleton className="w-[106px] h-[74px] relative flex flex-col justify-center items-center" />
-			<Skeleton className="w-[106px] h-[74px] relative flex flex-col justify-center items-center" />
-			<Skeleton className="w-[106px] h-[74px] relative flex flex-col justify-center items-center" />
-			<Skeleton className="w-[106px] h-[74px] relative flex flex-col justify-center items-center" />
-			<Skeleton className="w-[106px] h-[74px] relative flex flex-col justify-center items-center" />
-			<Skeleton className="w-[106px] h-[74px] relative flex flex-col justify-center items-center" />
-		</>
-	);
-};
-
-FormUnsplash.displayName = "FormUnsplashSkeleton";
