@@ -33,7 +33,7 @@ export const LoginForm = () => {
 		defaultValues: { email: "", password: "" }
 	})
 
-	const onSubmit = async (values: z.infer<typeof LoginSchema>) => {
+	const onSubmit = (values: z.infer<typeof LoginSchema>) => {
 		setError(undefined)
 		setSuccess(undefined)
 		startTransition(() => {
