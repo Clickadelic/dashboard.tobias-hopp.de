@@ -17,12 +17,13 @@ import { toast } from "sonner";
 
 import { addApp, getAppsByUserId, editAppById } from "@/actions/app";
 import { FiPlus } from "react-icons/fi";
+import { CiEdit } from "react-icons/ci";
 
 interface FormAppProps {
-	isEditMode?: boolean;
+	isAppEditMode?: boolean;
 }
 
-export const FormApp = ({ isEditMode }: FormAppProps = {}) => {
+export const FormApp = ({ isAppEditMode }: FormAppProps = {}) => {
 	const [isPending, startTransition] = useTransition();
 
 	const apps = useAppsStore(state => state.apps);
@@ -34,9 +35,11 @@ export const FormApp = ({ isEditMode }: FormAppProps = {}) => {
 	const isAppDialogOpen = useAppsStore(state => state.isAppDialogOpen);
 	const setAppDialogOpen = useAppsStore(state => state.setAppDialogOpen);
 
-	const formDefaults = () => {
-		if (isEditMode) {
+	const determineDefaultValues = () => {
+		if (isAppEditMode) {
 			const id = formData?.id as string;
+			// BUG: Wrong types passed along ???
+			// Cannot use AppSchema :App  here
 			const app = apps.find(app => app.id === id);
 			if (app) {
 				return {
@@ -46,14 +49,14 @@ export const FormApp = ({ isEditMode }: FormAppProps = {}) => {
 			}
 		}
 	};
-	// BUG: Form Types, improve any
+
 	const form = useForm<z.infer<typeof AppSchema>>({
 		resolver: zodResolver(AppSchema),
-		defaultValues: formDefaults()
+		defaultValues: determineDefaultValues()
 	});
 
 	const onSubmit = async (values: z.infer<typeof AppSchema>) => {
-		if (isEditMode) {
+		if (isAppEditMode) {
 			const id = formData?.id as string;
 
 			// BUG: Async bug
@@ -116,9 +119,9 @@ export const FormApp = ({ isEditMode }: FormAppProps = {}) => {
 						</FormItem>
 					)}
 				/>
-				<Button disabled={isPending} variant="primary" aria-label={isEditMode ? "App bearbeiten" : "App hinzufugen"} type="submit" className="w-full rounded-sm">
-					<FiPlus className="inline text-white mr-2" />
-					{isEditMode ? "App bearbeiten" : "App hinzufugen"}
+				<Button disabled={isPending} variant="primary" aria-label={isAppEditMode ? "App bearbeiten" : "App hinzufugen"} type="submit" className="w-full rounded-sm">
+					{isAppEditMode ? <CiEdit className="inline text-white mr-2" /> : <FiPlus className="inline text-white mr-2" />}
+					{isAppEditMode ? "App bearbeiten" : "App hinzufugen"}
 				</Button>
 			</form>
 		</Form>

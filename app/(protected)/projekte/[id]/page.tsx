@@ -1,12 +1,8 @@
-import { getProjectById, deleteProjectById } from "@/actions/project";
+import { getProjectById } from "@/actions/project";
 import { ProjectTabs } from "../project-tabs";
-import { Project } from "@prisma/client";
 
-interface ProjectTabsProps {
-	project?: Project;
-}
-
-const ProjectByIdPage = async ({ params }: { params: { id: string } }) => {
+const ProjectByIdPage = async (props: { params: Promise<{ id: string }> }) => {
+	const params = await props.params;
 	const id = params.id;
 	const project = await getProjectById(id);
 	return (

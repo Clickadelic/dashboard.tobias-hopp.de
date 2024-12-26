@@ -5,7 +5,7 @@ export async function GET() {
 	try {
 		const result = await unsplash.photos.getRandom({
 			collectionIds: ["317099"],
-			count: 9
+			count: 15
 		});
 		if (result && result.response) {
 			return NextResponse.json(result.response);
