@@ -96,5 +96,10 @@ export const ProjectSchema = z.object({
 });
 
 export const SystemSettingsSchema = z.object({
-	loginBackground: z.string().url("Ungültige URL")
+	id: z.string(),
+	imageId: z.string(),
+	imageThumbUrl: z.string(),
+	imageFullUrl: z.string(),
+	imageUsername: z.string(),
+	imageLinkHTML: z.string()
 });
