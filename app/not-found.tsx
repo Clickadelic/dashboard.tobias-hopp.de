@@ -2,7 +2,7 @@
 import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
 import Image from "next/image";
 import Link from "next/link";
-
+// Test
 const Error404Page = () => {
 	return (
 		<div className="flex flex-col items-center justify-center p-2 py-12 bg-white rounded-lg md:p-4">
