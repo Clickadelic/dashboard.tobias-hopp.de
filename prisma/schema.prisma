@@ -195,8 +195,14 @@ model Invitation {
 }
 
 model Systemsetting {
-    id              String   @id @default(cuid())
-    loginBackground String?  @default("")
-    createdAt       DateTime @default(now())
-    updatedAt       DateTime @updatedAt
+    id String @id @default(uuid())
+
+    imageId       String
+    imageThumbUrl String @db.Text
+    imageFullUrl  String @db.Text
+    imageUserName String @db.Text
+    imageLinkHTML String @db.Text
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
 }
