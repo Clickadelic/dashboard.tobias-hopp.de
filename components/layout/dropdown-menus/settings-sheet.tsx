@@ -4,7 +4,7 @@ import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTr
 import { GoGear } from "react-icons/go";
 import { Button } from "@/components/ui/button";
 
-import FormUnsplash from "@/components/forms/form-unsplash";
+import { FormUnsplash } from "@/components/forms/form-unsplash";
 
 export const SettingsSheet = () => {
 	return (

@@ -18,7 +18,7 @@ interface AppsStateProps {
 export const useAppsStore = create<AppsStateProps>(set => ({
 	apps: [],
 	setApps: (apps: App[]) => set({ apps }),
- 
+
 	formData: null,
 	setFormData: (formData: App) => set({ formData }),
 
