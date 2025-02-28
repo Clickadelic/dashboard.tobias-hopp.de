@@ -11,8 +11,8 @@ interface AppsStateProps {
 	isAppDialogOpen: boolean;
 	setAppDialogOpen: (isOpen: boolean) => void;
 
-	isAppEditMode: boolean;
-	setIsAppEditMode: (isEditMode: boolean) => void;
+	isEditMode: boolean;
+	setIsEditMode: (isEditMode: boolean) => void;
 }
 
 export const useAppsStore = create<AppsStateProps>(set => ({
@@ -25,6 +25,6 @@ export const useAppsStore = create<AppsStateProps>(set => ({
 	isAppDialogOpen: false,
 	setAppDialogOpen: (isOpen: boolean) => set({ isAppDialogOpen: isOpen }),
 
-	isAppEditMode: false,
-	setIsAppEditMode: (isEditMode: boolean) => set({ isAppEditMode: isEditMode })
+	isEditMode: false,
+	setIsEditMode: (isEditMode: boolean) => set({ isEditMode: isEditMode })
 }));

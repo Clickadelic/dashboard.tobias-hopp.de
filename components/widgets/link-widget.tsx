@@ -11,6 +11,7 @@ import { useLinksStore } from "@/hooks/use-links-store";
 import { Input } from "@/components/ui/input";
 import { Form, FormControl, FormLabel, FormField, FormItem, FormMessage } from "@/components/ui/form";
 import { Textarea } from "@/components/ui/textarea";
+import { Skeleton } from "@/components/ui/skeleton";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 
@@ -81,7 +82,7 @@ export const LinkWidget = () => {
 	};
 
 	const onEdit = async (values: z.infer<typeof LinkSchema>) => {
-		if (!editLinkId) return;
+		if (!editLinkId) return; // Ensure there's an ID to edit
 		startTransition(async () => {
 			const result = await editLinkById(editLinkId, values);
 			if (result.error) {

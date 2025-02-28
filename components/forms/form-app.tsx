@@ -17,13 +17,12 @@ import { toast } from "sonner";
 
 import { addApp, getAppsByUserId, editAppById } from "@/actions/app";
 import { FiPlus } from "react-icons/fi";
-import { CiEdit } from "react-icons/ci";
 
 interface FormAppProps {
-	isAppEditMode?: boolean;
+	isEditMode?: boolean;
 }
 
-export const FormApp = ({ isAppEditMode }: FormAppProps = {}) => {
+export const FormApp = ({ isEditMode }: FormAppProps = {}) => {
 	const [isPending, startTransition] = useTransition();
 
 	const apps = useAppsStore(state => state.apps);
@@ -35,28 +34,21 @@ export const FormApp = ({ isAppEditMode }: FormAppProps = {}) => {
 	const isAppDialogOpen = useAppsStore(state => state.isAppDialogOpen);
 	const setAppDialogOpen = useAppsStore(state => state.setAppDialogOpen);
 
-	const determineDefaultValues = () => {
-		if (isAppEditMode) {
-			const id = formData?.id as string;
-			// BUG: Wrong types passed along ???
-			// Cannot use AppSchema :App  here
-			const app = apps.find(app => app.id === id);
-			if (app) {
-				return {
-					title: app.title,
-					url: app.url
-				};
-			}
-		}
-	};
-
-	const form = useForm<z.infer<typeof AppSchema>>({
+	// BUG: Form Types, improve any
+	let form = useForm<z.infer<typeof AppSchema>>({
 		resolver: zodResolver(AppSchema),
-		defaultValues: determineDefaultValues()
+		defaultValues: { title: "", url: "" }
 	});
 
+	if (isEditMode) {
+		form = useForm<z.infer<typeof AppSchema>>({
+			resolver: zodResolver(AppSchema),
+			defaultValues: { title: formData?.title, url: formData?.url }
+		});
+	}
+
 	const onSubmit = async (values: z.infer<typeof AppSchema>) => {
-		if (isAppEditMode) {
+		if (isEditMode) {
 			const id = formData?.id as string;
 
 			// BUG: Async bug
@@ -87,7 +79,6 @@ export const FormApp = ({ isAppEditMode }: FormAppProps = {}) => {
 				}
 			});
 		}
-		setAppDialogOpen(false);
 	};
 
 	return (
@@ -119,9 +110,9 @@ export const FormApp = ({ isAppEditMode }: FormAppProps = {}) => {
 						</FormItem>
 					)}
 				/>
-				<Button disabled={isPending} variant="primary" aria-label={isAppEditMode ? "App bearbeiten" : "App hinzufugen"} type="submit" className="w-full rounded-sm">
-					{isAppEditMode ? <CiEdit className="inline text-white mr-2" /> : <FiPlus className="inline text-white mr-2" />}
-					{isAppEditMode ? "App bearbeiten" : "App hinzufugen"}
+				<Button disabled={isPending} variant="primary" aria-label={isEditMode ? "App bearbeiten" : "App hinzufugen"} type="submit" className="w-full rounded-sm">
+					<FiPlus className="inline text-white mr-2" />
+					{isEditMode ? "App bearbeiten" : "App hinzufugen"}
 				</Button>
 			</form>
 		</Form>

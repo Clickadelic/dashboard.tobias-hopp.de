@@ -38,6 +38,7 @@ export const MenuLeft = () => {
 				<li>
 					<span className={cn("text-xs text-neutral-400 ml-4 inline-block my-4", isSidebarOpen && "hidden")}>Dashboard</span>
 				</li>
+				{/* // TODO: Responsive Menu Items mit ToolTip erstellen */}
 				<li>
 					<TooltipProvider>
 						<Tooltip>
@@ -234,11 +235,11 @@ export const MenuLeft = () => {
 											)}
 										>
 											<BsHouseGear className={cn("inline-block mt-[-3px]", isSidebarOpen && "block mx-auto mt-[-3px]")} />
-											<span className={cn("ml-2", isSidebarOpen && "hidden")}>Systemeinstellungen</span>
+											<span className={cn("ml-2", isSidebarOpen && "hidden")}>System</span>
 										</Link>
 									</TooltipTrigger>
 									<TooltipContent side="right">
-										<p>Systemeinstellungen</p>
+										<p>System</p>
 										<TooltipArrow className="arrow-mantis-primary" />
 									</TooltipContent>
 								</Tooltip>

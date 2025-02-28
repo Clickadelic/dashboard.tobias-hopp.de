@@ -1,14 +1,16 @@
 import { AppBar } from "@/components/app-bar";
 
-import { ProjectCard } from "@/components/cards/dashboard/project-card";
-import { TodoCard } from "@/components/cards/dashboard/todo-card";
-import { LinkCard } from "@/components/cards/dashboard/link-card";
-import { NoticeCard } from "@/components/cards/dashboard/notice-card";
+import { ProjectCard } from "@/components/dasboard-cards/project-card";
+import { TodoCard } from "@/components/dasboard-cards/todo-card";
+import { LinkCard } from "@/components/dasboard-cards/link-card";
+import { NoticeCard } from "@/components/dasboard-cards/notice-card";
 
 import { TodoWidget } from "@/components/widgets/todo-widget";
 import { NoticeWidget } from "@/components/widgets/notice-widget";
 import { LinkWidget } from "@/components/widgets/link-widget";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+
+import { Charts } from "@/components/charts";
 
 import { EmailList } from "@/components/lists/email-list";
 
@@ -27,10 +29,9 @@ const DashboardPage = () => {
 			</div>
 			<div className="grid grid-cols-1 md:grid-cols-3 gap-4">
 				<div className="col-span-2">
-					<h2 className="text-md font-bold text-slate-900 mt-3 mb-5">E-Mails</h2>
+					<h2 className="text-md font-bold text-slate-900 mt-3 mb-5">Statistiken</h2>
 					<div className="bg-white rounded-xl shadow-sm border p-2 md:p-4">
-						<EmailList />
-						<EmailList />
+						<Charts />
 					</div>
 				</div>
 				<div className="col-span-2 md:col-span-1">
@@ -75,7 +76,7 @@ const DashboardPage = () => {
 				</div>
 				<div className="col-span-2">
 					<div>
-						<h2 className="text-md font-bold text-slate-900 mt-3 mb-5">Einladungen</h2>
+						<h2 className="text-md font-bold text-slate-900 mt-3 mb-5">E-Mails</h2>
 						<div className="bg-white rounded-xl shadow-sm border p-2 md:p-4">
 							<EmailList />
 						</div>

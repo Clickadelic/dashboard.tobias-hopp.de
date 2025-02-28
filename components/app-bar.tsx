@@ -19,8 +19,6 @@ import { AiOutlineEdit } from "react-icons/ai";
 import { getAppsByUserId, deleteAppById } from "@/actions/app";
 import { getFavicon } from "@/lib/utils";
 
-import { App } from "@prisma/client";
-
 export const AppBar = () => {
 	const { status } = useSession({ required: true });
 
@@ -36,12 +34,12 @@ export const AppBar = () => {
 	const isAppDialogOpen = useAppsStore(state => state.isAppDialogOpen);
 	const setAppDialogOpen = useAppsStore(state => state.setAppDialogOpen);
 
-	const isAppEditMode = useAppsStore(state => state.isAppEditMode);
-	const setIsAppEditMode = useAppsStore(state => state.setIsAppEditMode);
+	const isEditMode = useAppsStore(state => state.isEditMode);
+	const setIsEditMode = useAppsStore(state => state.setIsEditMode);
 
 	const fetchApps = async () => {
 		try {
-			const response: App[] = await getAppsByUserId();
+			const response = await getAppsByUserId();
 			setApps(response);
 		} catch (error) {
 			toast.error("Fehler beim Laden der Apps.");
@@ -52,7 +50,8 @@ export const AppBar = () => {
 		setIsLoading(true);
 		fetchApps();
 		setIsLoading(false);
-	}, [status]);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
 
 	const onDelete = async (id: string) => {
 		// BUG: await error
@@ -68,11 +67,11 @@ export const AppBar = () => {
 		});
 	};
 
-	const onEdit = (id: string) => {
+	const onEdit = async (id: string) => {
 		const app = apps.find(app => app.id === id);
 		if (app) setFormData(app);
 		setAppDialogOpen(true);
-		setIsAppEditMode(true);
+		setIsEditMode(true);
 	};
 
 	return (

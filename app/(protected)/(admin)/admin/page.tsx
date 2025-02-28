@@ -1,20 +1,65 @@
-import { ClickableCard } from "@/components/cards/clickable/clickable-card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 
-import { FiUploadCloud } from "react-icons/fi";
-import { BsHouseGear } from "react-icons/bs";
-import { FiUsers } from "react-icons/fi";
+import Link from "next/link"
+
+import { IoArrowForward } from "react-icons/io5"
+import { FiUsers } from "react-icons/fi"
+
+import { FiUploadCloud } from "react-icons/fi"
 
 const AdminPage = () => {
 	return (
 		<div className="page-wrapper">
 			<h2 className="text-md font-bold text-slate-700 mb-5">Admin</h2>
 			<div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-				<ClickableCard href="/admin/benutzer" icon={<FiUsers className="size-10 mb-3" />} label="Benutzer" description="Verwalte registrierte Benutzer" />
-				<ClickableCard href="/admin/uploads" icon={<FiUploadCloud className="size-10 mb-3" />} label="Uploads" description="Uploadverwaltung des Vercel Blobs" />
-				<ClickableCard href="/admin/systemeinstellungen" icon={<BsHouseGear className="size-10 mb-3" />} label="Systemeinstellungen" description="Systemeinstellungen des Dashboards" />
+				<Card>
+					<CardHeader>
+						<CardTitle>
+							<FiUsers className="size-10 mb-3" />
+							Benutzer
+						</CardTitle>
+						<CardDescription>Benutzerverwaltung</CardDescription>
+					</CardHeader>
+					<CardContent>
+						<Link href={"/admin/benutzer"} className="flex justify-start hover:text-mantis-primary">
+							<IoArrowForward className="mt-1 mr-2" />
+							Benutzer
+						</Link>
+					</CardContent>
+				</Card>
+				<Card>
+					<CardHeader>
+						<CardTitle>
+							<FiUploadCloud className="size-10 mb-3" />
+							Uploads
+						</CardTitle>
+						<CardDescription>Uploads der Benutzer</CardDescription>
+					</CardHeader>
+					<CardContent>
+						<Link href={"/admin/uploads"} className="flex justify-start hover:text-mantis-primary">
+							<IoArrowForward className="mt-1 mr-2" />
+							Uploads
+						</Link>
+					</CardContent>
+				</Card>
+				<Card>
+					<CardHeader>
+						<CardTitle>
+							<FiUploadCloud className="size-10 mb-3" />
+							Systemeinstellungen
+						</CardTitle>
+						<CardDescription>Systemeinstellungen des Dashboards</CardDescription>
+					</CardHeader>
+					<CardContent>
+						<Link href={"/admin/systemeinstellungen"} className="flex justify-start hover:text-mantis-primary">
+							<IoArrowForward className="mt-1 mr-2" />
+							Systemeinstellungen
+						</Link>
+					</CardContent>
+				</Card>
 			</div>
 		</div>
-	);
-};
+	)
+}
 
-export default AdminPage;
+export default AdminPage

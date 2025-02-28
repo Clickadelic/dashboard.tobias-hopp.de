@@ -10,6 +10,7 @@ import { useNoticesStore } from "@/hooks/use-notices-store";
 
 import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";
 import { Textarea } from "@/components/ui/textarea";
+import { Skeleton } from "@/components/ui/skeleton";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 
@@ -157,7 +158,7 @@ export const NoticeWidget = () => {
 			<ul>
 				{notices.map(notice => (
 					<li key={notice.id} className="flex justify-between mb-2 px-3 py-1 hover:bg-mantis-hover rounded-sm">
-						<p className="text-sm">{notice.noticetext}</p>
+						<p>{notice.noticetext}</p>
 						<span className="space-x-3 flex">
 							<button onClick={() => setEditValues(notice.id)}>
 								<LiaEdit />

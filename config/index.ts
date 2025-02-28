@@ -1,4 +1,5 @@
 import nodemailer from "nodemailer";
+import { type ChartConfig } from "@/components/ui/chart";
 
 // Site Config
 export const siteConfig = {
@@ -18,3 +19,15 @@ export const transporter = nodemailer.createTransport({
 	},
 	logger: false
 });
+
+// Chart color config
+export const chartConfig = {
+	desktop: {
+		label: "Desktop",
+		color: "#2563eb"
+	},
+	mobile: {
+		label: "Mobile",
+		color: "#60a5fa"
+	}
+} satisfies ChartConfig;

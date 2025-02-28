@@ -3,48 +3,35 @@
 import { useTransition, useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import { useCurrentUser } from "@/hooks/use-current-user";
-import { useTodosStore } from "@/hooks/use-todos-store";
 
 import { getTodosByUserId, deleteTodoById, toggleIsCompleted } from "@/actions/todo";
 
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem } from "@/components/ui/dropdown-menu";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Button } from "@/components/ui/button";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { toast } from "sonner";
 
-import { Todo } from "@prisma/client";
-
 import { HiDotsHorizontal } from "react-icons/hi";
-import { BsTrash } from "react-icons/bs";
-import { AiOutlineEdit } from "react-icons/ai";
 
 import { cn } from "@/lib/utils";
 
 export const TodosTable = () => {
 	const { status } = useSession({ required: true });
-
 	const userId = useCurrentUser()?.id;
 	const [isPending, startTransition] = useTransition();
 	const [isLoading, setIsLoading] = useState<boolean>(false);
-
-	const todos = useTodosStore(state => state.todos);
-	const setTodos = useTodosStore(state => state.setTodos);
-
-	const formData = useTodosStore(state => state.formData);
-	const setFormData = useTodosStore(state => state.setFormData);
-
-	const isTodoDialogOpen = useTodosStore(state => state.isTodoDialogOpen);
-	const setTodoDialogOpen = useTodosStore(state => state.setTodoDialogOpen);
-
-	const isTodoEditMode = useTodosStore(state => state.isTodoEditMode);
-	const setIsTodoEditMode = useTodosStore(state => state.setIsTodoEditMode);
+	const [todos, setTodos] = useState<any[]>([]);
 
 	const fetchTodos = async () => {
+		setIsLoading(true);
 		try {
-			const response: Todo[] = await getTodosByUserId();
+			const response = await getTodosByUserId();
 			setTodos(response);
 		} catch (error) {
 			toast.error("Failed to fetch Todos.");
+		} finally {
+			setIsLoading(false);
 		}
 	};
 
@@ -52,7 +39,7 @@ export const TodosTable = () => {
 		setIsLoading(true);
 		fetchTodos();
 		setIsLoading(false);
-	}, [isTodoDialogOpen]);
+	}, []);
 
 	const onDelete = async (id: string) => {
 		const result = await deleteTodoById(id);
@@ -74,15 +61,6 @@ export const TodosTable = () => {
 				fetchTodos();
 			}
 		});
-	};
-
-	const onEdit = (id: string) => {
-		const todo = todos.find(todo => todo.id === id);
-		if (todo) {
-			setFormData(todo);
-			setTodoDialogOpen(true);
-			setIsTodoEditMode(true);
-		}
 	};
 
 	return (
@@ -110,6 +88,7 @@ export const TodosTable = () => {
 							</TableCell>
 						</TableRow>
 					)}
+
 					{todos.map((todo: any) => (
 						<TableRow key={todo.id}>
 							<TableCell>
@@ -117,24 +96,25 @@ export const TodosTable = () => {
 							</TableCell>
 							<TableCell className={cn("truncate ellipsis", todo.isCompleted ? "line-through" : "")}>{todo.title}</TableCell>
 							<TableCell className={cn("truncate ellipsis", todo.isCompleted ? "line-through" : "")}>{todo.description}</TableCell>
-							<TableCell className="give-me-a-name-maybe">
-								<DropdownMenu modal={false}>
+							<TableCell className="asd">
+								<DropdownMenu>
 									<DropdownMenuTrigger asChild>
-										<button className="text-slate-500 hover:text-slate-900">
+										<Button variant="ghost" size="sm">
 											<HiDotsHorizontal className="size-5" />
-										</button>
+										</Button>
 									</DropdownMenuTrigger>
-									<DropdownMenuContent side="right" align="start">
+									<DropdownMenuContent>
 										<DropdownMenuItem>
-											<button onClick={() => onEdit(todo.id)} className="flex justify-between">
-												<AiOutlineEdit className="mt-1 mr-2" />
-												bearbeiten
+											<button
+												onClick={() => {
+													console.log("Clicked");
+												}}
+											>
+												Edit
 											</button>
 										</DropdownMenuItem>
 										<DropdownMenuItem>
-											<button onClick={() => onDelete(todo.id)} className="flex justify-between text-red-500 hover:text-red-700">
-												<BsTrash className="mt-1 mr-2" /> löschen
-											</button>
+											<button onClick={() => onDelete(todo.id)}>Delete</button>
 										</DropdownMenuItem>
 									</DropdownMenuContent>
 								</DropdownMenu>
